@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turnout: a VPN client for macOS that connects to WireGuard servers</title>
+<meta name="description" content="Turnout connects your Mac to WireGuard servers the way wg-quick does, in a native app: your hooks run, your routes stay yours, and you choose which network interface the tunnel leaves through.">
+<link rel="canonical" href="https://turnout.ctsite.cc/">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/site.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Turnout: wg-quick for your Mac, in a native app">
+<meta property="og:description" content="A VPN client for macOS that connects to WireGuard servers. Your hooks run, your routes stay yours, and you choose which network interface the tunnel leaves through.">
+<meta property="og:url" content="https://turnout.ctsite.cc/">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="Turnout's main window showing a connected tunnel's path: the tunnel, the network interface it leaves through, and the server">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+      <img src="assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="Site">
+      <ul>
+        <li><a href="how-it-works.html">How it works</a></li>
+        <li class="lang"><a href="./" hreflang="en" lang="en" aria-current="page">English</a></li>
+        <li><a href="zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap">
+    <h1 id="hero-title">Turnout connects your Mac to WireGuard servers the way <span class="nb">wg-quick</span> does, in a native app.</h1>
+    <div class="hero-row">
+      <p class="lede">Your hooks run, your routes stay yours, and you choose which network interface the tunnel leaves through.</p>
+      <div class="get">
+        <!-- download:soon -->
+        <div class="soon">
+          <p class="soon-title">Coming soon</p>
+          <p class="fineprint">The first public release is being prepared. Until then there is nothing to download. Watch the <a href="https://github.com/tasict/Turnout">GitHub repository</a> or its <a href="https://github.com/tasict/Turnout/releases">Releases page</a> for the first one.</p>
+        </div>
+        <!-- /download:soon -->
+        <!-- download:live -->
+        <div class="live" hidden>
+          <a class="download" href="https://github.com/tasict/Turnout/releases/latest">Download Turnout</a>
+          <p class="fineprint">macOS 15 or later · Apple silicon and Intel · free</p>
+          <p class="fineprint"><a href="#install">How to install</a></p>
+        </div>
+        <!-- /download:live -->
+      </div>
+    </div>
+  </div>
+  <figure class="stage">
+    <div class="wrap">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/dark/1-path.jpg">
+        <img class="shot" src="assets/screenshots/light/1-path.jpg" width="1600" height="1000" alt="Turnout's main window with a connected tunnel. Its path runs from the tunnel through the network interface it leaves by to the server, with traffic moving both ways.">
+      </picture>
+      <figcaption>Each tunnel shows its live path: the tunnel, the network interface it leaves through, and the server. The line goes solid once the server answers, and packets move along it at a pace set by your traffic.</figcaption>
+    </div>
+  </figure>
+</section>
+
+<section class="feature" id="wg-quick" aria-labelledby="wg-quick-title">
+  <div class="wrap">
+    <h2 id="wg-quick-title">Your configs, as <span class="nb">wg-quick</span> runs them</h2>
+    <div class="body">
+      <p class="intro">Turnout reads the <code>.conf</code> files you already use with wg-quick and applies them the way wg-quick does on macOS, step for step, with the same system tools.</p>
+      <dl class="keys">
+        <div>
+          <dt><code>PreUp</code> <code>PostUp</code> <code>PreDown</code> <code>PostDown</code></dt>
+          <dd>Hooks run, with <code>%i</code> replaced by the tunnel's <code>utun</code> interface and <code>%I</code> by its name. An administrator approves a file's hooks before they can run; <a href="how-it-works.html#hooks">how that works</a>.</dd>
+        </div>
+        <div>
+          <dt><code>AllowedIPs</code></dt>
+          <dd>Routed into the tunnel, most specific first. A full tunnel uses <code>0.0.0.0/1</code> and <code>128.0.0.0/1</code>, and the IPv6 halves, instead of replacing your default route, and the server's address stays on your physical gateway so it never routes into its own tunnel.</dd>
+        </div>
+        <div>
+          <dt><code>Table</code></dt>
+          <dd><code>auto</code> and <code>main</code> route as above; <code>off</code> leaves the routing table to you.</dd>
+        </div>
+        <div>
+          <dt><code>DNS</code></dt>
+          <dd>Servers and search domains are set on your network services while the tunnel is up, and your own settings come back when it goes down.</dd>
+        </div>
+        <div>
+          <dt><code>MTU</code></dt>
+          <dd>As written, or worked out the way wg-quick does it: the exit interface's MTU minus 80.</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="interface" aria-labelledby="interface-title">
+  <div class="wrap">
+    <h2 id="interface-title">Choose the network interface</h2>
+    <div class="body">
+      <p class="intro">Two lines wg-quick's format does not have. They start with <code>#@</code>, which wg-quick reads as a comment, so the same file still works with <code>wg-quick up</code>.</p>
+      <div class="conf">
+<pre><code>[Interface]
+PrivateKey = …
+Address = 10.8.0.2/32
+DNS = 10.8.0.1
+<span class="ln bind">#@ BindInterface = en0</span>
+<span class="ln around">#@ Route = 192.168.0.0/16 dev en0</span>
+
+[Peer]
+PublicKey = …
+<span class="ln tunnel">AllowedIPs = 0.0.0.0/0, ::/0</span>
+Endpoint = vpn.example.com:51820</code></pre>
+        <dl class="notes">
+          <div class="bind">
+            <dt><code>#@ BindInterface = en0</code></dt>
+            <dd>The encrypted traffic always leaves through <code>en0</code>, even when another interface holds the default route. The route to the server goes through <code>en0</code> too.</dd>
+          </div>
+          <div class="around">
+            <dt><code>#@ Route = 192.168.0.0/16 dev en0</code></dt>
+            <dd>These networks skip the tunnel and go out through <code>en0</code>'s own gateway. List as many as you need, separated by commas.</dd>
+          </div>
+          <div class="tunnel">
+            <dt><code>AllowedIPs</code></dt>
+            <dd>Everything else goes into the tunnel.</dd>
+          </div>
+        </dl>
+      </div>
+      <p>You can also change a connected tunnel's exit interface from its path in the main window. Turnout disconnects, saves the change and connects again.</p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="network" aria-labelledby="network-title">
+  <div class="wrap">
+    <h2 id="network-title">Follows the network</h2>
+    <div class="body">
+      <p class="intro">When gateways, interfaces or links change, or the Mac wakes from sleep, Turnout puts the tunnel's routes through your physical network back on the current gateways, works out the automatic MTU again and re-applies DNS.</p>
+      <p>If the interface a tunnel is bound to goes away and comes back, the tunnel binds to it again and handshakes again. If it disappears for good, the route to the server becomes a blackhole, so handshakes cannot slip into the tunnel itself, and routes that skip the tunnel wait until the interface returns.</p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="automatic" aria-labelledby="automatic-title">
+  <div class="wrap">
+    <h2 id="automatic-title">Connects by itself</h2>
+    <div class="body">
+      <p class="intro">Give a tunnel a schedule, a list of Wi-Fi networks, or both.</p>
+      <p>When a scheduled window starts, Turnout connects the tunnel, and when it ends, disconnects it. When the Mac joins one of the listed networks, the tunnel connects; when it leaves, the tunnel disconnects. In between, what you do by hand sticks, and changing a rule never connects or disconnects anything on its own.</p>
+<pre><code>#@ Schedule = Mon-Fri 09:00-18:00
+#@ OnWiFi = Office</code></pre>
+      <p>The rules are lines in the config file, set up from the tunnel's page. Turnout acts on them while it is open, so it offers to open at login. A Wi-Fi rule needs Location access, because macOS counts the name of a Wi-Fi network as location; Turnout asks for it when you set up the rule, never at launch.</p>
+      <figure class="shot-figure">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/dark/4-automation.jpg">
+          <img class="shot" src="assets/screenshots/light/4-automation.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="Setting up automatic connection for a tunnel: a weekly schedule and the Wi-Fi networks it connects on.">
+        </picture>
+        <figcaption>A tunnel's schedule and Wi-Fi networks, set up from its page.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="editor" aria-labelledby="editor-title">
+  <div class="wrap">
+    <h2 id="editor-title">An editor that keeps your file</h2>
+    <div class="body">
+      <p class="intro">Edit a tunnel as a form or as text, and switch between the two at any time.</p>
+      <p>Changes rewrite only the lines they touch, so your comments and ordering stay where you put them. Problems are listed with their line numbers, and Save waits until there are none. A new tunnel comes with a fresh key pair.</p>
+      <figure class="shot-figure">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/dark/2-editor.jpg">
+          <img class="shot" src="assets/screenshots/light/2-editor.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="Turnout's editor showing a tunnel's config as a form.">
+        </picture>
+        <figcaption>The form and the text are two views of the same file.</figcaption>
+      </figure>
+      <p>Drop <code>.conf</code> files or a <code>.zip</code> on the window, or choose Import from File…. The zip the official WireGuard app exports opens as a batch: review every tunnel, leave some out, and import the rest at once.</p>
+      <figure class="shot-figure">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/dark/3-import.jpg">
+          <img class="shot" src="assets/screenshots/light/3-import.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="The import sheet listing several tunnels from a zip, each one switched in or left out.">
+        </picture>
+        <figcaption>Each tunnel in an import is a branch line: switch it in, or leave it out.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="menu-bar" aria-labelledby="menu-bar-title">
+  <div class="wrap">
+    <h2 id="menu-bar-title">Stays out of the way</h2>
+    <div class="body">
+      <p class="intro">Turnout lives in the menu bar. Connect and disconnect tunnels from there, and open the window only when you want the details.</p>
+      <p>Tunnels run in Turnout's background service, so they keep running when the app is closed. Measured with the window open, the app uses about 0.5% of the CPU while idle and 2–4% while it draws live traffic. Statistics are only fetched while the menu or a window is open.</p>
+      <figure class="shot-figure">
+        <!-- scripts/screenshots.sh must write menu-light.png and menu-dark.png at
+             600x420 (the 300-point popover at 2x). If the popover's height
+             changes, change width/height here and MENU_SIZE in publish-site.sh. -->
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/menu-dark.png">
+          <img class="shot menu" src="assets/menu-light.png" width="600" height="420" loading="lazy" decoding="async" alt="Turnout's menu in the menu bar, listing tunnels with a switch for each.">
+        </picture>
+        <figcaption>Every tunnel with its switch, and the interface a connected one leaves through.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="cleanup" aria-labelledby="cleanup-title">
+  <div class="wrap">
+    <h2 id="cleanup-title">Nothing left behind</h2>
+    <div class="body">
+      <p class="intro">Every change Turnout makes to routes and DNS is written down before it is made.</p>
+      <p>If the Mac crashes or loses power with a tunnel up, the background service undoes what was left at its next start, and connects no tunnel until that is done. Turnout › Repair Network Settings… does the same whenever you ask.</p>
+      <p>Uninstalling takes one path, whether you start it from the app, from the installer or from a shell script you can read first. It disconnects every tunnel, restores routes and DNS, takes the background service out of Login Items, and deletes the app, its logs and its preferences. Saved tunnels stay unless you choose to delete them too. <a href="how-it-works.html#uninstall">What each way removes</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="not" aria-labelledby="not-title">
+  <div class="wrap">
+    <h2 id="not-title">What it is not</h2>
+    <div class="body">
+      <ul class="nots">
+        <li><strong>Not open source.</strong> The source code is not published. Everything the app and its background service do to your Mac is written down on <a href="how-it-works.html">a page of its own</a>.</li>
+        <li><strong>No kill switch yet.</strong> Turnout does not block traffic outside the tunnel. While a tunnel is down, your Mac uses its normal network.</li>
+        <li><strong>Not a VPN provider.</strong> Bring your own server, or a config from your provider or your network administrator.</li>
+        <li><strong>No NetworkExtension.</strong> Tunnels run in Turnout's own background service, which is what lets hooks run and routes stay yours. They do not appear under System Settings › VPN.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="feature inspect" id="your-mac" aria-labelledby="your-mac-title">
+  <div class="wrap">
+    <h2 id="your-mac-title">What it does to your Mac</h2>
+    <div class="body">
+      <p class="intro">Turnout installs a background service that runs as root. It changes addresses, routes and DNS with the same tools wg-quick uses, keeps configs in a folder only root can read, and runs a config's hooks only after an administrator approves them. You can check each of these yourself.</p>
+<pre><code>netstat -rn                         <span class="c"># the routes it added</span>
+networksetup -getdnsservers Wi-Fi   <span class="c"># the DNS servers it set</span>
+cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
+      <p><a class="more" href="how-it-works.html">What Turnout does to your Mac</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="install" aria-labelledby="install-title">
+  <div class="wrap">
+    <h2 id="install-title">Download and install</h2>
+    <div class="body">
+      <!-- download:soon -->
+      <div class="soon">
+        <p class="soon-title">Coming soon</p>
+        <p class="fineprint">The first public release is being prepared. Until then there is nothing to download. Watch the <a href="https://github.com/tasict/Turnout">GitHub repository</a> or its <a href="https://github.com/tasict/Turnout/releases">Releases page</a> for the first one.</p>
+      </div>
+      <!-- /download:soon -->
+      <!-- download:live -->
+      <div class="live" hidden>
+      <ol class="steps">
+        <li>Download the installer, the <code>.pkg</code> file, from the <a href="https://github.com/tasict/Turnout/releases/latest">latest release on GitHub</a>.</li>
+        <li>Open it and follow the steps. Turnout is installed in your Applications folder and opens when the installer finishes.</li>
+        <li>In Turnout's window, install the background service, then allow it when macOS asks, in System Settings › General › Login Items &amp; Extensions.</li>
+      </ol>
+      <!-- gatekeeper:open-anyway -->
+      <p class="gatekeeper">The installer is signed with a Developer ID but not yet notarized by Apple, so macOS may refuse to open it. If it does, go to System Settings › Privacy &amp; Security, choose Open Anyway, and open the installer again.</p>
+      <!-- /gatekeeper:open-anyway -->
+      <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">Download Turnout</a></p>
+      <p class="fineprint">macOS 15 or later · Apple silicon and Intel · free</p>
+      </div>
+      <!-- /download:live -->
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="how-it-works.html">What Turnout does to your Mac</a> <a href="privacy.html">Privacy</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></p>
+    <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
+  </div>
+</footer>
+</body>
+</html>

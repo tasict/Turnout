@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turnout 對你的 Mac 做了什麼</title>
+<meta name="description" content="Turnout 的背景服務以 root 身分執行。它是什麼、改了什麼、用哪些工具、設定檔放在哪裡、hook 何時執行、App 連到哪裡，以及如何自己逐項檢查。">
+<link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works.html">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Turnout 對你的 Mac 做了什麼">
+<meta property="og:description" content="背景服務、它執行的工具、它保存的檔案、它執行的 hook，以及 App 唯一的網路連線，每一項都附上檢查指令。">
+<meta property="og:url" content="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="Turnout 主視窗顯示一條已連線通道的路徑">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
+      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="網站">
+      <ul>
+        <li><a href="how-it-works.html" aria-current="page">運作方式</a></li>
+        <li class="lang"><a href="../how-it-works.html" hreflang="en" lang="en">English</a></li>
+        <li><a href="how-it-works.html" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="doc">
+  <div class="wrap doc-head">
+    <h1>Turnout 對你的 Mac 做了什麼</h1>
+    <p class="lede">Turnout 的原始碼沒有公開，而且會安裝一個以 root 身分執行的服務。所以這裡把事情交代清楚：這個服務是什麼、它改了什麼、留下什麼、連到哪裡，以及如何在你自己的 Mac 上逐項檢查。</p>
+  </div>
+
+  <div class="wrap doc-grid">
+    <nav class="toc" aria-labelledby="toc-title">
+      <p id="toc-title">本頁內容</p>
+      <ul>
+        <li><a href="#service">兩個部分</a></li>
+        <li><a href="#changes">它改了什麼</a></li>
+        <li><a href="#configs">你的設定檔</a></li>
+        <li><a href="#hooks">Hook</a></li>
+        <li><a href="#clients">服務回應誰</a></li>
+        <li><a href="#recovery">當機之後</a></li>
+        <li><a href="#network">網路連線</a></li>
+        <li><a href="#location">定位與 Wi-Fi 規則</a></li>
+        <li><a href="#logs">記錄檔</a></li>
+        <li><a href="#verify">自己檢查</a></li>
+        <li><a href="#uninstall">解除安裝</a></li>
+        <li><a href="#names">為什麼名稱是 wggui</a></li>
+      </ul>
+    </nav>
+
+    <div class="doc-body">
+      <section id="service" aria-labelledby="service-title">
+        <h2 id="service-title">兩個部分：App 與背景服務</h2>
+        <p>App 本身（<code>Turnout.app</code>）以你的身分執行，沒有任何特殊權限。它負責顯示通道、編輯設定檔，並請背景服務連線或中斷。它從不碰你的網路流量。</p>
+        <p>背景服務是一個 LaunchDaemon，<code>cc.ctsite.wggui.daemon</code>，以 root 身分執行。它的程式 <code>wggui-daemon</code> 就放在 App 裡的 <code>/Applications/<wbr>Turnout.app/<wbr>Contents/<wbr>MacOS/</code>。Turnout 透過 macOS 的登入項目（SMAppService）註冊它，所以 macOS 會請你在「系統設定 › 一般 › 登入項目與延伸功能」中允許，你也可以在那裡把它關掉。</p>
+        <p>服務會為每條通道建立 <code>utun</code> 介面，並用內建的 <a href="https://github.com/mullvad/gotatun">GotaTun</a> 在使用者空間執行 WireGuard；GotaTun 是 Mullvad 開發、以 MPL-2.0 授權的實作。只有通道的封包會經過它，其餘流量照常由 macOS 路由。通道存在於服務之中，所以關掉 App 時通道仍會連著。</p>
+      </section>
+
+      <section id="changes" aria-labelledby="changes-title">
+        <h2 id="changes-title">它改了什麼，用的是哪些工具</h2>
+        <p>位址、MTU、路由與 DNS 都用 wg-quick 在 macOS 上使用的程式修改。每個程式都直接帶參數執行，從不經過 shell。</p>
+        <dl class="paths">
+          <div>
+            <dt><code>/sbin/ifconfig</code></dt>
+            <dd>通道介面的位址與 MTU，以及啟用介面。</dd>
+          </div>
+          <div>
+            <dt><code>/sbin/route</code></dt>
+            <dd>導入通道的路由、讓伺服器位址留在實體網路上的路由，以及不走通道的路由。</dd>
+          </div>
+          <div>
+            <dt><code>/usr/sbin/networksetup</code></dt>
+            <dd>各個網路服務上的 DNS 伺服器與搜尋網域。</dd>
+          </div>
+        </dl>
+        <p>所以用平常的指令就能看到它到底做了什麼：</p>
+<pre><code>netstat -rn
+networksetup -listallnetworkservices
+networksetup -getdnsservers Wi-Fi   <span class="c"># 或清單中的其他服務</span></code></pre>
+        <p>通道中斷時，服務會移除它加入的路由，並把被它取代的 DNS 設定還原。</p>
+      </section>
+
+      <section id="configs" aria-labelledby="configs-title">
+        <h2 id="configs-title">你的設定檔</h2>
+        <p>通道存放在 <code>/Library/Application Support/cc.ctsite.wggui/tunnels</code>，這個資料夾屬於 root，每條通道一個檔案，權限為 0600，私鑰也在其中。只有服務會寫入這裡；App 要儲存時是請服務代勞。</p>
+<pre><code>sudo ls -l "/Library/Application Support/cc.ctsite.wggui/tunnels"</code></pre>
+      </section>
+
+      <section id="hooks" aria-labelledby="hooks-title">
+        <h2 id="hooks-title">Hook</h2>
+        <p><code>PreUp</code>、<code>PostUp</code>、<code>PreDown</code> 和 <code>PostDown</code> 以 root 身分透過 <code class="nb">/bin/bash -c</code> 執行，<code>%i</code> 換成通道的 <code>utun</code> 介面，<code>%I</code> 換成通道名稱。這等同於 <code>sudo</code> 的權限，所以：</p>
+        <ul>
+          <li>hook 只會來自磁碟上的設定檔，絕不會來自 App 傳給服務的任何內容。</li>
+          <li>儲存一個 hook 是新的或有變動的設定檔時，需要管理者核准。核准由服務自己透過 macOS 的 Authorization Services 檢查，不會只聽 App 的說法。</li>
+          <li>沒有動到 hook 的修改不需要重新核准。</li>
+        </ul>
+        <p>核准之前先讀一遍設定檔裡的 hook，就像你會先讀過要用 <code>sudo</code> 執行的指令稿一樣。</p>
+      </section>
+
+      <section id="clients" aria-labelledby="clients-title">
+        <h2 id="clients-title">服務回應誰</h2>
+        <p>App 透過 Unix socket（<code>/var/run/<wbr>cc.ctsite.wggui.daemon.sock</code>）和服務溝通。每個連上來的程式，服務都會檢查它的程式碼簽署，只回應由同一個開發團隊簽署、且帶有 Turnout 套件識別碼 <code>cc.ctsite.wggui</code> 的程式。其他程式一律拒絕。</p>
+      </section>
+
+      <section id="recovery" aria-labelledby="recovery-title">
+        <h2 id="recovery-title">當機之後</h2>
+        <p>服務停止時，macOS 會移除通道介面，介面上的路由也會跟著消失。但經由實體閘道的路由和 DNS 設定不會，這樣設定的 DNS 甚至重新開機後都還在。所以服務在每次修改之前都會先寫進日誌，下次啟動時再把前一次留下的變更復原。完成之前它不會連線任何通道，Turnout 也會顯示還在等待復原的項目，並提供 Restore Now。</p>
+        <p>Turnout › Repair Network Settings… 可以隨時手動做同樣的事。如果服務沒有在執行，它會要求輸入管理者密碼，自己依日誌復原。</p>
+      </section>
+
+      <section id="network" aria-labelledby="network-title">
+        <h2 id="network-title">網路連線</h2>
+        <p>App 本身只連到一個地方：GitHub，用來查看有沒有新版本。</p>
+        <ul>
+          <li>只有 <code>/Applications</code> 裡的那份會自動檢查，最多每小時一次，時機是你打開選單或視窗時。Turnout › Check for Updates… 則是你選它就檢查。</li>
+          <li>檢查時會向 GitHub 上這個專案的最新版本索取一個小檔案。請求不帶任何帳號，也不含任何關於你或你的通道的資訊。GitHub 看得到這個請求和你的 IP 位址。</li>
+          <li>如果你安裝更新，安裝程式來自同一個版本，Turnout 會先檢查它的檢查碼與 Developer ID 簽署，才交給 macOS 的安裝程式。</li>
+        </ul>
+        <p>你的通道連到設定檔裡的伺服器，hook 則做你寫在裡面的事。除此之外，App 和服務都不會連到任何地方：沒有分析工具、沒有自家的當機回報，也沒有帳號。</p>
+      </section>
+
+      <section id="location" aria-labelledby="location-title">
+        <h2 id="location-title">定位與 Wi-Fi 規則</h2>
+        <p>Wi-Fi 規則（<code>#@ OnWiFi</code>）需要知道 Mac 目前所在網路的名稱。macOS 把這個名稱視為位置資訊，只有取得定位權限的 App 才能讀取。Turnout 只在你設定 Wi-Fi 規則時才會要求權限，啟動時絕不會問，而且只用來讀取網路名稱，從不用來得知你在哪裡。你列出的網路名稱只存在 Mac 上的設定檔裡。沒有權限時，Wi-Fi 規則不會有任何作用。</p>
+      </section>
+
+      <section id="logs" aria-labelledby="logs-title">
+        <h2 id="logs-title">記錄檔</h2>
+        <dl class="paths">
+          <div>
+            <dt><code>/Library/Logs/<wbr>cc.ctsite.wggui.daemon.log</code></dt>
+            <dd>背景服務做了什麼，以及它的錯誤。</dd>
+          </div>
+          <div>
+            <dt><code>/Library/Logs/<wbr>cc.ctsite.wggui.update.log</code></dt>
+            <dd>安裝更新時寫入。</dd>
+          </div>
+        </dl>
+        <p>App 自己的訊息在系統記錄中：</p>
+<pre><code>/usr/bin/log show --predicate 'subsystem == "cc.ctsite.wggui"' --last 1h</code></pre>
+        <p>在 zsh 中要打完整路徑，因為只打 <code>log</code> 會執行另一個內建指令。</p>
+      </section>
+
+      <section id="verify" aria-labelledby="verify-title">
+        <h2 id="verify-title">自己檢查</h2>
+<pre><code>launchctl print system/cc.ctsite.wggui.daemon     <span class="c"># launchd 眼中的這個服務</span>
+ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnout 與 wggui-daemon</span>
+cat /Applications/Turnout.app/Contents/Resources/uninstall.sh
+netstat -rn
+networksetup -getdnsservers Wi-Fi</code></pre>
+        <p>解除安裝程式是 App 裡的一個 shell 指令稿，執行前可以先讀過。</p>
+      </section>
+
+      <section id="uninstall" aria-labelledby="uninstall-title">
+        <h2 id="uninstall-title">解除安裝</h2>
+        <p>有三種方式，執行的都是同一個指令稿：</p>
+        <ul>
+          <li>在 Turnout 視窗開著時，選擇 Turnout › Uninstall Turnout…。確認對話框中的勾選框可以一併刪除已儲存的通道。</li>
+          <li>打開安裝程式，在列出安裝項目的地方選擇 Remove Turnout；若也想刪除已儲存的通道，再選 Delete saved tunnels。</li>
+          <li>在「終端機」中執行（加上 <code>--purge</code> 會一併刪除已儲存的通道）：
+<pre><code>sudo sh /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
+          </li>
+        </ul>
+        <p>每一種方式都會中斷所有通道（同時恢復路由與 DNS）、把背景服務從登入項目移除、復原當機的服務留下的變更，並刪除 App、它的記錄檔、安裝程式的收據，以及每位使用者的 Turnout 偏好設定、視窗狀態與快取。已儲存的通道及其私鑰位於 <code>/Library/Application Support/cc.ctsite.wggui</code>，除非你選擇刪除，否則會保留。</p>
+      </section>
+
+      <section id="names" aria-labelledby="names-title">
+        <h2 id="names-title">為什麼名稱是 wggui</h2>
+        <p>服務、它的資料夾、記錄檔和 App 的套件識別碼都以 <code>cc.ctsite.wggui</code> 開頭，因為 Turnout 在開發期間叫做 wgGUI。這些名稱寫在已簽署的檔案裡，所以改名時沒有跟著改。</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">隱私權</a> <a href="https://github.com/tasict/Turnout/issues">回報問題</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a></p>
+    <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
+  </div>
+</footer>
+</body>
+</html>

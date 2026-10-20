@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="175" viewBox="0 0 760 175">
+  <g transform="translate(0 4) scale(0.2233) translate(-229 -265)">
+  <defs>
+    <linearGradient id="frame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4A586D"/>
+      <stop offset="1" stop-color="#2F3A48"/>
+    </linearGradient>
+    <linearGradient id="bore" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#04070B"/>
+      <stop offset="1" stop-color="#18222D"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="640" x2="0" y2="450" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="fadeMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024">
+      <rect width="1024" height="1024" fill="url(#fade)"/>
+    </mask>
+  </defs>
+  <path d="M239 660 V480 A184 184 0 0 1 607 480 V660 Z" fill="url(#frame)"/>
+  <path d="M277 660 V480 A146 146 0 0 1 569 480 V660 Z" fill="url(#bore)"/>
+  <path d="M395 830 V420" fill="none" stroke="#2F6FD6" stroke-width="68" mask="url(#fadeMask)"/>
+  <path d="M500 830 H658 L736 752 V340" fill="none" stroke="#E07A22" stroke-width="68" stroke-linejoin="round"/>
+  <circle cx="736" cy="330" r="46" fill="#fff" stroke="#0E141B" stroke-width="18"/>
+  <rect x="340" y="787" width="214" height="86" rx="43" fill="#fff" stroke="#0E141B" stroke-width="18"/>
+  </g>
+  <g transform="translate(176 22)" fill="none" stroke="#E6EBF1" stroke-width="15" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M0 2 H64 M32 2 V98"/>
+  <path d="M80 30 V66 A32 32 0 0 0 144 66 M144 30 V98"/>
+  <path d="M172 30 V98 M172 62 A32 32 0 0 1 204 30"/>
+  <path d="M230 30 V98 M230 62 A32 32 0 0 1 294 62 V98"/>
+  <circle cx="352" cy="64" r="34"/>
+  <path d="M410 30 V66 A32 32 0 0 0 474 66 M474 30 V98"/>
+  <path d="M497 30 H527 M511 8 V80 L529 98 H537"/>
+  </g>
+</svg>

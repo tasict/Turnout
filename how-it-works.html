@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Turnout does to your Mac</title>
+<meta name="description" content="Turnout's background service runs as root. What it is, what it changes and with which tools, where configs live, when hooks run, what the app connects to, and how to check all of it yourself.">
+<link rel="canonical" href="https://turnout.ctsite.cc/how-it-works.html">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works.html">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="What Turnout does to your Mac">
+<meta property="og:description" content="The background service, the tools it runs, the files it keeps, the hooks it runs and the one connection the app makes, with commands to check each of them.">
+<meta property="og:url" content="https://turnout.ctsite.cc/how-it-works.html">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="Turnout's main window showing a connected tunnel's path">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+      <img src="assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="Site">
+      <ul>
+        <li><a href="how-it-works.html" aria-current="page">How it works</a></li>
+        <li class="lang"><a href="how-it-works.html" hreflang="en" lang="en" aria-current="page">English</a></li>
+        <li><a href="zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="doc">
+  <div class="wrap doc-head">
+    <h1>What Turnout does to your Mac</h1>
+    <p class="lede">Turnout's source is not published, and it installs a service that runs as root. That calls for an exact account: what the service is, what it changes, what it keeps, what it connects to, and how to check each of these on your own Mac.</p>
+  </div>
+
+  <div class="wrap doc-grid">
+    <nav class="toc" aria-labelledby="toc-title">
+      <p id="toc-title">On this page</p>
+      <ul>
+        <li><a href="#service">Two parts</a></li>
+        <li><a href="#changes">What it changes</a></li>
+        <li><a href="#configs">Your configs</a></li>
+        <li><a href="#hooks">Hooks</a></li>
+        <li><a href="#clients">Who it answers</a></li>
+        <li><a href="#recovery">After a crash</a></li>
+        <li><a href="#network">Network connections</a></li>
+        <li><a href="#location">Location and Wi-Fi rules</a></li>
+        <li><a href="#logs">Logs</a></li>
+        <li><a href="#verify">Look for yourself</a></li>
+        <li><a href="#uninstall">Uninstalling</a></li>
+        <li><a href="#names">Why the names say wggui</a></li>
+      </ul>
+    </nav>
+
+    <div class="doc-body">
+      <section id="service" aria-labelledby="service-title">
+        <h2 id="service-title">Two parts: an app and a background service</h2>
+        <p>The app, <code>Turnout.app</code>, runs as you, with no special privileges. It shows your tunnels, edits configs and asks the background service to connect and disconnect them. It never touches your network traffic.</p>
+        <p>The background service is a LaunchDaemon, <code>cc.ctsite.wggui.daemon</code>, that runs as root. Its program, <code>wggui-daemon</code>, sits inside the app in <code>/Applications/<wbr>Turnout.app/<wbr>Contents/<wbr>MacOS/</code>. Turnout registers it through macOS's Login Items (SMAppService), so macOS asks you to allow it in System Settings › General › Login Items &amp; Extensions, and you can switch it off there.</p>
+        <p>The service creates each tunnel's <code>utun</code> interface and runs WireGuard in userspace with <a href="https://github.com/mullvad/gotatun">GotaTun</a>, an implementation by Mullvad under the MPL-2.0 licence, built into the service. Only the tunnel's packets pass through it; the rest of your traffic is routed by macOS as usual. Tunnels stay up when the app is closed, because they live in the service.</p>
+      </section>
+
+      <section id="changes" aria-labelledby="changes-title">
+        <h2 id="changes-title">What it changes, and with which tools</h2>
+        <p>Addresses, MTU, routes and DNS are changed with the programs wg-quick uses on macOS. Each is run directly with its arguments, never through a shell.</p>
+        <dl class="paths">
+          <div>
+            <dt><code>/sbin/ifconfig</code></dt>
+            <dd>The tunnel interface's addresses and MTU, and bringing it up.</dd>
+          </div>
+          <div>
+            <dt><code>/sbin/route</code></dt>
+            <dd>Routes into the tunnel, the route that keeps the server's address on your physical network, and routes that skip the tunnel.</dd>
+          </div>
+          <div>
+            <dt><code>/usr/sbin/networksetup</code></dt>
+            <dd>DNS servers and search domains on your network services.</dd>
+          </div>
+        </dl>
+        <p>So the usual commands show exactly what it did:</p>
+<pre><code>netstat -rn
+networksetup -listallnetworkservices
+networksetup -getdnsservers Wi-Fi   <span class="c"># or another service from the list</span></code></pre>
+        <p>When a tunnel disconnects, the service removes the routes it added and puts back the DNS settings it replaced.</p>
+      </section>
+
+      <section id="configs" aria-labelledby="configs-title">
+        <h2 id="configs-title">Your configs</h2>
+        <p>Tunnels are saved in <code>/Library/Application Support/cc.ctsite.wggui/tunnels</code>, a folder that belongs to root, one file per tunnel with mode 0600, private keys included. Only the service writes there; the app asks it to save.</p>
+<pre><code>sudo ls -l "/Library/Application Support/cc.ctsite.wggui/tunnels"</code></pre>
+      </section>
+
+      <section id="hooks" aria-labelledby="hooks-title">
+        <h2 id="hooks-title">Hooks</h2>
+        <p><code>PreUp</code>, <code>PostUp</code>, <code>PreDown</code> and <code>PostDown</code> run as root, through <code class="nb">/bin/bash -c</code>, with <code>%i</code> replaced by the tunnel's <code>utun</code> interface and <code>%I</code> by the tunnel's name. That is as much power as <code>sudo</code>, so:</p>
+        <ul>
+          <li>Hooks only ever come from a config file on disk, never from anything the app sends to the service.</li>
+          <li>Saving a config whose hooks are new or changed needs an administrator's approval. The service checks that approval itself, with macOS Authorization Services; it does not take the app's word for it.</li>
+          <li>Edits that leave the hooks alone need no new approval.</li>
+        </ul>
+        <p>Read a config's hooks before you approve them, as you would a script you run with <code>sudo</code>.</p>
+      </section>
+
+      <section id="clients" aria-labelledby="clients-title">
+        <h2 id="clients-title">Who the service answers</h2>
+        <p>The app talks to the service over a Unix socket, <code>/var/run/<wbr>cc.ctsite.wggui.daemon.sock</code>. For every program that connects, the service checks its code signature and answers only a program signed by the same developer team with Turnout's bundle identifier, <code>cc.ctsite.wggui</code>. Other programs are refused.</p>
+      </section>
+
+      <section id="recovery" aria-labelledby="recovery-title">
+        <h2 id="recovery-title">After a crash</h2>
+        <p>When the service stops, macOS removes the tunnel interface, and the routes on it go with it. Routes through your physical gateway and DNS settings do not, and DNS set this way even survives a restart. So the service writes every change to a journal before it makes it, and at its next start undoes whatever a previous run left behind. Until that is done it connects no tunnel, and Turnout shows what is still waiting, with Restore Now.</p>
+        <p>Turnout › Repair Network Settings… does the same on request. If the service is not running, it asks for an administrator password and replays the journal itself.</p>
+      </section>
+
+      <section id="network" aria-labelledby="network-title">
+        <h2 id="network-title">Network connections</h2>
+        <p>The app itself connects to one place: GitHub, to see whether there is a new version.</p>
+        <ul>
+          <li>Only the copy in <code>/Applications</code> checks on its own, at most once an hour, when you open the menu or a window. Turnout › Check for Updates… checks whenever you choose it.</li>
+          <li>The check asks for a small file in this project's latest release on GitHub. It carries no account and nothing about you or your tunnels. GitHub sees the request and your IP address.</li>
+          <li>If you install an update, the installer comes from the same release, and Turnout checks its checksum and its Developer ID signature before handing it to the macOS installer.</li>
+        </ul>
+        <p>Your tunnels connect to the servers in your configs, and your hooks do what you wrote in them. Apart from that, neither the app nor the service connects anywhere: no analytics, no crash reporting of its own, no account.</p>
+      </section>
+
+      <section id="location" aria-labelledby="location-title">
+        <h2 id="location-title">Location and Wi-Fi rules</h2>
+        <p>A Wi-Fi rule (<code>#@ OnWiFi</code>) needs the name of the network the Mac is on. macOS counts that name as location, so only an app with Location access can read it. Turnout asks for access when you set up a Wi-Fi rule, never at launch, and uses it only for the network's name, never for where you are. The names you list stay in the config file on your Mac. Without access, Wi-Fi rules do nothing.</p>
+      </section>
+
+      <section id="logs" aria-labelledby="logs-title">
+        <h2 id="logs-title">Logs</h2>
+        <dl class="paths">
+          <div>
+            <dt><code>/Library/Logs/<wbr>cc.ctsite.wggui.daemon.log</code></dt>
+            <dd>What the background service did, and its errors.</dd>
+          </div>
+          <div>
+            <dt><code>/Library/Logs/<wbr>cc.ctsite.wggui.update.log</code></dt>
+            <dd>Written when an update is installed.</dd>
+          </div>
+        </dl>
+        <p>The app's own messages are in the system log:</p>
+<pre><code>/usr/bin/log show --predicate 'subsystem == "cc.ctsite.wggui"' --last 1h</code></pre>
+        <p>The full path matters in zsh, where a plain <code>log</code> is a different, built-in command.</p>
+      </section>
+
+      <section id="verify" aria-labelledby="verify-title">
+        <h2 id="verify-title">Look for yourself</h2>
+<pre><code>launchctl print system/cc.ctsite.wggui.daemon     <span class="c"># the service, as launchd sees it</span>
+ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnout and wggui-daemon</span>
+cat /Applications/Turnout.app/Contents/Resources/uninstall.sh
+netstat -rn
+networksetup -getdnsservers Wi-Fi</code></pre>
+        <p>The uninstaller is a shell script inside the app. Read it before you run it.</p>
+      </section>
+
+      <section id="uninstall" aria-labelledby="uninstall-title">
+        <h2 id="uninstall-title">Uninstalling</h2>
+        <p>There are three ways, and they all run that same script:</p>
+        <ul>
+          <li>With Turnout's window open, choose Turnout › Uninstall Turnout…. A checkbox in the confirmation deletes saved tunnels too.</li>
+          <li>Open the installer and, where it lists what to install, choose Remove Turnout, and Delete saved tunnels if you want that as well.</li>
+          <li>In Terminal, adding <code>--purge</code> to delete saved tunnels as well:
+<pre><code>sudo sh /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
+          </li>
+        </ul>
+        <p>Each one disconnects every tunnel, which restores routes and DNS; takes the background service out of Login Items; undoes anything a crashed service left behind; and deletes the app, its logs, the installer's receipt, and every user's Turnout preferences, saved window state and caches. Saved tunnels and their private keys, in <code>/Library/Application Support/cc.ctsite.wggui</code>, stay unless you choose to delete them.</p>
+      </section>
+
+      <section id="names" aria-labelledby="names-title">
+        <h2 id="names-title">Why the names say wggui</h2>
+        <p>The service, its folder, its log and the app's bundle identifier start with <code>cc.ctsite.wggui</code> because Turnout was called wgGUI while it was being built. They are written into signed files, so they stayed when the name changed.</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">Privacy</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></p>
+    <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
+  </div>
+</footer>
+</body>
+</html>

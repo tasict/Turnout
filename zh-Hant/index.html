@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turnout：連線到 WireGuard 伺服器的 macOS VPN 用戶端</title>
+<meta name="description" content="Turnout 用原生 App，照 wg-quick 的做法把你的 Mac 連上 WireGuard 伺服器：hook 照樣執行，路由由你作主，通道要從哪個網路介面出去也由你決定。">
+<link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Turnout：原生 App 版的 wg-quick">
+<meta property="og:description" content="連線到 WireGuard 伺服器的 macOS VPN 用戶端。hook 照樣執行，路由由你作主，通道要從哪個網路介面出去也由你決定。">
+<meta property="og:url" content="https://turnout.ctsite.cc/zh-Hant/">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="Turnout 主視窗顯示一條已連線通道的路徑：通道、它出去的網路介面，以及伺服器">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
+      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="網站">
+      <ul>
+        <li><a href="how-it-works.html">運作方式</a></li>
+        <li class="lang"><a href="../" hreflang="en" lang="en">English</a></li>
+        <li><a href="./" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap">
+    <h1 id="hero-title">Turnout 用原生 App，照 <span class="nb">wg-quick</span> 的做法把你的 Mac 連上 WireGuard 伺服器。</h1>
+    <div class="hero-row">
+      <p class="lede">你的 hook 照樣執行，路由由你作主，通道要從哪個網路介面出去也由你決定。</p>
+      <div class="get">
+        <!-- download:soon -->
+        <div class="soon">
+          <p class="soon-title">即將推出</p>
+          <p class="fineprint">第一個公開版本正在準備中，在那之前還沒有可以下載的檔案。想第一時間知道，可以關注（Watch）<a href="https://github.com/tasict/Turnout">GitHub 儲存庫</a>或它的 <a href="https://github.com/tasict/Turnout/releases">Releases 頁面</a>。</p>
+        </div>
+        <!-- /download:soon -->
+        <!-- download:live -->
+        <div class="live" hidden>
+          <a class="download" href="https://github.com/tasict/Turnout/releases/latest">下載 Turnout</a>
+          <p class="fineprint">macOS 15 以上 · Apple 晶片與 Intel · 免費</p>
+          <p class="fineprint"><a href="#install">如何安裝</a></p>
+        </div>
+        <!-- /download:live -->
+      </div>
+    </div>
+  </div>
+  <figure class="stage">
+    <div class="wrap">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/1-path.jpg">
+        <img class="shot" src="../assets/screenshots/light/1-path.jpg" width="1600" height="1000" alt="Turnout 主視窗中一條已連線的通道：路徑從通道經過它出去的網路介面連到伺服器，雙向都有流量。">
+      </picture>
+      <figcaption>每條通道都會顯示即時路徑：通道、它出去的網路介面，以及伺服器。伺服器一回應，線就變成實線，封包沿著線移動的快慢跟著你的流量走。</figcaption>
+    </div>
+  </figure>
+</section>
+
+<section class="feature" id="wg-quick" aria-labelledby="wg-quick-title">
+  <div class="wrap">
+    <h2 id="wg-quick-title">設定檔照 <span class="nb">wg-quick</span> 的方式執行</h2>
+    <div class="body">
+      <p class="intro">Turnout 讀取你原本給 wg-quick 用的 <code>.conf</code> 設定檔，照 wg-quick 在 macOS 上的做法一步步套用，用的也是同樣的系統工具。</p>
+      <dl class="keys">
+        <div>
+          <dt><code>PreUp</code> <code>PostUp</code> <code>PreDown</code> <code>PostDown</code></dt>
+          <dd>hook 會執行，<code>%i</code> 換成通道的 <code>utun</code> 介面，<code>%I</code> 換成通道名稱。檔案裡的 hook 要先經過管理者核准才會執行；<a href="how-it-works.html#hooks">運作方式</a>。</dd>
+        </div>
+        <div>
+          <dt><code>AllowedIPs</code></dt>
+          <dd>導入通道，越具體的路由越優先。全通道用 <code>0.0.0.0/1</code> 和 <code>128.0.0.0/1</code>（以及對應的 IPv6 兩半），而不是取代你的預設路由；伺服器的位址則留在實體閘道上，不會繞進自己的通道。</dd>
+        </div>
+        <div>
+          <dt><code>Table</code></dt>
+          <dd><code>auto</code> 和 <code>main</code> 照上面的方式設定路由；<code>off</code> 則把路由表交給你處理。</dd>
+        </div>
+        <div>
+          <dt><code>DNS</code></dt>
+          <dd>通道連線期間，DNS 伺服器與搜尋網域會設定到你的網路服務上；中斷連線後就恢復成你原本的設定。</dd>
+        </div>
+        <div>
+          <dt><code>MTU</code></dt>
+          <dd>照設定檔寫的值，或照 wg-quick 的算法：出口網路介面的 MTU 減 80。</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="interface" aria-labelledby="interface-title">
+  <div class="wrap">
+    <h2 id="interface-title">選擇網路介面</h2>
+    <div class="body">
+      <p class="intro">這兩行是 wg-quick 的格式裡沒有的。它們以 <code>#@</code> 開頭，wg-quick 會當成註解，所以同一個檔案照樣能用 <code>wg-quick up</code>。</p>
+      <div class="conf">
+<pre><code>[Interface]
+PrivateKey = …
+Address = 10.8.0.2/32
+DNS = 10.8.0.1
+<span class="ln bind">#@ BindInterface = en0</span>
+<span class="ln around">#@ Route = 192.168.0.0/16 dev en0</span>
+
+[Peer]
+PublicKey = …
+<span class="ln tunnel">AllowedIPs = 0.0.0.0/0, ::/0</span>
+Endpoint = vpn.example.com:51820</code></pre>
+        <dl class="notes">
+          <div class="bind">
+            <dt><code>#@ BindInterface = en0</code></dt>
+            <dd>加密流量一律從 <code>en0</code> 出去，就算預設路由在別的介面上也一樣。通往伺服器的路由也走 <code>en0</code>。</dd>
+          </div>
+          <div class="around">
+            <dt><code>#@ Route = 192.168.0.0/16 dev en0</code></dt>
+            <dd>這些網段不走通道，改從 <code>en0</code> 自己的閘道出去。需要幾個就列幾個，用逗號分隔。</dd>
+          </div>
+          <div class="tunnel">
+            <dt><code>AllowedIPs</code></dt>
+            <dd>其餘流量全部進入通道。</dd>
+          </div>
+        </dl>
+      </div>
+      <p>已連線的通道也能直接在主視窗的路徑上切換出口介面：Turnout 會中斷連線、儲存變更，再重新連線。</p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="network" aria-labelledby="network-title">
+  <div class="wrap">
+    <h2 id="network-title">跟著網路走</h2>
+    <div class="body">
+      <p class="intro">閘道、網路介面或連線狀態改變，或是 Mac 從睡眠中喚醒時，Turnout 會把經由實體網路的路由重新指向目前的閘道、重新計算自動 MTU，並重新套用 DNS。</p>
+      <p>通道綁定的網路介面消失後又回來時，通道會重新綁定並再次交握。介面若一直沒回來，通往伺服器的路由會變成黑洞路由，交握封包就不會溜進通道本身；不走通道的路由則會等介面回來再恢復。</p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="automatic" aria-labelledby="automatic-title">
+  <div class="wrap">
+    <h2 id="automatic-title">自動連線</h2>
+    <div class="body">
+      <p class="intro">幫通道設定時段、Wi-Fi 網路清單，或兩者都設。</p>
+      <p>排定的時段一開始，Turnout 就連線，時段結束就中斷。Mac 加入清單上的網路時通道會連線，離開時就中斷。這中間你手動做的操作會維持不變，修改規則本身也不會連線或中斷任何東西。</p>
+<pre><code>#@ Schedule = Mon-Fri 09:00-18:00
+#@ OnWiFi = Office</code></pre>
+      <p>規則就是設定檔裡的幾行，從通道的頁面設定。Turnout 開著時才會執行這些規則，所以它會建議你設為登入時開啟。Wi-Fi 規則需要定位權限，因為 macOS 把 Wi-Fi 網路名稱視為位置資訊；Turnout 只在你設定這類規則時才會詢問，啟動時絕不會問。</p>
+      <figure class="shot-figure">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg">
+          <img class="shot" src="../assets/screenshots/light/4-automation.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="為通道設定自動連線：每週的時段，以及要連線的 Wi-Fi 網路。">
+        </picture>
+        <figcaption>在通道的頁面設定時段與 Wi-Fi 網路。</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="editor" aria-labelledby="editor-title">
+  <div class="wrap">
+    <h2 id="editor-title">保留原檔的編輯器</h2>
+    <div class="body">
+      <p class="intro">用表單或文字編輯通道，隨時都能切換。</p>
+      <p>修改只會改寫有動到的那幾行，你的註解和順序都留在原處。問題會連同行號列出，全部解決之後才能儲存。新增的通道會附上一組新產生的金鑰。</p>
+      <figure class="shot-figure">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg">
+          <img class="shot" src="../assets/screenshots/light/2-editor.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="Turnout 的編輯器以表單顯示一條通道的設定。">
+        </picture>
+        <figcaption>表單和文字是同一個檔案的兩種檢視。</figcaption>
+      </figure>
+      <p>把 <code>.conf</code> 檔或 <code>.zip</code> 拖到視窗上，或選擇 Import from File…。官方 WireGuard App 匯出的 zip 會以批次方式開啟：逐一檢查每條通道，略過不要的，其餘一次匯入。</p>
+      <figure class="shot-figure">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg">
+          <img class="shot" src="../assets/screenshots/light/3-import.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="匯入面板列出 zip 裡的多條通道，每條都可以切入或略過。">
+        </picture>
+        <figcaption>匯入中的每條通道都是一條支線：切入，或是略過。</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="menu-bar" aria-labelledby="menu-bar-title">
+  <div class="wrap">
+    <h2 id="menu-bar-title">不打擾你</h2>
+    <div class="body">
+      <p class="intro">Turnout 待在選單列裡。在那裡連線、中斷通道，需要細節時再打開視窗。</p>
+      <p>通道在 Turnout 的背景服務中執行，所以關掉 App 也會繼續連著。在視窗開著的情況下量測，App 閒置時約佔 0.5% CPU，繪製即時流量時約 2–4%。只有選單或視窗開著時才會讀取統計資料。</p>
+      <figure class="shot-figure">
+        <!-- scripts/screenshots.sh must write menu-light.png and menu-dark.png at
+             600x420 (the 300-point popover at 2x). If the popover's height
+             changes, change width/height here and MENU_SIZE in publish-site.sh. -->
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/menu-dark.png">
+          <img class="shot menu" src="../assets/menu-light.png" width="600" height="420" loading="lazy" decoding="async" alt="選單列中的 Turnout 選單，列出每條通道和各自的開關。">
+        </picture>
+        <figcaption>每條通道都有自己的開關，已連線的通道會標出它走哪個網路介面。</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="cleanup" aria-labelledby="cleanup-title">
+  <div class="wrap">
+    <h2 id="cleanup-title">不留下痕跡</h2>
+    <div class="body">
+      <p class="intro">Turnout 對路由和 DNS 的每一項變更，都會先記錄下來才動手。</p>
+      <p>如果 Mac 在通道連線時當機或斷電，背景服務下次啟動時會復原留下的變更，完成之前不會連線任何通道。Turnout › Repair Network Settings… 也能隨時手動做同樣的事。</p>
+      <p>解除安裝只有一條路，不論你從 App、從安裝程式，還是從一個可以先讀過內容的 shell 指令稿開始。它會中斷所有通道、恢復路由與 DNS、把背景服務從登入項目移除，並刪除 App、它的記錄檔和偏好設定。已儲存的通道會保留，除非你選擇一併刪除。<a href="how-it-works.html#uninstall">各種方式會移除什麼</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="not" aria-labelledby="not-title">
+  <div class="wrap">
+    <h2 id="not-title">它不是什麼</h2>
+    <div class="body">
+      <ul class="nots">
+        <li><strong>不是開放原始碼。</strong>原始碼沒有公開。App 和背景服務對你的 Mac 做的每一件事，都寫在<a href="how-it-works.html">另一頁</a>。</li>
+        <li><strong>還沒有 kill switch。</strong>Turnout 不會阻擋通道以外的流量。通道中斷時，你的 Mac 會走原本的網路。</li>
+        <li><strong>不是 VPN 服務商。</strong>請自備伺服器，或使用服務商、網管給你的設定檔。</li>
+        <li><strong>沒有使用 NetworkExtension。</strong>通道在 Turnout 自己的背景服務中執行，hook 能執行、路由由你作主，靠的就是這一點。也因此通道不會出現在「系統設定 › VPN」中。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="feature inspect" id="your-mac" aria-labelledby="your-mac-title">
+  <div class="wrap">
+    <h2 id="your-mac-title">它對你的 Mac 做了什麼</h2>
+    <div class="body">
+      <p class="intro">Turnout 會安裝一個以 root 身分執行的背景服務。它用和 wg-quick 相同的工具修改位址、路由與 DNS，把設定檔放在只有 root 能讀取的資料夾，而且設定檔裡的 hook 要經過管理者核准才會執行。每一項你都能自己檢查。</p>
+<pre><code>netstat -rn                         <span class="c"># 它加入的路由</span>
+networksetup -getdnsservers Wi-Fi   <span class="c"># 它設定的 DNS 伺服器</span>
+cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
+      <p><a class="more" href="how-it-works.html">Turnout 對你的 Mac 做了什麼</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="install" aria-labelledby="install-title">
+  <div class="wrap">
+    <h2 id="install-title">下載與安裝</h2>
+    <div class="body">
+      <!-- download:soon -->
+      <div class="soon">
+        <p class="soon-title">即將推出</p>
+        <p class="fineprint">第一個公開版本正在準備中，在那之前還沒有可以下載的檔案。想第一時間知道，可以關注（Watch）<a href="https://github.com/tasict/Turnout">GitHub 儲存庫</a>或它的 <a href="https://github.com/tasict/Turnout/releases">Releases 頁面</a>。</p>
+      </div>
+      <!-- /download:soon -->
+      <!-- download:live -->
+      <div class="live" hidden>
+      <ol class="steps">
+        <li>從 GitHub 上的<a href="https://github.com/tasict/Turnout/releases/latest">最新版本</a>下載安裝程式（<code>.pkg</code> 檔）。</li>
+        <li>打開它並依照步驟進行。Turnout 會安裝到「應用程式」檔案夾，安裝完成後自動開啟。</li>
+        <li>在 Turnout 的視窗中安裝背景服務；macOS 詢問時，在「系統設定 › 一般 › 登入項目與延伸功能」中允許它。</li>
+      </ol>
+      <!-- gatekeeper:open-anyway -->
+      <p class="gatekeeper">安裝程式已用 Developer ID 簽署，但還沒有經過 Apple 公證，所以 macOS 可能會拒絕打開它。遇到這種情況，請到「系統設定 › 隱私權與安全性」點選「強制打開」，再重新打開安裝程式。</p>
+      <!-- /gatekeeper:open-anyway -->
+      <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">下載 Turnout</a></p>
+      <p class="fineprint">macOS 15 以上 · Apple 晶片與 Intel · 免費</p>
+      </div>
+      <!-- /download:live -->
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="how-it-works.html">Turnout 對你的 Mac 做了什麼</a> <a href="privacy.html">隱私權</a> <a href="https://github.com/tasict/Turnout/issues">回報問題</a> <a href="../" hreflang="en" lang="en">English</a></p>
+    <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
+  </div>
+</footer>
+</body>
+</html>

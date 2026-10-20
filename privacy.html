@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turnout privacy policy</title>
+<meta name="description" content="Turnout collects nothing: no account, no analytics, no third-party SDKs. The only connection the app itself makes is its check for updates on GitHub.">
+<link rel="canonical" href="https://turnout.ctsite.cc/privacy.html">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/privacy.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/privacy.html">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/privacy.html">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Turnout privacy policy">
+<meta property="og:description" content="Turnout collects nothing. The only connection the app itself makes is its check for updates on GitHub.">
+<meta property="og:url" content="https://turnout.ctsite.cc/privacy.html">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="Turnout's main window showing a connected tunnel's path">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+      <img src="assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="Site">
+      <ul>
+        <li><a href="how-it-works.html">How it works</a></li>
+        <li class="lang"><a href="privacy.html" hreflang="en" lang="en" aria-current="page">English</a></li>
+        <li><a href="zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="doc policy">
+  <div class="wrap doc-head">
+    <h1>Privacy policy</h1>
+    <p class="effective">Effective 20 October 2026</p>
+  </div>
+
+  <div class="wrap">
+    <div class="doc-body">
+      <p class="short">Turnout collects nothing about you. It has no account, no analytics and no third-party SDKs, and the only connection the app itself makes is its check for updates.</p>
+
+      <section id="connections" aria-labelledby="connections-title">
+        <h2 id="connections-title">What leaves your Mac</h2>
+        <ul>
+          <li><strong>The update check.</strong> The app asks GitHub for a small file in Turnout's latest release when you open the menu or a window, at most once an hour, and whenever you choose Check for Updates…. The request carries nothing about you or your tunnels. GitHub sees the request and your IP address, as described in the <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>. Installing an update downloads the installer from the same place.</li>
+          <li><strong>Your tunnels.</strong> Traffic you send through a tunnel goes to the server in its config, and is between you and whoever runs that server. Hooks do what you wrote in them.</li>
+        </ul>
+        <p>Nothing else: no analytics, no crash reporting of its own, no advertising, no tracking.</p>
+      </section>
+
+      <section id="location" aria-labelledby="location-title">
+        <h2 id="location-title">Location and Wi-Fi rules</h2>
+        <p>macOS counts the name of the Wi-Fi network you are on as location. Turnout asks for Location access only when you set up a rule that connects a tunnel on certain Wi-Fi networks, and uses it only to read the network's name, never where you are. The network names you list are stored in that tunnel's config file on your Mac and are not sent anywhere. You can take access back in System Settings › Privacy &amp; Security › Location Services.</p>
+      </section>
+
+      <section id="on-your-mac" aria-labelledby="on-your-mac-title">
+        <h2 id="on-your-mac-title">What stays on your Mac</h2>
+        <ul>
+          <li>Your tunnels, private keys included, in <code>/Library/Application Support/cc.ctsite.wggui/tunnels</code>, which only root can read.</li>
+          <li>The app's preferences, under <code>cc.ctsite.wggui</code>: things like the colour each network interface is shown in, and when a schedule last acted.</li>
+          <li>Logs: <code>/Library/Logs/<wbr>cc.ctsite.wggui.daemon.log</code> from the background service, <code>/Library/Logs/<wbr>cc.ctsite.wggui.update.log</code> when an update is installed, and the app's messages in the macOS system log.</li>
+        </ul>
+        <p>Uninstalling Turnout deletes the app, its logs and every user's Turnout preferences, and the saved tunnels too if you choose. <a href="how-it-works.html#uninstall">How to uninstall</a></p>
+      </section>
+
+      <section id="website" aria-labelledby="website-title">
+        <h2 id="website-title">This website</h2>
+        <p>This site has no analytics, no cookies and no scripts, and loads nothing from other sites. It is hosted on GitHub Pages, and GitHub may log visits as described in the <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>.</p>
+      </section>
+
+      <section id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">Contact</h2>
+        <p>Questions and problems go to the issue tracker at <a href="https://github.com/tasict/Turnout/issues">github.com/tasict/Turnout/issues</a>. Issues are public: leave out private keys, preshared keys, server addresses and whole config files.</p>
+      </section>
+
+      <section id="changes" aria-labelledby="changes-title">
+        <h2 id="changes-title">Changes</h2>
+        <p>If this policy changes, the new version will be posted on this page with a new effective date. It is available in English and 繁體中文; if the two differ, the English version applies.</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">What Turnout does to your Mac</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></p>
+    <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
+  </div>
+</footer>
+</body>
+</html>

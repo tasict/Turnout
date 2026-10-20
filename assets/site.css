@@ -1,0 +1,568 @@
+/* Turnout site. One stylesheet, no build step, nothing loaded from elsewhere.
+   Colour comes from the app icon: the light plate and slate frame in light
+   mode, the tunnel's bore in dark mode. Blue is T568 pair 1, the wire that
+   runs into the tunnel, and carries links and the download button. Orange is
+   pair 2, the wire that goes around the tunnel through another interface; it
+   marks exactly that and nothing else, and never encodes state. */
+
+:root {
+  color-scheme: light dark;
+
+  --bg: #f5f7fa;          /* the icon's plate */
+  --ground: #e1e6ed;      /* the ground the portal stands on */
+  --sunk: #e9edf2;
+  --ink: #263140;         /* stations and the wordmark */
+  --muted: #4c596b;
+  --rule: #d2d9e2;
+  --blue: #1f5fbf;        /* PairBlue */
+  --on-blue: #ffffff;
+  --orange: #c9631a;      /* PairOrange */
+  --code-bg: #e7ecf2;
+  --code-ink: #1d2733;
+  --code-muted: #5a687a;
+  --shadow: rgba(38, 49, 64, 0.30);
+
+  --font: -apple-system, "SF Pro Text", "Helvetica Neue", "PingFang TC", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --gutter: 16px;
+  --wide: 72rem;
+  --measure: 38rem;
+}
+
+:root:lang(zh-Hant) {
+  --font: -apple-system, "PingFang TC", "SF Pro Text", "Helvetica Neue", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121920;        /* the bore of the tunnel */
+    --ground: #1a232d;
+    --sunk: #19222c;
+    --ink: #e6ebf1;       /* the dark wordmark */
+    --muted: #a5b1c0;
+    --rule: #2b3643;
+    --blue: #6fa3f2;      /* PairBlue, dark */
+    --on-blue: #0e141b;
+    --orange: #f2944a;    /* PairOrange, dark */
+    --code-bg: #0e141b;
+    --code-ink: #dfe6ee;
+    --code-muted: #8a98a9;
+    --shadow: rgba(0, 0, 0, 0.60);
+  }
+}
+
+@media (min-width: 40rem) {
+  :root { --gutter: 32px; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+:lang(zh-Hant) body { line-height: 1.8; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--blue); text-underline-offset: 0.18em; }
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+code, pre, kbd { font-family: var(--font-mono); font-size: 0.9em; }
+
+p code, li code, dd code, dt code, td code, figcaption code {
+  background: var(--sunk);
+  border-radius: 4px;
+  padding: 0.05em 0.3em;
+  overflow-wrap: anywhere;
+}
+
+.nb { white-space: nowrap; }
+
+.skip {
+  position: absolute;
+  left: var(--gutter);
+  top: -4rem;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  z-index: 10;
+}
+.skip:focus { top: 0.75rem; }
+
+.wrap {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+/* Header ---------------------------------------------------------------- */
+
+.site-header .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding-block: 1.1rem;
+}
+
+.brand { display: block; line-height: 0; }
+.brand img { width: 130px; height: 30px; }
+
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.95rem;
+}
+
+.site-nav a { color: var(--muted); text-decoration: none; }
+.site-nav a:hover { color: var(--ink); text-decoration: underline; }
+.site-nav a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--blue);
+  text-decoration-thickness: 2px;
+}
+.site-nav .lang { padding-left: 1.25rem; border-left: 1px solid var(--rule); }
+
+/* Hero: the message, the download, and the live path standing on the
+   ground, as the portal does in the icon. -------------------------------- */
+
+.hero { padding-top: 2.5rem; }
+
+@media (min-width: 60rem) {
+  .hero { padding-top: 4.5rem; }
+}
+
+.hero h1 {
+  font-size: clamp(2.05rem, 1.15rem + 3.7vw, 3.9rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.028em;
+  max-width: 17.5em;
+  margin: 0 0 1.75rem;
+  text-wrap: balance;
+}
+
+:lang(zh-Hant) .hero h1 {
+  font-size: clamp(1.9rem, 1.1rem + 3.3vw, 3.4rem);
+  line-height: 1.28;
+  letter-spacing: 0.01em;
+  max-width: 16em;
+}
+
+.hero-row { display: grid; gap: 1.75rem; }
+
+@media (min-width: 60rem) {
+  .hero-row { grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 4rem; }
+}
+
+.lede {
+  font-size: clamp(1.15rem, 1rem + 0.55vw, 1.4rem);
+  line-height: 1.45;
+  color: var(--muted);
+  max-width: 30em;
+  margin: 0;
+}
+
+:lang(zh-Hant) .lede { line-height: 1.7; }
+
+.get { display: grid; gap: 0.6rem; justify-items: start; }
+
+.download {
+  display: inline-block;
+  background: var(--blue);
+  color: var(--on-blue);
+  font-weight: 600;
+  font-size: 1.05rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  text-decoration: none;
+}
+.download:hover { background: color-mix(in srgb, var(--blue) 84%, var(--ink)); }
+
+.fineprint { color: var(--muted); font-size: 0.92rem; margin: 0; }
+
+.live { display: grid; gap: 0.6rem; justify-items: start; }
+
+/* Until the first release: where the button goes, a dashed outline, the
+   way the path draws a connection that has not answered yet. Not a link,
+   so it does not look like one. */
+.soon { display: grid; gap: 0.6rem; justify-items: start; max-width: 23rem; }
+.soon-title {
+  margin: 0;
+  border: 2px dashed var(--blue);
+  border-radius: 10px;
+  padding: calc(0.8rem - 2px) calc(1.5rem - 2px);
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.body .live { display: block; }
+.body .live > * { margin-block: 0; }
+.body .live > * + * { margin-top: 1.25rem; }
+.body .live > .fineprint { margin-top: 0.6rem; }
+
+.stage {
+  --cut: calc((min(100vw, var(--wide)) - 2 * var(--gutter)) * 0.3125);
+  margin: 2.75rem 0 0;
+  padding-bottom: 3.25rem;
+  background: linear-gradient(to bottom, transparent 0, transparent var(--cut), var(--ground) var(--cut));
+}
+
+@media (min-width: 60rem) {
+  .stage { margin-top: 4rem; padding-bottom: 4.5rem; }
+}
+
+.stage .shot {
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px var(--rule), 0 30px 60px -30px var(--shadow);
+}
+
+.stage figcaption {
+  margin-top: 1.25rem;
+  max-width: var(--measure);
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Screenshots, and the box that stands in for one until it exists: a
+   broken image shows its alt text, centred, instead of a broken icon. ---- */
+
+.shot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: auto 16 / 10;   /* the box while the image is missing; a loaded image keeps its own shape */
+  border-radius: 10px;
+  background: var(--sunk);
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.shot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--sunk);
+  border: 1px dashed var(--rule);
+  border-radius: inherit;
+}
+
+.shot::after {
+  content: attr(alt);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 12%;
+  text-align: center;
+}
+
+.shot.menu { width: 300px; aspect-ratio: auto 600 / 420; }
+
+/* Sections: the heading in its own column on a wide screen. ------------- */
+
+.feature { border-top: 1px solid var(--rule); }
+.hero + .feature { border-top: 0; }
+
+.feature > .wrap {
+  display: grid;
+  gap: 1.25rem 3rem;
+  padding-block: 3.25rem 3.5rem;
+}
+
+@media (min-width: 64rem) {
+  .feature > .wrap {
+    grid-template-columns: 18rem minmax(0, 1fr);
+    padding-block: 4.5rem 5rem;
+  }
+}
+
+h2 {
+  font-size: clamp(1.5rem, 1.25rem + 1vw, 1.9rem);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+:lang(zh-Hant) h2 { line-height: 1.35; letter-spacing: 0.01em; }
+
+/* Chinese headings break where the words do (at the spaces around Latin
+   words and after punctuation), not in the middle of 你的. */
+:lang(zh-Hant) h1, :lang(zh-Hant) h2 { word-break: keep-all; }
+
+h3 { font-size: 1.1rem; line-height: 1.35; margin: 0 0 0.35rem; }
+
+.body { min-width: 0; }
+.body > * { margin-block: 0; }
+.body > * + * { margin-top: 1.25rem; }
+.body p, .body ul, .body ol { max-width: var(--measure); }
+.body .intro { font-size: 1.15rem; }
+
+figure { margin: 0; }
+figure figcaption { margin-top: 0.75rem; color: var(--muted); font-size: 0.95rem; max-width: var(--measure); }
+
+.body .shot-figure { margin-top: 2rem; }
+.body .shot-figure .shot { box-shadow: 0 0 0 1px var(--rule), 0 24px 48px -30px var(--shadow); }
+
+/* Config keys and what Turnout does with them, as a spec sheet. */
+.keys { margin: 0; max-width: 46rem; }
+.keys > div {
+  display: grid;
+  gap: 0.2rem 1.5rem;
+  padding-block: 0.9rem;
+  border-top: 1px solid var(--rule);
+}
+.keys > div:last-child { border-bottom: 1px solid var(--rule); }
+.keys dt { display: flex; flex-wrap: wrap; gap: 0.3rem; align-content: start; }
+.keys dd { margin: 0; color: var(--muted); }
+
+@media (min-width: 40rem) {
+  .keys > div { grid-template-columns: 13rem minmax(0, 1fr); }
+}
+
+/* Code ------------------------------------------------------------------ */
+
+pre {
+  background: var(--code-bg);
+  color: var(--code-ink);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 0;
+  overflow-x: auto;
+  line-height: 1.65;
+  font-size: 0.86rem;
+  tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+  pre { box-shadow: inset 0 0 0 1px var(--rule); }
+}
+
+pre code { font-size: 1em; }
+pre .c { color: var(--code-muted); }
+
+/* The config with its two routes marked: blue into the tunnel, orange
+   around it, the bound interface in ink. */
+.conf { display: grid; gap: 1.5rem; max-width: 52rem; }
+
+@media (min-width: 52rem) {
+  .conf { grid-template-columns: minmax(0, 23rem) minmax(0, 1fr); gap: 2rem; align-items: start; }
+}
+
+.conf pre .ln {
+  display: inline-block;
+  min-width: 100%;
+  margin-left: -1.25rem;
+  padding-left: calc(1.25rem - 4px);
+  border-left: 4px solid var(--mark);
+}
+
+.tunnel { --mark: var(--blue); }
+.around { --mark: var(--orange); }
+.bind { --mark: var(--ink); }
+
+.notes { margin: 0; display: grid; gap: 1.1rem; }
+.notes > div { border-left: 4px solid var(--mark); padding-left: 1rem; }
+.notes dt code { background: none; padding: 0; font-weight: 600; }
+.notes dd { margin: 0.2rem 0 0; color: var(--muted); }
+
+/* What it is not: stations this line does not serve. */
+.nots { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+.nots li { position: relative; padding-left: 1.75rem; }
+.nots li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.42em;
+  width: 0.8rem;
+  height: 0.8rem;
+  border: 2px solid var(--muted);
+  border-radius: 50%;
+}
+:lang(zh-Hant) .nots li::before { top: 0.55em; }
+.nots strong { color: var(--ink); }
+.nots li { color: var(--muted); }
+
+/* The teaser for what it does to your Mac, on the sunk ground. */
+.inspect { background: var(--sunk); --code-bg: var(--bg); }
+.inspect pre { box-shadow: inset 0 0 0 1px var(--rule); }
+.inspect + .feature { border-top-color: transparent; }
+@media (prefers-color-scheme: dark) {
+  .inspect { --code-bg: #0e141b; }
+}
+
+.more {
+  display: inline-block;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 0.1rem;
+}
+
+/* Install: a real sequence, drawn as stops on one line. */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: step;
+  max-width: var(--measure);
+}
+
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 0 0 1.4rem 3rem;
+}
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  background: var(--bg);
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  z-index: 1;
+}
+
+.steps li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: calc(1rem - 2px);
+  top: 2rem;
+  bottom: 0;
+  border-left: 4px solid var(--blue);
+}
+
+.gatekeeper {
+  max-width: var(--measure);
+  background: var(--sunk);
+  border-left: 3px solid var(--ink);
+  border-radius: 0 8px 8px 0;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.97rem;
+}
+
+/* Footer ---------------------------------------------------------------- */
+
+.site-footer { border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.92rem; }
+.site-footer .wrap {
+  display: grid;
+  gap: 0.75rem;
+  padding-block: 2rem 2.75rem;
+}
+.site-footer p { margin: 0; }
+.site-footer a { color: var(--muted); }
+.site-footer a:hover { color: var(--ink); }
+.footer-links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
+
+/* Long pages: what it does to your Mac, and the privacy policy. --------- */
+
+.doc-head { padding-block: 2.5rem 2rem; }
+
+@media (min-width: 60rem) {
+  .doc-head { padding-block: 4rem 2.5rem; }
+}
+
+.doc-head h1 {
+  font-size: clamp(2rem, 1.3rem + 2.6vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  margin: 0 0 1rem;
+  max-width: 18em;
+  text-wrap: balance;
+}
+
+:lang(zh-Hant) .doc-head h1 { line-height: 1.3; letter-spacing: 0.01em; }
+
+.doc-head .lede { max-width: 34em; }
+.effective { color: var(--muted); margin: 0 0 1rem; font-size: 0.95rem; }
+
+.doc-grid { display: grid; gap: 2rem 4rem; padding-bottom: 4rem; }
+
+@media (min-width: 64rem) {
+  .doc-grid { grid-template-columns: 15rem minmax(0, 1fr); }
+  .toc { position: sticky; top: 1.5rem; align-self: start; }
+}
+
+.toc {
+  font-size: 0.95rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+}
+.toc p { margin: 0 0 0.5rem; color: var(--muted); }
+.toc ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
+.toc a { color: var(--ink); text-decoration: none; }
+.toc a:hover { color: var(--blue); text-decoration: underline; }
+
+.doc-body { min-width: 0; max-width: 46rem; }
+.doc-body section { border-top: 1px solid var(--rule); padding-top: 1.75rem; }
+.doc-body section + section { margin-top: 2.75rem; }
+.doc-body h2 { font-size: clamp(1.35rem, 1.2rem + 0.6vw, 1.6rem); }
+.doc-body section > * { margin-block: 0; }
+.doc-body section > * + * { margin-top: 1rem; }
+.doc-body section > h2 + * { margin-top: 0.85rem; }
+.doc-body p, .doc-body ul, .doc-body ol { max-width: var(--measure); }
+.doc-body li + li { margin-top: 0.45rem; }
+.doc-body ul, .doc-body ol { padding-left: 1.25rem; }
+.doc-body li::marker { color: var(--muted); }
+.doc-body li pre { margin-top: 0.6rem; }
+
+.doc-body .short {
+  margin: 0 0 2.5rem;
+  font-size: 1.15rem;
+  border-left: 3px solid var(--blue);
+  padding-left: 1rem;
+}
+
+.paths { margin: 0; display: grid; gap: 0.9rem; max-width: var(--measure); }
+.paths dt code { font-weight: 600; }
+.paths dd { margin: 0.2rem 0 0; color: var(--muted); }
+
+.policy .doc-body { margin-bottom: 4rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}
