@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TurnoutがMacに対して行うこと</title>
+<meta name="description" content="Turnoutのバックグラウンドサービスはrootとして動きます。それが何か、何をどのツールで変更するか、構成はどこにあるか、フックはいつ実行されるか、アプリがどこに接続するか、そしてそのすべてを自分で確かめる方法。">
+<link rel="canonical" href="https://turnout.ctsite.cc/ja/how-it-works.html">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/how-it-works.html">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/how-it-works.html">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works.html">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="TurnoutがMacに対して行うこと">
+<meta property="og:description" content="バックグラウンドサービス、それが実行するツール、保存するファイル、実行するフック、アプリの接続先。それぞれを確かめるコマンド付きです。">
+<meta property="og:url" content="https://turnout.ctsite.cc/ja/how-it-works.html">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="接続中のトンネルの経路を表示したTurnoutのメインウインドウ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析"><p>このサイトへの訪問をGoogle Analyticsで数えてもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy.html#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
+<!-- /analytics -->
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
+      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="サイト">
+      <ul>
+        <li><a href="how-it-works.html" aria-current="page">仕組み</a></li>
+        <li class="lang"><a href="../how-it-works.html" hreflang="en" lang="en">English</a></li>
+        <li><a href="../zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="how-it-works.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li>
+        <li><a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="doc">
+  <div class="wrap doc-head">
+    <h1>TurnoutがMacに対して行うこと</h1>
+    <p class="lede">Turnoutのソースコードは公開されておらず、rootとして動くサービスをインストールします。だからこそ正確に説明します。そのサービスが何か、何を変更し、何を保存し、どこに接続するのか。そして、それぞれをご自身のMacで確かめる方法です。</p>
+  </div>
+
+  <div class="wrap doc-grid">
+    <nav class="toc" aria-labelledby="toc-title">
+      <p id="toc-title">このページの内容</p>
+      <ul>
+        <li><a href="#service">2つの部分</a></li>
+        <li><a href="#changes">変更するもの</a></li>
+        <li><a href="#configs">構成ファイル</a></li>
+        <li><a href="#hooks">フック</a></li>
+        <li><a href="#clients">応答する相手</a></li>
+        <li><a href="#recovery">クラッシュのあと</a></li>
+        <li><a href="#network">ネットワーク接続</a></li>
+        <li><a href="#location">位置情報とWi-Fiルール</a></li>
+        <li><a href="#logs">ログ</a></li>
+        <li><a href="#verify">自分で確かめる</a></li>
+        <li><a href="#uninstall">アンインストール</a></li>
+      </ul>
+    </nav>
+
+    <div class="doc-body">
+      <section id="service" aria-labelledby="service-title">
+        <h2 id="service-title">2つの部分：アプリとバックグラウンドサービス</h2>
+        <p>アプリ（<code>Turnout.app</code>）はあなたのユーザとして、特別な権限なしに動きます。トンネルを表示し、構成を編集し、バックグラウンドサービスに接続と接続解除を頼みます。ネットワークの通信には一切触れません。</p>
+        <p>バックグラウンドサービスは、rootとして動くLaunchDaemon（<code>cc.ctsite.turnout.daemon</code>）です。そのプログラム<code>turnout-daemon</code>は、アプリの中の<code>/Applications/<wbr>Turnout.app/<wbr>Contents/<wbr>MacOS/</code>にあります。TurnoutはこれをmacOSのログイン項目（SMAppService）として登録するので、macOSが“システム設定” › “一般” › “ログイン項目と機能拡張”で許可を求めます。オフにするのもそこからです。</p>
+        <p>サービスはトンネルごとに<code>utun</code>インターフェイスを作り、サービスに組み込まれた<a href="https://github.com/mullvad/gotatun">GotaTun</a>（MullvadによるMPL-2.0ライセンスの実装）でWireGuardをユーザ空間で動かします。サービスを通るのはトンネルのパケットだけで、それ以外の通信はいつもどおりmacOSがルーティングします。トンネルはサービスの中にあるので、アプリを閉じても接続されたままです。</p>
+      </section>
+
+      <section id="changes" aria-labelledby="changes-title">
+        <h2 id="changes-title">何を、どのツールで変更するか</h2>
+        <p>アドレス、MTU、ルート、DNSは、macOSでwg-quickが使うのと同じプログラムで変更します。どれも引数を付けて直接実行し、シェルは通しません。</p>
+        <dl class="paths">
+          <div>
+            <dt><code>/sbin/ifconfig</code></dt>
+            <dd>トンネルインターフェイスのアドレスとMTU、そしてインターフェイスの有効化。</dd>
+          </div>
+          <div>
+            <dt><code>/sbin/route</code></dt>
+            <dd>トンネルへのルート、サーバーのアドレスを物理ネットワーク側に保つルート、そしてトンネルを通らないルート。</dd>
+          </div>
+          <div>
+            <dt><code>/usr/sbin/networksetup</code></dt>
+            <dd>ネットワークサービスのDNSサーバーと検索ドメイン。</dd>
+          </div>
+        </dl>
+        <p>なので、いつものコマンドで何をしたかがそのまま分かります：</p>
+<pre><code>netstat -rn
+networksetup -listallnetworkservices
+networksetup -getdnsservers Wi-Fi   <span class="c"># または一覧にある別のサービス</span></code></pre>
+        <p>トンネルの接続を解除すると、サービスは追加したルートを削除し、置き換えたDNS設定を元に戻します。</p>
+      </section>
+
+      <section id="configs" aria-labelledby="configs-title">
+        <h2 id="configs-title">構成ファイル</h2>
+        <p>トンネルは、rootが所有するフォルダ<code>/Library/Application Support/cc.ctsite.turnout/tunnels</code>に、トンネルごとに1ファイル、モード0600で、秘密鍵も含めて保存されます。そこに書き込むのはサービスだけで、アプリは保存をサービスに頼みます。</p>
+<pre><code>sudo ls -l "/Library/Application Support/cc.ctsite.turnout/tunnels"</code></pre>
+      </section>
+
+      <section id="hooks" aria-labelledby="hooks-title">
+        <h2 id="hooks-title">フック</h2>
+        <p><code>PreUp</code>、<code>PostUp</code>、<code>PreDown</code>、<code>PostDown</code>は、rootとして<code class="nb">/bin/bash -c</code>で実行され、<code>%i</code>はトンネルの<code>utun</code>インターフェイスに、<code>%I</code>はトンネル名に置き換えられます。<code>sudo</code>と同じだけの力があるので：</p>
+        <ul>
+          <li>フックは必ずディスク上の構成ファイルから読み込まれ、アプリがサービスに送る内容から来ることはありません。</li>
+          <li>フックが新しい、または変更された構成を保存するには、管理者の承認が必要です。承認はサービス自身がmacOSのAuthorization Servicesで確認し、アプリの言い分をうのみにはしません。</li>
+          <li>フックに触れない編集なら、改めて承認する必要はありません。</li>
+        </ul>
+        <p>承認する前に、構成のフックを読んでください。<code>sudo</code>で実行するスクリプトを読むのと同じです。</p>
+      </section>
+
+      <section id="clients" aria-labelledby="clients-title">
+        <h2 id="clients-title">サービスが応答する相手</h2>
+        <p>アプリはUnixソケット（<code>/var/run/<wbr>cc.ctsite.turnout.daemon.sock</code>）でサービスと通信します。サービスは接続してくるプログラムごとにコード署名を確認し、同じ開発チームが署名し、Turnoutのバンドル識別子<code>cc.ctsite.turnout</code>を持つプログラムにだけ応答します。それ以外のプログラムは拒否されます。</p>
+      </section>
+
+      <section id="recovery" aria-labelledby="recovery-title">
+        <h2 id="recovery-title">クラッシュのあと</h2>
+        <p>サービスが止まると、macOSはトンネルインターフェイスを削除し、そこにあるルートも一緒に消えます。しかし物理ゲートウェイを通るルートとDNS設定は消えず、この方法で設定したDNSは再起動しても残ります。そこでサービスはすべての変更を、行う前にジャーナルに書き込み、次の起動時に前回の実行が残したものを元に戻します。それが終わるまでトンネルは接続されず、Turnoutはまだ残っているものを“今すぐ復元”と一緒に表示します。</p>
+        <p>“Turnout” › “ネットワーク設定を修復…”で、いつでも同じことを行えます。サービスが動いていない場合は管理者パスワードを求め、自分でジャーナルをたどって元に戻します。</p>
+      </section>
+
+      <section id="network" aria-labelledby="network-title">
+        <h2 id="network-title">ネットワーク接続</h2>
+        <p>アプリ自体の接続先は2か所で、どちらもアップデートのためです。新しいバージョンがあるかを確かめるGitHubと、インストール数を数えるGoogle Analyticsです。</p>
+        <ul>
+          <li>自動で確認するのは<code>/Applications</code>にあるコピーだけで、メニューかウインドウを開いたときに、多くても1時間に1回です。“Turnout” › “アップデートを確認…”は、選べばいつでも確認します。</li>
+          <li>確認では、GitHub上のこのプロジェクトの最新リリースにある小さなファイルを取得します。アカウントは使わず、あなたやトンネルに関する情報も含みません。GitHubに見えるのは、そのリクエストとあなたのIPアドレスです。</li>
+          <li>確認のたびに、アプリはGoogle Analyticsにイベントを1件送ります（<code>www.google-analytics.com</code>、Measurement Protocol経由）。内容は、Turnoutが最初の使用時に作って環境設定に保存するランダムなインストールID（ハードウェアから導いたものではありません）、Turnoutのバージョンとビルド、macOSのバージョン、プロセッサのアーキテクチャ、システムの言語、そしてGoogle Analyticsが数えるのに必要な2つの項目（Turnoutの起動時刻から取ったセッション番号と、固定のエンゲージメント時間）です。トンネル、サーバー、鍵、ネットワークに関する情報は含まず、アカウントやユーザIDもありません。Googleに見えるのはそのリクエストとあなたのIPアドレスで、<a href="https://policies.google.com/privacy">Googleのプライバシーポリシー</a>が適用されます。</li>
+          <li>“一般”（“Turnout” › “設定…”）で“アップデートを自動的に確認”をオフにすると、自動の確認とこの報告の両方が止まります。“アップデートを確認…”は選べば確認しますが、報告は送りません。</li>
+          <li>アップデートをインストールする場合、インストーラは同じリリースから取得され、TurnoutはそのチェックサムとDeveloper IDの署名を確認してから、macOSのインストーラに渡します。</li>
+        </ul>
+        <p>トンネルは構成に書かれたサーバーに接続し、フックはあなたが書いたとおりに動きます。それ以外に、アプリもサービスもどこにも接続しません。独自のクラッシュレポートも、広告も、アカウントもありません。</p>
+      </section>
+
+      <section id="location" aria-labelledby="location-title">
+        <h2 id="location-title">位置情報とWi-Fiルール</h2>
+        <p>Wi-Fiルール（<code>#@ OnWiFi</code>）には、Macが接続しているネットワークの名前が必要です。macOSはその名前を位置情報として扱うので、位置情報へのアクセスを持つアプリしか読めません。TurnoutはWi-Fiルールを設定するときにアクセスを求め、起動時に求めることはありません。使うのはネットワークの名前だけで、あなたの居場所には使いません。並べた名前はMac上の構成ファイルに残ります。アクセスがなければ、Wi-Fiルールは何もしません。</p>
+      </section>
+
+      <section id="logs" aria-labelledby="logs-title">
+        <h2 id="logs-title">ログ</h2>
+        <dl class="paths">
+          <div>
+            <dt><code>/Library/Logs/<wbr>cc.ctsite.turnout.daemon.log</code></dt>
+            <dd>バックグラウンドサービスが行ったことと、そのエラー。</dd>
+          </div>
+          <div>
+            <dt><code>/Library/Logs/<wbr>cc.ctsite.turnout.update.log</code></dt>
+            <dd>アップデートをインストールしたときに書き込まれます。</dd>
+          </div>
+        </dl>
+        <p>“ヘルプ” › “Finderでログを表示”で、両方のファイルを表示できます。アプリ自体のメッセージはシステムログにあります：</p>
+<pre><code>/usr/bin/log show --predicate 'subsystem == "cc.ctsite.turnout"' --last 1h</code></pre>
+        <p>zshでは、ただの<code>log</code>は別の組み込みコマンドなので、フルパスで入力してください。</p>
+      </section>
+
+      <section id="verify" aria-labelledby="verify-title">
+        <h2 id="verify-title">自分で確かめる</h2>
+<pre><code>launchctl print system/cc.ctsite.turnout.daemon   <span class="c"># launchdから見たサービス</span>
+ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnoutとturnout-daemon</span>
+cat /Applications/Turnout.app/Contents/Resources/uninstall.sh
+defaults read cc.ctsite.turnout analyticsClientID  <span class="c"># ランダムなインストールID</span>
+netstat -rn
+networksetup -getdnsservers Wi-Fi</code></pre>
+        <p>アンインストーラは、アプリの中にあるシェルスクリプトです。実行する前に読んでみてください。</p>
+      </section>
+
+      <section id="uninstall" aria-labelledby="uninstall-title">
+        <h2 id="uninstall-title">アンインストール</h2>
+        <p>方法は3つあり、どれも同じスクリプトを実行します：</p>
+        <ul>
+          <li>Turnoutのウインドウを開いた状態で、“Turnout” › “Turnoutをアンインストール…”を選びます。確認で“保存済みのトンネルとその秘密鍵も削除”を選ぶと、それらも削除されます。</li>
+          <li>インストーラを開き、インストールする項目の一覧でRemove Turnoutを選びます。保存済みのトンネルも削除するなら、Delete saved tunnelsも選びます（インストーラは今のところ英語のみです）。</li>
+          <li>“ターミナル”で実行します（<code>--purge</code>を付けると、保存済みのトンネルも削除します）：
+<pre><code>sudo sh /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
+          </li>
+        </ul>
+        <p>どの方法でも、すべてのトンネルの接続を解除し（ルートとDNSも元に戻ります）、バックグラウンドサービスをログイン項目から外し、クラッシュしたサービスが残したものを元に戻し、アプリ、ログ、インストーラのレシート、そして全ユーザのTurnoutの環境設定、ウインドウの状態、キャッシュを削除します。<code>/Library/Application Support/cc.ctsite.turnout</code>にある保存済みのトンネルと秘密鍵は、削除を選ばない限り残ります。</p>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">プライバシー</a> <a href="https://github.com/tasict/Turnout/issues">問題を報告</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a></p>
+    <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
+  </div>
+</footer>
+</body>
+</html>

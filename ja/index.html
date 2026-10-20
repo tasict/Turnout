@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turnout：WireGuardサーバーに接続するmacOS用VPNクライアント</title>
+<meta name="description" content="Turnoutは、MacをWireGuardサーバーにwg-quickと同じやり方でつなぐネイティブアプリです。フックは実行され、ルートはあなたのまま。トンネルがどのネットワークインターフェイスから出ていくかも選べます。">
+<link rel="canonical" href="https://turnout.ctsite.cc/ja/">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Turnout：ネイティブアプリになったMac用のwg-quick">
+<meta property="og:description" content="WireGuardサーバーに接続するmacOS用VPNクライアント。フックは実行され、ルートはあなたのまま。トンネルがどのネットワークインターフェイスから出ていくかも選べます。">
+<meta property="og:url" content="https://turnout.ctsite.cc/ja/">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="接続中のトンネルの経路を表示したTurnoutのメインウインドウ：トンネル、出ていくネットワークインターフェイス、サーバー">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析"><p>このサイトへの訪問をGoogle Analyticsで数えてもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy.html#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
+<!-- /analytics -->
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
+      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="サイト">
+      <ul>
+        <li><a href="how-it-works.html">仕組み</a></li>
+        <li class="lang"><a href="../" hreflang="en" lang="en">English</a></li>
+        <li><a href="../zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="./" hreflang="ja" lang="ja" aria-current="page">日本語</a></li>
+        <li><a href="../es/" hreflang="es" lang="es">Español</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap">
+    <h1 id="hero-title">Turnoutは、MacをWireGuardサーバーに<span class="nb">wg-quick</span>と同じやり方でつなぐ、ネイティブアプリです。</h1>
+    <div class="hero-row">
+      <p class="lede">フックは実行され、ルートはあなたのまま。トンネルがどのネットワークインターフェイスから出ていくかも、あなたが選べます。</p>
+      <div class="get">
+        <!-- download:soon -->
+        <div class="soon">
+          <p class="soon-title">近日公開</p>
+          <p class="fineprint">最初の公開版を準備しています。それまではダウンロードできるものはありません。公開を知りたい方は、<a href="https://github.com/tasict/Turnout">GitHubリポジトリ</a>をWatchするか、<a href="https://github.com/tasict/Turnout/releases">Releasesページ</a>をご覧ください。</p>
+        </div>
+        <!-- /download:soon -->
+        <!-- download:live -->
+        <div class="live" hidden>
+          <a class="download" href="https://github.com/tasict/Turnout/releases/latest">Turnoutをダウンロード</a>
+          <p class="fineprint">macOS 15以降 · AppleシリコンとIntel · 無料</p>
+          <p class="fineprint"><a href="#install">インストール方法</a></p>
+        </div>
+        <!-- /download:live -->
+      </div>
+    </div>
+  </div>
+  <figure class="stage">
+    <div class="wrap">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/1-path.jpg">
+        <img class="shot" src="../assets/screenshots/light/1-path.jpg" width="1600" height="1000" alt="接続中のトンネルを表示したTurnoutのメインウインドウ。経路はトンネルから、出ていくネットワークインターフェイスを経てサーバーまで続き、両方向に通信が流れています。">
+      </picture>
+      <figcaption>各トンネルには、リアルタイムの経路が表示されます。トンネル、出ていくネットワークインターフェイス、そしてサーバーです。サーバーが応答すると線が実線になり、パケットは通信量に合わせた速さで線の上を動きます。</figcaption>
+    </div>
+  </figure>
+</section>
+
+<section class="feature" id="wg-quick" aria-labelledby="wg-quick-title">
+  <div class="wrap">
+    <h2 id="wg-quick-title">構成ファイルは<span class="nb">wg-quick</span>のとおりに</h2>
+    <div class="body">
+      <p class="intro">Turnoutは、wg-quickで使っている<code>.conf</code>ファイルをそのまま読み込み、macOS上のwg-quickと同じ手順で、同じシステムツールを使って適用します。</p>
+      <dl class="keys">
+        <div>
+          <dt><code>PreUp</code> <code>PostUp</code> <code>PreDown</code> <code>PostDown</code></dt>
+          <dd>フックが実行されます。<code>%i</code>はトンネルの<code>utun</code>インターフェイスに、<code>%I</code>はトンネル名に置き換えられます。ファイルのフックは、管理者が承認してから実行されます。<a href="how-it-works.html#hooks">その仕組み</a>。</dd>
+        </div>
+        <div>
+          <dt><code>AllowedIPs</code></dt>
+          <dd>トンネルにルーティングされ、より具体的なものが優先されます。フルトンネルではデフォルトルートを置き換えず、<code>0.0.0.0/1</code>と<code>128.0.0.0/1</code>（とIPv6の半分ずつ）を使います。サーバーのアドレスは物理ゲートウェイ側に残るので、自分のトンネルに入り込むことはありません。</dd>
+        </div>
+        <div>
+          <dt><code>Table</code></dt>
+          <dd><code>auto</code>と<code>main</code>は上記のとおりにルーティングし、<code>off</code>はルーティングテーブルをあなたに任せます。</dd>
+        </div>
+        <div>
+          <dt><code>DNS</code></dt>
+          <dd>トンネルの接続中は、DNSサーバーと検索ドメインがネットワークサービスに設定され、接続を解除すると元の設定に戻ります。</dd>
+        </div>
+        <div>
+          <dt><code>MTU</code></dt>
+          <dd>書かれた値か、wg-quickと同じ計算で求めた値（出口インターフェイスのMTUから80を引いた値）を使います。</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="interface" aria-labelledby="interface-title">
+  <div class="wrap">
+    <h2 id="interface-title">ネットワークインターフェイスを選ぶ</h2>
+    <div class="body">
+      <p class="intro">wg-quickの形式にはない2行です。<code>#@</code>で始まるのでwg-quickはコメントとして扱い、同じファイルをそのまま<code>wg-quick up</code>でも使えます。</p>
+      <div class="conf">
+<pre><code>[Interface]
+PrivateKey = …
+Address = 10.8.0.2/32
+DNS = 10.8.0.1
+<span class="ln bind">#@ BindInterface = en0</span>
+<span class="ln around">#@ Route = 192.168.0.0/16 dev en0</span>
+
+[Peer]
+PublicKey = …
+<span class="ln tunnel">AllowedIPs = 0.0.0.0/0, ::/0</span>
+Endpoint = vpn.example.com:51820</code></pre>
+        <dl class="notes">
+          <div class="bind">
+            <dt><code>#@ BindInterface = en0</code></dt>
+            <dd>暗号化された通信は、ほかのインターフェイスがデフォルトルートを持っていても、常に<code>en0</code>から出ていきます。サーバーへのルートも<code>en0</code>を通ります。</dd>
+          </div>
+          <div class="around">
+            <dt><code>#@ Route = 192.168.0.0/16 dev en0</code></dt>
+            <dd>これらのネットワークはトンネルを通らず、<code>en0</code>自身のゲートウェイから出ていきます。カンマで区切って、必要なだけ並べられます。</dd>
+          </div>
+          <div class="tunnel">
+            <dt><code>AllowedIPs</code></dt>
+            <dd>それ以外はすべてトンネルに入ります。</dd>
+          </div>
+        </dl>
+      </div>
+      <p>接続中のトンネルの出口インターフェイスは、メインウインドウの経路から変更することもできます。Turnoutは接続を解除し、変更を保存して、もう一度接続します。</p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="network" aria-labelledby="network-title">
+  <div class="wrap">
+    <h2 id="network-title">ネットワークの変化についていく</h2>
+    <div class="body">
+      <p class="intro">ゲートウェイ、インターフェイス、リンクが変わったときや、Macがスリープから復帰したとき、Turnoutは物理ネットワークを通るトンネルのルートを現在のゲートウェイに付け直し、自動MTUを計算し直し、DNSを適用し直します。</p>
+      <p>トンネルを固定したインターフェイスが一度なくなって戻ってくると、トンネルはそこに固定し直して、もう一度ハンドシェイクします。インターフェイスが戻らなければ、サーバーへのルートはブラックホールになり、ハンドシェイクがトンネル自身に入り込むことはありません。トンネルを通らないルートは、インターフェイスが戻るまで待機します。</p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="automatic" aria-labelledby="automatic-title">
+  <div class="wrap">
+    <h2 id="automatic-title">自動で接続</h2>
+    <div class="body">
+      <p class="intro">トンネルには、スケジュール、Wi-Fiネットワークの一覧、またはその両方を設定できます。</p>
+      <p>スケジュールの時間帯が始まるとTurnoutはトンネルを接続し、終わると接続を解除します。一覧のネットワークにMacが接続するとトンネルが接続され、離れると接続が解除されます。その間に手動で行った操作はそのまま保たれ、ルールを変えただけで接続や接続解除が起きることはありません。</p>
+<pre><code>#@ Schedule = Mon-Fri 09:00-18:00
+#@ OnWiFi = Office</code></pre>
+      <p>ルールは構成ファイルの中の行で、トンネルのページから設定します。Turnoutは開いている間だけルールに従って動くので、“ログイン時に開く”を用意しています。Wi-Fiルールには位置情報へのアクセスが必要です。macOSはWi-Fiネットワークの名前を位置情報として扱うためです。Turnoutはルールを設定するときにアクセスを求め、起動時に求めることはありません。</p>
+      <figure class="shot-figure">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg">
+          <img class="shot" src="../assets/screenshots/light/4-automation.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="トンネルの自動接続の設定：週ごとのスケジュールと、接続するWi-Fiネットワーク。">
+        </picture>
+        <figcaption>トンネルのスケジュールとWi-Fiネットワークは、そのトンネルのページで設定します。</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="editor" aria-labelledby="editor-title">
+  <div class="wrap">
+    <h2 id="editor-title">ファイルを崩さないエディタ</h2>
+    <div class="body">
+      <p class="intro">トンネルはフォームでもテキストでも編集でき、いつでも切り替えられます。</p>
+      <p>変更は関係する行だけを書き換えるので、コメントや並び順はそのまま残ります。問題は行番号付きで一覧され、問題がなくなるまで“保存”はできません。新しいトンネルには、新しく生成した鍵ペアが付きます。</p>
+      <figure class="shot-figure">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg">
+          <img class="shot" src="../assets/screenshots/light/2-editor.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="トンネルの構成をフォームで表示したTurnoutのエディタ。">
+        </picture>
+        <figcaption>フォームとテキストは、同じファイルの2つの表示です。</figcaption>
+      </figure>
+      <p><code>.conf</code>ファイルや<code>.zip</code>をウインドウにドロップするか、“ファイル” › “ファイルから読み込む…”を選ぶか、コピーした構成を“ファイル” › “クリップボードから新規トンネル…”で貼り付けます。公式のWireGuardアプリが書き出したzipはまとめて開きます。すべてのトンネルを確認し、不要なものを外して、残りを一度に読み込めます。</p>
+      <figure class="shot-figure">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg">
+          <img class="shot" src="../assets/screenshots/light/3-import.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="zipの中の複数のトンネルを一覧した読み込みシート。それぞれ、読み込むか外すかを切り替えられます。">
+        </picture>
+        <figcaption>読み込むトンネルはそれぞれが支線です。本線に入れるか、外しておくかを選びます。</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="menu-bar" aria-labelledby="menu-bar-title">
+  <div class="wrap">
+    <h2 id="menu-bar-title">じゃまにならない</h2>
+    <div class="body">
+      <p class="intro">Turnoutはメニューバーにいます。トンネルの接続と接続解除はそこから行い、詳しく見たいときだけウインドウを開きます。</p>
+      <p>トンネルはTurnoutのバックグラウンドサービスで動くので、アプリを閉じても接続されたままです。ウインドウを開いた状態で測ると、待機中のCPU使用率は約0.5%、リアルタイムの通信を描いている間は2〜4%です。統計情報を取得するのは、メニューかウインドウが開いている間だけです。</p>
+      <figure class="shot-figure">
+        <!-- scripts/screenshots.sh must write menu-light.png and menu-dark.png at
+             600x420 (the 300-point popover at 2x). If the popover's height
+             changes, change width/height here and MENU_SIZE in publish-site.sh. -->
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/menu-dark.png">
+          <img class="shot menu" src="../assets/menu-light.png" width="600" height="420" loading="lazy" decoding="async" alt="メニューバーのTurnoutメニュー。トンネルごとにスイッチが並んでいます。">
+        </picture>
+        <figcaption>トンネルごとのスイッチと、接続中のトンネルが使っているインターフェイス。</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="cleanup" aria-labelledby="cleanup-title">
+  <div class="wrap">
+    <h2 id="cleanup-title">何も残さない</h2>
+    <div class="body">
+      <p class="intro">TurnoutがルートやDNSに加える変更は、すべて変更する前に記録されます。</p>
+      <p>トンネルの接続中にMacがクラッシュしたり電源が落ちたりしても、バックグラウンドサービスは次の起動時に残った変更を元に戻し、それが終わるまでトンネルを接続しません。“Turnout” › “ネットワーク設定を修復…”で、いつでも同じことができます。</p>
+      <p>アンインストールの経路はひとつです。アプリから始めても、インストーラから始めても、先に中身を読めるシェルスクリプトから始めても同じです。すべてのトンネルの接続を解除し、ルートとDNSを元に戻し、バックグラウンドサービスをログイン項目から外し、アプリ、ログ、環境設定を削除します。保存済みのトンネルは、削除を選ばない限り残ります。<a href="how-it-works.html#uninstall">それぞれの方法で削除されるもの</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="not" aria-labelledby="not-title">
+  <div class="wrap">
+    <h2 id="not-title">Turnoutではないもの</h2>
+    <div class="body">
+      <ul class="nots">
+        <li><strong>オープンソースではありません。</strong>ソースコードは公開していません。アプリとバックグラウンドサービスがMacに対して行うことは、すべて<a href="how-it-works.html">別のページ</a>に書いてあります。</li>
+        <li><strong>キルスイッチはまだありません。</strong>Turnoutはトンネル外の通信を遮断しません。トンネルが切れている間、Macは通常のネットワークを使います。</li>
+        <li><strong>VPNプロバイダではありません。</strong>サーバーはご自身で用意するか、プロバイダやネットワーク管理者から受け取った構成を使ってください。</li>
+        <li><strong>NetworkExtensionは使っていません。</strong>トンネルはTurnout自身のバックグラウンドサービスで動きます。だからフックが実行でき、ルートがあなたのままなのです。そのため“システム設定” › “VPN”には表示されません。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="feature inspect" id="your-mac" aria-labelledby="your-mac-title">
+  <div class="wrap">
+    <h2 id="your-mac-title">Macに対して行うこと</h2>
+    <div class="body">
+      <p class="intro">Turnoutはrootとして動くバックグラウンドサービスをインストールします。wg-quickと同じツールでアドレス、ルート、DNSを変更し、構成はrootしか読めないフォルダに置き、構成のフックは管理者が承認してから実行します。どれもご自身で確かめられます。</p>
+<pre><code>netstat -rn                         <span class="c"># 追加されたルート</span>
+networksetup -getdnsservers Wi-Fi   <span class="c"># 設定されたDNSサーバー</span>
+cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
+      <p><a class="more" href="how-it-works.html">TurnoutがMacに対して行うこと</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="install" aria-labelledby="install-title">
+  <div class="wrap">
+    <h2 id="install-title">ダウンロードとインストール</h2>
+    <div class="body">
+      <!-- download:soon -->
+      <div class="soon">
+        <p class="soon-title">近日公開</p>
+        <p class="fineprint">最初の公開版を準備しています。それまではダウンロードできるものはありません。公開を知りたい方は、<a href="https://github.com/tasict/Turnout">GitHubリポジトリ</a>をWatchするか、<a href="https://github.com/tasict/Turnout/releases">Releasesページ</a>をご覧ください。</p>
+      </div>
+      <!-- /download:soon -->
+      <!-- download:live -->
+      <div class="live" hidden>
+      <ol class="steps">
+        <li>インストーラ（<code>.pkg</code>ファイル）を<a href="https://github.com/tasict/Turnout/releases/latest">GitHubの最新リリース</a>からダウンロードします。</li>
+        <li>開いて手順に従います。Turnoutは“アプリケーション”フォルダにインストールされ、インストールが終わると開きます。</li>
+        <li>Turnoutのウインドウでバックグラウンドサービスをインストールし、macOSに尋ねられたら“システム設定” › “一般” › “ログイン項目と機能拡張”で許可します。</li>
+      </ol>
+      <!-- gatekeeper:open-anyway -->
+      <p class="gatekeeper">インストーラはDeveloper IDで署名されていますが、まだAppleの公証を受けていないため、macOSが開くのを拒否することがあります。その場合は“システム設定” › “プライバシーとセキュリティ”で“このまま開く”を選び、もう一度インストーラを開いてください。</p>
+      <!-- /gatekeeper:open-anyway -->
+      <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">Turnoutをダウンロード</a></p>
+      <p class="fineprint">macOS 15以降 · AppleシリコンとIntel · 無料</p>
+      </div>
+      <!-- /download:live -->
+    </div>
+  </div>
+</section>
+
+<section class="feature support" id="support" aria-labelledby="support-title">
+  <div class="wrap">
+    <h2 id="support-title">無料であり続けるために</h2>
+    <div class="body">
+      <p class="intro">Turnoutは無料で、広告も有料版もありません。タピオカ1杯や少額のチップが、開発を続ける力になります。</p>
+      <p class="support-links">
+        <a class="support-boba" href="https://tasict.bobaboba.me"><svg class="icon" width="20" height="20" aria-hidden="true" focusable="false" data-icon="support-boba" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 1.6 13 6"/><path d="M5.5 9.5a6.5 4 0 0 1 13 0"/><path d="M4.5 9.5h15"/><path d="M6 9.5 7.4 21h9.2L18 9.5"/><g fill="currentColor" stroke="none"><circle cx="10" cy="17.75" r="1.3"/><circle cx="14" cy="17.75" r="1.3"/><circle cx="12" cy="14.75" r="1.3"/></g></svg>タピオカを1杯おごる</a>
+        <a class="support-tip" href="https://paypal.me/tasict"><svg class="icon" width="20" height="20" aria-hidden="true" focusable="false" data-icon="support-tip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><path d="M12 14.56 9.44 12A1.5 1.5 0 1 1 12 10.94 1.5 1.5 0 1 1 14.56 12Z"/><g fill="currentColor" stroke="none"><circle cx="6" cy="12" r="1.1"/><circle cx="18" cy="12" r="1.1"/></g></svg>PayPalでチップを送る</a>
+      </p>
+      <p class="fineprint">タピオカはカードで支払えます。PayPalアカウントは不要です。</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="how-it-works.html">TurnoutがMacに対して行うこと</a> <a href="privacy.html">プライバシー</a> <a href="https://github.com/tasict/Turnout/issues">問題を報告</a> <a href="../" hreflang="en" lang="en">English</a> <a href="../zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/" hreflang="es" lang="es">Español</a></p>
+    <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turnoutプライバシーポリシー</title>
+<meta name="description" content="Turnoutにはアカウントも広告もクラッシュレポートもありません。アプリが送るのはアップデートの確認と、それに伴う匿名の報告1件だけで、どちらも1つのスイッチでオフにできます。">
+<link rel="canonical" href="https://turnout.ctsite.cc/ja/privacy.html">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/privacy.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/privacy.html">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/privacy.html">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/privacy.html">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/privacy.html">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Turnoutプライバシーポリシー">
+<meta property="og:description" content="Turnoutが送るもの：アップデートの確認と、それに伴う匿名の報告1件。どちらも1つのスイッチでオフにできます。トンネルに関する情報は含みません。">
+<meta property="og:url" content="https://turnout.ctsite.cc/ja/privacy.html">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="接続中のトンネルの経路を表示したTurnoutのメインウインドウ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析"><p>このサイトへの訪問をGoogle Analyticsで数えてもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy.html#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
+<!-- /analytics -->
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
+      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="サイト">
+      <ul>
+        <li><a href="how-it-works.html">仕組み</a></li>
+        <li class="lang"><a href="../privacy.html" hreflang="en" lang="en">English</a></li>
+        <li><a href="../zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="privacy.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li>
+        <li><a href="../es/privacy.html" hreflang="es" lang="es">Español</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="doc policy">
+  <div class="wrap doc-head">
+    <h1>プライバシーポリシー</h1>
+    <p class="effective">施行日：2026年10月20日</p>
+  </div>
+
+  <div class="wrap">
+    <div class="doc-body">
+      <p class="short">Turnoutにはアカウントも広告もクラッシュレポートもなく、あなたがトンネルで何をしているかを見る仕組みもありません。アプリが送るのは、アップデートの確認と、確認のたびにインストール数を数えるための匿名の報告1件です。1つのスイッチで両方をオフにできます。</p>
+
+      <section id="connections" aria-labelledby="connections-title">
+        <h2 id="connections-title">Macから送られるもの</h2>
+        <ul>
+          <li><strong>アップデートの確認。</strong>Turnoutは、メニューかウインドウを開いたとき（多くても1時間に1回）と、“アップデートを確認…”を選んだときに、GitHubに最新リリースの小さなファイルを求めます。リクエストには、あなたやトンネルに関する情報は含まれません。GitHubに見えるのはリクエストとあなたのIPアドレスで、<a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub一般プライバシーステートメント</a>に従って扱われます。アップデートをインストールするときも、インストーラは同じ場所からダウンロードされます。</li>
+          <li><strong>確認のたびに送る匿名の報告。</strong>確認のたびに、Google Analytics（google-analytics.com）にもイベントを1件送ります。使われているインストールの数とそのバージョンを開発者が知るためです。内容は、Turnoutが最初に使われたときに作って環境設定に保存するランダムなインストールID（Macのハードウェアから導いたものではありません）、Turnoutのバージョンとビルド、macOSのバージョン、プロセッサのアーキテクチャ、システムの言語、そしてTurnoutの起動時刻（Google Analyticsが報告をセッションにまとめるのに使います）です。トンネル、サーバー、鍵、ネットワークに関する情報が送られることはなく、アカウントやユーザIDもありません。Googleに見えるのはリクエストとあなたのIPアドレスで、データの扱いは<a href="https://policies.google.com/privacy">Googleのプライバシーポリシー</a>に記載されています。</li>
+          <li><strong>トンネル。</strong>トンネルで送る通信は構成に書かれたサーバーに届き、あなたとそのサーバーの運営者との間のことです。フックはあなたが書いたとおりに動きます。</li>
+        </ul>
+        <p>確認と報告の両方を止めるには、“一般”（“Turnout” › “設定…”）で“アップデートを自動的に確認”をオフにします。そうすると、Turnoutは“アップデートを確認…”を選んだときだけ確認し、報告は一切送りません。</p>
+        <p>それ以外にMacから送られるものはありません。独自のクラッシュレポートも、広告も、トラッキングも、サードパーティのSDKもありません。</p>
+      </section>
+
+      <section id="location" aria-labelledby="location-title">
+        <h2 id="location-title">位置情報とWi-Fiルール</h2>
+        <p>macOSは、接続しているWi-Fiネットワークの名前を位置情報として扱います。Turnoutが位置情報へのアクセスを求めるのは、特定のWi-Fiネットワークでトンネルを接続するルールを設定するときだけで、使うのはネットワークの名前を読むことだけです。あなたの居場所には使いません。並べたネットワーク名はMac上のそのトンネルの構成ファイルに保存され、どこにも送られません。アクセスは“システム設定” › “プライバシーとセキュリティ” › “位置情報サービス”で取り消せます。</p>
+      </section>
+
+      <section id="on-your-mac" aria-labelledby="on-your-mac-title">
+        <h2 id="on-your-mac-title">Macに残るもの</h2>
+        <ul>
+          <li>トンネル（秘密鍵を含む）。rootしか読めない<code>/Library/Application Support/cc.ctsite.turnout/tunnels</code>にあります。</li>
+          <li>アプリの環境設定（<code>cc.ctsite.turnout</code>）。各ネットワークインターフェイスの表示色、スケジュールが最後に動いた時刻、ランダムなインストールIDなどです。</li>
+          <li>ログ：バックグラウンドサービスの<code>/Library/Logs/<wbr>cc.ctsite.turnout.daemon.log</code>、アップデートのインストール時の<code>/Library/Logs/<wbr>cc.ctsite.turnout.update.log</code>、そしてmacOSのシステムログにあるアプリのメッセージ。</li>
+        </ul>
+        <p>Turnoutをアンインストールすると、アプリ、ログ、全ユーザのTurnoutの環境設定（インストールIDを含む）が削除され、選べば保存済みのトンネルも削除されます。新しくインストールすると、新しいIDが作られます。<a href="how-it-works.html#uninstall">アンインストールの方法</a></p>
+      </section>
+
+      <!-- analytics:on -->
+      <section id="analytics" aria-labelledby="analytics-title">
+        <h2 id="analytics-title">このWebサイトのアクセス解析</h2>
+        <p>このWebサイトがGoogle Analyticsを使うのは、ページ下部のバーで“同意する”を選んだ場合だけです。選ぶまでのあいだも、“拒否”を選んだ場合も、解析用のコードは読み込まれず、Googleには何も送られず、Cookieも設定されません。</p>
+        <p>同意すると、Google Analyticsは閲覧したページ、IPアドレスから推定したおおよその位置（Google Analyticsはアドレス自体を保存しません）、ブラウザとデバイスの種類、そしてどのサイトから来たかを記録します。再訪を見分けるため、このサイトに<code>_ga</code>という名前のCookieを設定します。</p>
+        <p>これは前述のアプリの報告とは別のものです。ここでの選択がアプリの送る内容を変えることはなく、アプリのスイッチがこのWebサイトに影響することもありません。</p>
+        <p>選択は、ブラウザがこのサイト用に持つストレージに保存されます。変更するには下のボタンを使うか、ブラウザでこのサイトのデータを消去してください（Google AnalyticsのCookieも削除されます）。Googleによるデータの扱いは<a href="https://policies.google.com/privacy">Googleのプライバシーポリシー</a>に記載されています。</p>
+        <p><button type="button" class="consent-reset" data-consent-reset>アクセス解析の選択を変更</button></p>
+      </section>
+      <!-- /analytics:on -->
+
+      <section id="website" aria-labelledby="website-title">
+        <h2 id="website-title">このWebサイト</h2>
+        <!-- analytics:off -->
+        <p hidden>このサイトにはアクセス解析もCookieもスクリプトもなく、ほかのサイトから何も読み込みません。</p>
+        <!-- /analytics:off -->
+        <!-- analytics:on -->
+        <p>このサイトがほかのサイトから読み込むのはGoogle Analyticsだけで、それも前述のとおり同意したあとに限られます。このサイト自身はCookieを設定しません。</p>
+        <!-- /analytics:on -->
+        <p>このサイトはGitHub Pagesでホストされており、GitHubは<a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub一般プライバシーステートメント</a>に従ってアクセスを記録することがあります。</p>
+      </section>
+
+      <section id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">お問い合わせ</h2>
+        <p>質問や問題は、<a href="https://github.com/tasict/Turnout/issues">github.com/tasict/Turnout/issues</a>のイシュートラッカーへお寄せください。イシューは公開されます。秘密鍵、事前共有鍵、サーバーのアドレス、構成ファイル全体は書き込まないでください。</p>
+      </section>
+
+      <section id="changes" aria-labelledby="changes-title">
+        <h2 id="changes-title">変更</h2>
+        <p>このポリシーを変更する場合は、新しい施行日とともにこのページに掲載します。このポリシーは英語、繁體中文、日本語、Españolで提供しており、内容が異なる場合は英語版が優先されます。</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">TurnoutがMacに対して行うこと</a> <a href="https://github.com/tasict/Turnout/issues">問題を報告</a> <a href="../privacy.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/privacy.html" hreflang="es" lang="es">Español</a></p>
+    <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
+  </div>
+</footer>
+</body>
+</html>

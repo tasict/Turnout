@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de privacidad de Turnout</title>
+<meta name="description" content="Turnout no tiene cuenta, publicidad ni informes de fallos. La app envía su comprobación de actualizaciones y un informe anónimo con ella, y un solo interruptor desactiva ambos.">
+<link rel="canonical" href="https://turnout.ctsite.cc/es/privacy.html">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/privacy.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/privacy.html">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/privacy.html">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/privacy.html">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/privacy.html">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Política de privacidad de Turnout">
+<meta property="og:description" content="Qué envía Turnout: la comprobación de actualizaciones y un informe anónimo con ella, ambos desactivables con un interruptor. Nada sobre tus túneles.">
+<meta property="og:url" content="https://turnout.ctsite.cc/es/privacy.html">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="La ventana principal de Turnout con la ruta de un túnel conectado">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="Analítica"><p>¿Puede este sitio contar tu visita con Google Analytics? No se envía nada a Google a menos que aceptes. <a href="privacy.html#analytics">Política de privacidad</a></p><p class="consent-actions"><button type="button" data-consent="denied">Rechazar</button> <button type="button" data-consent="granted">Aceptar</button></p></div></template>
+<!-- /analytics -->
+</head>
+<body>
+<a class="skip" href="#main">Ir al contenido</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
+      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="Sitio">
+      <ul>
+        <li><a href="how-it-works.html">Cómo funciona</a></li>
+        <li class="lang"><a href="../privacy.html" hreflang="en" lang="en">English</a></li>
+        <li><a href="../zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="../ja/privacy.html" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="privacy.html" hreflang="es" lang="es" aria-current="page">Español</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="doc policy">
+  <div class="wrap doc-head">
+    <h1>Política de privacidad</h1>
+    <p class="effective">En vigor desde el 20 de octubre de 2026</p>
+  </div>
+
+  <div class="wrap">
+    <div class="doc-body">
+      <p class="short">Turnout no tiene cuenta, publicidad ni informes de fallos, y nada en él mira lo que haces con tus túneles. Lo que la app envía es su comprobación de actualizaciones y, con cada comprobación, un informe anónimo que cuenta la instalación. Un solo interruptor desactiva ambos.</p>
+
+      <section id="connections" aria-labelledby="connections-title">
+        <h2 id="connections-title">Qué sale de tu Mac</h2>
+        <ul>
+          <li><strong>La comprobación de actualizaciones.</strong> Turnout pide a GitHub un archivo pequeño de su última versión cuando abres el menú o una ventana, como mucho una vez por hora, y cada vez que eliges Buscar actualizaciones…. La solicitud no lleva nada sobre ti ni sobre tus túneles. GitHub ve la solicitud y tu dirección IP, como se describe en la <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">Declaración de privacidad general de GitHub</a>. Al instalar una actualización, el instalador se descarga del mismo sitio.</li>
+          <li><strong>Un informe anónimo con cada comprobación.</strong> Cada comprobación también envía un evento a Google Analytics, en google-analytics.com, para que el desarrollador sepa cuántas instalaciones están en uso y con qué versiones. Contiene un identificador de instalación aleatorio que Turnout crea la primera vez que se usa y guarda en sus preferencias (no se deriva del hardware de tu Mac), la versión y la compilación de Turnout, la versión de macOS, la arquitectura del procesador, el idioma del sistema y la hora a la que se abrió Turnout, que Google Analytics usa para agrupar el informe en una sesión. Nunca se envía nada sobre tus túneles, servidores, claves o redes, y no hay cuenta ni identificador de usuario. Google ve la solicitud y tu dirección IP; el uso que hace de los datos se describe en la <a href="https://policies.google.com/privacy">Política de privacidad de Google</a>.</li>
+          <li><strong>Tus túneles.</strong> El tráfico que envías por un túnel va al servidor de su configuración, y queda entre tú y quien gestione ese servidor. Los hooks hacen lo que escribiste en ellos.</li>
+        </ul>
+        <p>Para detener la comprobación y el informe, desactiva Buscar actualizaciones automáticamente en General (Turnout › Ajustes…). Turnout solo comprobará cuando elijas Buscar actualizaciones…, y no enviará ningún informe.</p>
+        <p>Nada más sale de tu Mac: sin informes de fallos propios, sin publicidad, sin seguimiento, sin SDK de terceros.</p>
+      </section>
+
+      <section id="location" aria-labelledby="location-title">
+        <h2 id="location-title">Ubicación y reglas de Wi-Fi</h2>
+        <p>macOS considera el nombre de la red Wi-Fi a la que estás conectado como información de ubicación. Turnout pide acceso a la ubicación solo cuando configuras una regla que conecta un túnel en ciertas redes Wi-Fi, y solo lo usa para leer el nombre de la red, nunca para saber dónde estás. Los nombres de red que pongas se guardan en el archivo de configuración de ese túnel en tu Mac y no se envían a ningún sitio. Puedes retirar el acceso en Ajustes del Sistema › Privacidad y seguridad › Localización.</p>
+      </section>
+
+      <section id="on-your-mac" aria-labelledby="on-your-mac-title">
+        <h2 id="on-your-mac-title">Qué se queda en tu Mac</h2>
+        <ul>
+          <li>Tus túneles, claves privadas incluidas, en <code>/Library/Application Support/cc.ctsite.turnout/tunnels</code>, que solo root puede leer.</li>
+          <li>Las preferencias de la app, en <code>cc.ctsite.turnout</code>: cosas como el color con que se muestra cada interfaz de red, cuándo actuó por última vez un horario y el identificador de instalación aleatorio.</li>
+          <li>Registros: <code>/Library/Logs/<wbr>cc.ctsite.turnout.daemon.log</code> del servicio en segundo plano, <code>/Library/Logs/<wbr>cc.ctsite.turnout.update.log</code> cuando se instala una actualización, y los mensajes de la app en el registro del sistema de macOS.</li>
+        </ul>
+        <p>Desinstalar Turnout borra la app, sus registros y las preferencias de Turnout de cada usuario, con el identificador de instalación, y también los túneles guardados si lo eliges. Una instalación nueva crea un identificador nuevo. <a href="how-it-works.html#uninstall">Cómo desinstalar</a></p>
+      </section>
+
+      <!-- analytics:on -->
+      <section id="analytics" aria-labelledby="analytics-title">
+        <h2 id="analytics-title">Analítica en este sitio web</h2>
+        <p>Este sitio web usa Google Analytics solo si eliges Aceptar en la barra de la parte inferior de la página. Hasta entonces, y si eliges Rechazar, no se carga ningún código de analítica, no se envía nada a Google y no se instala ninguna cookie.</p>
+        <p>Si aceptas, Google Analytics registra las páginas que ves, tu ubicación aproximada, calculada a partir de tu dirección IP (Google Analytics no guarda la dirección en sí), tu tipo de navegador y de dispositivo, y el sitio desde el que llegaste. Instala en este sitio cookies llamadas <code>_ga</code> para reconocer una visita repetida.</p>
+        <p>Esto es independiente del informe de la app descrito arriba: lo que elijas aquí no cambia lo que envía la app, y el interruptor de la app no cambia este sitio web.</p>
+        <p>Tu elección se guarda en el almacenamiento de tu navegador para este sitio. Para cambiarla, usa el botón de abajo o borra los datos de este sitio en tu navegador, lo que también elimina las cookies de Google Analytics. El uso que Google hace de los datos se describe en la <a href="https://policies.google.com/privacy">Política de privacidad de Google</a>.</p>
+        <p><button type="button" class="consent-reset" data-consent-reset>Cambiar mi elección de analítica</button></p>
+      </section>
+      <!-- /analytics:on -->
+
+      <section id="website" aria-labelledby="website-title">
+        <h2 id="website-title">Este sitio web</h2>
+        <!-- analytics:off -->
+        <p hidden>Este sitio no tiene analítica, ni cookies, ni scripts, y no carga nada de otros sitios.</p>
+        <!-- /analytics:off -->
+        <!-- analytics:on -->
+        <p>Este sitio no carga nada de otros sitios salvo Google Analytics, y solo después de que lo aceptes, como se describe arriba. No instala cookies propias.</p>
+        <!-- /analytics:on -->
+        <p>Está alojado en GitHub Pages, y GitHub puede registrar las visitas como se describe en la <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">Declaración de privacidad general de GitHub</a>.</p>
+      </section>
+
+      <section id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">Contacto</h2>
+        <p>Las preguntas y los problemas van al gestor de incidencias en <a href="https://github.com/tasict/Turnout/issues">github.com/tasict/Turnout/issues</a>. Las incidencias son públicas: no incluyas claves privadas, claves precompartidas, direcciones de servidores ni archivos de configuración completos.</p>
+      </section>
+
+      <section id="changes" aria-labelledby="changes-title">
+        <h2 id="changes-title">Cambios</h2>
+        <p>Si esta política cambia, la nueva versión se publicará en esta página con una nueva fecha de entrada en vigor. Está disponible en English, 繁體中文, 日本語 y Español; si difieren, prevalece la versión en inglés.</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">Qué hace Turnout en tu Mac</a> <a href="https://github.com/tasict/Turnout/issues">Informar de un problema</a> <a href="../privacy.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/privacy.html" hreflang="ja" lang="ja">日本語</a></p>
+    <p>© 2026 tasict. Mac y macOS son marcas comerciales de Apple Inc. WireGuard es una marca registrada de Jason A. Donenfeld.</p>
+  </div>
+</footer>
+</body>
+</html>

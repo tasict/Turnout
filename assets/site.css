@@ -30,6 +30,10 @@
   --measure: 38rem;
 }
 
+:root:lang(ja) {
+  --font: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "SF Pro Text", "Helvetica Neue", sans-serif;
+}
+
 :root:lang(zh-Hant) {
   --font: -apple-system, "PingFang TC", "SF Pro Text", "Helvetica Neue", sans-serif;
 }
@@ -75,7 +79,7 @@ body {
   overflow-wrap: break-word;
 }
 
-:lang(zh-Hant) body { line-height: 1.8; }
+:lang(zh-Hant) body, :lang(ja) body { line-height: 1.8; }
 
 img { max-width: 100%; height: auto; display: block; }
 
@@ -171,14 +175,14 @@ p code, li code, dd code, dt code, td code, figcaption code {
   text-wrap: balance;
 }
 
-:lang(zh-Hant) .hero h1 {
+:lang(zh-Hant) .hero h1, :lang(ja) .hero h1 {
   font-size: clamp(1.9rem, 1.1rem + 3.3vw, 3.4rem);
   line-height: 1.28;
   letter-spacing: 0.01em;
   max-width: 16em;
 }
 
-.hero-row { display: grid; gap: 1.75rem; }
+.hero-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
 
 @media (min-width: 60rem) {
   .hero-row { grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 4rem; }
@@ -192,7 +196,7 @@ p code, li code, dd code, dt code, td code, figcaption code {
   margin: 0;
 }
 
-:lang(zh-Hant) .lede { line-height: 1.7; }
+:lang(zh-Hant) .lede, :lang(ja) .lede { line-height: 1.7; }
 
 .get { display: grid; gap: 0.6rem; justify-items: start; }
 
@@ -297,6 +301,7 @@ p code, li code, dd code, dt code, td code, figcaption code {
 
 .feature > .wrap {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem 3rem;
   padding-block: 3.25rem 3.5rem;
 }
@@ -317,11 +322,14 @@ h2 {
   text-wrap: balance;
 }
 
-:lang(zh-Hant) h2 { line-height: 1.35; letter-spacing: 0.01em; }
+:lang(zh-Hant) h2, :lang(ja) h2 { line-height: 1.35; letter-spacing: 0.01em; }
 
 /* Chinese headings break where the words do (at the spaces around Latin
    words and after punctuation), not in the middle of 你的. */
 :lang(zh-Hant) h1, :lang(zh-Hant) h2 { word-break: keep-all; }
+/* Japanese has no spaces to break at; break headings between phrases where
+   the browser knows how (others break between characters, as usual). */
+:lang(ja) h1, :lang(ja) h2 { word-break: auto-phrase; overflow-wrap: anywhere; }
 
 h3 { font-size: 1.1rem; line-height: 1.35; margin: 0 0 0.35rem; }
 
@@ -412,7 +420,7 @@ pre .c { color: var(--code-muted); }
   border: 2px solid var(--muted);
   border-radius: 50%;
 }
-:lang(zh-Hant) .nots li::before { top: 0.55em; }
+:lang(zh-Hant) .nots li::before, :lang(ja) .nots li::before { top: 0.55em; }
 .nots strong { color: var(--ink); }
 .nots li { color: var(--muted); }
 
@@ -579,12 +587,12 @@ body:has(> .consent) { padding-bottom: 9rem; }
   text-wrap: balance;
 }
 
-:lang(zh-Hant) .doc-head h1 { line-height: 1.3; letter-spacing: 0.01em; }
+:lang(zh-Hant) .doc-head h1, :lang(ja) .doc-head h1 { line-height: 1.3; letter-spacing: 0.01em; }
 
 .doc-head .lede { max-width: 34em; }
 .effective { color: var(--muted); margin: 0 0 1rem; font-size: 0.95rem; }
 
-.doc-grid { display: grid; gap: 2rem 4rem; padding-bottom: 4rem; }
+.doc-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem 4rem; padding-bottom: 4rem; }
 
 @media (min-width: 64rem) {
   .doc-grid { grid-template-columns: 15rem minmax(0, 1fr); }

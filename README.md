@@ -33,7 +33,7 @@ What the background service does to your Mac, and how to check it, is on [What T
 
 Turnout has no account, no advertising and no crash reporting. The installed app checks GitHub for a new version when you open its menu or a window (at most once an hour) and when you choose Check for Updates…. With each check it also sends one anonymous event to Google Analytics, so the developer can tell how many installations are in use and on which versions: a random installation ID that Turnout makes up on first use and keeps in its preferences (not derived from the hardware), the Turnout version and build, the macOS version, the processor architecture and the system language. Nothing about your tunnels, servers, keys or networks is ever sent. That request goes to google-analytics.com and is covered by the [Google Privacy Policy](https://policies.google.com/privacy).
 
-Switching off **Check for updates automatically** in Turnout › Settings › General stops both the check and the report. The details are in the [privacy policy](https://turnout.ctsite.cc/privacy.html).
+Switching off **Check for updates automatically** in General (Turnout › Settings…) stops both the check and the report. The details are in the [privacy policy](https://turnout.ctsite.cc/privacy.html).
 
 ## Reporting a problem
 
@@ -41,11 +41,11 @@ Switching off **Check for updates automatically** in Turnout › Settings › Ge
 
 - your macOS version, and Turnout's version from Turnout › About Turnout
 - what you did, what you expected, and what happened instead
-- the lines of the background service's log from around that time, in `/Library/Logs/cc.ctsite.wggui.daemon.log`
+- the lines of the background service's log from around that time, in `/Library/Logs/cc.ctsite.turnout.daemon.log` (Help › Show Logs in Finder shows it)
 - the app's own log:
 
   ```sh
-  /usr/bin/log show --predicate 'subsystem == "cc.ctsite.wggui"' --last 1h
+  /usr/bin/log show --predicate 'subsystem == "cc.ctsite.turnout"' --last 1h
   ```
 
 Issues are public: leave out private keys, preshared keys, server addresses and whole config files.
@@ -56,7 +56,7 @@ Turnout has no ads and no paid version. If it is useful to you, you can [buy me 
 
 ## The website
 
-Plain static HTML and one stylesheet, in English and 繁體中文, served by GitHub Pages from this repository's `main` branch as it stands, at <https://turnout.ctsite.cc/>; there is no build step. The screenshots in `assets/` are taken from the app itself.
+Plain static HTML and one stylesheet, in four languages (English, 繁體中文, 日本語, Español), served by GitHub Pages from this repository's `main` branch as it stands, at <https://turnout.ctsite.cc/>; there is no build step. The screenshots in `assets/` are taken from the app itself.
 
 - [Turnout](https://turnout.ctsite.cc/)
 - [What Turnout does to your Mac](https://turnout.ctsite.cc/how-it-works.html)

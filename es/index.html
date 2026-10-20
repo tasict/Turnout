@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turnout: un cliente VPN para macOS que se conecta a servidores WireGuard</title>
+<meta name="description" content="Turnout conecta tu Mac a servidores WireGuard como lo hace wg-quick, en una app nativa: tus hooks se ejecutan, tus rutas siguen siendo tuyas y tú eliges por qué interfaz de red sale el túnel.">
+<link rel="canonical" href="https://turnout.ctsite.cc/es/">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Turnout: wg-quick para tu Mac, en una app nativa">
+<meta property="og:description" content="Un cliente VPN para macOS que se conecta a servidores WireGuard. Tus hooks se ejecutan, tus rutas siguen siendo tuyas y tú eliges por qué interfaz de red sale el túnel.">
+<meta property="og:url" content="https://turnout.ctsite.cc/es/">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="La ventana principal de Turnout con la ruta de un túnel conectado: el túnel, la interfaz de red por la que sale y el servidor">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="Analítica"><p>¿Puede este sitio contar tu visita con Google Analytics? No se envía nada a Google a menos que aceptes. <a href="privacy.html#analytics">Política de privacidad</a></p><p class="consent-actions"><button type="button" data-consent="denied">Rechazar</button> <button type="button" data-consent="granted">Aceptar</button></p></div></template>
+<!-- /analytics -->
+</head>
+<body>
+<a class="skip" href="#main">Ir al contenido</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
+      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="Sitio">
+      <ul>
+        <li><a href="how-it-works.html">Cómo funciona</a></li>
+        <li class="lang"><a href="../" hreflang="en" lang="en">English</a></li>
+        <li><a href="../zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="../ja/" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="./" hreflang="es" lang="es" aria-current="page">Español</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap">
+    <h1 id="hero-title">Turnout conecta tu Mac a servidores WireGuard como lo hace <span class="nb">wg-quick</span>, en una app nativa.</h1>
+    <div class="hero-row">
+      <p class="lede">Tus hooks se ejecutan, tus rutas siguen siendo tuyas y tú eliges por qué interfaz de red sale el túnel.</p>
+      <div class="get">
+        <!-- download:soon -->
+        <div class="soon">
+          <p class="soon-title">Próximamente</p>
+          <p class="fineprint">Se está preparando la primera versión pública. Hasta entonces no hay nada que descargar. Sigue el <a href="https://github.com/tasict/Turnout">repositorio en GitHub</a> o su <a href="https://github.com/tasict/Turnout/releases">página de Releases</a> para enterarte de la primera.</p>
+        </div>
+        <!-- /download:soon -->
+        <!-- download:live -->
+        <div class="live" hidden>
+          <a class="download" href="https://github.com/tasict/Turnout/releases/latest">Descargar Turnout</a>
+          <p class="fineprint">macOS 15 o posterior · Apple silicon e Intel · gratis</p>
+          <p class="fineprint"><a href="#install">Cómo instalar</a></p>
+        </div>
+        <!-- /download:live -->
+      </div>
+    </div>
+  </div>
+  <figure class="stage">
+    <div class="wrap">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/1-path.jpg">
+        <img class="shot" src="../assets/screenshots/light/1-path.jpg" width="1600" height="1000" alt="La ventana principal de Turnout con un túnel conectado. Su ruta va del túnel, por la interfaz de red por la que sale, hasta el servidor, con tráfico en ambos sentidos.">
+      </picture>
+      <figcaption>Cada túnel muestra su ruta en vivo: el túnel, la interfaz de red por la que sale y el servidor. La línea se vuelve continua cuando el servidor responde, y los paquetes avanzan por ella al ritmo de tu tráfico.</figcaption>
+    </div>
+  </figure>
+</section>
+
+<section class="feature" id="wg-quick" aria-labelledby="wg-quick-title">
+  <div class="wrap">
+    <h2 id="wg-quick-title">Tus configuraciones, tal como las ejecuta <span class="nb">wg-quick</span></h2>
+    <div class="body">
+      <p class="intro">Turnout lee los archivos <code>.conf</code> que ya usas con wg-quick y los aplica como lo hace wg-quick en macOS, paso a paso y con las mismas herramientas del sistema.</p>
+      <dl class="keys">
+        <div>
+          <dt><code>PreUp</code> <code>PostUp</code> <code>PreDown</code> <code>PostDown</code></dt>
+          <dd>Los hooks se ejecutan, con <code>%i</code> sustituido por la interfaz <code>utun</code> del túnel y <code>%I</code> por su nombre. Un administrador aprueba los hooks de un archivo antes de que puedan ejecutarse; <a href="how-it-works.html#hooks">cómo funciona</a>.</dd>
+        </div>
+        <div>
+          <dt><code>AllowedIPs</code></dt>
+          <dd>Se enrutan por el túnel, de la más específica a la menos. Un túnel completo usa <code>0.0.0.0/1</code> y <code>128.0.0.0/1</code>, y las dos mitades de IPv6, en lugar de reemplazar tu ruta predeterminada, y la dirección del servidor se queda en tu puerta de enlace física para que nunca se enrute por su propio túnel.</dd>
+        </div>
+        <div>
+          <dt><code>Table</code></dt>
+          <dd><code>auto</code> y <code>main</code> enrutan como arriba; <code>off</code> deja la tabla de rutas en tus manos.</dd>
+        </div>
+        <div>
+          <dt><code>DNS</code></dt>
+          <dd>Los servidores y dominios de búsqueda se configuran en tus servicios de red mientras el túnel está activo, y tu configuración vuelve cuando se desconecta.</dd>
+        </div>
+        <div>
+          <dt><code>MTU</code></dt>
+          <dd>La que indiques, o calculada como lo hace wg-quick: la MTU de la interfaz de salida menos 80.</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="interface" aria-labelledby="interface-title">
+  <div class="wrap">
+    <h2 id="interface-title">Elige la interfaz de red</h2>
+    <div class="body">
+      <p class="intro">Dos líneas que el formato de wg-quick no tiene. Empiezan por <code>#@</code>, que wg-quick lee como comentario, así que el mismo archivo sigue funcionando con <code>wg-quick up</code>.</p>
+      <div class="conf">
+<pre><code>[Interface]
+PrivateKey = …
+Address = 10.8.0.2/32
+DNS = 10.8.0.1
+<span class="ln bind">#@ BindInterface = en0</span>
+<span class="ln around">#@ Route = 192.168.0.0/16 dev en0</span>
+
+[Peer]
+PublicKey = …
+<span class="ln tunnel">AllowedIPs = 0.0.0.0/0, ::/0</span>
+Endpoint = vpn.example.com:51820</code></pre>
+        <dl class="notes">
+          <div class="bind">
+            <dt><code>#@ BindInterface = en0</code></dt>
+            <dd>El tráfico cifrado siempre sale por <code>en0</code>, aunque otra interfaz tenga la ruta predeterminada. La ruta al servidor también pasa por <code>en0</code>.</dd>
+          </div>
+          <div class="around">
+            <dt><code>#@ Route = 192.168.0.0/16 dev en0</code></dt>
+            <dd>Estas redes evitan el túnel y salen por la puerta de enlace de <code>en0</code>. Añade tantas como necesites, separadas por comas.</dd>
+          </div>
+          <div class="tunnel">
+            <dt><code>AllowedIPs</code></dt>
+            <dd>Todo lo demás va por el túnel.</dd>
+          </div>
+        </dl>
+      </div>
+      <p>También puedes cambiar la interfaz de salida de un túnel conectado desde su ruta en la ventana principal. Turnout desconecta, guarda el cambio y vuelve a conectar.</p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="network" aria-labelledby="network-title">
+  <div class="wrap">
+    <h2 id="network-title">Sigue a la red</h2>
+    <div class="body">
+      <p class="intro">Cuando cambian las puertas de enlace, las interfaces o los enlaces, o el Mac sale del reposo, Turnout vuelve a apuntar las rutas del túnel que pasan por tu red física a las puertas de enlace actuales, recalcula la MTU automática y vuelve a aplicar el DNS.</p>
+      <p>Si la interfaz a la que está vinculado un túnel desaparece y vuelve, el túnel se vincula a ella de nuevo y repite la negociación. Si desaparece del todo, la ruta al servidor se convierte en un agujero negro, para que la negociación no se cuele en el propio túnel, y las rutas que evitan el túnel esperan a que la interfaz vuelva.</p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="automatic" aria-labelledby="automatic-title">
+  <div class="wrap">
+    <h2 id="automatic-title">Se conecta solo</h2>
+    <div class="body">
+      <p class="intro">Dale a un túnel un horario, una lista de redes Wi-Fi, o ambos.</p>
+      <p>Cuando empieza una franja del horario, Turnout conecta el túnel, y cuando termina, lo desconecta. Cuando el Mac se une a una de las redes de la lista, el túnel se conecta; cuando la deja, se desconecta. Entre medias, lo que hagas a mano se mantiene, y cambiar una regla nunca conecta ni desconecta nada por sí solo.</p>
+<pre><code>#@ Schedule = Mon-Fri 09:00-18:00
+#@ OnWiFi = Office</code></pre>
+      <p>Las reglas son líneas del archivo de configuración y se configuran desde la página del túnel. Turnout las aplica mientras está abierto, por eso ofrece Abrir al iniciar sesión. Una regla de Wi-Fi necesita acceso a la ubicación, porque macOS considera el nombre de una red Wi-Fi como información de ubicación; Turnout lo pide cuando configuras la regla, nunca al abrirse.</p>
+      <figure class="shot-figure">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg">
+          <img class="shot" src="../assets/screenshots/light/4-automation.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="Configuración de la conexión automática de un túnel: un horario semanal y las redes Wi-Fi en las que se conecta.">
+        </picture>
+        <figcaption>El horario y las redes Wi-Fi de un túnel, configurados desde su página.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="editor" aria-labelledby="editor-title">
+  <div class="wrap">
+    <h2 id="editor-title">Un editor que respeta tu archivo</h2>
+    <div class="body">
+      <p class="intro">Edita un túnel como formulario o como texto, y cambia entre los dos cuando quieras.</p>
+      <p>Los cambios reescriben solo las líneas que tocan, así que tus comentarios y el orden se quedan donde los pusiste. Los problemas se listan con su número de línea, y Guardar espera a que no quede ninguno. Un túnel nuevo viene con un par de claves recién generado.</p>
+      <figure class="shot-figure">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg">
+          <img class="shot" src="../assets/screenshots/light/2-editor.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="El editor de Turnout mostrando la configuración de un túnel como formulario.">
+        </picture>
+        <figcaption>El formulario y el texto son dos vistas del mismo archivo.</figcaption>
+      </figure>
+      <p>Arrastra archivos <code>.conf</code> o un <code>.zip</code> a la ventana, elige Archivo › Importar desde archivo…, o pega una configuración copiada con Archivo › Nuevo túnel desde el portapapeles…. El zip que exporta la app oficial de WireGuard se abre como un lote: revisa cada túnel, deja fuera los que no quieras e importa el resto de una vez.</p>
+      <figure class="shot-figure">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg">
+          <img class="shot" src="../assets/screenshots/light/3-import.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="La hoja de importación con varios túneles de un zip, cada uno incluido o dejado fuera.">
+        </picture>
+        <figcaption>Cada túnel de una importación es un ramal: inclúyelo o déjalo fuera.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="menu-bar" aria-labelledby="menu-bar-title">
+  <div class="wrap">
+    <h2 id="menu-bar-title">No estorba</h2>
+    <div class="body">
+      <p class="intro">Turnout vive en la barra de menús. Conecta y desconecta túneles desde ahí y abre la ventana solo cuando quieras ver los detalles.</p>
+      <p>Los túneles se ejecutan en el servicio en segundo plano de Turnout, así que siguen activos cuando cierras la app. Medido con la ventana abierta, la app usa cerca del 0,5 % de la CPU en reposo y entre el 2 y el 4 % mientras dibuja el tráfico en vivo. Las estadísticas solo se consultan mientras el menú o una ventana están abiertos.</p>
+      <figure class="shot-figure">
+        <!-- scripts/screenshots.sh must write menu-light.png and menu-dark.png at
+             600x420 (the 300-point popover at 2x). If the popover's height
+             changes, change width/height here and MENU_SIZE in publish-site.sh. -->
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/menu-dark.png">
+          <img class="shot menu" src="../assets/menu-light.png" width="600" height="420" loading="lazy" decoding="async" alt="El menú de Turnout en la barra de menús, con un interruptor para cada túnel.">
+        </picture>
+        <figcaption>Cada túnel con su interruptor, y la interfaz por la que sale uno conectado.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="cleanup" aria-labelledby="cleanup-title">
+  <div class="wrap">
+    <h2 id="cleanup-title">No deja nada atrás</h2>
+    <div class="body">
+      <p class="intro">Cada cambio que Turnout hace en las rutas y el DNS se anota antes de hacerlo.</p>
+      <p>Si el Mac se bloquea o se queda sin corriente con un túnel conectado, el servicio en segundo plano deshace lo que quedó en su siguiente arranque, y no conecta ningún túnel hasta terminar. Turnout › Reparar ajustes de red… hace lo mismo cuando quieras.</p>
+      <p>Desinstalar sigue un único camino, empieces desde la app, desde el instalador o desde un script de shell que puedes leer antes. Desconecta todos los túneles, restaura las rutas y el DNS, quita el servicio en segundo plano de Ítems de inicio y borra la app, sus registros y sus preferencias. Los túneles guardados se quedan, salvo que elijas borrarlos también. <a href="how-it-works.html#uninstall">Qué quita cada opción</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="not" aria-labelledby="not-title">
+  <div class="wrap">
+    <h2 id="not-title">Lo que no es</h2>
+    <div class="body">
+      <ul class="nots">
+        <li><strong>No es de código abierto.</strong> El código fuente no se publica. Todo lo que la app y su servicio en segundo plano hacen en tu Mac está descrito en <a href="how-it-works.html">una página aparte</a>.</li>
+        <li><strong>Aún no tiene kill switch.</strong> Turnout no bloquea el tráfico fuera del túnel. Mientras un túnel está desconectado, tu Mac usa su red normal.</li>
+        <li><strong>No es un proveedor de VPN.</strong> Usa tu propio servidor, o una configuración de tu proveedor o de tu administrador de red.</li>
+        <li><strong>No usa NetworkExtension.</strong> Los túneles se ejecutan en el propio servicio en segundo plano de Turnout, y eso es lo que permite que los hooks se ejecuten y que las rutas sigan siendo tuyas. No aparecen en Ajustes del Sistema › VPN.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="feature inspect" id="your-mac" aria-labelledby="your-mac-title">
+  <div class="wrap">
+    <h2 id="your-mac-title">Qué hace en tu Mac</h2>
+    <div class="body">
+      <p class="intro">Turnout instala un servicio en segundo plano que se ejecuta como root. Cambia direcciones, rutas y DNS con las mismas herramientas que usa wg-quick, guarda las configuraciones en una carpeta que solo root puede leer y ejecuta los hooks de una configuración solo después de que un administrador los apruebe. Puedes comprobar cada punto tú mismo.</p>
+<pre><code>netstat -rn                         <span class="c"># las rutas que añadió</span>
+networksetup -getdnsservers Wi-Fi   <span class="c"># los servidores DNS que configuró</span>
+cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
+      <p><a class="more" href="how-it-works.html">Qué hace Turnout en tu Mac</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="install" aria-labelledby="install-title">
+  <div class="wrap">
+    <h2 id="install-title">Descargar e instalar</h2>
+    <div class="body">
+      <!-- download:soon -->
+      <div class="soon">
+        <p class="soon-title">Próximamente</p>
+        <p class="fineprint">Se está preparando la primera versión pública. Hasta entonces no hay nada que descargar. Sigue el <a href="https://github.com/tasict/Turnout">repositorio en GitHub</a> o su <a href="https://github.com/tasict/Turnout/releases">página de Releases</a> para enterarte de la primera.</p>
+      </div>
+      <!-- /download:soon -->
+      <!-- download:live -->
+      <div class="live" hidden>
+      <ol class="steps">
+        <li>Descarga el instalador, el archivo <code>.pkg</code>, de la <a href="https://github.com/tasict/Turnout/releases/latest">última versión en GitHub</a>.</li>
+        <li>Ábrelo y sigue los pasos. Turnout se instala en tu carpeta Aplicaciones y se abre cuando el instalador termina.</li>
+        <li>En la ventana de Turnout, instala el servicio en segundo plano y permítelo cuando macOS lo pida, en Ajustes del Sistema › General › Ítems de inicio y extensiones.</li>
+      </ol>
+      <!-- gatekeeper:open-anyway -->
+      <p class="gatekeeper">El instalador está firmado con un Developer ID pero Apple aún no lo ha notarizado, así que macOS puede negarse a abrirlo. Si pasa, ve a Ajustes del Sistema › Privacidad y seguridad, elige Abrir igualmente y vuelve a abrir el instalador.</p>
+      <!-- /gatekeeper:open-anyway -->
+      <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">Descargar Turnout</a></p>
+      <p class="fineprint">macOS 15 o posterior · Apple silicon e Intel · gratis</p>
+      </div>
+      <!-- /download:live -->
+    </div>
+  </div>
+</section>
+
+<section class="feature support" id="support" aria-labelledby="support-title">
+  <div class="wrap">
+    <h2 id="support-title">Que siga siendo gratis</h2>
+    <div class="body">
+      <p class="intro">Turnout es gratis, sin anuncios y sin versión de pago. Un boba o una pequeña propina ayudan a que siga adelante.</p>
+      <p class="support-links">
+        <a class="support-boba" href="https://tasict.bobaboba.me"><svg class="icon" width="20" height="20" aria-hidden="true" focusable="false" data-icon="support-boba" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 1.6 13 6"/><path d="M5.5 9.5a6.5 4 0 0 1 13 0"/><path d="M4.5 9.5h15"/><path d="M6 9.5 7.4 21h9.2L18 9.5"/><g fill="currentColor" stroke="none"><circle cx="10" cy="17.75" r="1.3"/><circle cx="14" cy="17.75" r="1.3"/><circle cx="12" cy="14.75" r="1.3"/></g></svg>Invítame a un boba</a>
+        <a class="support-tip" href="https://paypal.me/tasict"><svg class="icon" width="20" height="20" aria-hidden="true" focusable="false" data-icon="support-tip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><path d="M12 14.56 9.44 12A1.5 1.5 0 1 1 12 10.94 1.5 1.5 0 1 1 14.56 12Z"/><g fill="currentColor" stroke="none"><circle cx="6" cy="12" r="1.1"/><circle cx="18" cy="12" r="1.1"/></g></svg>Dar propina con PayPal</a>
+      </p>
+      <p class="fineprint">El boba se paga con tarjeta. No hace falta cuenta de PayPal.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="how-it-works.html">Qué hace Turnout en tu Mac</a> <a href="privacy.html">Privacidad</a> <a href="https://github.com/tasict/Turnout/issues">Informar de un problema</a> <a href="../" hreflang="en" lang="en">English</a> <a href="../zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/" hreflang="ja" lang="ja">日本語</a></p>
+    <p>© 2026 tasict. Mac y macOS son marcas comerciales de Apple Inc. WireGuard es una marca registrada de Jason A. Donenfeld.</p>
+  </div>
+</footer>
+</body>
+</html>

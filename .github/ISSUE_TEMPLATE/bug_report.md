@@ -29,7 +29,7 @@ replace those values with placeholders.
 **Background service log**
 <!--
 The lines from around the time it happened:
-  tail -n 100 /Library/Logs/cc.ctsite.wggui.daemon.log
+  tail -n 100 /Library/Logs/cc.ctsite.turnout.daemon.log
 Where Turnout keeps its logs: https://turnout.ctsite.cc/how-it-works.html#logs
 -->
 
@@ -38,7 +38,7 @@ Where Turnout keeps its logs: https://turnout.ctsite.cc/how-it-works.html#logs
 
 **App log**
 <!--
-  /usr/bin/log show --predicate 'subsystem == "cc.ctsite.wggui"' --last 1h
+  /usr/bin/log show --predicate 'subsystem == "cc.ctsite.turnout"' --last 1h
 -->
 
 ```

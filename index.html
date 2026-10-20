@@ -8,6 +8,8 @@
 <link rel="canonical" href="https://turnout.ctsite.cc/">
 <link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/">
 <link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/">
 <link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
@@ -26,7 +28,56 @@
 <meta property="og:image:alt" content="Turnout's main window showing a connected tunnel's path: the tunnel, the network interface it leaves through, and the server">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="Analytics"><p>Can this site count your visit with Google Analytics? Nothing is sent to Google unless you accept. <a href="privacy.html#analytics">Privacy policy</a></p><p class="consent-actions"><button type="button" data-consent="denied">Decline</button> <button type="button" data-consent="granted">Accept</button></p></div></template>
+<!-- /analytics -->
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -42,6 +93,8 @@
         <li><a href="how-it-works.html">How it works</a></li>
         <li class="lang"><a href="./" hreflang="en" lang="en" aria-current="page">English</a></li>
         <li><a href="zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="ja/" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="es/" hreflang="es" lang="es">Español</a></li>
       </ul>
     </nav>
   </div>
@@ -168,7 +221,7 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>When a scheduled window starts, Turnout connects the tunnel, and when it ends, disconnects it. When the Mac joins one of the listed networks, the tunnel connects; when it leaves, the tunnel disconnects. In between, what you do by hand sticks, and changing a rule never connects or disconnects anything on its own.</p>
 <pre><code>#@ Schedule = Mon-Fri 09:00-18:00
 #@ OnWiFi = Office</code></pre>
-      <p>The rules are lines in the config file, set up from the tunnel's page. Turnout acts on them while it is open, so it offers to open at login. A Wi-Fi rule needs Location access, because macOS counts the name of a Wi-Fi network as location; Turnout asks for it when you set up the rule, never at launch.</p>
+      <p>The rules are lines in the config file, set up from the tunnel's page. Turnout acts on them while it is open, so it offers Open at Login. A Wi-Fi rule needs Location access, because macOS counts the name of a Wi-Fi network as location; Turnout asks for it when you set up the rule, never at launch.</p>
       <figure class="shot-figure">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/dark/4-automation.jpg">
@@ -193,7 +246,7 @@ Endpoint = vpn.example.com:51820</code></pre>
         </picture>
         <figcaption>The form and the text are two views of the same file.</figcaption>
       </figure>
-      <p>Drop <code>.conf</code> files or a <code>.zip</code> on the window, or choose Import from File…. The zip the official WireGuard app exports opens as a batch: review every tunnel, leave some out, and import the rest at once.</p>
+      <p>Drop <code>.conf</code> files or a <code>.zip</code> on the window, choose File › Import from File…, or paste a copied configuration with File › New Tunnel from Clipboard…. The zip the official WireGuard app exports opens as a batch: review every tunnel, leave some out, and import the rest at once.</p>
       <figure class="shot-figure">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/dark/3-import.jpg">
@@ -309,7 +362,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="how-it-works.html">What Turnout does to your Mac</a> <a href="privacy.html">Privacy</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></p>
+    <p class="footer-links"><a href="how-it-works.html">What Turnout does to your Mac</a> <a href="privacy.html">Privacy</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/" hreflang="ja" lang="ja">日本語</a> <a href="es/" hreflang="es" lang="es">Español</a></p>
     <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
   </div>
 </footer>

@@ -8,6 +8,8 @@
 <link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/">
 <link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/">
 <link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/">
 <link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
@@ -26,7 +28,56 @@
 <meta property="og:image:alt" content="Turnout 主視窗顯示一條已連線通道的路徑：通道、它出去的網路介面，以及伺服器">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="網站分析"><p>可以讓本網站用 Google Analytics 統計這次造訪嗎？除非你接受，否則不會傳送任何資料給 Google。 <a href="privacy.html#analytics">隱私權政策</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒絕</button> <button type="button" data-consent="granted">接受</button></p></div></template>
+<!-- /analytics -->
 </head>
 <body>
 <a class="skip" href="#main">跳到主要內容</a>
@@ -42,6 +93,8 @@
         <li><a href="how-it-works.html">運作方式</a></li>
         <li class="lang"><a href="../" hreflang="en" lang="en">English</a></li>
         <li><a href="./" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></li>
+        <li><a href="../ja/" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="../es/" hreflang="es" lang="es">Español</a></li>
       </ul>
     </nav>
   </div>
@@ -168,7 +221,7 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>排定的時段一開始，Turnout 就連線，時段結束就中斷。Mac 加入清單上的網路時通道會連線，離開時就中斷。這中間你手動做的操作會維持不變，修改規則本身也不會連線或中斷任何東西。</p>
 <pre><code>#@ Schedule = Mon-Fri 09:00-18:00
 #@ OnWiFi = Office</code></pre>
-      <p>規則就是設定檔裡的幾行，從通道的頁面設定。Turnout 開著時才會執行這些規則，所以它會建議你設為登入時開啟。Wi-Fi 規則需要定位權限，因為 macOS 把 Wi-Fi 網路名稱視為位置資訊；Turnout 只在你設定這類規則時才會詢問，啟動時絕不會問。</p>
+      <p>規則就是設定檔裡的幾行，從通道的頁面設定。Turnout 開著時才會執行這些規則，所以它提供「在登入時打開」。Wi-Fi 規則需要定位權限，因為 macOS 把 Wi-Fi 網路名稱視為位置資訊；Turnout 只在你設定這類規則時才會詢問，啟動時絕不會問。</p>
       <figure class="shot-figure">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg">
@@ -193,7 +246,7 @@ Endpoint = vpn.example.com:51820</code></pre>
         </picture>
         <figcaption>表單和文字是同一個檔案的兩種檢視。</figcaption>
       </figure>
-      <p>把 <code>.conf</code> 檔或 <code>.zip</code> 拖到視窗上，或選擇 Import from File…。官方 WireGuard App 匯出的 zip 會以批次方式開啟：逐一檢查每條通道，略過不要的，其餘一次匯入。</p>
+      <p>把 <code>.conf</code> 檔或 <code>.zip</code> 拖到視窗上、選擇「檔案」›「從檔案匯入⋯」，或用「檔案」›「從剪貼板新增通道⋯」貼上複製的設定檔。官方 WireGuard App 匯出的 zip 會以批次方式開啟：逐一檢查每條通道，略過不要的，其餘一次匯入。</p>
       <figure class="shot-figure">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg">
@@ -230,7 +283,7 @@ Endpoint = vpn.example.com:51820</code></pre>
     <h2 id="cleanup-title">不留下痕跡</h2>
     <div class="body">
       <p class="intro">Turnout 對路由和 DNS 的每一項變更，都會先記錄下來才動手。</p>
-      <p>如果 Mac 在通道連線時當機或斷電，背景服務下次啟動時會復原留下的變更，完成之前不會連線任何通道。Turnout › Repair Network Settings… 也能隨時手動做同樣的事。</p>
+      <p>如果 Mac 在通道連線時當機或斷電，背景服務下次啟動時會復原留下的變更，完成之前不會連線任何通道。「Turnout」›「修復網路設定⋯」也能隨時手動做同樣的事。</p>
       <p>解除安裝只有一條路，不論你從 App、從安裝程式，還是從一個可以先讀過內容的 shell 指令稿開始。它會中斷所有通道、恢復路由與 DNS、把背景服務從登入項目移除，並刪除 App、它的記錄檔和偏好設定。已儲存的通道會保留，除非你選擇一併刪除。<a href="how-it-works.html#uninstall">各種方式會移除什麼</a></p>
     </div>
   </div>
@@ -297,8 +350,8 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
     <div class="body">
       <p class="intro">Turnout 免費，沒有廣告，也沒有付費版。一杯珍奶或一點小額贊助，能讓它繼續走下去。</p>
       <p class="support-links">
-        <a class="support-boba" href="https://tasict.bobaboba.me"><svg class="icon" width="20" height="20" aria-hidden="true" focusable="false" data-icon="support-boba" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 1.6 13 6"/><path d="M5.5 9.5a6.5 4 0 0 1 13 0"/><path d="M4.5 9.5h15"/><path d="M6 9.5 7.4 21h9.2L18 9.5"/><g fill="currentColor" stroke="none"><circle cx="10" cy="17.75" r="1.3"/><circle cx="14" cy="17.75" r="1.3"/><circle cx="12" cy="14.75" r="1.3"/></g></svg>請我喝珍奶</a>
-        <a class="support-tip" href="https://paypal.me/tasict"><svg class="icon" width="20" height="20" aria-hidden="true" focusable="false" data-icon="support-tip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><path d="M12 14.56 9.44 12A1.5 1.5 0 1 1 12 10.94 1.5 1.5 0 1 1 14.56 12Z"/><g fill="currentColor" stroke="none"><circle cx="6" cy="12" r="1.1"/><circle cx="18" cy="12" r="1.1"/></g></svg>用 PayPal 贊助</a>
+        <a class="support-boba" href="https://tasict.bobaboba.me"><svg class="icon" width="20" height="20" aria-hidden="true" focusable="false" data-icon="support-boba" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 1.6 13 6"/><path d="M5.5 9.5a6.5 4 0 0 1 13 0"/><path d="M4.5 9.5h15"/><path d="M6 9.5 7.4 21h9.2L18 9.5"/><g fill="currentColor" stroke="none"><circle cx="10" cy="17.75" r="1.3"/><circle cx="14" cy="17.75" r="1.3"/><circle cx="12" cy="14.75" r="1.3"/></g></svg>請我喝杯珍奶</a>
+        <a class="support-tip" href="https://paypal.me/tasict"><svg class="icon" width="20" height="20" aria-hidden="true" focusable="false" data-icon="support-tip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><path d="M12 14.56 9.44 12A1.5 1.5 0 1 1 12 10.94 1.5 1.5 0 1 1 14.56 12Z"/><g fill="currentColor" stroke="none"><circle cx="6" cy="12" r="1.1"/><circle cx="18" cy="12" r="1.1"/></g></svg>用 PayPal 小額贊助</a>
       </p>
       <p class="fineprint">珍奶贊助直接刷卡，不需要 PayPal 帳號。</p>
     </div>
@@ -309,7 +362,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="how-it-works.html">Turnout 對你的 Mac 做了什麼</a> <a href="privacy.html">隱私權</a> <a href="https://github.com/tasict/Turnout/issues">回報問題</a> <a href="../" hreflang="en" lang="en">English</a></p>
+    <p class="footer-links"><a href="how-it-works.html">Turnout 對你的 Mac 做了什麼</a> <a href="privacy.html">隱私權</a> <a href="https://github.com/tasict/Turnout/issues">回報問題</a> <a href="../" hreflang="en" lang="en">English</a> <a href="../ja/" hreflang="ja" lang="ja">日本語</a> <a href="../es/" hreflang="es" lang="es">Español</a></p>
     <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
   </div>
 </footer>

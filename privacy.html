@@ -8,6 +8,8 @@
 <link rel="canonical" href="https://turnout.ctsite.cc/privacy.html">
 <link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/privacy.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/privacy.html">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/privacy.html">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/privacy.html">
 <link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/privacy.html">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
@@ -26,7 +28,56 @@
 <meta property="og:image:alt" content="Turnout's main window showing a connected tunnel's path">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="Analytics"><p>Can this site count your visit with Google Analytics? Nothing is sent to Google unless you accept. <a href="privacy.html#analytics">Privacy policy</a></p><p class="consent-actions"><button type="button" data-consent="denied">Decline</button> <button type="button" data-consent="granted">Accept</button></p></div></template>
+<!-- /analytics -->
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -42,6 +93,8 @@
         <li><a href="how-it-works.html">How it works</a></li>
         <li class="lang"><a href="privacy.html" hreflang="en" lang="en" aria-current="page">English</a></li>
         <li><a href="zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="ja/privacy.html" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="es/privacy.html" hreflang="es" lang="es">Español</a></li>
       </ul>
     </nav>
   </div>
@@ -64,7 +117,7 @@
           <li><strong>An anonymous report with each check.</strong> Each check also sends one event to Google Analytics, at google-analytics.com, so the developer can tell how many installations are in use and on which versions. It contains a random installation ID that Turnout makes up the first time it is used and keeps in its preferences (it is not derived from your Mac's hardware), the Turnout version and build, the macOS version, the processor architecture, the system language, and the time Turnout was started, which Google Analytics uses to group the report into a session. Nothing about your tunnels, servers, keys or networks is ever sent, and there is no account or user ID. Google sees the request and your IP address; its use of the data is described in the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</li>
           <li><strong>Your tunnels.</strong> Traffic you send through a tunnel goes to the server in its config, and is between you and whoever runs that server. Hooks do what you wrote in them.</li>
         </ul>
-        <p>To stop both the check and the report, switch off Check for updates automatically in Turnout › Settings › General. Turnout then checks only when you choose Check for Updates…, and sends no report at all.</p>
+        <p>To stop both the check and the report, switch off Check for updates automatically in General (Turnout › Settings…). Turnout then checks only when you choose Check for Updates…, and sends no report at all.</p>
         <p>Nothing else leaves your Mac: no crash reporting of its own, no advertising, no tracking, no third-party SDKs.</p>
       </section>
 
@@ -76,15 +129,15 @@
       <section id="on-your-mac" aria-labelledby="on-your-mac-title">
         <h2 id="on-your-mac-title">What stays on your Mac</h2>
         <ul>
-          <li>Your tunnels, private keys included, in <code>/Library/Application Support/cc.ctsite.wggui/tunnels</code>, which only root can read.</li>
-          <li>The app's preferences, under <code>cc.ctsite.wggui</code>: things like the colour each network interface is shown in, when a schedule last acted, and the random installation ID.</li>
-          <li>Logs: <code>/Library/Logs/<wbr>cc.ctsite.wggui.daemon.log</code> from the background service, <code>/Library/Logs/<wbr>cc.ctsite.wggui.update.log</code> when an update is installed, and the app's messages in the macOS system log.</li>
+          <li>Your tunnels, private keys included, in <code>/Library/Application Support/cc.ctsite.turnout/tunnels</code>, which only root can read.</li>
+          <li>The app's preferences, under <code>cc.ctsite.turnout</code>: things like the colour each network interface is shown in, when a schedule last acted, and the random installation ID.</li>
+          <li>Logs: <code>/Library/Logs/<wbr>cc.ctsite.turnout.daemon.log</code> from the background service, <code>/Library/Logs/<wbr>cc.ctsite.turnout.update.log</code> when an update is installed, and the app's messages in the macOS system log.</li>
         </ul>
         <p>Uninstalling Turnout deletes the app, its logs and every user's Turnout preferences, the installation ID with them, and the saved tunnels too if you choose. A new installation makes up a new ID. <a href="how-it-works.html#uninstall">How to uninstall</a></p>
       </section>
 
       <!-- analytics:on -->
-      <section id="analytics" aria-labelledby="analytics-title" hidden>
+      <section id="analytics" aria-labelledby="analytics-title">
         <h2 id="analytics-title">Analytics on this website</h2>
         <p>This website uses Google Analytics only if you choose Accept in the bar at the bottom of the page. Until you do, and if you choose Decline, no analytics code is loaded, nothing is sent to Google and no cookie is set.</p>
         <p>Once you accept, Google Analytics records the pages you view, your approximate location, worked out from your IP address (Google Analytics does not keep the address itself), your browser and device type, and the site that sent you here. It sets cookies on this site, named <code>_ga</code>, to recognise a return visit.</p>
@@ -97,10 +150,10 @@
       <section id="website" aria-labelledby="website-title">
         <h2 id="website-title">This website</h2>
         <!-- analytics:off -->
-        <p>This site has no analytics, no cookies and no scripts, and loads nothing from other sites.</p>
+        <p hidden>This site has no analytics, no cookies and no scripts, and loads nothing from other sites.</p>
         <!-- /analytics:off -->
         <!-- analytics:on -->
-        <p hidden>This site loads nothing from other sites except Google Analytics, and that only after you accept it, as described above. It sets no cookies of its own.</p>
+        <p>This site loads nothing from other sites except Google Analytics, and that only after you accept it, as described above. It sets no cookies of its own.</p>
         <!-- /analytics:on -->
         <p>It is hosted on GitHub Pages, and GitHub may log visits as described in the <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>.</p>
       </section>
@@ -112,7 +165,7 @@
 
       <section id="changes" aria-labelledby="changes-title">
         <h2 id="changes-title">Changes</h2>
-        <p>If this policy changes, the new version will be posted on this page with a new effective date. It is available in English and 繁體中文; if the two differ, the English version applies.</p>
+        <p>If this policy changes, the new version will be posted on this page with a new effective date. It is available in English, 繁體中文, 日本語 and Español; if they differ, the English version applies.</p>
       </section>
     </div>
   </div>
@@ -120,7 +173,7 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">What Turnout does to your Mac</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">What Turnout does to your Mac</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/privacy.html" hreflang="ja" lang="ja">日本語</a> <a href="es/privacy.html" hreflang="es" lang="es">Español</a></p>
     <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
   </div>
 </footer>

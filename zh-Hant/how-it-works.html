@@ -8,6 +8,8 @@
 <link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
 <link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/how-it-works.html">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/how-it-works.html">
 <link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works.html">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
@@ -26,7 +28,56 @@
 <meta property="og:image:alt" content="Turnout 主視窗顯示一條已連線通道的路徑">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="網站分析"><p>可以讓本網站用 Google Analytics 統計這次造訪嗎？除非你接受，否則不會傳送任何資料給 Google。 <a href="privacy.html#analytics">隱私權政策</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒絕</button> <button type="button" data-consent="granted">接受</button></p></div></template>
+<!-- /analytics -->
 </head>
 <body>
 <a class="skip" href="#main">跳到主要內容</a>
@@ -42,6 +93,8 @@
         <li><a href="how-it-works.html" aria-current="page">運作方式</a></li>
         <li class="lang"><a href="../how-it-works.html" hreflang="en" lang="en">English</a></li>
         <li><a href="how-it-works.html" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></li>
+        <li><a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a></li>
       </ul>
     </nav>
   </div>
@@ -68,7 +121,6 @@
         <li><a href="#logs">記錄檔</a></li>
         <li><a href="#verify">自己檢查</a></li>
         <li><a href="#uninstall">解除安裝</a></li>
-        <li><a href="#names">為什麼名稱是 wggui</a></li>
       </ul>
     </nav>
 
@@ -76,7 +128,7 @@
       <section id="service" aria-labelledby="service-title">
         <h2 id="service-title">兩個部分：App 與背景服務</h2>
         <p>App 本身（<code>Turnout.app</code>）以你的身分執行，沒有任何特殊權限。它負責顯示通道、編輯設定檔，並請背景服務連線或中斷。它從不碰你的網路流量。</p>
-        <p>背景服務是一個 LaunchDaemon，<code>cc.ctsite.wggui.daemon</code>，以 root 身分執行。它的程式 <code>wggui-daemon</code> 就放在 App 裡的 <code>/Applications/<wbr>Turnout.app/<wbr>Contents/<wbr>MacOS/</code>。Turnout 透過 macOS 的登入項目（SMAppService）註冊它，所以 macOS 會請你在「系統設定 › 一般 › 登入項目與延伸功能」中允許，你也可以在那裡把它關掉。</p>
+        <p>背景服務是一個 LaunchDaemon，<code>cc.ctsite.turnout.daemon</code>，以 root 身分執行。它的程式 <code>turnout-daemon</code> 就放在 App 裡的 <code>/Applications/<wbr>Turnout.app/<wbr>Contents/<wbr>MacOS/</code>。Turnout 透過 macOS 的登入項目（SMAppService）註冊它，所以 macOS 會請你在「系統設定 › 一般 › 登入項目與延伸功能」中允許，你也可以在那裡把它關掉。</p>
         <p>服務會為每條通道建立 <code>utun</code> 介面，並用內建的 <a href="https://github.com/mullvad/gotatun">GotaTun</a> 在使用者空間執行 WireGuard；GotaTun 是 Mullvad 開發、以 MPL-2.0 授權的實作。只有通道的封包會經過它，其餘流量照常由 macOS 路由。通道存在於服務之中，所以關掉 App 時通道仍會連著。</p>
       </section>
 
@@ -106,8 +158,8 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># 或清單中的其他服�
 
       <section id="configs" aria-labelledby="configs-title">
         <h2 id="configs-title">你的設定檔</h2>
-        <p>通道存放在 <code>/Library/Application Support/cc.ctsite.wggui/tunnels</code>，這個資料夾屬於 root，每條通道一個檔案，權限為 0600，私鑰也在其中。只有服務會寫入這裡；App 要儲存時是請服務代勞。</p>
-<pre><code>sudo ls -l "/Library/Application Support/cc.ctsite.wggui/tunnels"</code></pre>
+        <p>通道存放在 <code>/Library/Application Support/cc.ctsite.turnout/tunnels</code>，這個資料夾屬於 root，每條通道一個檔案，權限為 0600，私鑰也在其中。只有服務會寫入這裡；App 要儲存時是請服務代勞。</p>
+<pre><code>sudo ls -l "/Library/Application Support/cc.ctsite.turnout/tunnels"</code></pre>
       </section>
 
       <section id="hooks" aria-labelledby="hooks-title">
@@ -123,23 +175,23 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># 或清單中的其他服�
 
       <section id="clients" aria-labelledby="clients-title">
         <h2 id="clients-title">服務回應誰</h2>
-        <p>App 透過 Unix socket（<code>/var/run/<wbr>cc.ctsite.wggui.daemon.sock</code>）和服務溝通。每個連上來的程式，服務都會檢查它的程式碼簽署，只回應由同一個開發團隊簽署、且帶有 Turnout 套件識別碼 <code>cc.ctsite.wggui</code> 的程式。其他程式一律拒絕。</p>
+        <p>App 透過 Unix socket（<code>/var/run/<wbr>cc.ctsite.turnout.daemon.sock</code>）和服務溝通。每個連上來的程式，服務都會檢查它的程式碼簽署，只回應由同一個開發團隊簽署、且帶有 Turnout 套件識別碼 <code>cc.ctsite.turnout</code> 的程式。其他程式一律拒絕。</p>
       </section>
 
       <section id="recovery" aria-labelledby="recovery-title">
         <h2 id="recovery-title">當機之後</h2>
-        <p>服務停止時，macOS 會移除通道介面，介面上的路由也會跟著消失。但經由實體閘道的路由和 DNS 設定不會，這樣設定的 DNS 甚至重新開機後都還在。所以服務在每次修改之前都會先寫進日誌，下次啟動時再把前一次留下的變更復原。完成之前它不會連線任何通道，Turnout 也會顯示還在等待復原的項目，並提供 Restore Now。</p>
-        <p>Turnout › Repair Network Settings… 可以隨時手動做同樣的事。如果服務沒有在執行，它會要求輸入管理者密碼，自己依日誌復原。</p>
+        <p>服務停止時，macOS 會移除通道介面，介面上的路由也會跟著消失。但經由實體閘道的路由和 DNS 設定不會，這樣設定的 DNS 甚至重新開機後都還在。所以服務在每次修改之前都會先寫進日誌，下次啟動時再把前一次留下的變更復原。完成之前它不會連線任何通道，Turnout 也會顯示還在等待復原的項目，並提供「立即復原」。</p>
+        <p>「Turnout」›「修復網路設定⋯」可以隨時手動做同樣的事。如果服務沒有在執行，它會要求輸入管理者密碼，自己依日誌復原。</p>
       </section>
 
       <section id="network" aria-labelledby="network-title">
         <h2 id="network-title">網路連線</h2>
         <p>App 本身只連到兩個地方，都和更新有關：GitHub，用來查看有沒有新版本；以及 Google Analytics，用來計算安裝數。</p>
         <ul>
-          <li>只有 <code>/Applications</code> 裡的那份會自動檢查，最多每小時一次，時機是你打開選單或視窗時。Turnout › Check for Updates… 則是你選它就檢查。</li>
+          <li>只有 <code>/Applications</code> 裡的那份會自動檢查，最多每小時一次，時機是你打開選單或視窗時。「Turnout」›「檢查更新項目⋯」則是你選它就檢查。</li>
           <li>檢查時會向 GitHub 上這個專案的最新版本索取一個小檔案。請求不帶任何帳號，也不含任何關於你或你的通道的資訊。GitHub 看得到這個請求和你的 IP 位址。</li>
           <li>每次檢查時，App 也會送出一個事件給 Google Analytics（<code>www.google-analytics.com</code>，透過它的 Measurement Protocol）：一個 Turnout 第一次使用時隨機產生、存在偏好設定裡的安裝 ID，絕不是從硬體推算出來的；Turnout 的版本與建置編號；macOS 版本；處理器架構；系統語言；以及 Google Analytics 計數需要的兩個欄位：取自 Turnout 啟動時間的工作階段編號，和一個固定的參與時間。不含任何關於通道、伺服器、金鑰或網路的資訊，也沒有帳號或使用者 ID。Google 看得到這個請求和你的 IP 位址，適用 <a href="https://policies.google.com/privacy">Google 隱私權政策</a>。</li>
-          <li>在 Turnout › Settings › General 關掉 Check for updates automatically，自動檢查和這份回報都會停止。之後選 Check for Updates… 仍會檢查，但不會送出回報。</li>
+          <li>在「一般」（「Turnout」›「設定⋯」）關掉「自動檢查更新項目」，自動檢查和這份回報都會停止。之後選「檢查更新項目⋯」仍會檢查，但不會送出回報。</li>
           <li>如果你安裝更新，安裝程式來自同一個版本，Turnout 會先檢查它的檢查碼與 Developer ID 簽署，才交給 macOS 的安裝程式。</li>
         </ul>
         <p>你的通道連到設定檔裡的伺服器，hook 則做你寫在裡面的事。除此之外，App 和服務都不會連到任何地方：沒有自家的當機回報、沒有廣告，也沒有帳號。</p>
@@ -154,25 +206,25 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># 或清單中的其他服�
         <h2 id="logs-title">記錄檔</h2>
         <dl class="paths">
           <div>
-            <dt><code>/Library/Logs/<wbr>cc.ctsite.wggui.daemon.log</code></dt>
+            <dt><code>/Library/Logs/<wbr>cc.ctsite.turnout.daemon.log</code></dt>
             <dd>背景服務做了什麼，以及它的錯誤。</dd>
           </div>
           <div>
-            <dt><code>/Library/Logs/<wbr>cc.ctsite.wggui.update.log</code></dt>
+            <dt><code>/Library/Logs/<wbr>cc.ctsite.turnout.update.log</code></dt>
             <dd>安裝更新時寫入。</dd>
           </div>
         </dl>
-        <p>App 自己的訊息在系統記錄中：</p>
-<pre><code>/usr/bin/log show --predicate 'subsystem == "cc.ctsite.wggui"' --last 1h</code></pre>
+        <p>「輔助說明」›「在Finder中顯示記錄檔」會在 Finder 裡顯示這兩個檔案。App 自己的訊息在系統記錄中：</p>
+<pre><code>/usr/bin/log show --predicate 'subsystem == "cc.ctsite.turnout"' --last 1h</code></pre>
         <p>在 zsh 中要打完整路徑，因為只打 <code>log</code> 會執行另一個內建指令。</p>
       </section>
 
       <section id="verify" aria-labelledby="verify-title">
         <h2 id="verify-title">自己檢查</h2>
-<pre><code>launchctl print system/cc.ctsite.wggui.daemon     <span class="c"># launchd 眼中的這個服務</span>
-ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnout 與 wggui-daemon</span>
+<pre><code>launchctl print system/cc.ctsite.turnout.daemon   <span class="c"># launchd 眼中的這個服務</span>
+ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnout 與 turnout-daemon</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh
-defaults read cc.ctsite.wggui analyticsClientID    <span class="c"># 隨機產生的安裝 ID</span>
+defaults read cc.ctsite.turnout analyticsClientID  <span class="c"># 隨機產生的安裝 ID</span>
 netstat -rn
 networksetup -getdnsservers Wi-Fi</code></pre>
         <p>解除安裝程式是 App 裡的一個 shell 指令稿，執行前可以先讀過。</p>
@@ -182,26 +234,22 @@ networksetup -getdnsservers Wi-Fi</code></pre>
         <h2 id="uninstall-title">解除安裝</h2>
         <p>有三種方式，執行的都是同一個指令稿：</p>
         <ul>
-          <li>在 Turnout 視窗開著時，選擇 Turnout › Uninstall Turnout…。確認對話框中的勾選框可以一併刪除已儲存的通道。</li>
-          <li>打開安裝程式，在列出安裝項目的地方選擇 Remove Turnout；若也想刪除已儲存的通道，再選 Delete saved tunnels。</li>
+          <li>在 Turnout 視窗開著時，選擇「Turnout」›「解除安裝Turnout⋯」。在確認對話框中勾選「同時刪除已儲存的通道及其私鑰」，就會一併刪除。</li>
+          <li>打開安裝程式，在列出安裝項目的地方選擇 Remove Turnout；若也想刪除已儲存的通道，再選 Delete saved tunnels（安裝程式目前只有英文）。</li>
           <li>在「終端機」中執行（加上 <code>--purge</code> 會一併刪除已儲存的通道）：
 <pre><code>sudo sh /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
           </li>
         </ul>
-        <p>每一種方式都會中斷所有通道（同時恢復路由與 DNS）、把背景服務從登入項目移除、復原當機的服務留下的變更，並刪除 App、它的記錄檔、安裝程式的收據，以及每位使用者的 Turnout 偏好設定、視窗狀態與快取。已儲存的通道及其私鑰位於 <code>/Library/Application Support/cc.ctsite.wggui</code>，除非你選擇刪除，否則會保留。</p>
+        <p>每一種方式都會中斷所有通道（同時恢復路由與 DNS）、把背景服務從登入項目移除、復原當機的服務留下的變更，並刪除 App、它的記錄檔、安裝程式的收據，以及每位使用者的 Turnout 偏好設定、視窗狀態與快取。已儲存的通道及其私鑰位於 <code>/Library/Application Support/cc.ctsite.turnout</code>，除非你選擇刪除，否則會保留。</p>
       </section>
 
-      <section id="names" aria-labelledby="names-title">
-        <h2 id="names-title">為什麼名稱是 wggui</h2>
-        <p>服務、它的資料夾、記錄檔和 App 的套件識別碼都以 <code>cc.ctsite.wggui</code> 開頭，因為 Turnout 在開發期間叫做 wgGUI。這些名稱寫在已簽署的檔案裡，所以改名時沒有跟著改。</p>
-      </section>
     </div>
   </div>
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">隱私權</a> <a href="https://github.com/tasict/Turnout/issues">回報問題</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">隱私權</a> <a href="https://github.com/tasict/Turnout/issues">回報問題</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a></p>
     <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
   </div>
 </footer>

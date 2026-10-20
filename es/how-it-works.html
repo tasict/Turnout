@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qué hace Turnout en tu Mac</title>
+<meta name="description" content="El servicio en segundo plano de Turnout se ejecuta como root. Qué es, qué cambia y con qué herramientas, dónde están las configuraciones, cuándo se ejecutan los hooks, a qué se conecta la app y cómo comprobarlo todo tú mismo.">
+<link rel="canonical" href="https://turnout.ctsite.cc/es/how-it-works.html">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/how-it-works.html">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/how-it-works.html">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works.html">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Qué hace Turnout en tu Mac">
+<meta property="og:description" content="El servicio en segundo plano, las herramientas que ejecuta, los archivos que guarda, los hooks que ejecuta y las conexiones de la app, con comandos para comprobar cada uno.">
+<meta property="og:url" content="https://turnout.ctsite.cc/es/how-it-works.html">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="La ventana principal de Turnout con la ruta de un túnel conectado">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="Analítica"><p>¿Puede este sitio contar tu visita con Google Analytics? No se envía nada a Google a menos que aceptes. <a href="privacy.html#analytics">Política de privacidad</a></p><p class="consent-actions"><button type="button" data-consent="denied">Rechazar</button> <button type="button" data-consent="granted">Aceptar</button></p></div></template>
+<!-- /analytics -->
+</head>
+<body>
+<a class="skip" href="#main">Ir al contenido</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
+      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="Sitio">
+      <ul>
+        <li><a href="how-it-works.html" aria-current="page">Cómo funciona</a></li>
+        <li class="lang"><a href="../how-it-works.html" hreflang="en" lang="en">English</a></li>
+        <li><a href="../zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="how-it-works.html" hreflang="es" lang="es" aria-current="page">Español</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="doc">
+  <div class="wrap doc-head">
+    <h1>Qué hace Turnout en tu Mac</h1>
+    <p class="lede">El código de Turnout no se publica, e instala un servicio que se ejecuta como root. Eso merece una explicación exacta: qué es el servicio, qué cambia, qué guarda, a qué se conecta y cómo comprobar cada cosa en tu propio Mac.</p>
+  </div>
+
+  <div class="wrap doc-grid">
+    <nav class="toc" aria-labelledby="toc-title">
+      <p id="toc-title">En esta página</p>
+      <ul>
+        <li><a href="#service">Dos partes</a></li>
+        <li><a href="#changes">Qué cambia</a></li>
+        <li><a href="#configs">Tus configuraciones</a></li>
+        <li><a href="#hooks">Hooks</a></li>
+        <li><a href="#clients">A quién responde</a></li>
+        <li><a href="#recovery">Después de un fallo</a></li>
+        <li><a href="#network">Conexiones de red</a></li>
+        <li><a href="#location">Ubicación y reglas de Wi-Fi</a></li>
+        <li><a href="#logs">Registros</a></li>
+        <li><a href="#verify">Compruébalo tú mismo</a></li>
+        <li><a href="#uninstall">Desinstalar</a></li>
+      </ul>
+    </nav>
+
+    <div class="doc-body">
+      <section id="service" aria-labelledby="service-title">
+        <h2 id="service-title">Dos partes: una app y un servicio en segundo plano</h2>
+        <p>La app, <code>Turnout.app</code>, se ejecuta con tu usuario, sin privilegios especiales. Muestra tus túneles, edita configuraciones y pide al servicio en segundo plano que los conecte y desconecte. Nunca toca tu tráfico de red.</p>
+        <p>El servicio en segundo plano es un LaunchDaemon, <code>cc.ctsite.turnout.daemon</code>, que se ejecuta como root. Su programa, <code>turnout-daemon</code>, está dentro de la app, en <code>/Applications/<wbr>Turnout.app/<wbr>Contents/<wbr>MacOS/</code>. Turnout lo registra mediante los ítems de inicio de macOS (SMAppService), así que macOS te pide que lo permitas en Ajustes del Sistema › General › Ítems de inicio y extensiones, y puedes desactivarlo ahí.</p>
+        <p>El servicio crea la interfaz <code>utun</code> de cada túnel y ejecuta WireGuard en espacio de usuario con <a href="https://github.com/mullvad/gotatun">GotaTun</a>, una implementación de Mullvad con licencia MPL-2.0, integrada en el servicio. Solo los paquetes del túnel pasan por él; el resto de tu tráfico lo enruta macOS como siempre. Los túneles siguen activos cuando cierras la app, porque viven en el servicio.</p>
+      </section>
+
+      <section id="changes" aria-labelledby="changes-title">
+        <h2 id="changes-title">Qué cambia y con qué herramientas</h2>
+        <p>Las direcciones, la MTU, las rutas y el DNS se cambian con los programas que usa wg-quick en macOS. Cada uno se ejecuta directamente con sus argumentos, nunca a través de un shell.</p>
+        <dl class="paths">
+          <div>
+            <dt><code>/sbin/ifconfig</code></dt>
+            <dd>Las direcciones y la MTU de la interfaz del túnel, y su activación.</dd>
+          </div>
+          <div>
+            <dt><code>/sbin/route</code></dt>
+            <dd>Las rutas hacia el túnel, la ruta que mantiene la dirección del servidor en tu red física y las rutas que evitan el túnel.</dd>
+          </div>
+          <div>
+            <dt><code>/usr/sbin/networksetup</code></dt>
+            <dd>Los servidores DNS y dominios de búsqueda de tus servicios de red.</dd>
+          </div>
+        </dl>
+        <p>Así, los comandos de siempre muestran exactamente lo que hizo:</p>
+<pre><code>netstat -rn
+networksetup -listallnetworkservices
+networksetup -getdnsservers Wi-Fi   <span class="c"># u otro servicio de la lista</span></code></pre>
+        <p>Cuando un túnel se desconecta, el servicio quita las rutas que añadió y restaura la configuración de DNS que había reemplazado.</p>
+      </section>
+
+      <section id="configs" aria-labelledby="configs-title">
+        <h2 id="configs-title">Tus configuraciones</h2>
+        <p>Los túneles se guardan en <code>/Library/Application Support/cc.ctsite.turnout/tunnels</code>, una carpeta que pertenece a root, un archivo por túnel con permisos 0600, claves privadas incluidas. Solo el servicio escribe ahí; la app le pide que guarde.</p>
+<pre><code>sudo ls -l "/Library/Application Support/cc.ctsite.turnout/tunnels"</code></pre>
+      </section>
+
+      <section id="hooks" aria-labelledby="hooks-title">
+        <h2 id="hooks-title">Hooks</h2>
+        <p><code>PreUp</code>, <code>PostUp</code>, <code>PreDown</code> y <code>PostDown</code> se ejecutan como root, mediante <code class="nb">/bin/bash -c</code>, con <code>%i</code> sustituido por la interfaz <code>utun</code> del túnel y <code>%I</code> por su nombre. Eso es tanto poder como <code>sudo</code>, así que:</p>
+        <ul>
+          <li>Los hooks solo salen de un archivo de configuración en disco, nunca de nada que la app envíe al servicio.</li>
+          <li>Guardar una configuración con hooks nuevos o cambiados requiere la aprobación de un administrador. El servicio comprueba esa aprobación por sí mismo, con Authorization Services de macOS; no se fía de lo que diga la app.</li>
+          <li>Los cambios que no tocan los hooks no necesitan una nueva aprobación.</li>
+        </ul>
+        <p>Lee los hooks de una configuración antes de aprobarlos, como harías con un script que ejecutas con <code>sudo</code>.</p>
+      </section>
+
+      <section id="clients" aria-labelledby="clients-title">
+        <h2 id="clients-title">A quién responde el servicio</h2>
+        <p>La app habla con el servicio por un socket Unix, <code>/var/run/<wbr>cc.ctsite.turnout.daemon.sock</code>. Con cada programa que se conecta, el servicio comprueba su firma de código y solo responde a un programa firmado por el mismo equipo de desarrollo con el identificador de paquete de Turnout, <code>cc.ctsite.turnout</code>. Los demás programas se rechazan.</p>
+      </section>
+
+      <section id="recovery" aria-labelledby="recovery-title">
+        <h2 id="recovery-title">Después de un fallo</h2>
+        <p>Cuando el servicio se detiene, macOS elimina la interfaz del túnel, y las rutas que tenía desaparecen con ella. Las rutas por tu puerta de enlace física y la configuración de DNS no, y el DNS configurado así sobrevive incluso a un reinicio. Por eso el servicio anota cada cambio en un registro antes de hacerlo y, en su siguiente arranque, deshace lo que dejó una ejecución anterior. Hasta terminar no conecta ningún túnel, y Turnout muestra lo que sigue pendiente, con Restaurar ahora.</p>
+        <p>Turnout › Reparar ajustes de red… hace lo mismo cuando lo pides. Si el servicio no está en marcha, pide una contraseña de administrador y aplica el registro por su cuenta.</p>
+      </section>
+
+      <section id="network" aria-labelledby="network-title">
+        <h2 id="network-title">Conexiones de red</h2>
+        <p>La app en sí se conecta a dos sitios, ambos por las actualizaciones: GitHub, para ver si hay una versión nueva, y Google Analytics, para contar la instalación.</p>
+        <ul>
+          <li>Solo la copia de <code>/Applications</code> comprueba por su cuenta, como mucho una vez por hora, cuando abres el menú o una ventana. Turnout › Buscar actualizaciones… comprueba cada vez que lo eliges.</li>
+          <li>La comprobación pide un archivo pequeño de la última versión de este proyecto en GitHub. No lleva ninguna cuenta ni nada sobre ti o tus túneles. GitHub ve la solicitud y tu dirección IP.</li>
+          <li>Con cada comprobación, la app envía un evento a Google Analytics (<code>www.google-analytics.com</code>, mediante su Measurement Protocol): un identificador de instalación aleatorio que Turnout crea la primera vez que se usa y guarda en sus preferencias, nunca derivado del hardware; la versión y la compilación de Turnout; la versión de macOS; la arquitectura del procesador; el idioma del sistema; y dos campos que Google Analytics necesita para contarlo, un número de sesión tomado de cuándo se abrió Turnout y un tiempo de interacción fijo. Nada sobre túneles, servidores, claves o redes, y ninguna cuenta ni identificador de usuario. Google ve la solicitud y tu dirección IP, según la <a href="https://policies.google.com/privacy">Política de privacidad de Google</a>.</li>
+          <li>Al desactivar Buscar actualizaciones automáticamente en General (Turnout › Ajustes…) se detienen tanto la comprobación automática como el informe. Buscar actualizaciones… sigue comprobando cuando lo eliges, sin enviar ningún informe.</li>
+          <li>Si instalas una actualización, el instalador sale de la misma versión, y Turnout comprueba su suma de verificación y su firma Developer ID antes de pasarlo al instalador de macOS.</li>
+        </ul>
+        <p>Tus túneles se conectan a los servidores de tus configuraciones, y tus hooks hacen lo que escribiste en ellos. Aparte de eso, ni la app ni el servicio se conectan a ningún sitio: sin informes de fallos propios, sin publicidad, sin cuenta.</p>
+      </section>
+
+      <section id="location" aria-labelledby="location-title">
+        <h2 id="location-title">Ubicación y reglas de Wi-Fi</h2>
+        <p>Una regla de Wi-Fi (<code>#@ OnWiFi</code>) necesita el nombre de la red a la que está conectado el Mac. macOS considera ese nombre información de ubicación, así que solo una app con acceso a la ubicación puede leerlo. Turnout pide acceso cuando configuras una regla de Wi-Fi, nunca al abrirse, y solo lo usa para el nombre de la red, nunca para saber dónde estás. Los nombres que pongas se quedan en el archivo de configuración de tu Mac. Sin acceso, las reglas de Wi-Fi no hacen nada.</p>
+      </section>
+
+      <section id="logs" aria-labelledby="logs-title">
+        <h2 id="logs-title">Registros</h2>
+        <dl class="paths">
+          <div>
+            <dt><code>/Library/Logs/<wbr>cc.ctsite.turnout.daemon.log</code></dt>
+            <dd>Lo que hizo el servicio en segundo plano, y sus errores.</dd>
+          </div>
+          <div>
+            <dt><code>/Library/Logs/<wbr>cc.ctsite.turnout.update.log</code></dt>
+            <dd>Se escribe al instalar una actualización.</dd>
+          </div>
+        </dl>
+        <p>Ayuda › Mostrar registros en el Finder muestra los dos archivos. Los mensajes de la propia app están en el registro del sistema:</p>
+<pre><code>/usr/bin/log show --predicate 'subsystem == "cc.ctsite.turnout"' --last 1h</code></pre>
+        <p>En zsh hace falta la ruta completa, porque <code>log</code> a secas es otro comando integrado.</p>
+      </section>
+
+      <section id="verify" aria-labelledby="verify-title">
+        <h2 id="verify-title">Compruébalo tú mismo</h2>
+<pre><code>launchctl print system/cc.ctsite.turnout.daemon   <span class="c"># el servicio, tal como lo ve launchd</span>
+ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnout y turnout-daemon</span>
+cat /Applications/Turnout.app/Contents/Resources/uninstall.sh
+defaults read cc.ctsite.turnout analyticsClientID  <span class="c"># el identificador de instalación aleatorio</span>
+netstat -rn
+networksetup -getdnsservers Wi-Fi</code></pre>
+        <p>El desinstalador es un script de shell dentro de la app. Léelo antes de ejecutarlo.</p>
+      </section>
+
+      <section id="uninstall" aria-labelledby="uninstall-title">
+        <h2 id="uninstall-title">Desinstalar</h2>
+        <p>Hay tres formas, y todas ejecutan ese mismo script:</p>
+        <ul>
+          <li>Con la ventana de Turnout abierta, elige Turnout › Desinstalar Turnout…. En la confirmación, Eliminar también los túneles guardados y sus claves privadas los borra también.</li>
+          <li>Abre el instalador y, donde lista lo que se va a instalar, elige Remove Turnout, y también Delete saved tunnels si lo quieres (por ahora el instalador solo está en inglés).</li>
+          <li>En Terminal, añadiendo <code>--purge</code> para borrar también los túneles guardados:
+<pre><code>sudo sh /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
+          </li>
+        </ul>
+        <p>Cada una desconecta todos los túneles, lo que restaura las rutas y el DNS; quita el servicio en segundo plano de Ítems de inicio; deshace lo que haya dejado un servicio que falló; y borra la app, sus registros, el recibo del instalador y, para cada usuario, las preferencias, el estado de las ventanas y las cachés de Turnout. Los túneles guardados y sus claves privadas, en <code>/Library/Application Support/cc.ctsite.turnout</code>, se quedan salvo que elijas borrarlos.</p>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">Privacidad</a> <a href="https://github.com/tasict/Turnout/issues">Informar de un problema</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a></p>
+    <p>© 2026 tasict. Mac y macOS son marcas comerciales de Apple Inc. WireGuard es una marca registrada de Jason A. Donenfeld.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -8,6 +8,8 @@
 <link rel="canonical" href="https://turnout.ctsite.cc/how-it-works.html">
 <link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/how-it-works.html">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/how-it-works.html">
 <link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works.html">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
@@ -26,7 +28,56 @@
 <meta property="og:image:alt" content="Turnout's main window showing a connected tunnel's path">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="Analytics"><p>Can this site count your visit with Google Analytics? Nothing is sent to Google unless you accept. <a href="privacy.html#analytics">Privacy policy</a></p><p class="consent-actions"><button type="button" data-consent="denied">Decline</button> <button type="button" data-consent="granted">Accept</button></p></div></template>
+<!-- /analytics -->
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -42,6 +93,8 @@
         <li><a href="how-it-works.html" aria-current="page">How it works</a></li>
         <li class="lang"><a href="how-it-works.html" hreflang="en" lang="en" aria-current="page">English</a></li>
         <li><a href="zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="es/how-it-works.html" hreflang="es" lang="es">Español</a></li>
       </ul>
     </nav>
   </div>
@@ -68,7 +121,6 @@
         <li><a href="#logs">Logs</a></li>
         <li><a href="#verify">Look for yourself</a></li>
         <li><a href="#uninstall">Uninstalling</a></li>
-        <li><a href="#names">Why the names say wggui</a></li>
       </ul>
     </nav>
 
@@ -76,7 +128,7 @@
       <section id="service" aria-labelledby="service-title">
         <h2 id="service-title">Two parts: an app and a background service</h2>
         <p>The app, <code>Turnout.app</code>, runs as you, with no special privileges. It shows your tunnels, edits configs and asks the background service to connect and disconnect them. It never touches your network traffic.</p>
-        <p>The background service is a LaunchDaemon, <code>cc.ctsite.wggui.daemon</code>, that runs as root. Its program, <code>wggui-daemon</code>, sits inside the app in <code>/Applications/<wbr>Turnout.app/<wbr>Contents/<wbr>MacOS/</code>. Turnout registers it through macOS's Login Items (SMAppService), so macOS asks you to allow it in System Settings › General › Login Items &amp; Extensions, and you can switch it off there.</p>
+        <p>The background service is a LaunchDaemon, <code>cc.ctsite.turnout.daemon</code>, that runs as root. Its program, <code>turnout-daemon</code>, sits inside the app in <code>/Applications/<wbr>Turnout.app/<wbr>Contents/<wbr>MacOS/</code>. Turnout registers it through macOS's Login Items (SMAppService), so macOS asks you to allow it in System Settings › General › Login Items &amp; Extensions, and you can switch it off there.</p>
         <p>The service creates each tunnel's <code>utun</code> interface and runs WireGuard in userspace with <a href="https://github.com/mullvad/gotatun">GotaTun</a>, an implementation by Mullvad under the MPL-2.0 licence, built into the service. Only the tunnel's packets pass through it; the rest of your traffic is routed by macOS as usual. Tunnels stay up when the app is closed, because they live in the service.</p>
       </section>
 
@@ -106,8 +158,8 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># or another service from th
 
       <section id="configs" aria-labelledby="configs-title">
         <h2 id="configs-title">Your configs</h2>
-        <p>Tunnels are saved in <code>/Library/Application Support/cc.ctsite.wggui/tunnels</code>, a folder that belongs to root, one file per tunnel with mode 0600, private keys included. Only the service writes there; the app asks it to save.</p>
-<pre><code>sudo ls -l "/Library/Application Support/cc.ctsite.wggui/tunnels"</code></pre>
+        <p>Tunnels are saved in <code>/Library/Application Support/cc.ctsite.turnout/tunnels</code>, a folder that belongs to root, one file per tunnel with mode 0600, private keys included. Only the service writes there; the app asks it to save.</p>
+<pre><code>sudo ls -l "/Library/Application Support/cc.ctsite.turnout/tunnels"</code></pre>
       </section>
 
       <section id="hooks" aria-labelledby="hooks-title">
@@ -123,7 +175,7 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># or another service from th
 
       <section id="clients" aria-labelledby="clients-title">
         <h2 id="clients-title">Who the service answers</h2>
-        <p>The app talks to the service over a Unix socket, <code>/var/run/<wbr>cc.ctsite.wggui.daemon.sock</code>. For every program that connects, the service checks its code signature and answers only a program signed by the same developer team with Turnout's bundle identifier, <code>cc.ctsite.wggui</code>. Other programs are refused.</p>
+        <p>The app talks to the service over a Unix socket, <code>/var/run/<wbr>cc.ctsite.turnout.daemon.sock</code>. For every program that connects, the service checks its code signature and answers only a program signed by the same developer team with Turnout's bundle identifier, <code>cc.ctsite.turnout</code>. Other programs are refused.</p>
       </section>
 
       <section id="recovery" aria-labelledby="recovery-title">
@@ -139,7 +191,7 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># or another service from th
           <li>Only the copy in <code>/Applications</code> checks on its own, at most once an hour, when you open the menu or a window. Turnout › Check for Updates… checks whenever you choose it.</li>
           <li>The check asks for a small file in this project's latest release on GitHub. It carries no account and nothing about you or your tunnels. GitHub sees the request and your IP address.</li>
           <li>With each check, the app sends one event to Google Analytics (<code>www.google-analytics.com</code>, through its Measurement Protocol): a random installation ID that Turnout makes up on first use and keeps in its preferences, never derived from the hardware; the Turnout version and build; the macOS version; the processor architecture; the system language; and two fields Google Analytics needs to count it, a session number taken from when Turnout was started and a fixed engagement time. Nothing about tunnels, servers, keys or networks, and no account or user ID. Google sees the request and your IP address, under the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</li>
-          <li>Switching off Check for updates automatically in Turnout › Settings › General stops both the automatic check and the report. Check for Updates… still checks when you choose it, and sends no report.</li>
+          <li>Switching off Check for updates automatically in General (Turnout › Settings…) stops both the automatic check and the report. Check for Updates… still checks when you choose it, and sends no report.</li>
           <li>If you install an update, the installer comes from the same release, and Turnout checks its checksum and its Developer ID signature before handing it to the macOS installer.</li>
         </ul>
         <p>Your tunnels connect to the servers in your configs, and your hooks do what you wrote in them. Apart from that, neither the app nor the service connects anywhere: no crash reporting of its own, no advertising, no account.</p>
@@ -154,25 +206,25 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># or another service from th
         <h2 id="logs-title">Logs</h2>
         <dl class="paths">
           <div>
-            <dt><code>/Library/Logs/<wbr>cc.ctsite.wggui.daemon.log</code></dt>
+            <dt><code>/Library/Logs/<wbr>cc.ctsite.turnout.daemon.log</code></dt>
             <dd>What the background service did, and its errors.</dd>
           </div>
           <div>
-            <dt><code>/Library/Logs/<wbr>cc.ctsite.wggui.update.log</code></dt>
+            <dt><code>/Library/Logs/<wbr>cc.ctsite.turnout.update.log</code></dt>
             <dd>Written when an update is installed.</dd>
           </div>
         </dl>
-        <p>The app's own messages are in the system log:</p>
-<pre><code>/usr/bin/log show --predicate 'subsystem == "cc.ctsite.wggui"' --last 1h</code></pre>
+        <p>Help › Show Logs in Finder shows both files. The app's own messages are in the system log:</p>
+<pre><code>/usr/bin/log show --predicate 'subsystem == "cc.ctsite.turnout"' --last 1h</code></pre>
         <p>The full path matters in zsh, where a plain <code>log</code> is a different, built-in command.</p>
       </section>
 
       <section id="verify" aria-labelledby="verify-title">
         <h2 id="verify-title">Look for yourself</h2>
-<pre><code>launchctl print system/cc.ctsite.wggui.daemon     <span class="c"># the service, as launchd sees it</span>
-ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnout and wggui-daemon</span>
+<pre><code>launchctl print system/cc.ctsite.turnout.daemon   <span class="c"># the service, as launchd sees it</span>
+ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnout and turnout-daemon</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh
-defaults read cc.ctsite.wggui analyticsClientID    <span class="c"># the random installation ID</span>
+defaults read cc.ctsite.turnout analyticsClientID  <span class="c"># the random installation ID</span>
 netstat -rn
 networksetup -getdnsservers Wi-Fi</code></pre>
         <p>The uninstaller is a shell script inside the app. Read it before you run it.</p>
@@ -182,26 +234,22 @@ networksetup -getdnsservers Wi-Fi</code></pre>
         <h2 id="uninstall-title">Uninstalling</h2>
         <p>There are three ways, and they all run that same script:</p>
         <ul>
-          <li>With Turnout's window open, choose Turnout › Uninstall Turnout…. A checkbox in the confirmation deletes saved tunnels too.</li>
+          <li>With Turnout's window open, choose Turnout › Uninstall Turnout…. In the confirmation, Also delete saved tunnels and their private keys deletes them too.</li>
           <li>Open the installer and, where it lists what to install, choose Remove Turnout, and Delete saved tunnels if you want that as well.</li>
           <li>In Terminal, adding <code>--purge</code> to delete saved tunnels as well:
 <pre><code>sudo sh /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
           </li>
         </ul>
-        <p>Each one disconnects every tunnel, which restores routes and DNS; takes the background service out of Login Items; undoes anything a crashed service left behind; and deletes the app, its logs, the installer's receipt, and every user's Turnout preferences, saved window state and caches. Saved tunnels and their private keys, in <code>/Library/Application Support/cc.ctsite.wggui</code>, stay unless you choose to delete them.</p>
+        <p>Each one disconnects every tunnel, which restores routes and DNS; takes the background service out of Login Items; undoes anything a crashed service left behind; and deletes the app, its logs, the installer's receipt, and every user's Turnout preferences, saved window state and caches. Saved tunnels and their private keys, in <code>/Library/Application Support/cc.ctsite.turnout</code>, stay unless you choose to delete them.</p>
       </section>
 
-      <section id="names" aria-labelledby="names-title">
-        <h2 id="names-title">Why the names say wggui</h2>
-        <p>The service, its folder, its log and the app's bundle identifier start with <code>cc.ctsite.wggui</code> because Turnout was called wgGUI while it was being built. They are written into signed files, so they stayed when the name changed.</p>
-      </section>
     </div>
   </div>
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">Privacy</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">Privacy</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a> <a href="es/how-it-works.html" hreflang="es" lang="es">Español</a></p>
     <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
   </div>
 </footer>
