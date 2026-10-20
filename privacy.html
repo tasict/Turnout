@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Turnout privacy policy</title>
-<meta name="description" content="Turnout collects nothing: no account, no analytics, no third-party SDKs. The only connection the app itself makes is its check for updates on GitHub.">
+<meta name="description" content="Turnout has no account, no advertising and no crash reporting. The app sends its update check and one anonymous report with it, and one switch turns both off.">
 <link rel="canonical" href="https://turnout.ctsite.cc/privacy.html">
 <link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/privacy.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/privacy.html">
@@ -18,7 +18,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout privacy policy">
-<meta property="og:description" content="Turnout collects nothing. The only connection the app itself makes is its check for updates on GitHub.">
+<meta property="og:description" content="What Turnout sends: the update check and one anonymous report with it, both off with one switch. Nothing about your tunnels.">
 <meta property="og:url" content="https://turnout.ctsite.cc/privacy.html">
 <meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
 <meta property="og:image:width" content="1600">
@@ -55,15 +55,17 @@
 
   <div class="wrap">
     <div class="doc-body">
-      <p class="short">Turnout collects nothing about you. It has no account, no analytics and no third-party SDKs, and the only connection the app itself makes is its check for updates.</p>
+      <p class="short">Turnout has no account, no advertising and no crash reporting, and nothing in it looks at what you do with your tunnels. What the app sends is its check for updates and, with each check, one anonymous report that counts the installation. One switch turns both off.</p>
 
       <section id="connections" aria-labelledby="connections-title">
         <h2 id="connections-title">What leaves your Mac</h2>
         <ul>
-          <li><strong>The update check.</strong> The app asks GitHub for a small file in Turnout's latest release when you open the menu or a window, at most once an hour, and whenever you choose Check for Updates…. The request carries nothing about you or your tunnels. GitHub sees the request and your IP address, as described in the <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>. Installing an update downloads the installer from the same place.</li>
+          <li><strong>The update check.</strong> Turnout asks GitHub for a small file in its latest release when you open the menu or a window, at most once an hour, and whenever you choose Check for Updates…. The request carries nothing about you or your tunnels. GitHub sees the request and your IP address, as described in the <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>. Installing an update downloads the installer from the same place.</li>
+          <li><strong>An anonymous report with each check.</strong> Each check also sends one event to Google Analytics, at google-analytics.com, so the developer can tell how many installations are in use and on which versions. It contains a random installation ID that Turnout makes up the first time it is used and keeps in its preferences (it is not derived from your Mac's hardware), the Turnout version and build, the macOS version, the processor architecture, the system language, and the time Turnout was started, which Google Analytics uses to group the report into a session. Nothing about your tunnels, servers, keys or networks is ever sent, and there is no account or user ID. Google sees the request and your IP address; its use of the data is described in the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</li>
           <li><strong>Your tunnels.</strong> Traffic you send through a tunnel goes to the server in its config, and is between you and whoever runs that server. Hooks do what you wrote in them.</li>
         </ul>
-        <p>Nothing else: no analytics, no crash reporting of its own, no advertising, no tracking.</p>
+        <p>To stop both the check and the report, switch off Check for updates automatically in Turnout › Settings › General. Turnout then checks only when you choose Check for Updates…, and sends no report at all.</p>
+        <p>Nothing else leaves your Mac: no crash reporting of its own, no advertising, no tracking, no third-party SDKs.</p>
       </section>
 
       <section id="location" aria-labelledby="location-title">
@@ -75,15 +77,32 @@
         <h2 id="on-your-mac-title">What stays on your Mac</h2>
         <ul>
           <li>Your tunnels, private keys included, in <code>/Library/Application Support/cc.ctsite.wggui/tunnels</code>, which only root can read.</li>
-          <li>The app's preferences, under <code>cc.ctsite.wggui</code>: things like the colour each network interface is shown in, and when a schedule last acted.</li>
+          <li>The app's preferences, under <code>cc.ctsite.wggui</code>: things like the colour each network interface is shown in, when a schedule last acted, and the random installation ID.</li>
           <li>Logs: <code>/Library/Logs/<wbr>cc.ctsite.wggui.daemon.log</code> from the background service, <code>/Library/Logs/<wbr>cc.ctsite.wggui.update.log</code> when an update is installed, and the app's messages in the macOS system log.</li>
         </ul>
-        <p>Uninstalling Turnout deletes the app, its logs and every user's Turnout preferences, and the saved tunnels too if you choose. <a href="how-it-works.html#uninstall">How to uninstall</a></p>
+        <p>Uninstalling Turnout deletes the app, its logs and every user's Turnout preferences, the installation ID with them, and the saved tunnels too if you choose. A new installation makes up a new ID. <a href="how-it-works.html#uninstall">How to uninstall</a></p>
       </section>
+
+      <!-- analytics:on -->
+      <section id="analytics" aria-labelledby="analytics-title" hidden>
+        <h2 id="analytics-title">Analytics on this website</h2>
+        <p>This website uses Google Analytics only if you choose Accept in the bar at the bottom of the page. Until you do, and if you choose Decline, no analytics code is loaded, nothing is sent to Google and no cookie is set.</p>
+        <p>Once you accept, Google Analytics records the pages you view, your approximate location, worked out from your IP address (Google Analytics does not keep the address itself), your browser and device type, and the site that sent you here. It sets cookies on this site, named <code>_ga</code>, to recognise a return visit.</p>
+        <p>This is separate from the app's report above: your choice here does not change what the app sends, and the switch in the app does not change this website.</p>
+        <p>Your choice is kept in your browser's storage for this site. To change it, use the button below, or clear this site's data in your browser, which also removes the Google Analytics cookies. Google's use of the data is described in the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</p>
+        <p><button type="button" class="consent-reset" data-consent-reset>Change my analytics choice</button></p>
+      </section>
+      <!-- /analytics:on -->
 
       <section id="website" aria-labelledby="website-title">
         <h2 id="website-title">This website</h2>
-        <p>This site has no analytics, no cookies and no scripts, and loads nothing from other sites. It is hosted on GitHub Pages, and GitHub may log visits as described in the <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>.</p>
+        <!-- analytics:off -->
+        <p>This site has no analytics, no cookies and no scripts, and loads nothing from other sites.</p>
+        <!-- /analytics:off -->
+        <!-- analytics:on -->
+        <p hidden>This site loads nothing from other sites except Google Analytics, and that only after you accept it, as described above. It sets no cookies of its own.</p>
+        <!-- /analytics:on -->
+        <p>It is hosted on GitHub Pages, and GitHub may log visits as described in the <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>.</p>
       </section>
 
       <section id="contact" aria-labelledby="contact-title">

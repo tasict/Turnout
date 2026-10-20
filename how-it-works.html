@@ -18,7 +18,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="What Turnout does to your Mac">
-<meta property="og:description" content="The background service, the tools it runs, the files it keeps, the hooks it runs and the one connection the app makes, with commands to check each of them.">
+<meta property="og:description" content="The background service, the tools it runs, the files it keeps, the hooks it runs and the connections the app makes, with commands to check each of them.">
 <meta property="og:url" content="https://turnout.ctsite.cc/how-it-works.html">
 <meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
 <meta property="og:image:width" content="1600">
@@ -134,13 +134,15 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># or another service from th
 
       <section id="network" aria-labelledby="network-title">
         <h2 id="network-title">Network connections</h2>
-        <p>The app itself connects to one place: GitHub, to see whether there is a new version.</p>
+        <p>The app itself connects to two places, both for updates: GitHub, to see whether there is a new version, and Google Analytics, to count the installation.</p>
         <ul>
           <li>Only the copy in <code>/Applications</code> checks on its own, at most once an hour, when you open the menu or a window. Turnout › Check for Updates… checks whenever you choose it.</li>
           <li>The check asks for a small file in this project's latest release on GitHub. It carries no account and nothing about you or your tunnels. GitHub sees the request and your IP address.</li>
+          <li>With each check, the app sends one event to Google Analytics (<code>www.google-analytics.com</code>, through its Measurement Protocol): a random installation ID that Turnout makes up on first use and keeps in its preferences, never derived from the hardware; the Turnout version and build; the macOS version; the processor architecture; the system language; and two fields Google Analytics needs to count it, a session number taken from when Turnout was started and a fixed engagement time. Nothing about tunnels, servers, keys or networks, and no account or user ID. Google sees the request and your IP address, under the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</li>
+          <li>Switching off Check for updates automatically in Turnout › Settings › General stops both the automatic check and the report. Check for Updates… still checks when you choose it, and sends no report.</li>
           <li>If you install an update, the installer comes from the same release, and Turnout checks its checksum and its Developer ID signature before handing it to the macOS installer.</li>
         </ul>
-        <p>Your tunnels connect to the servers in your configs, and your hooks do what you wrote in them. Apart from that, neither the app nor the service connects anywhere: no analytics, no crash reporting of its own, no account.</p>
+        <p>Your tunnels connect to the servers in your configs, and your hooks do what you wrote in them. Apart from that, neither the app nor the service connects anywhere: no crash reporting of its own, no advertising, no account.</p>
       </section>
 
       <section id="location" aria-labelledby="location-title">
@@ -170,6 +172,7 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># or another service from th
 <pre><code>launchctl print system/cc.ctsite.wggui.daemon     <span class="c"># the service, as launchd sees it</span>
 ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnout and wggui-daemon</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh
+defaults read cc.ctsite.wggui analyticsClientID    <span class="c"># the random installation ID</span>
 netstat -rn
 networksetup -getdnsservers Wi-Fi</code></pre>
         <p>The uninstaller is a shell script inside the app. Read it before you run it.</p>

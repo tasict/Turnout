@@ -29,6 +29,12 @@ The installer is signed with a Developer ID but not yet notarized by Apple, so m
 
 What the background service does to your Mac, and how to check it, is on [What Turnout does to your Mac](https://turnout.ctsite.cc/how-it-works.html).
 
+## What Turnout sends
+
+Turnout has no account, no advertising and no crash reporting. The installed app checks GitHub for a new version when you open its menu or a window (at most once an hour) and when you choose Check for Updates…. With each check it also sends one anonymous event to Google Analytics, so the developer can tell how many installations are in use and on which versions: a random installation ID that Turnout makes up on first use and keeps in its preferences (not derived from the hardware), the Turnout version and build, the macOS version, the processor architecture and the system language. Nothing about your tunnels, servers, keys or networks is ever sent. That request goes to google-analytics.com and is covered by the [Google Privacy Policy](https://policies.google.com/privacy).
+
+Switching off **Check for updates automatically** in Turnout › Settings › General stops both the check and the report. The details are in the [privacy policy](https://turnout.ctsite.cc/privacy.html).
+
 ## Reporting a problem
 
 [Open an issue](https://github.com/tasict/Turnout/issues/new?template=bug_report.md). It helps to include:
@@ -43,6 +49,10 @@ What the background service does to your Mac, and how to check it, is on [What T
   ```
 
 Issues are public: leave out private keys, preshared keys, server addresses and whole config files.
+
+## Support the project
+
+Turnout has no ads and no paid version. If it is useful to you, you can [buy me a boba](https://tasict.bobaboba.me) (paid by card, no PayPal account needed) or [tip with PayPal](https://paypal.me/tasict).
 
 ## The website
 

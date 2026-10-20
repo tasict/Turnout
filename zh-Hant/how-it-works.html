@@ -18,7 +18,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout 對你的 Mac 做了什麼">
-<meta property="og:description" content="背景服務、它執行的工具、它保存的檔案、它執行的 hook，以及 App 唯一的網路連線，每一項都附上檢查指令。">
+<meta property="og:description" content="背景服務、它執行的工具、它保存的檔案、它執行的 hook，以及 App 的網路連線，每一項都附上檢查指令。">
 <meta property="og:url" content="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
 <meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
 <meta property="og:image:width" content="1600">
@@ -134,13 +134,15 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># 或清單中的其他服�
 
       <section id="network" aria-labelledby="network-title">
         <h2 id="network-title">網路連線</h2>
-        <p>App 本身只連到一個地方：GitHub，用來查看有沒有新版本。</p>
+        <p>App 本身只連到兩個地方，都和更新有關：GitHub，用來查看有沒有新版本；以及 Google Analytics，用來計算安裝數。</p>
         <ul>
           <li>只有 <code>/Applications</code> 裡的那份會自動檢查，最多每小時一次，時機是你打開選單或視窗時。Turnout › Check for Updates… 則是你選它就檢查。</li>
           <li>檢查時會向 GitHub 上這個專案的最新版本索取一個小檔案。請求不帶任何帳號，也不含任何關於你或你的通道的資訊。GitHub 看得到這個請求和你的 IP 位址。</li>
+          <li>每次檢查時，App 也會送出一個事件給 Google Analytics（<code>www.google-analytics.com</code>，透過它的 Measurement Protocol）：一個 Turnout 第一次使用時隨機產生、存在偏好設定裡的安裝 ID，絕不是從硬體推算出來的；Turnout 的版本與建置編號；macOS 版本；處理器架構；系統語言；以及 Google Analytics 計數需要的兩個欄位：取自 Turnout 啟動時間的工作階段編號，和一個固定的參與時間。不含任何關於通道、伺服器、金鑰或網路的資訊，也沒有帳號或使用者 ID。Google 看得到這個請求和你的 IP 位址，適用 <a href="https://policies.google.com/privacy">Google 隱私權政策</a>。</li>
+          <li>在 Turnout › Settings › General 關掉 Check for updates automatically，自動檢查和這份回報都會停止。之後選 Check for Updates… 仍會檢查，但不會送出回報。</li>
           <li>如果你安裝更新，安裝程式來自同一個版本，Turnout 會先檢查它的檢查碼與 Developer ID 簽署，才交給 macOS 的安裝程式。</li>
         </ul>
-        <p>你的通道連到設定檔裡的伺服器，hook 則做你寫在裡面的事。除此之外，App 和服務都不會連到任何地方：沒有分析工具、沒有自家的當機回報，也沒有帳號。</p>
+        <p>你的通道連到設定檔裡的伺服器，hook 則做你寫在裡面的事。除此之外，App 和服務都不會連到任何地方：沒有自家的當機回報、沒有廣告，也沒有帳號。</p>
       </section>
 
       <section id="location" aria-labelledby="location-title">
@@ -170,6 +172,7 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># 或清單中的其他服�
 <pre><code>launchctl print system/cc.ctsite.wggui.daemon     <span class="c"># launchd 眼中的這個服務</span>
 ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnout 與 wggui-daemon</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh
+defaults read cc.ctsite.wggui analyticsClientID    <span class="c"># 隨機產生的安裝 ID</span>
 netstat -rn
 networksetup -getdnsservers Wi-Fi</code></pre>
         <p>解除安裝程式是 App 裡的一個 shell 指令稿，執行前可以先讀過。</p>
