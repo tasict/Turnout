@@ -7,7 +7,7 @@
 
 Turnout is a VPN client for macOS that connects to WireGuard servers the way `wg-quick` does, in a native app: your `PreUp`/`PostUp` hooks run, your routes stay yours, and you choose which network interface the tunnel leaves through. It lives in the menu bar, follows the network as it changes, can connect by schedule or Wi-Fi network, and cleans up after itself.
 
-Turnout's source code is not published here. This repository holds:
+This repository holds:
 
 - the website, <https://turnout.ctsite.cc/>
 - the installer downloads, under [Releases](https://github.com/tasict/Turnout/releases)
