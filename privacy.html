@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Turnout privacy policy</title>
-<meta name="description" content="Turnout has no account, no advertising and no crash reporting. The app sends its update check and one anonymous report with it, and one switch turns both off.">
+<meta name="description" content="Turnout has no account, no advertising and no crash reporting. The app sends its update check with one anonymous report, and, once you have bought a license, a license check to Polar about once a week.">
 <link rel="canonical" href="https://turnout.ctsite.cc/privacy.html">
 <link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/privacy.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/privacy.html">
@@ -20,7 +20,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout privacy policy">
-<meta property="og:description" content="What Turnout sends: the update check and one anonymous report with it, both off with one switch. Nothing about your tunnels.">
+<meta property="og:description" content="What Turnout sends: the update check and one anonymous report with it, both off with one switch, and, once you have bought a license, a license check about once a week. Nothing about your tunnels.">
 <meta property="og:url" content="https://turnout.ctsite.cc/privacy.html">
 <meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
 <meta property="og:image:width" content="1600">
@@ -103,22 +103,36 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <main id="main" class="doc policy">
   <div class="wrap doc-head">
     <h1>Privacy policy</h1>
-    <p class="effective">Effective 20 October 2026</p>
+    <p class="effective">Effective 25 October 2026</p>
   </div>
 
   <div class="wrap">
     <div class="doc-body">
-      <p class="short">Turnout has no account, no advertising and no crash reporting, and nothing in it looks at what you do with your tunnels. What the app sends is its check for updates and, with each check, one anonymous report that counts the installation. One switch turns both off.</p>
+      <p class="short">Turnout has no account, no advertising and no crash reporting, and nothing in it looks at what you do with your tunnels. What the app sends is its check for updates and, with each check, one anonymous report that counts the installation. One switch turns both off. Once you have bought a license, the app also checks it with Polar, which sells Turnout, about once a week. No license check runs during the trial.</p>
 
       <section id="connections" aria-labelledby="connections-title">
         <h2 id="connections-title">What leaves your Mac</h2>
         <ul>
           <li><strong>The update check.</strong> Turnout asks GitHub for a small file in its latest release when you open the menu or a window, at most once an hour, and whenever you choose Check for Updates…. The request carries nothing about you or your tunnels. GitHub sees the request and your IP address, as described in the <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>. Installing an update downloads the installer from the same place.</li>
           <li><strong>An anonymous report with each check.</strong> Each check also sends one event to Google Analytics, at google-analytics.com, so the developer can tell how many installations are in use and on which versions. It contains a random installation ID that Turnout makes up the first time it is used and keeps in its preferences (it is not derived from your Mac's hardware), the Turnout version and build, the macOS version, the processor architecture, the system language, and the time Turnout was started, which Google Analytics uses to group the report into a session. Nothing about your tunnels, servers, keys or networks is ever sent, and there is no account or user ID. Google sees the request and your IP address; its use of the data is described in the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</li>
+          <li><strong>The license.</strong> Once you have bought one, activating a Mac, a check about once a week and removing a Mac go to Polar, which sells Turnout, and the license is kept in your iCloud account so your other Macs find it. Nothing goes to Polar during the trial. What each step sends is listed under <a href="#license">The license</a>.</li>
           <li><strong>Your tunnels.</strong> Traffic you send through a tunnel goes to the server in its config, and is between you and whoever runs that server. Hooks do what you wrote in them.</li>
         </ul>
-        <p>To stop both the check and the report, switch off Check for updates automatically in General (Turnout › Settings…). Turnout then checks only when you choose Check for Updates…, and sends no report at all.</p>
+        <p>To stop both the check and the report, switch off Check for updates automatically in General (Turnout › Settings…). Turnout then checks only when you choose Check for Updates…, and sends no report at all. That switch does not change the license check, which only runs once you have bought a license.</p>
         <p>Nothing else leaves your Mac: no crash reporting of its own, no advertising, no tracking, no third-party SDKs.</p>
+      </section>
+
+      <section id="license" aria-labelledby="license-title">
+        <h2 id="license-title">The license</h2>
+        <p>Polar (polar.sh) sells Turnout as the seller of record: it takes the payment, handles tax, issues the receipt and keeps your order. Nothing is sent to Polar during the trial; the update check and its report run as they always do and know nothing about the trial. Once you have bought a license, this is what is sent about it, and when:</p>
+        <ul>
+          <li><strong>Buying.</strong> What you type into Polar's checkout: your email address, your name, your card (handled by Stripe) and your billing country. Polar keeps it under the <a href="https://polar.sh/legal/privacy">Polar Privacy Policy</a>.</li>
+          <li><strong>Activating a Mac</strong>, when you enter your key or use it on another Mac: the license key; the name you give the Mac (its computer name, unless you change it before activating); the Mac's model identifier; the macOS and Turnout versions; and a one-way hash of the Mac's hardware identifier. This goes to Polar's license service at api.polar.sh, which sees your IP address, as with any request.</li>
+          <li><strong>Checking the license</strong>, about once a week when you open Turnout's menu or window, and whenever you choose Check Now: the license key, this Mac's activation ID and the same hash, to api.polar.sh.</li>
+          <li><strong>Removing a Mac</strong> from the license: the key and that Mac's activation ID, to api.polar.sh.</li>
+          <li><strong>Your other Macs.</strong> So that your other Macs find the license, the key, the email address you bought with, and for each Mac using it its name, model, macOS and Turnout versions, activation ID and the same hash are kept as records in Turnout's area of your iCloud account (CloudKit). Turnout reads them when it starts and when you open its menu or window, during the trial too, to find a license bought on another of your Macs; it writes them only after an activation, a check or a removal. They are stored with Apple's standard iCloud protection, not end-to-end encrypted, and the developer cannot read them. None of this happens while the Mac is not signed in to iCloud.</li>
+        </ul>
+        <p>Nothing about your tunnels, servers, tunnel keys or networks is ever part of it. The hash cannot be turned back into the hardware identifier; it is there so the license can tell your Macs apart. A Mac that cannot reach Polar keeps working: nothing in Turnout stops because a check failed. The License pane in Turnout's window shows what Turnout keeps about your license.</p>
       </section>
 
       <section id="location" aria-labelledby="location-title">
@@ -131,9 +145,10 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <ul>
           <li>Your tunnels, private keys included, in <code>/Library/Application Support/cc.ctsite.turnout/tunnels</code>, which only root can read.</li>
           <li>The app's preferences, under <code>cc.ctsite.turnout</code>: things like the colour each network interface is shown in, when a schedule last acted, and the random installation ID.</li>
+          <li>The license item in this Mac's keychain, <code>cc.ctsite.turnout.license</code>: when the trial started and, once you have bought, the key, the email address you bought with, this Mac's activation and when the license was last checked. It never leaves this Mac.</li>
           <li>Logs: <code>/Library/Logs/<wbr>cc.ctsite.turnout.daemon.log</code> from the background service, <code>/Library/Logs/<wbr>cc.ctsite.turnout.update.log</code> when an update is installed, and the app's messages in the macOS system log.</li>
         </ul>
-        <p>Uninstalling Turnout deletes the app, its logs and every user's Turnout preferences, the installation ID with them, and the saved tunnels too if you choose. A new installation makes up a new ID. <a href="how-it-works.html#uninstall">How to uninstall</a></p>
+        <p>Uninstalling Turnout deletes the app, its logs and every user's Turnout preferences, the installation ID with them, and the saved tunnels too if you choose. A new installation makes up a new ID. The license item stays in the keychain, so installing again does not start a new trial. Uninstall Turnout… in the app also takes this Mac off your license and removes its record from your iCloud account, unless you choose otherwise in the confirmation; the installer and the Terminal script cannot, so after those, remove the Mac in the License pane on another Mac or in Polar's customer portal. The key your other Macs use stays in your iCloud account. <a href="how-it-works.html#uninstall">How to uninstall</a></p>
       </section>
 
       <!-- analytics:on -->
@@ -173,7 +188,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">What Turnout does to your Mac</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/privacy.html" hreflang="ja" lang="ja">日本語</a> <a href="es/privacy.html" hreflang="es" lang="es">Español</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">What Turnout does to your Mac</a> <a href="license.html">License terms</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/privacy.html" hreflang="ja" lang="ja">日本語</a> <a href="es/privacy.html" hreflang="es" lang="es">Español</a></p>
     <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
   </div>
 </footer>

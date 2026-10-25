@@ -117,6 +117,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <li><a href="#clients">Who it answers</a></li>
         <li><a href="#recovery">After a crash</a></li>
         <li><a href="#network">Network connections</a></li>
+        <li><a href="#license">The license</a></li>
         <li><a href="#location">Location and Wi-Fi rules</a></li>
         <li><a href="#logs">Logs</a></li>
         <li><a href="#verify">Look for yourself</a></li>
@@ -129,7 +130,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <h2 id="service-title">Two parts: an app and a background service</h2>
         <p>The app, <code>Turnout.app</code>, runs as you, with no special privileges. It shows your tunnels, edits configs and asks the background service to connect and disconnect them. It never touches your network traffic.</p>
         <p>The background service is a LaunchDaemon, <code>cc.ctsite.turnout.daemon</code>, that runs as root. Its program, <code>turnout-daemon</code>, sits inside the app in <code>/Applications/<wbr>Turnout.app/<wbr>Contents/<wbr>MacOS/</code>. Turnout registers it through macOS's Login Items (SMAppService), so macOS asks you to allow it in System Settings › General › Login Items &amp; Extensions, and you can switch it off there.</p>
-        <p>The service creates each tunnel's <code>utun</code> interface and runs WireGuard in userspace with <a href="https://github.com/mullvad/gotatun">GotaTun</a>, an implementation by Mullvad under the MPL-2.0 licence, built into the service. Only the tunnel's packets pass through it; the rest of your traffic is routed by macOS as usual. Tunnels stay up when the app is closed, because they live in the service.</p>
+        <p>The service creates each tunnel's <code>utun</code> interface and runs WireGuard in userspace with <a href="https://github.com/mullvad/gotatun">GotaTun</a>, an implementation by Mullvad under the MPL-2.0 license, built into the service. Only the tunnel's packets pass through it; the rest of your traffic is routed by macOS as usual. Tunnels stay up when the app is closed, because they live in the service.</p>
       </section>
 
       <section id="changes" aria-labelledby="changes-title">
@@ -186,7 +187,7 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># or another service from th
 
       <section id="network" aria-labelledby="network-title">
         <h2 id="network-title">Network connections</h2>
-        <p>The app itself connects to two places, both for updates: GitHub, to see whether there is a new version, and Google Analytics, to count the installation.</p>
+        <p>For updates, the app itself connects to two places: GitHub, to see whether there is a new version, and Google Analytics, to count the installation. For the license it connects to Polar, once you have bought one, and to your iCloud account; <a href="#license">The license</a> below says when, and with what.</p>
         <ul>
           <li>Only the copy in <code>/Applications</code> checks on its own, at most once an hour, when you open the menu or a window. Turnout › Check for Updates… checks whenever you choose it.</li>
           <li>The check asks for a small file in this project's latest release on GitHub. It carries no account and nothing about you or your tunnels. GitHub sees the request and your IP address.</li>
@@ -195,6 +196,19 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># or another service from th
           <li>If you install an update, the installer comes from the same release, and Turnout checks its checksum and its Developer ID signature before handing it to the macOS installer.</li>
         </ul>
         <p>Your tunnels connect to the servers in your configs, and your hooks do what you wrote in them. Apart from that, neither the app nor the service connects anywhere: no crash reporting of its own, no advertising, no account.</p>
+      </section>
+
+      <section id="license" aria-labelledby="license-title">
+        <h2 id="license-title">The license</h2>
+        <p>Turnout runs in full for a 7-day trial on each Mac, with 7 more days once if you ask; after that, connecting a tunnel needs a license. Only connecting: tunnels that are connected stay connected, and disconnecting, editing, importing, exporting, Repair Network Settings… and uninstalling always work. Nothing is ever disconnected for licensing reasons.</p>
+        <p>Licensing lives in the app. The background service knows nothing about it, and never connects to Polar or iCloud.</p>
+        <ul>
+          <li>No license check runs during the trial. The trial's dates are kept in this Mac's keychain, in an item named <code>cc.ctsite.turnout.license</code>, which stays when Turnout is uninstalled, so installing again does not start a new trial.</li>
+          <li>Once you have bought, the app calls Polar's license service, <code>api.polar.sh</code>, when you activate this Mac (the key, the name you give the Mac, its model identifier, the macOS and Turnout versions, and a one-way hash of its hardware identifier); about once a week when you open the menu or the window, and whenever you choose Check Now (the key, this Mac's activation ID and the hash); and when you remove a Mac (the key and that Mac's activation ID). No account, and nothing about your tunnels.</li>
+          <li>If Polar cannot be reached, nothing changes: a licensed Mac keeps connecting, however long it stays offline, and the License pane only says when the license was last confirmed.</li>
+          <li>The key and the list of Macs using it are kept as records in Turnout's area of your iCloud account (CloudKit), so your other Macs signed in to the same account find the license and use it with one click. The app reads them when it starts and when you open its menu or window, and writes them only after an activation, a check or a removal. They are stored with Apple's standard iCloud protection, not end-to-end encrypted. A Mac that is not signed in to iCloud syncs nothing; there, you enter the key by hand.</li>
+        </ul>
+        <p>Everything that is sent, and to whom, is listed in the <a href="privacy.html#license">privacy policy</a>; the terms are on <a href="license.html">License terms</a>.</p>
       </section>
 
       <section id="location" aria-labelledby="location-title">
@@ -234,13 +248,14 @@ networksetup -getdnsservers Wi-Fi</code></pre>
         <h2 id="uninstall-title">Uninstalling</h2>
         <p>There are three ways, and they all run that same script:</p>
         <ul>
-          <li>With Turnout's window open, choose Turnout › Uninstall Turnout…. In the confirmation, Also delete saved tunnels and their private keys deletes them too.</li>
+          <li>With Turnout's window open, choose Turnout › Uninstall Turnout…. In the confirmation, Also delete saved tunnels and their private keys deletes them too. On a licensed Mac, it first takes this Mac off your license and removes its record from your iCloud account, unless you choose otherwise in the confirmation.</li>
           <li>Open the installer and, where it lists what to install, choose Remove Turnout, and Delete saved tunnels if you want that as well.</li>
           <li>In Terminal, adding <code>--purge</code> to delete saved tunnels as well:
 <pre><code>sudo sh /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
           </li>
         </ul>
         <p>Each one disconnects every tunnel, which restores routes and DNS; takes the background service out of Login Items; undoes anything a crashed service left behind; and deletes the app, its logs, the installer's receipt, and every user's Turnout preferences, saved window state and caches. Saved tunnels and their private keys, in <code>/Library/Application Support/cc.ctsite.turnout</code>, stay unless you choose to delete them.</p>
+        <p>The license item in the keychain stays, so installing again does not start a new trial, and the key stays in your iCloud account for your other Macs. The installer and the Terminal script run as root, without your keychain or iCloud account, so they cannot take this Mac off your license: do that first in the License pane, or afterwards from another Mac or in Polar's customer portal.</p>
       </section>
 
     </div>
@@ -249,7 +264,7 @@ networksetup -getdnsservers Wi-Fi</code></pre>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">Privacy</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a> <a href="es/how-it-works.html" hreflang="es" lang="es">Español</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">Privacy</a> <a href="license.html">License terms</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a> <a href="es/how-it-works.html" hreflang="es" lang="es">Español</a></p>
     <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
   </div>
 </footer>

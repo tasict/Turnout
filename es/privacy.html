@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Política de privacidad de Turnout</title>
-<meta name="description" content="Turnout no tiene cuenta, publicidad ni informes de fallos. La app envía su comprobación de actualizaciones y un informe anónimo con ella, y un solo interruptor desactiva ambos.">
+<meta name="description" content="Turnout no tiene cuenta, publicidad ni informes de fallos. La app envía su comprobación de actualizaciones con un informe anónimo y, cuando has comprado una licencia, una comprobación de licencia a Polar más o menos una vez por semana.">
 <link rel="canonical" href="https://turnout.ctsite.cc/es/privacy.html">
 <link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/privacy.html">
 <link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/privacy.html">
@@ -20,7 +20,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Política de privacidad de Turnout">
-<meta property="og:description" content="Qué envía Turnout: la comprobación de actualizaciones y un informe anónimo con ella, ambos desactivables con un interruptor. Nada sobre tus túneles.">
+<meta property="og:description" content="Qué envía Turnout: la comprobación de actualizaciones y un informe anónimo con ella, ambos desactivables con un interruptor, y, cuando has comprado una licencia, una comprobación de licencia más o menos semanal. Nada sobre tus túneles.">
 <meta property="og:url" content="https://turnout.ctsite.cc/es/privacy.html">
 <meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
 <meta property="og:image:width" content="1600">
@@ -103,22 +103,36 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <main id="main" class="doc policy">
   <div class="wrap doc-head">
     <h1>Política de privacidad</h1>
-    <p class="effective">En vigor desde el 20 de octubre de 2026</p>
+    <p class="effective">En vigor desde el 25 de octubre de 2026</p>
   </div>
 
   <div class="wrap">
     <div class="doc-body">
-      <p class="short">Turnout no tiene cuenta, publicidad ni informes de fallos, y nada en él mira lo que haces con tus túneles. Lo que la app envía es su comprobación de actualizaciones y, con cada comprobación, un informe anónimo que cuenta la instalación. Un solo interruptor desactiva ambos.</p>
+      <p class="short">Turnout no tiene cuenta, publicidad ni informes de fallos, y nada en él mira lo que haces con tus túneles. Lo que la app envía es su comprobación de actualizaciones y, con cada comprobación, un informe anónimo que cuenta la instalación. Un solo interruptor desactiva ambos. Cuando has comprado una licencia, la app también la comprueba con Polar, que vende Turnout, más o menos una vez por semana. Durante la prueba no se comprueba ninguna licencia.</p>
 
       <section id="connections" aria-labelledby="connections-title">
         <h2 id="connections-title">Qué sale de tu Mac</h2>
         <ul>
           <li><strong>La comprobación de actualizaciones.</strong> Turnout pide a GitHub un archivo pequeño de su última versión cuando abres el menú o una ventana, como mucho una vez por hora, y cada vez que eliges Buscar actualizaciones…. La solicitud no lleva nada sobre ti ni sobre tus túneles. GitHub ve la solicitud y tu dirección IP, como se describe en la <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">Declaración de privacidad general de GitHub</a>. Al instalar una actualización, el instalador se descarga del mismo sitio.</li>
           <li><strong>Un informe anónimo con cada comprobación.</strong> Cada comprobación también envía un evento a Google Analytics, en google-analytics.com, para que el desarrollador sepa cuántas instalaciones están en uso y con qué versiones. Contiene un identificador de instalación aleatorio que Turnout crea la primera vez que se usa y guarda en sus preferencias (no se deriva del hardware de tu Mac), la versión y la compilación de Turnout, la versión de macOS, la arquitectura del procesador, el idioma del sistema y la hora a la que se abrió Turnout, que Google Analytics usa para agrupar el informe en una sesión. Nunca se envía nada sobre tus túneles, servidores, claves o redes, y no hay cuenta ni identificador de usuario. Google ve la solicitud y tu dirección IP; el uso que hace de los datos se describe en la <a href="https://policies.google.com/privacy">Política de privacidad de Google</a>.</li>
+          <li><strong>La licencia.</strong> Cuando has comprado una, activar un Mac, una comprobación más o menos semanal y quitar un Mac van a Polar, que vende Turnout, y la licencia se guarda en tu cuenta de iCloud para que tus otros Mac la encuentren. Durante la prueba no se envía nada a Polar. Lo que envía cada paso está en <a href="#license">La licencia</a>, más abajo.</li>
           <li><strong>Tus túneles.</strong> El tráfico que envías por un túnel va al servidor de su configuración, y queda entre tú y quien gestione ese servidor. Los hooks hacen lo que escribiste en ellos.</li>
         </ul>
-        <p>Para detener la comprobación y el informe, desactiva Buscar actualizaciones automáticamente en General (Turnout › Ajustes…). Turnout solo comprobará cuando elijas Buscar actualizaciones…, y no enviará ningún informe.</p>
+        <p>Para detener la comprobación y el informe, desactiva Buscar actualizaciones automáticamente en General (Turnout › Ajustes…). Turnout solo comprobará cuando elijas Buscar actualizaciones…, y no enviará ningún informe. Ese interruptor no cambia la comprobación de licencia, que solo se hace cuando has comprado una.</p>
         <p>Nada más sale de tu Mac: sin informes de fallos propios, sin publicidad, sin seguimiento, sin SDK de terceros.</p>
+      </section>
+
+      <section id="license" aria-labelledby="license-title">
+        <h2 id="license-title">La licencia</h2>
+        <p>Polar (polar.sh) vende Turnout como vendedor registrado: cobra el pago, se ocupa de los impuestos, emite el recibo y guarda tu pedido. Durante la prueba no se envía nada a Polar; la comprobación de actualizaciones y su informe funcionan como siempre y no saben nada de la prueba. Cuando has comprado una licencia, esto es lo que se envía sobre ella, y cuándo:</p>
+        <ul>
+          <li><strong>Al comprar.</strong> Lo que escribes en el pago de Polar: tu dirección de correo, tu nombre, tu tarjeta (la gestiona Stripe) y el país de facturación. Polar lo guarda según la <a href="https://polar.sh/legal/privacy">Política de privacidad de Polar</a>.</li>
+          <li><strong>Al activar un Mac</strong>, cuando introduces tu clave o la usas en otro Mac: la clave de licencia; el nombre que le das al Mac (su nombre de ordenador, salvo que lo cambies antes de activarlo); el identificador de modelo del Mac; las versiones de macOS y de Turnout; y un hash unidireccional del identificador de hardware del Mac. Va al servicio de licencias de Polar, api.polar.sh, que ve tu dirección IP, como con cualquier solicitud.</li>
+          <li><strong>Al comprobar la licencia</strong>, más o menos una vez por semana cuando abres el menú o la ventana de Turnout, y cuando la compruebas a mano: la clave de licencia, el identificador de activación de este Mac y el mismo hash, a api.polar.sh.</li>
+          <li><strong>Al quitar un Mac</strong> de la licencia: la clave y el identificador de activación de ese Mac, a api.polar.sh.</li>
+          <li><strong>Tus otros Mac.</strong> Para que tus otros Mac encuentren la licencia, la clave, la dirección de correo con la que compraste y, de cada Mac que la usa, su nombre, modelo, versiones de macOS y de Turnout, identificador de activación y el mismo hash se guardan como registros en el área de Turnout de tu cuenta de iCloud (CloudKit). Turnout los lee al abrirse y cuando abres su menú o su ventana, también durante la prueba, para encontrar una licencia comprada en otro de tus Mac; solo los escribe después de una activación, una comprobación o una retirada. Se guardan con la protección estándar de iCloud de Apple, sin cifrado de extremo a extremo, y el desarrollador no puede leerlos. Nada de esto ocurre si el Mac no ha iniciado sesión en iCloud.</li>
+        </ul>
+        <p>Nunca incluye nada sobre tus túneles, servidores, claves de túnel o redes. El hash no se puede convertir de nuevo en el identificador de hardware; existe para que la licencia distinga tus Mac. Un Mac que no puede llegar a Polar sigue funcionando: nada en Turnout se detiene porque una comprobación falle. El panel Licencia de la ventana de Turnout muestra lo que Turnout guarda sobre tu licencia.</p>
       </section>
 
       <section id="location" aria-labelledby="location-title">
@@ -131,9 +145,10 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <ul>
           <li>Tus túneles, claves privadas incluidas, en <code>/Library/Application Support/cc.ctsite.turnout/tunnels</code>, que solo root puede leer.</li>
           <li>Las preferencias de la app, en <code>cc.ctsite.turnout</code>: cosas como el color con que se muestra cada interfaz de red, cuándo actuó por última vez un horario y el identificador de instalación aleatorio.</li>
+          <li>El elemento de licencia en el llavero de este Mac, <code>cc.ctsite.turnout.license</code>: cuándo empezó la prueba y, cuando has comprado, la clave, la dirección de correo con la que compraste, la activación de este Mac y cuándo se comprobó la licencia por última vez. Nunca sale de este Mac.</li>
           <li>Registros: <code>/Library/Logs/<wbr>cc.ctsite.turnout.daemon.log</code> del servicio en segundo plano, <code>/Library/Logs/<wbr>cc.ctsite.turnout.update.log</code> cuando se instala una actualización, y los mensajes de la app en el registro del sistema de macOS.</li>
         </ul>
-        <p>Desinstalar Turnout borra la app, sus registros y las preferencias de Turnout de cada usuario, con el identificador de instalación, y también los túneles guardados si lo eliges. Una instalación nueva crea un identificador nuevo. <a href="how-it-works.html#uninstall">Cómo desinstalar</a></p>
+        <p>Desinstalar Turnout borra la app, sus registros y las preferencias de Turnout de cada usuario, con el identificador de instalación, y también los túneles guardados si lo eliges. Una instalación nueva crea un identificador nuevo. El elemento de licencia se queda en el llavero, así que instalar de nuevo no empieza otra prueba. Desinstalar Turnout… en la app también quita este Mac de tu licencia y borra su registro de tu cuenta de iCloud (en la confirmación puedes elegir no hacerlo); el instalador y el script de Terminal no pueden, así que después de usarlos quita el Mac desde el panel Licencia de otro Mac o en el portal de clientes de Polar. La clave que usan tus otros Mac se queda en tu cuenta de iCloud. <a href="how-it-works.html#uninstall">Cómo desinstalar</a></p>
       </section>
 
       <!-- analytics:on -->
@@ -173,7 +188,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">Qué hace Turnout en tu Mac</a> <a href="https://github.com/tasict/Turnout/issues">Informar de un problema</a> <a href="../privacy.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/privacy.html" hreflang="ja" lang="ja">日本語</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">Qué hace Turnout en tu Mac</a> <a href="license.html">Términos de la licencia</a> <a href="https://github.com/tasict/Turnout/issues">Informar de un problema</a> <a href="../privacy.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/privacy.html" hreflang="ja" lang="ja">日本語</a></p>
     <p>© 2026 tasict. Mac y macOS son marcas comerciales de Apple Inc. WireGuard es una marca registrada de Jason A. Donenfeld.</p>
   </div>
 </footer>

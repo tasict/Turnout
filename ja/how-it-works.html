@@ -117,6 +117,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <li><a href="#clients">応答する相手</a></li>
         <li><a href="#recovery">クラッシュのあと</a></li>
         <li><a href="#network">ネットワーク接続</a></li>
+        <li><a href="#license">ライセンス</a></li>
         <li><a href="#location">位置情報とWi-Fiルール</a></li>
         <li><a href="#logs">ログ</a></li>
         <li><a href="#verify">自分で確かめる</a></li>
@@ -186,7 +187,7 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># または一覧にある�
 
       <section id="network" aria-labelledby="network-title">
         <h2 id="network-title">ネットワーク接続</h2>
-        <p>アプリ自体の接続先は2か所で、どちらもアップデートのためです。新しいバージョンがあるかを確かめるGitHubと、インストール数を数えるGoogle Analyticsです。</p>
+        <p>アップデートのために、アプリ自体は2か所に接続します。新しいバージョンがあるかを確かめるGitHubと、インストール数を数えるGoogle Analyticsです。ライセンスのためには、購入後はPolarに、そしてあなたのiCloudアカウントに接続します。いつ何を送るかは、下の<a href="#license">ライセンス</a>にあります。</p>
         <ul>
           <li>自動で確認するのは<code>/Applications</code>にあるコピーだけで、メニューかウインドウを開いたときに、多くても1時間に1回です。“Turnout” › “アップデートを確認…”は、選べばいつでも確認します。</li>
           <li>確認では、GitHub上のこのプロジェクトの最新リリースにある小さなファイルを取得します。アカウントは使わず、あなたやトンネルに関する情報も含みません。GitHubに見えるのは、そのリクエストとあなたのIPアドレスです。</li>
@@ -195,6 +196,19 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># または一覧にある�
           <li>アップデートをインストールする場合、インストーラは同じリリースから取得され、TurnoutはそのチェックサムとDeveloper IDの署名を確認してから、macOSのインストーラに渡します。</li>
         </ul>
         <p>トンネルは構成に書かれたサーバーに接続し、フックはあなたが書いたとおりに動きます。それ以外に、アプリもサービスもどこにも接続しません。独自のクラッシュレポートも、広告も、アカウントもありません。</p>
+      </section>
+
+      <section id="license" aria-labelledby="license-title">
+        <h2 id="license-title">ライセンス</h2>
+        <p>Turnoutは、Macごとに7日間の試用期間中すべての機能が使え、希望すればさらに7日間、1回だけ延長できます。その後、トンネルの接続にはライセンスが必要です。必要なのは接続だけです。接続中のトンネルは接続されたままで、接続解除、編集、読み込み、書き出し、“ネットワーク設定を修復…”、アンインストールはいつでも使えます。ライセンスを理由に接続が切られることはありません。</p>
+        <p>ライセンスの処理はアプリの中だけで行います。バックグラウンドサービスはライセンスについて何も知らず、PolarにもiCloudにも接続しません。</p>
+        <ul>
+          <li>試用期間中はライセンスの確認を行いません。試用の日付は、このMacのキーチェーンの<code>cc.ctsite.turnout.license</code>という項目に保存されます。Turnoutをアンインストールしても残るので、インストールし直しても試用が始まり直すことはありません。</li>
+          <li>購入後、アプリはPolarのライセンスサービス<code>api.polar.sh</code>に、次のときに接続します。このMacのライセンス認証のとき（ライセンスキー、Macに付けた名前、機種ID、macOSとTurnoutのバージョン、ハードウェア識別子から計算した一方向のハッシュ）、週に1回程度メニューかウインドウを開いたときと手動で確認したとき（ライセンスキー、このMacの認証ID、ハッシュ）、そしてMacを外すとき（ライセンスキーとそのMacの認証ID）です。アカウントはなく、トンネルに関する情報も含みません。</li>
+          <li>Polarに接続できなくても何も変わりません。ライセンス認証済みのMacは、どれだけ長くオフラインでも接続でき、“ライセンス”パネルが最後にライセンスを確認できた日を示すだけです。</li>
+          <li>ライセンスキーと、それを使っているMacの一覧は、あなたのiCloudアカウントのTurnout用の領域（CloudKit）にレコードとして保存されます。そのため、同じアカウントにサインインしているほかのMacがライセンスを見つけ、クリック1回で使えます。アプリは起動したときと、メニューかウインドウを開いたときにこれを読み、書き込むのは認証、確認、削除のあとだけです。Appleの標準のiCloud保護で保存されますが、エンドツーエンドで暗号化されてはいません。iCloudにサインインしていないMacでは何も同期されないので、そのMacではキーを手で入力します。</li>
+        </ul>
+        <p>送られるものと送り先の一覧は<a href="privacy.html#license">プライバシーポリシー</a>に、条項は<a href="license.html">ライセンス条項</a>にあります。</p>
       </section>
 
       <section id="location" aria-labelledby="location-title">
@@ -234,13 +248,14 @@ networksetup -getdnsservers Wi-Fi</code></pre>
         <h2 id="uninstall-title">アンインストール</h2>
         <p>方法は3つあり、どれも同じスクリプトを実行します：</p>
         <ul>
-          <li>Turnoutのウインドウを開いた状態で、“Turnout” › “Turnoutをアンインストール…”を選びます。確認で“保存済みのトンネルとその秘密鍵も削除”を選ぶと、それらも削除されます。</li>
+          <li>Turnoutのウインドウを開いた状態で、“Turnout” › “Turnoutをアンインストール…”を選びます。確認で“保存済みのトンネルとその秘密鍵も削除”を選ぶと、それらも削除されます。ライセンス認証済みのMacでは、先にこのMacをライセンスから外し、iCloudアカウントにあるレコードも削除します（確認のときに外さないことも選べます）。</li>
           <li>インストーラを開き、インストールする項目の一覧でRemove Turnoutを選びます。保存済みのトンネルも削除するなら、Delete saved tunnelsも選びます（インストーラは今のところ英語のみです）。</li>
           <li>“ターミナル”で実行します（<code>--purge</code>を付けると、保存済みのトンネルも削除します）：
 <pre><code>sudo sh /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
           </li>
         </ul>
         <p>どの方法でも、すべてのトンネルの接続を解除し（ルートとDNSも元に戻ります）、バックグラウンドサービスをログイン項目から外し、クラッシュしたサービスが残したものを元に戻し、アプリ、ログ、インストーラのレシート、そして全ユーザのTurnoutの環境設定、ウインドウの状態、キャッシュを削除します。<code>/Library/Application Support/cc.ctsite.turnout</code>にある保存済みのトンネルと秘密鍵は、削除を選ばない限り残ります。</p>
+        <p>キーチェーンのライセンスの項目は残るので、インストールし直しても試用が始まり直すことはありません。ライセンスキーも、ほかのMacのためにiCloudアカウントに残ります。インストーラとターミナルのスクリプトはrootとして動き、あなたのキーチェーンやiCloudアカウントには触れないため、このMacをライセンスから外すことはできません。先に“ライセンス”パネルで外すか、あとで別のMacかPolarのカスタマーポータルで外してください。</p>
       </section>
 
     </div>
@@ -249,7 +264,7 @@ networksetup -getdnsservers Wi-Fi</code></pre>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">プライバシー</a> <a href="https://github.com/tasict/Turnout/issues">問題を報告</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">プライバシー</a> <a href="license.html">ライセンス条項</a> <a href="https://github.com/tasict/Turnout/issues">問題を報告</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a></p>
     <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
   </div>
 </footer>

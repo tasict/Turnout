@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Términos de la licencia de Turnout</title>
+<meta name="description" content="Una licencia de Turnout se paga una vez, sirve para tres Mac e incluye todas las actualizaciones de Turnout 1, con 7 días de prueba antes y reembolso en 14 días.">
+<link rel="canonical" href="https://turnout.ctsite.cc/es/license.html">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/license.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/license.html">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/license.html">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/license.html">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/license.html">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Términos de la licencia de Turnout">
+<meta property="og:description" content="Una licencia, tres Mac, todas las actualizaciones de Turnout 1, 7 días de prueba y reembolso en 14 días.">
+<meta property="og:url" content="https://turnout.ctsite.cc/es/license.html">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="La ventana principal de Turnout con la ruta de un túnel conectado">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="Analítica"><p>¿Puede este sitio contar tu visita con Google Analytics? No se envía nada a Google a menos que aceptes. <a href="privacy.html#analytics">Política de privacidad</a></p><p class="consent-actions"><button type="button" data-consent="denied">Rechazar</button> <button type="button" data-consent="granted">Aceptar</button></p></div></template>
+<!-- /analytics -->
+</head>
+<body>
+<a class="skip" href="#main">Ir al contenido</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
+      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="Sitio">
+      <ul>
+        <li><a href="how-it-works.html">Cómo funciona</a></li>
+        <li class="lang"><a href="../license.html" hreflang="en" lang="en">English</a></li>
+        <li><a href="../zh-Hant/license.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="../ja/license.html" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="license.html" hreflang="es" lang="es" aria-current="page">Español</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="doc policy">
+  <div class="wrap doc-head">
+    <h1>Términos de la licencia</h1>
+    <p class="effective">En vigor desde el 25 de octubre de 2026</p>
+  </div>
+
+  <div class="wrap">
+    <div class="doc-body">
+      <p class="short">Una licencia cuesta <!-- price -->US$19<!-- /price -->, en un solo pago, para tres Mac, con todas las actualizaciones de Turnout 1. Prueba Turnout 7 días antes, y 7 más si los pides. ¿No es para ti? Reembolso en 14 días, sin preguntas.</p>
+
+      <section id="macs" aria-labelledby="macs-title">
+        <h2 id="macs-title">Una licencia, tres Mac</h2>
+        <p>Una licencia es una clave, y funciona en tres Mac a la vez: los tuyos, los de tu hogar o los de una misma organización. Cada Mac que usa la clave ocupa uno de sus tres puestos. Quita un Mac que ya no uses, en el panel Licencia de cualquiera de tus Mac o en el portal de clientes de Polar, y su puesto vuelve a quedar libre. Un cuarto Mac necesita otra licencia, que cubre tres Mac más.</p>
+      </section>
+
+      <section id="trial" aria-labelledby="trial-title">
+        <h2 id="trial-title">La prueba</h2>
+        <p>Turnout funciona completo durante 7 días desde que lo abres por primera vez en cada Mac. Cuando la prueba termina, puedes añadir 7 días más, una vez, con un clic. No hay nada que registrar, ninguna tarjeta que dar y ninguna comprobación de licencia durante la prueba.</p>
+        <p>Después de la prueba, solo conectar necesita una licencia. Los túneles conectados siguen conectados, y desconectar, editar, importar, exportar, reparar los ajustes de red y desinstalar funcionan siempre. Tus configuraciones nunca quedan retenidas.</p>
+      </section>
+
+      <section id="updates" aria-labelledby="updates-title">
+        <h2 id="updates-title">Actualizaciones</h2>
+        <p>Todas las actualizaciones de Turnout 1 están incluidas. Una futura versión principal sería una compra aparte, con descuento para quienes ya son clientes; en cualquier caso, todas las actualizaciones de Turnout 1 siguen incluidas.</p>
+      </section>
+
+      <section id="buying" aria-labelledby="buying-title">
+        <h2 id="buying-title">Precio, pago e impuestos</h2>
+        <p>Una licencia cuesta <!-- price -->US$19<!-- /price -->, en un solo pago; según tu país, pueden añadirse impuestos al pagar. Sin suscripción y sin cuenta.</p>
+        <!-- launch -->
+        <p class="launch" hidden></p>
+        <!-- /launch -->
+        <p>Polar (polar.sh) vende Turnout como vendedor registrado: cobra el pago, se ocupa de los impuestos, emite el recibo y guarda tu pedido. La compra en sí se rige por los <a href="https://polar.sh/legal/checkout-buyer-terms">términos para compradores de Polar</a>.</p>
+      </section>
+
+      <section id="key" aria-labelledby="key-title">
+        <h2 id="key-title">Tu clave</h2>
+        <p>En cuanto pagas, la página de Polar muestra tu clave de licencia, con un botón para copiarla. Abre Turnout, elige Licencia en la barra lateral de su ventana y pega la clave; si la clave está en el portapapeles cuando abres el panel, Turnout te la ofrece. Tus otros Mac con la misma cuenta de iCloud encuentran ahí la licencia y la usan con un clic.</p>
+        <p>La clave se queda en tu página de compras de Polar: inicia sesión con la dirección de correo con la que compraste y Polar te envía un código. Ahí también puedes quitar un Mac que Turnout no puede mostrarte.</p>
+        <!-- link:portal -->
+        <p hidden><a>Ver mi clave en el portal de clientes de Polar</a></p>
+        <!-- /link:portal -->
+      </section>
+
+      <section id="giving" aria-labelledby="giving-title">
+        <h2 id="giving-title">Dársela a otra persona</h2>
+        <p>Puedes regalar tu licencia: quítala de tus Mac y entrega la clave. Una licencia no es para revender.</p>
+      </section>
+
+      <section id="refunds" aria-labelledby="refunds-title">
+        <h2 id="refunds-title">Reembolsos</h2>
+        <p>¿No es para ti? Pide el reembolso en los 14 días siguientes a la compra y se te devuelve el dinero, sin preguntas. Un reembolso pone fin a la licencia: los Mac que usan su clave ya no pueden conectar, y los túneles conectados siguen así hasta que los desconectes.</p>
+      </section>
+
+      <section id="why" aria-labelledby="why-title">
+        <h2 id="why-title">Por qué Turnout cuesta dinero</h2>
+        <p>El servicio en segundo plano de Turnout se ejecuta como root y tiene que seguir funcionando, con seguridad, en cada versión de macOS. No hay cuenta, ni suscripción, ni publicidad que pague eso. Un precio único, sí.</p>
+      </section>
+
+      <section id="changes" aria-labelledby="changes-title">
+        <h2 id="changes-title">Cambios</h2>
+        <p>Si estos términos cambian, la nueva versión se publicará en esta página con una nueva fecha de entrada en vigor. Están disponibles en English, 繁體中文, 日本語 y Español; si difieren, prevalece la versión en inglés.</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">Qué hace Turnout en tu Mac</a> <a href="privacy.html">Privacidad</a> <a href="https://github.com/tasict/Turnout/issues">Informar de un problema</a> <a href="../license.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/license.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/license.html" hreflang="ja" lang="ja">日本語</a></p>
+    <p>© 2026 tasict. Mac y macOS son marcas comerciales de Apple Inc. WireGuard es una marca registrada de Jason A. Donenfeld.</p>
+  </div>
+</footer>
+</body>
+</html>

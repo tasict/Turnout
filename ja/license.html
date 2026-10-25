@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turnoutライセンス条項</title>
+<meta name="description" content="Turnoutのライセンスは買い切りで、Mac 3台に使え、Turnout 1のアップデートはすべて含まれます。まず7日間試せて、14日以内なら返金できます。">
+<link rel="canonical" href="https://turnout.ctsite.cc/ja/license.html">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/license.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/license.html">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/license.html">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/license.html">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/license.html">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Turnoutライセンス条項">
+<meta property="og:description" content="1つのライセンスでMac 3台、Turnout 1のすべてのアップデート、7日間の試用、14日以内の返金。">
+<meta property="og:url" content="https://turnout.ctsite.cc/ja/license.html">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="接続中のトンネルの経路を表示したTurnoutのメインウインドウ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析"><p>このサイトへの訪問をGoogle Analyticsで数えてもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy.html#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
+<!-- /analytics -->
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
+      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="サイト">
+      <ul>
+        <li><a href="how-it-works.html">仕組み</a></li>
+        <li class="lang"><a href="../license.html" hreflang="en" lang="en">English</a></li>
+        <li><a href="../zh-Hant/license.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="license.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li>
+        <li><a href="../es/license.html" hreflang="es" lang="es">Español</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="doc policy">
+  <div class="wrap doc-head">
+    <h1>ライセンス条項</h1>
+    <p class="effective">施行日：2026年10月25日</p>
+  </div>
+
+  <div class="wrap">
+    <div class="doc-body">
+      <p class="short">ライセンスは<!-- price -->US$19<!-- /price -->の買い切りで、Mac 3台に使え、Turnout 1のアップデートはすべて含まれます。まず7日間試せて、希望すればさらに7日間延長できます。合わなければ、14日以内なら理由を問わず返金します。</p>
+
+      <section id="macs" aria-labelledby="macs-title">
+        <h2 id="macs-title">1つのライセンスでMac 3台</h2>
+        <p>ライセンスは1つのキーで、同時に3台のMacで使えます。あなたのMac、家族のMac、または同じ組織内のMacです。キーを使うMacは、それぞれ3台分の枠を1つ使います。使わなくなったMacを、どれかのMacの“ライセンス”パネルかPolarのカスタマーポータルで外せば、その枠はまた空きます。4台目のMacには別のライセンスが必要で、それでさらに3台に使えます。</p>
+      </section>
+
+      <section id="trial" aria-labelledby="trial-title">
+        <h2 id="trial-title">試用</h2>
+        <p>Turnoutは、各Macで初めて起動してから7日間、すべての機能を使えます。試用が終わるとき、クリック1回でさらに7日間、1回だけ延長できます。登録もカードも不要で、試用期間中はライセンスの確認も行いません。</p>
+        <p>試用のあとにライセンスが必要になるのは、接続だけです。接続中のトンネルは接続されたままで、接続解除、編集、読み込み、書き出し、ネットワーク設定の修復、アンインストールはいつでも使えます。構成ファイルが使えなくなることはありません。</p>
+      </section>
+
+      <section id="updates" aria-labelledby="updates-title">
+        <h2 id="updates-title">アップデート</h2>
+        <p>Turnout 1のアップデートはすべて含まれます。将来のメジャーバージョンは別売りになり、既存のお客様には割引があります。どちらにしても、Turnout 1のアップデートはすべて含まれたままです。</p>
+      </section>
+
+      <section id="buying" aria-labelledby="buying-title">
+        <h2 id="buying-title">価格、支払い、税金</h2>
+        <p>ライセンスは<!-- price -->US$19<!-- /price -->の買い切りです。お住まいの国によっては、チェックアウト時に税金が加算されることがあります。サブスクリプションもアカウントもありません。</p>
+        <!-- launch -->
+        <p class="launch" hidden></p>
+        <!-- /launch -->
+        <p>TurnoutはPolar（polar.sh）が販売者として販売しています。支払いを受け、税金を処理し、領収書を発行し、注文を保管するのはPolarです。購入そのものには<a href="https://polar.sh/legal/checkout-buyer-terms">Polarの購入者向け規約</a>が適用されます。</p>
+      </section>
+
+      <section id="key" aria-labelledby="key-title">
+        <h2 id="key-title">ライセンスキー</h2>
+        <p>支払いが済むとすぐに、Polarのページにライセンスキーがコピー用のボタンと一緒に表示されます。Turnoutを開き、ウインドウのサイドバーで“ライセンス”を選んで、キーを貼り付けてください。パネルを開いたときにキーがクリップボードにあれば、Turnoutのほうから提案します。同じiCloudアカウントにサインインしているほかのMacは、そこでライセンスを見つけ、クリック1回で使えます。</p>
+        <p>キーはPolarの購入履歴ページにずっと残ります。購入に使ったメールアドレスでサインインすると、Polarからコードが届きます。Turnoutが一覧に出せないMacも、そこで外せます。</p>
+        <!-- link:portal -->
+        <p hidden><a>Polarのカスタマーポータルでキーを表示</a></p>
+        <!-- /link:portal -->
+      </section>
+
+      <section id="giving" aria-labelledby="giving-title">
+        <h2 id="giving-title">ほかの人に譲る</h2>
+        <p>ライセンスはほかの人に譲れます。あなたのMacから外してから、キーを渡してください。転売はできません。</p>
+      </section>
+
+      <section id="refunds" aria-labelledby="refunds-title">
+        <h2 id="refunds-title">返金</h2>
+        <p>合わなければ、購入から14日以内に返金を求めてください。理由は問わず返金します。返金するとライセンスは終わり、そのキーを使っているMacは接続できなくなります。接続中のトンネルは、接続を解除するまで接続されたままです。</p>
+      </section>
+
+      <section id="why" aria-labelledby="why-title">
+        <h2 id="why-title">Turnoutが有料である理由</h2>
+        <p>Turnoutのバックグラウンドサービスはrootとして動き、どのmacOSのリリースでも安全に動き続けなければなりません。その費用をまかなうアカウントも、サブスクリプションも、広告もありません。まかなうのは買い切りの価格です。</p>
+      </section>
+
+      <section id="changes" aria-labelledby="changes-title">
+        <h2 id="changes-title">変更</h2>
+        <p>この条項を変更する場合は、新しい施行日とともにこのページに掲載します。この条項は英語、繁體中文、日本語、Españolで提供しており、内容が異なる場合は英語版が優先されます。</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">TurnoutがMacに対して行うこと</a> <a href="privacy.html">プライバシー</a> <a href="https://github.com/tasict/Turnout/issues">問題を報告</a> <a href="../license.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/license.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/license.html" hreflang="es" lang="es">Español</a></p>
+    <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
+  </div>
+</footer>
+</body>
+</html>

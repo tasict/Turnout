@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turnout 授權條款</title>
+<meta name="description" content="Turnout 授權一次買斷，可用在三台 Mac 上，Turnout 1 的每一次更新都包含在內；可以先試用 7 天，14 天內可以退款。">
+<link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/license.html">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/license.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/license.html">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/license.html">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/license.html">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/license.html">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Turnout 授權條款">
+<meta property="og:description" content="一份授權、三台 Mac、Turnout 1 的每一次更新、7 天試用，以及 14 天內退款。">
+<meta property="og:url" content="https://turnout.ctsite.cc/zh-Hant/license.html">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="Turnout 主視窗顯示一條已連線通道的路徑">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="網站分析"><p>可以讓本網站用 Google Analytics 統計這次造訪嗎？除非你接受，否則不會傳送任何資料給 Google。 <a href="privacy.html#analytics">隱私權政策</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒絕</button> <button type="button" data-consent="granted">接受</button></p></div></template>
+<!-- /analytics -->
+</head>
+<body>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
+      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="網站">
+      <ul>
+        <li><a href="how-it-works.html">運作方式</a></li>
+        <li class="lang"><a href="../license.html" hreflang="en" lang="en">English</a></li>
+        <li><a href="license.html" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></li>
+        <li><a href="../ja/license.html" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="../es/license.html" hreflang="es" lang="es">Español</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="doc policy">
+  <div class="wrap doc-head">
+    <h1>授權條款</h1>
+    <p class="effective">生效日期：2026 年 10 月 25 日</p>
+  </div>
+
+  <div class="wrap">
+    <div class="doc-body">
+      <p class="short">一份授權 <!-- price -->US$19<!-- /price -->，一次買斷，可以用在三台 Mac 上，Turnout 1 的每一次更新都包含在內。先試用 7 天，需要的話再多 7 天。不適合你？14 天內可以退款，不問原因。</p>
+
+      <section id="macs" aria-labelledby="macs-title">
+        <h2 id="macs-title">一份授權，三台 Mac</h2>
+        <p>一份授權就是一組金鑰，可以同時用在三台 Mac 上：你自己的、家裡的，或同一個組織內的。每部使用這組金鑰的 Mac 會佔用三個名額中的一個。在任何一部 Mac 的「授權」面板，或在 Polar 的客戶入口移除不再使用的 Mac，它的名額就會空出來。第四部 Mac 需要另一份授權，可以再用在三台 Mac 上。</p>
+      </section>
+
+      <section id="trial" aria-labelledby="trial-title">
+        <h2 id="trial-title">試用</h2>
+        <p>Turnout 在每部 Mac 上從第一次打開起，有 7 天可以使用全部功能。試用結束時，按一下就能再延長 7 天，限一次。不需要註冊，不需要提供信用卡，試用期間也不做授權檢查。</p>
+        <p>試用結束後，需要授權的只有連線。已連線的通道會維持連線，中斷連線、編輯、匯入、匯出、修復網路設定和解除安裝也永遠都能用。你的設定檔絕不會被扣住。</p>
+      </section>
+
+      <section id="updates" aria-labelledby="updates-title">
+        <h2 id="updates-title">更新</h2>
+        <p>Turnout 1 的每一次更新都包含在內。未來若推出新的主要版本，會另外販售，並給現有客戶折扣；不論如何，Turnout 1 的每一次更新都仍然包含在內。</p>
+      </section>
+
+      <section id="buying" aria-labelledby="buying-title">
+        <h2 id="buying-title">價格、付款與稅金</h2>
+        <p>一份授權 <!-- price -->US$19<!-- /price -->，一次買斷；依你所在的國家，結帳時可能會另外加上稅金。沒有訂閱，也沒有帳號。</p>
+        <!-- launch -->
+        <p class="launch" hidden></p>
+        <!-- /launch -->
+        <p>Turnout 由 Polar（polar.sh）以賣方身分販售：收款、稅務和收據都由 Polar 處理，你的訂單也由它保存。購買本身適用 <a href="https://polar.sh/legal/checkout-buyer-terms">Polar 的買方條款</a>。</p>
+      </section>
+
+      <section id="key" aria-labelledby="key-title">
+        <h2 id="key-title">你的授權金鑰</h2>
+        <p>付款完成後，Polar 的頁面會立刻顯示你的授權金鑰，旁邊有複製按鈕。打開 Turnout，在視窗側邊欄選擇「授權」，貼上金鑰就好；面板打開時如果剪貼板上有金鑰，Turnout 會主動提供。登入同一個 iCloud 帳號的其他 Mac，會在那裡找到這份授權，按一下就能使用。</p>
+        <p>授權金鑰會一直留在你的 Polar 購買記錄頁面：用購買時的電子郵件地址登入，Polar 會寄一組驗證碼給你。Turnout 列不出來的 Mac，也可以在那裡移除。</p>
+        <!-- link:portal -->
+        <p hidden><a>在 Polar 的客戶入口查看我的授權金鑰</a></p>
+        <!-- /link:portal -->
+      </section>
+
+      <section id="giving" aria-labelledby="giving-title">
+        <h2 id="giving-title">轉讓給別人</h2>
+        <p>你可以把授權送給別人：先從你的 Mac 上移除，再把金鑰交給對方。授權不得轉售。</p>
+      </section>
+
+      <section id="refunds" aria-labelledby="refunds-title">
+        <h2 id="refunds-title">退款</h2>
+        <p>不適合你？購買後 14 天內提出，就會退款，不問原因。退款後授權就會失效：使用這組金鑰的 Mac 無法再連線，已連線的通道則會維持連線，直到你中斷為止。</p>
+      </section>
+
+      <section id="why" aria-labelledby="why-title">
+        <h2 id="why-title">為什麼 Turnout 要收費</h2>
+        <p>Turnout 的背景服務以 root 身分執行，必須在每一個 macOS 版本上都持續、安全地運作。沒有帳號、沒有訂閱、也沒有廣告來支付這些工作；一次買斷的價格可以。</p>
+      </section>
+
+      <section id="changes" aria-labelledby="changes-title">
+        <h2 id="changes-title">條款變更</h2>
+        <p>這些條款若有變更，新版本會公布在這一頁，並更新生效日期。條款提供英文、繁體中文、日文與西班牙文版本；各版本如有出入，以英文版為準。</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">Turnout 對你的 Mac 做了什麼</a> <a href="privacy.html">隱私權</a> <a href="https://github.com/tasict/Turnout/issues">回報問題</a> <a href="../license.html" hreflang="en" lang="en">English</a> <a href="../ja/license.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/license.html" hreflang="es" lang="es">Español</a></p>
+    <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
+  </div>
+</footer>
+</body>
+</html>

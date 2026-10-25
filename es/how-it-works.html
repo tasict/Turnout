@@ -117,6 +117,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <li><a href="#clients">A quién responde</a></li>
         <li><a href="#recovery">Después de un fallo</a></li>
         <li><a href="#network">Conexiones de red</a></li>
+        <li><a href="#license">La licencia</a></li>
         <li><a href="#location">Ubicación y reglas de Wi-Fi</a></li>
         <li><a href="#logs">Registros</a></li>
         <li><a href="#verify">Compruébalo tú mismo</a></li>
@@ -186,7 +187,7 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># u otro servicio de la list
 
       <section id="network" aria-labelledby="network-title">
         <h2 id="network-title">Conexiones de red</h2>
-        <p>La app en sí se conecta a dos sitios, ambos por las actualizaciones: GitHub, para ver si hay una versión nueva, y Google Analytics, para contar la instalación.</p>
+        <p>Por las actualizaciones, la app en sí se conecta a dos sitios: GitHub, para ver si hay una versión nueva, y Google Analytics, para contar la instalación. Por la licencia se conecta a Polar, cuando has comprado una, y a tu cuenta de iCloud; <a href="#license">La licencia</a>, más abajo, dice cuándo y con qué.</p>
         <ul>
           <li>Solo la copia de <code>/Applications</code> comprueba por su cuenta, como mucho una vez por hora, cuando abres el menú o una ventana. Turnout › Buscar actualizaciones… comprueba cada vez que lo eliges.</li>
           <li>La comprobación pide un archivo pequeño de la última versión de este proyecto en GitHub. No lleva ninguna cuenta ni nada sobre ti o tus túneles. GitHub ve la solicitud y tu dirección IP.</li>
@@ -195,6 +196,19 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># u otro servicio de la list
           <li>Si instalas una actualización, el instalador sale de la misma versión, y Turnout comprueba su suma de verificación y su firma Developer ID antes de pasarlo al instalador de macOS.</li>
         </ul>
         <p>Tus túneles se conectan a los servidores de tus configuraciones, y tus hooks hacen lo que escribiste en ellos. Aparte de eso, ni la app ni el servicio se conectan a ningún sitio: sin informes de fallos propios, sin publicidad, sin cuenta.</p>
+      </section>
+
+      <section id="license" aria-labelledby="license-title">
+        <h2 id="license-title">La licencia</h2>
+        <p>Turnout funciona completo durante una prueba de 7 días en cada Mac, y 7 días más una vez si los pides; después, conectar un túnel necesita una licencia. Solo conectar: los túneles conectados siguen conectados, y desconectar, editar, importar, exportar, Reparar ajustes de red… y desinstalar funcionan siempre. Nunca se desconecta nada por motivos de licencia.</p>
+        <p>La licencia vive en la app. El servicio en segundo plano no sabe nada de ella y nunca se conecta a Polar ni a iCloud.</p>
+        <ul>
+          <li>Durante la prueba no se comprueba ninguna licencia. Las fechas de la prueba se guardan en el llavero de este Mac, en un elemento llamado <code>cc.ctsite.turnout.license</code>, que se queda al desinstalar Turnout, así que instalar de nuevo no empieza otra prueba.</li>
+          <li>Cuando has comprado, la app llama al servicio de licencias de Polar, <code>api.polar.sh</code>, al activar este Mac (la clave, el nombre que le das al Mac, su identificador de modelo, las versiones de macOS y de Turnout y un hash unidireccional de su identificador de hardware); más o menos una vez por semana cuando abres el menú o la ventana, y cuando la compruebas a mano (la clave, el identificador de activación de este Mac y el hash); y al quitar un Mac (la clave y el identificador de activación de ese Mac). Sin cuenta, y nada sobre tus túneles.</li>
+          <li>Si no se puede llegar a Polar, no cambia nada: un Mac con licencia sigue conectando, por mucho tiempo que pase sin conexión, y el panel Licencia solo dice cuándo se confirmó la licencia por última vez.</li>
+          <li>La clave y la lista de Mac que la usan se guardan como registros en el área de Turnout de tu cuenta de iCloud (CloudKit), así que tus otros Mac con la misma cuenta encuentran la licencia y la usan con un clic. La app los lee al abrirse y cuando abres su menú o su ventana, y solo los escribe después de una activación, una comprobación o una retirada. Se guardan con la protección estándar de iCloud de Apple, sin cifrado de extremo a extremo. Un Mac sin sesión iniciada en iCloud no sincroniza nada; en él, la clave se introduce a mano.</li>
+        </ul>
+        <p>Todo lo que se envía, y a quién, está en la <a href="privacy.html#license">política de privacidad</a>; los términos, en <a href="license.html">Términos de la licencia</a>.</p>
       </section>
 
       <section id="location" aria-labelledby="location-title">
@@ -234,13 +248,14 @@ networksetup -getdnsservers Wi-Fi</code></pre>
         <h2 id="uninstall-title">Desinstalar</h2>
         <p>Hay tres formas, y todas ejecutan ese mismo script:</p>
         <ul>
-          <li>Con la ventana de Turnout abierta, elige Turnout › Desinstalar Turnout…. En la confirmación, Eliminar también los túneles guardados y sus claves privadas los borra también.</li>
+          <li>Con la ventana de Turnout abierta, elige Turnout › Desinstalar Turnout…. En la confirmación, Eliminar también los túneles guardados y sus claves privadas los borra también. En un Mac con licencia, primero quita este Mac de tu licencia y borra su registro de tu cuenta de iCloud (en la confirmación puedes elegir no hacerlo).</li>
           <li>Abre el instalador y, donde lista lo que se va a instalar, elige Remove Turnout, y también Delete saved tunnels si lo quieres (por ahora el instalador solo está en inglés).</li>
           <li>En Terminal, añadiendo <code>--purge</code> para borrar también los túneles guardados:
 <pre><code>sudo sh /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
           </li>
         </ul>
         <p>Cada una desconecta todos los túneles, lo que restaura las rutas y el DNS; quita el servicio en segundo plano de Ítems de inicio; deshace lo que haya dejado un servicio que falló; y borra la app, sus registros, el recibo del instalador y, para cada usuario, las preferencias, el estado de las ventanas y las cachés de Turnout. Los túneles guardados y sus claves privadas, en <code>/Library/Application Support/cc.ctsite.turnout</code>, se quedan salvo que elijas borrarlos.</p>
+        <p>El elemento de licencia del llavero se queda, así que instalar de nuevo no empieza otra prueba, y la clave se queda en tu cuenta de iCloud para tus otros Mac. El instalador y el script de Terminal se ejecutan como root, sin acceso a tu llavero ni a tu cuenta de iCloud, así que no pueden quitar este Mac de tu licencia: hazlo antes en el panel Licencia, o después desde otro Mac o en el portal de clientes de Polar.</p>
       </section>
 
     </div>
@@ -249,7 +264,7 @@ networksetup -getdnsservers Wi-Fi</code></pre>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">Privacidad</a> <a href="https://github.com/tasict/Turnout/issues">Informar de un problema</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">Privacidad</a> <a href="license.html">Términos de la licencia</a> <a href="https://github.com/tasict/Turnout/issues">Informar de un problema</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a></p>
     <p>© 2026 tasict. Mac y macOS son marcas comerciales de Apple Inc. WireGuard es una marca registrada de Jason A. Donenfeld.</p>
   </div>
 </footer>

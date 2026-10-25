@@ -117,6 +117,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <li><a href="#clients">服務回應誰</a></li>
         <li><a href="#recovery">當機之後</a></li>
         <li><a href="#network">網路連線</a></li>
+        <li><a href="#license">授權</a></li>
         <li><a href="#location">定位與 Wi-Fi 規則</a></li>
         <li><a href="#logs">記錄檔</a></li>
         <li><a href="#verify">自己檢查</a></li>
@@ -186,7 +187,7 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># 或清單中的其他服�
 
       <section id="network" aria-labelledby="network-title">
         <h2 id="network-title">網路連線</h2>
-        <p>App 本身只連到兩個地方，都和更新有關：GitHub，用來查看有沒有新版本；以及 Google Analytics，用來計算安裝數。</p>
+        <p>為了更新，App 本身會連到兩個地方：GitHub，用來查看有沒有新版本；以及 Google Analytics，用來計算安裝數。為了授權，它會在你買了授權之後連到 Polar，也會連到你的 iCloud 帳號；什麼時候、送出什麼，請見下方的<a href="#license">授權</a>。</p>
         <ul>
           <li>只有 <code>/Applications</code> 裡的那份會自動檢查，最多每小時一次，時機是你打開選單或視窗時。「Turnout」›「檢查更新項目⋯」則是你選它就檢查。</li>
           <li>檢查時會向 GitHub 上這個專案的最新版本索取一個小檔案。請求不帶任何帳號，也不含任何關於你或你的通道的資訊。GitHub 看得到這個請求和你的 IP 位址。</li>
@@ -195,6 +196,19 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># 或清單中的其他服�
           <li>如果你安裝更新，安裝程式來自同一個版本，Turnout 會先檢查它的檢查碼與 Developer ID 簽署，才交給 macOS 的安裝程式。</li>
         </ul>
         <p>你的通道連到設定檔裡的伺服器，hook 則做你寫在裡面的事。除此之外，App 和服務都不會連到任何地方：沒有自家的當機回報、沒有廣告，也沒有帳號。</p>
+      </section>
+
+      <section id="license" aria-labelledby="license-title">
+        <h2 id="license-title">授權</h2>
+        <p>Turnout 在每部 Mac 上都有 7 天的完整試用，需要的話還能再延長一次 7 天；之後，連線通道需要授權。需要授權的只有連線：已連線的通道會維持連線，中斷連線、編輯、匯入、匯出、「修復網路設定⋯」和解除安裝也永遠都能用。Turnout 絕不會因為授權的關係中斷任何連線。</p>
+        <p>授權的處理全在 App 裡。背景服務完全不涉及授權，也從不連到 Polar 或 iCloud。</p>
+        <ul>
+          <li>試用期間不做任何授權檢查。試用的日期存在這部 Mac 的鑰匙圈裡，項目名稱是 <code>cc.ctsite.turnout.license</code>；解除安裝 Turnout 時它會保留，所以重新安裝不會重新開始試用。</li>
+          <li>買了授權之後，App 會在這些時候連到 Polar 的授權服務 <code>api.polar.sh</code>：啟用這部 Mac 時（授權金鑰、你為 Mac 取的名稱、機型識別碼、macOS 與 Turnout 版本，以及由硬體識別碼算出的單向雜湊值）；大約每週一次，在你打開選單或視窗時，以及你手動要求檢查時（授權金鑰、這部 Mac 的啟用 ID 和雜湊值）；還有移除一部 Mac 時（授權金鑰和那部 Mac 的啟用 ID）。沒有帳號，也不含任何關於你通道的資訊。</li>
+          <li>連不上 Polar 時什麼都不會改變：已授權的 Mac 不論離線多久都照樣能連線，「授權」面板只會說明上次確認授權是什麼時候。</li>
+          <li>授權金鑰和使用它的 Mac 清單，會以記錄的形式存在你 iCloud 帳號中屬於 Turnout 的區域（CloudKit），所以登入同一個帳號的其他 Mac 找得到授權，按一下就能使用。App 啟動時，以及你打開選單或視窗時，會讀取這些記錄；只有在啟用、檢查或移除之後才會寫入。它們受 Apple 標準的 iCloud 保護，但不是端對端加密。沒有登入 iCloud 的 Mac 不會同步任何東西，要在那部 Mac 上手動輸入授權金鑰。</li>
+        </ul>
+        <p>會送出的所有東西和接收者，列在<a href="privacy.html#license">隱私權政策</a>裡；條款請見<a href="license.html">授權條款</a>。</p>
       </section>
 
       <section id="location" aria-labelledby="location-title">
@@ -234,13 +248,14 @@ networksetup -getdnsservers Wi-Fi</code></pre>
         <h2 id="uninstall-title">解除安裝</h2>
         <p>有三種方式，執行的都是同一個指令稿：</p>
         <ul>
-          <li>在 Turnout 視窗開著時，選擇「Turnout」›「解除安裝Turnout⋯」。在確認對話框中勾選「同時刪除已儲存的通道及其私鑰」，就會一併刪除。</li>
+          <li>在 Turnout 視窗開著時，選擇「Turnout」›「解除安裝Turnout⋯」。在確認對話框中勾選「同時刪除已儲存的通道及其私鑰」，就會一併刪除。已授權的 Mac 還會先把這部 Mac 從你的授權中移除，並刪除它在你 iCloud 帳號中的記錄（確認時可以選擇不要這麼做）。</li>
           <li>打開安裝程式，在列出安裝項目的地方選擇 Remove Turnout；若也想刪除已儲存的通道，再選 Delete saved tunnels（安裝程式目前只有英文）。</li>
           <li>在「終端機」中執行（加上 <code>--purge</code> 會一併刪除已儲存的通道）：
 <pre><code>sudo sh /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
           </li>
         </ul>
         <p>每一種方式都會中斷所有通道（同時恢復路由與 DNS）、把背景服務從登入項目移除、復原當機的服務留下的變更，並刪除 App、它的記錄檔、安裝程式的收據，以及每位使用者的 Turnout 偏好設定、視窗狀態與快取。已儲存的通道及其私鑰位於 <code>/Library/Application Support/cc.ctsite.turnout</code>，除非你選擇刪除，否則會保留。</p>
+        <p>鑰匙圈裡的授權項目會保留，所以重新安裝不會重新開始試用；授權金鑰也會留在你的 iCloud 帳號中，給你的其他 Mac 使用。安裝程式和終端機指令稿以 root 身分執行，碰不到你的鑰匙圈和 iCloud 帳號，所以無法把這部 Mac 從授權中移除：請事先在「授權」面板移除，或事後從另一部 Mac 或 Polar 的客戶入口移除。</p>
       </section>
 
     </div>
@@ -249,7 +264,7 @@ networksetup -getdnsservers Wi-Fi</code></pre>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">隱私權</a> <a href="https://github.com/tasict/Turnout/issues">回報問題</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">隱私權</a> <a href="license.html">授權條款</a> <a href="https://github.com/tasict/Turnout/issues">回報問題</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a></p>
     <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
   </div>
 </footer>
