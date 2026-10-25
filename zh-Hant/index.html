@@ -250,6 +250,7 @@ Endpoint = vpn.example.com:51820</code></pre>
         <figcaption>表單和文字是同一個檔案的兩種檢視。</figcaption>
       </figure>
       <p>把 <code>.conf</code> 檔或 <code>.zip</code> 拖到視窗上、選擇「檔案」›「從檔案匯入⋯」，或用「檔案」›「從剪貼板新增通道⋯」貼上複製的設定檔。官方 WireGuard App 匯出的 zip 會以批次方式開啟：逐一檢查每條通道，略過不要的，其餘一次匯入。</p>
+      <p>「檔案」›「輸出通道⋯」則反過來：每條通道各一個 <code>.conf</code>，放進同一個 zip，結構和官方 App 匯出與匯入的一樣。單一通道的「輸出⋯」只儲存它自己的檔案。</p>
       <figure class="shot-figure">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg">
@@ -266,7 +267,9 @@ Endpoint = vpn.example.com:51820</code></pre>
     <h2 id="menu-bar-title">不打擾你</h2>
     <div class="body">
       <p class="intro">Turnout 待在選單列裡。在那裡連線、中斷通道，需要細節時再打開視窗。</p>
-      <p>通道在 Turnout 的背景服務中執行，所以關掉 App 也會繼續連著。在視窗開著的情況下量測，App 閒置時約佔 0.5% CPU，繪製即時流量時約 2–4%。只有選單或視窗開著時才會讀取統計資料。</p>
+      <p>通道在 Turnout 的背景服務中執行，所以關掉 App 也會繼續連著。在視窗開著的情況下量測，App 閒置時約佔 0.5% CPU，繪製即時流量時約 2–4%。只有選單或視窗開著時才會讀取統計資料；如果你要求在伺服器沒有回應時收到通知，則會每分鐘讀取一次。</p>
+      <p>排程或 Wi-Fi 規則讓通道連線或中斷連線時、通道連線失敗或在沒有要求下停止時，以及試用結束的前一天，Turnout 都會發出通知。每一種通知都有自己的開關，伺服器沒有回應的那一種預設關閉，等你需要時再打開。</p>
+      <p>它的選單和視窗會跟著你 Mac 的語言，使用 English、繁體中文、日本語、Español 或 한국어。</p>
       <figure class="shot-figure">
         <!-- scripts/screenshots.sh must write menu-light.png and menu-dark.png at
              600x420 (the 300-point popover at 2x). If the popover's height
@@ -287,7 +290,7 @@ Endpoint = vpn.example.com:51820</code></pre>
     <div class="body">
       <p class="intro">Turnout 對路由和 DNS 的每一項變更，都會先記錄下來才動手。</p>
       <p>如果 Mac 在通道連線時當機或斷電，背景服務下次啟動時會復原留下的變更，完成之前不會連線任何通道。「Turnout」›「修復網路設定⋯」也能隨時手動做同樣的事。</p>
-      <p>解除安裝只有一條路，不論你從 App、從安裝程式，還是從一個可以先讀過內容的 shell 指令稿開始。它會中斷所有通道、恢復路由與 DNS、把背景服務從登入項目移除，並刪除 App、它的記錄檔和偏好設定。已儲存的通道會保留，除非你選擇一併刪除。<a href="how-it-works.html#uninstall">各種方式會移除什麼</a></p>
+      <p>解除安裝只有一條路，不論你從 App、從安裝程式，還是從一個可以先讀過內容的 shell 指令稿開始。它會中斷所有通道、恢復路由與 DNS、把背景服務從登入項目移除，並刪除 App、它的記錄檔和偏好設定。已儲存的通道會保留，除非你選擇一併刪除。從 App 解除安裝時，也會空出這部 Mac 在你授權上的名額。<a href="how-it-works.html#uninstall">各種方式會移除什麼</a></p>
     </div>
   </div>
 </section>

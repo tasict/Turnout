@@ -250,6 +250,7 @@ Endpoint = vpn.example.com:51820</code></pre>
         <figcaption>El formulario y el texto son dos vistas del mismo archivo.</figcaption>
       </figure>
       <p>Arrastra archivos <code>.conf</code> o un <code>.zip</code> a la ventana, elige Archivo › Importar desde archivo…, o pega una configuración copiada con Archivo › Nuevo túnel desde el portapapeles…. El zip que exporta la app oficial de WireGuard se abre como un lote: revisa cada túnel, deja fuera los que no quieras e importa el resto de una vez.</p>
+      <p>Archivo › Exportar túneles… hace el camino inverso: un zip con un <code>.conf</code> por túnel, organizado como lo escribe e importa la app oficial. Desde un túnel, Exportar… guarda solo su archivo.</p>
       <figure class="shot-figure">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg">
@@ -266,7 +267,9 @@ Endpoint = vpn.example.com:51820</code></pre>
     <h2 id="menu-bar-title">No estorba</h2>
     <div class="body">
       <p class="intro">Turnout vive en la barra de menús. Conecta y desconecta túneles desde ahí y abre la ventana solo cuando quieras ver los detalles.</p>
-      <p>Los túneles se ejecutan en el servicio en segundo plano de Turnout, así que siguen activos cuando cierras la app. Medido con la ventana abierta, la app usa cerca del 0,5 % de la CPU en reposo y entre el 2 y el 4 % mientras dibuja el tráfico en vivo. Las estadísticas solo se consultan mientras el menú o una ventana están abiertos.</p>
+      <p>Los túneles se ejecutan en el servicio en segundo plano de Turnout, así que siguen activos cuando cierras la app. Medido con la ventana abierta, la app usa cerca del 0,5 % de la CPU en reposo y entre el 2 y el 4 % mientras dibuja el tráfico en vivo. Las estadísticas solo se consultan mientras el menú o una ventana están abiertos, y una vez por minuto si pides un aviso cuando un servidor deje de responder.</p>
+      <p>Las notificaciones te avisan cuando un horario o una regla de Wi-Fi conecta o desconecta un túnel, cuando un túnel falla o se detiene sin que se le pida, y el día antes de que termine tu prueba. Cada tipo tiene su propio interruptor, y el de un servidor que no responde viene desactivado hasta que lo quieras.</p>
+      <p>Sus menús y ventanas hablan English, 繁體中文, 日本語, Español y 한국어, según el idioma de tu Mac.</p>
       <figure class="shot-figure">
         <!-- scripts/screenshots.sh must write menu-light.png and menu-dark.png at
              600x420 (the 300-point popover at 2x). If the popover's height
@@ -287,7 +290,7 @@ Endpoint = vpn.example.com:51820</code></pre>
     <div class="body">
       <p class="intro">Cada cambio que Turnout hace en las rutas y el DNS se anota antes de hacerlo.</p>
       <p>Si el Mac se bloquea o se queda sin corriente con un túnel conectado, el servicio en segundo plano deshace lo que quedó en su siguiente arranque, y no conecta ningún túnel hasta terminar. Turnout › Reparar ajustes de red… hace lo mismo cuando quieras.</p>
-      <p>Desinstalar sigue un único camino, empieces desde la app, desde el instalador o desde un script de shell que puedes leer antes. Desconecta todos los túneles, restaura las rutas y el DNS, quita el servicio en segundo plano de Ítems de inicio y borra la app, sus registros y sus preferencias. Los túneles guardados se quedan, salvo que elijas borrarlos también. <a href="how-it-works.html#uninstall">Qué quita cada opción</a></p>
+      <p>Desinstalar sigue un único camino, empieces desde la app, desde el instalador o desde un script de shell que puedes leer antes. Desconecta todos los túneles, restaura las rutas y el DNS, quita el servicio en segundo plano de Ítems de inicio y borra la app, sus registros y sus preferencias. Los túneles guardados se quedan, salvo que elijas borrarlos también. Desinstalar desde la app también libera el puesto del Mac en tu licencia. <a href="how-it-works.html#uninstall">Qué quita cada opción</a></p>
     </div>
   </div>
 </section>
