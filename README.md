@@ -5,7 +5,7 @@
   </picture>
 </p>
 
-Turnout is a VPN client for macOS that connects to WireGuard servers the way `wg-quick` does, in a native app: your `PreUp`/`PostUp` hooks run, your routes stay yours, and you choose which network interface the tunnel leaves through. It lives in the menu bar, follows the network as it changes, can connect by schedule or Wi-Fi network, and cleans up after itself.
+Turnout is a VPN client for macOS that connects to WireGuard servers the way `wg-quick` does, in a native app: your `PreUp`/`PostUp` hooks run, your routes stay yours, and you choose which network interface the tunnel leaves through. It lives in the menu bar, follows the network as it changes, can connect by schedule or Wi-Fi network, and cleans up after itself. It is a paid app: US$19 once for three Macs, after a 7-day trial ([price and license](#price)).
 
 This repository holds:
 
@@ -33,7 +33,11 @@ What the background service does to your Mac, and how to check it, is on [What T
 
 Turnout has no account, no advertising and no crash reporting. The installed app checks GitHub for a new version when you open its menu or a window (at most once an hour) and when you choose Check for Updates…. With each check it also sends one anonymous event to Google Analytics, so the developer can tell how many installations are in use and on which versions: a random installation ID that Turnout makes up on first use and keeps in its preferences (not derived from the hardware), the Turnout version and build, the macOS version, the processor architecture and the system language. Nothing about your tunnels, servers, keys or networks is ever sent. That request goes to google-analytics.com and is covered by the [Google Privacy Policy](https://policies.google.com/privacy).
 
-Switching off **Check for updates automatically** in General (Turnout › Settings…) stops both the check and the report. The details are in the [privacy policy](https://turnout.ctsite.cc/privacy.html).
+Switching off **Check for updates automatically** in General (Turnout › Settings…) stops both the check and the report.
+
+No license check runs during the trial. Once you have bought a license, the app activates and checks it with Polar, which sells Turnout: when you activate a Mac, about once a week when you open its menu or window, and when you remove a Mac. It sends the license key, the name you give the Mac, its model identifier, the macOS and Turnout versions and a one-way hash of its hardware identifier, never anything about your tunnels. The key and the list of your Macs are kept in your own iCloud account, so your other Macs find the license. If Polar cannot be reached, a licensed Mac keeps connecting.
+
+The details are in the [privacy policy](https://turnout.ctsite.cc/privacy.html).
 
 ## Reporting a problem
 
@@ -50,9 +54,11 @@ Switching off **Check for updates automatically** in General (Turnout › Settin
 
 Issues are public: leave out private keys, preshared keys, server addresses and whole config files.
 
-## Support the project
+## Price
 
-Turnout has no ads and no paid version. If it is useful to you, you can [buy me a boba](https://tasict.bobaboba.me) (paid by card, no PayPal account needed) or [tip with PayPal](https://paypal.me/tasict).
+Turnout is paid: US$19 once for three Macs (yours, your household's, or within one organization), with every update to Turnout 1. Try it first: 7 days on each Mac, and 7 more if you ask, with no account, no card and no license check. After the trial only connecting needs a license; tunnels that are connected stay connected, and everything else keeps working.
+
+[Polar](https://polar.sh/) sells it and handles the payment, tax and receipt; your key appears on Polar's page as soon as you have paid, and stays on your Polar purchases page. Not for you? A refund within 14 days, no questions. The details are in the [license terms](https://turnout.ctsite.cc/license.html).
 
 ## The website
 
@@ -61,5 +67,6 @@ Plain static HTML and one stylesheet, in four languages (English, 繁體中文, 
 - [Turnout](https://turnout.ctsite.cc/)
 - [What Turnout does to your Mac](https://turnout.ctsite.cc/how-it-works.html)
 - [Privacy policy](https://turnout.ctsite.cc/privacy.html)
+- [License terms](https://turnout.ctsite.cc/license.html)
 
 © 2026 tasict
