@@ -25,7 +25,7 @@ Turnout needs macOS 15 or later, on Apple silicon or Intel.
 2. Open it and follow the steps. Turnout is installed in `/Applications` and opens when the installer finishes.
 3. In Turnout's window, install the background service, then allow it when macOS asks, in System Settings › General › Login Items & Extensions.
 
-The installer is signed with a Developer ID but not yet notarized by Apple, so macOS may refuse to open it. If it does, go to System Settings › Privacy & Security, choose Open Anyway, and open the installer again.
+The installer is signed with a Developer ID and notarized by Apple.
 
 What the background service does to your Mac, and how to check it, is on [What Turnout does to your Mac](https://turnout.ctsite.cc/how-it-works.html).
 

@@ -10,6 +10,7 @@
 <link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/">
 <link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/">
 <link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/">
+<link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/">
 <link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
@@ -30,6 +31,7 @@
 <meta property="og:locale:alternate" content="zh_TW">
 <meta property="og:locale:alternate" content="ja_JP">
 <meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
 <!-- analytics -->
 <script>
@@ -95,6 +97,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <li><a href="zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
         <li><a href="ja/" hreflang="ja" lang="ja">日本語</a></li>
         <li><a href="es/" hreflang="es" lang="es">Español</a></li>
+        <li><a href="ko/" hreflang="ko" lang="ko">한국어</a></li>
       </ul>
     </nav>
   </div>
@@ -247,6 +250,7 @@ Endpoint = vpn.example.com:51820</code></pre>
         <figcaption>The form and the text are two views of the same file.</figcaption>
       </figure>
       <p>Drop <code>.conf</code> files or a <code>.zip</code> on the window, choose File › Import from File…, or paste a copied configuration with File › New Tunnel from Clipboard…. The zip the official WireGuard app exports opens as a batch: review every tunnel, leave some out, and import the rest at once.</p>
+      <p>File › Export Tunnels… goes the other way: one zip with a <code>.conf</code> per tunnel, laid out the way the official app writes and imports it. A tunnel's own Export… saves just its file.</p>
       <figure class="shot-figure">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/dark/3-import.jpg">
@@ -263,7 +267,9 @@ Endpoint = vpn.example.com:51820</code></pre>
     <h2 id="menu-bar-title">Stays out of the way</h2>
     <div class="body">
       <p class="intro">Turnout lives in the menu bar. Connect and disconnect tunnels from there, and open the window only when you want the details.</p>
-      <p>Tunnels run in Turnout's background service, so they keep running when the app is closed. Measured with the window open, the app uses about 0.5% of the CPU while idle and 2–4% while it draws live traffic. Statistics are only fetched while the menu or a window is open.</p>
+      <p>Tunnels run in Turnout's background service, so they keep running when the app is closed. Measured with the window open, the app uses about 0.5% of the CPU while idle and 2–4% while it draws live traffic. Statistics are only fetched while the menu or a window is open, and once a minute if you ask to hear when a server stops answering.</p>
+      <p>Notifications tell you when a schedule or Wi-Fi rule connected or disconnected a tunnel, when a tunnel failed or stopped without being asked to, and the day before your trial ends. Each kind has its own switch, and the one about a silent server is off until you want it.</p>
+      <p>Its menus and windows speak English, 繁體中文, 日本語, Español and 한국어, following your Mac's language.</p>
       <figure class="shot-figure">
         <!-- scripts/screenshots.sh must write menu-light.png and menu-dark.png at
              600x420 (the 300-point popover at 2x). If the popover's height
@@ -284,7 +290,7 @@ Endpoint = vpn.example.com:51820</code></pre>
     <div class="body">
       <p class="intro">Every change Turnout makes to routes and DNS is written down before it is made.</p>
       <p>If the Mac crashes or loses power with a tunnel up, the background service undoes what was left at its next start, and connects no tunnel until that is done. Turnout › Repair Network Settings… does the same whenever you ask.</p>
-      <p>Uninstalling takes one path, whether you start it from the app, from the installer or from a shell script you can read first. It disconnects every tunnel, restores routes and DNS, takes the background service out of Login Items, and deletes the app, its logs and its preferences. Saved tunnels stay unless you choose to delete them too. <a href="how-it-works.html#uninstall">What each way removes</a></p>
+      <p>Uninstalling takes one path, whether you start it from the app, from the installer or from a shell script you can read first. It disconnects every tunnel, restores routes and DNS, takes the background service out of Login Items, and deletes the app, its logs and its preferences. Saved tunnels stay unless you choose to delete them too. Uninstalling from the app also frees the Mac's place on your license. <a href="how-it-works.html#uninstall">What each way removes</a></p>
     </div>
   </div>
 </section>
@@ -333,7 +339,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
         <li>In Turnout's window, install the background service, then allow it when macOS asks, in System Settings › General › Login Items &amp; Extensions.</li>
       </ol>
       <!-- gatekeeper:open-anyway -->
-      <p class="gatekeeper">The installer is signed with a Developer ID but not yet notarized by Apple, so macOS may refuse to open it. If it does, go to System Settings › Privacy &amp; Security, choose Open Anyway, and open the installer again.</p>
+      <p class="gatekeeper" hidden>The installer is signed with a Developer ID but not yet notarized by Apple, so macOS may refuse to open it. If it does, go to System Settings › Privacy &amp; Security, choose Open Anyway, and open the installer again.</p>
       <!-- /gatekeeper:open-anyway -->
       <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">Download Turnout</a></p>
       <p class="fineprint">macOS 15 or later · Apple silicon and Intel · 7-day trial · <!-- price -->US$19<!-- /price --> once, three Macs</p>
@@ -377,7 +383,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="how-it-works.html">What Turnout does to your Mac</a> <a href="privacy.html">Privacy</a> <a href="license.html">License terms</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/" hreflang="ja" lang="ja">日本語</a> <a href="es/" hreflang="es" lang="es">Español</a></p>
+    <p class="footer-links"><a href="how-it-works.html">What Turnout does to your Mac</a> <a href="privacy.html">Privacy</a> <a href="license.html">License terms</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/" hreflang="ja" lang="ja">日本語</a> <a href="es/" hreflang="es" lang="es">Español</a> <a href="ko/" hreflang="ko" lang="ko">한국어</a></p>
     <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
   </div>
 </footer>
