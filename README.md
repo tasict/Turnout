@@ -15,17 +15,22 @@ This repository holds:
 
 ## Installing
 
-<!-- download:soon -->
-**Coming soon.** The first public release is being prepared; until then there is nothing to download. Watch this repository, or its [Releases](https://github.com/tasict/Turnout/releases) page, for the first one.
-<!-- /download:soon -->
-
 Turnout needs macOS 15 or later, on Apple silicon or Intel.
 
 1. Download `Turnout-<version>.pkg` from the [latest release](https://github.com/tasict/Turnout/releases/latest).
 2. Open it and follow the steps. Turnout is installed in `/Applications` and opens when the installer finishes.
-3. In Turnout's window, install the background service, then allow it when macOS asks, in System Settings › General › Login Items & Extensions.
+3. Turnout's welcome tour walks you through installing the background service; allow it when macOS asks, in System Settings › General › Login Items & Extensions.
 
 The installer is signed with a Developer ID and notarized by Apple.
+
+Or install it with [Homebrew](https://brew.sh), which installs the same package:
+
+```sh
+brew tap tasict/tap
+brew install --cask tasict/tap/turnout
+```
+
+Either way Turnout updates itself, so `brew upgrade` leaves it alone; `brew uninstall --cask turnout` runs Turnout's own uninstaller and keeps your saved tunnels.
 
 What the background service does to your Mac, and how to check it, is on [What Turnout does to your Mac](https://turnout.ctsite.cc/how-it-works.html).
 

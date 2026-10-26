@@ -112,13 +112,13 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       <p class="lede">你的 hook 照樣執行，路由由你作主，通道要從哪個網路介面出去也由你決定。</p>
       <div class="get">
         <!-- download:soon -->
-        <div class="soon">
+        <div class="soon" hidden>
           <p class="soon-title">即將推出</p>
           <p class="fineprint">第一個公開版本正在準備中，在那之前還沒有可以下載的檔案。想第一時間知道，可以關注（Watch）<a href="https://github.com/tasict/Turnout">GitHub 儲存庫</a>或它的 <a href="https://github.com/tasict/Turnout/releases">Releases 頁面</a>。</p>
         </div>
         <!-- /download:soon -->
         <!-- download:live -->
-        <div class="live" hidden>
+        <div class="live">
           <a class="download" href="https://github.com/tasict/Turnout/releases/latest">下載 Turnout</a>
           <p class="fineprint">macOS 15 以上 · Apple 晶片與 Intel · 試用 7 天 · <!-- price -->US$19<!-- /price --> 一次買斷，三台 Mac</p>
           <p class="fineprint"><a href="#install">如何安裝</a></p>
@@ -326,23 +326,27 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
     <h2 id="install-title">下載與安裝</h2>
     <div class="body">
       <!-- download:soon -->
-      <div class="soon">
+      <div class="soon" hidden>
         <p class="soon-title">即將推出</p>
         <p class="fineprint">第一個公開版本正在準備中，在那之前還沒有可以下載的檔案。想第一時間知道，可以關注（Watch）<a href="https://github.com/tasict/Turnout">GitHub 儲存庫</a>或它的 <a href="https://github.com/tasict/Turnout/releases">Releases 頁面</a>。</p>
       </div>
       <!-- /download:soon -->
       <!-- download:live -->
-      <div class="live" hidden>
+      <div class="live">
       <ol class="steps">
         <li>從 GitHub 上的<a href="https://github.com/tasict/Turnout/releases/latest">最新版本</a>下載安裝程式（<code>.pkg</code> 檔）。</li>
         <li>打開它並依照步驟進行。Turnout 會安裝到「應用程式」檔案夾，安裝完成後自動開啟。</li>
-        <li>在 Turnout 的視窗中安裝背景服務；macOS 詢問時，在「系統設定 › 一般 › 登入項目與延伸功能」中允許它。</li>
+        <li>Turnout 的歡迎導覽會帶你安裝背景服務；macOS 詢問時，在「系統設定 › 一般 › 登入項目與延伸功能」中允許它。</li>
       </ol>
       <!-- gatekeeper:open-anyway -->
       <p class="gatekeeper" hidden>安裝程式已用 Developer ID 簽署，但還沒有經過 Apple 公證，所以 macOS 可能會拒絕打開它。遇到這種情況，請到「系統設定 › 隱私權與安全性」點選「強制打開」，再重新打開安裝程式。</p>
       <!-- /gatekeeper:open-anyway -->
       <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">下載 Turnout</a></p>
       <p class="fineprint">macOS 15 以上 · Apple 晶片與 Intel · 試用 7 天 · <!-- price -->US$19<!-- /price --> 一次買斷，三台 Mac</p>
+      <p>也可以用 <a href="https://brew.sh">Homebrew</a> 安裝，裝的是同一個安裝程式：</p>
+<pre><code>brew tap tasict/tap
+brew install --cask tasict/tap/turnout</code></pre>
+      <p class="fineprint">不論用哪種方式安裝，Turnout 都會自行更新，所以 <code>brew upgrade</code> 不會動到它。<code>brew uninstall --cask turnout</code> 會執行 Turnout 自己的解除安裝程式，並保留你儲存的通道。</p>
       </div>
       <!-- /download:live -->
     </div>
@@ -355,22 +359,22 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
     <div class="body">
       <p class="intro"><!-- price -->US$19<!-- /price -->，一次買斷，可以用在三台 Mac 上，Turnout 1 的每一次更新都包含在內。先試試看：七天免費，需要的話再多七天。不需要帳號，不需要信用卡，試用期間也不做授權檢查。</p>
       <!-- launch -->
-      <p class="launch" hidden></p>
+      <p class="launch">上市優惠價 US$10，到 2026 年 11 月 25 日為止，之後為 US$19。</p>
       <!-- /launch -->
       <div class="buy-row">
         <!-- download:soon -->
-        <div class="soon">
+        <div class="soon" hidden>
           <p class="soon-title">即將推出</p>
         </div>
         <!-- /download:soon -->
         <!-- download:live -->
-        <div class="live" hidden>
+        <div class="live">
           <a class="download" href="https://github.com/tasict/Turnout/releases/latest">下載 Turnout</a>
           <p class="fineprint">免費試用 7 天</p>
         </div>
         <!-- /download:live -->
         <!-- link:checkout -->
-        <p class="buy" hidden><a>購買授權，<!-- price -->US$19<!-- /price --></a></p>
+        <p class="buy"><a href="https://buy.polar.sh/polar_cl_6vhwN9nVD3PohFkvGN9YDGQsTxcLNL3Ioo3yV1jagMT?utm_source=site">購買授權，<!-- price -->US$19<!-- /price --></a></p>
         <!-- /link:checkout -->
       </div>
       <p>三台 Mac：你自己的、家裡的，或同一個組織內的。付款和稅務由 Polar 處理，收據也由 Polar 寄給你。付款完成後，Polar 的頁面會立刻顯示你的授權金鑰，複製起來貼進 Turnout 就好；之後在你的 Polar 購買記錄頁面也找得到。不適合你？14 天內可以退款，不問原因。</p>

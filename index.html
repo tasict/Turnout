@@ -112,13 +112,13 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       <p class="lede">Your hooks run, your routes stay yours, and you choose which network interface the tunnel leaves through.</p>
       <div class="get">
         <!-- download:soon -->
-        <div class="soon">
+        <div class="soon" hidden>
           <p class="soon-title">Coming soon</p>
           <p class="fineprint">The first public release is being prepared. Until then there is nothing to download. Watch the <a href="https://github.com/tasict/Turnout">GitHub repository</a> or its <a href="https://github.com/tasict/Turnout/releases">Releases page</a> for the first one.</p>
         </div>
         <!-- /download:soon -->
         <!-- download:live -->
-        <div class="live" hidden>
+        <div class="live">
           <a class="download" href="https://github.com/tasict/Turnout/releases/latest">Download Turnout</a>
           <p class="fineprint">macOS 15 or later · Apple silicon and Intel · 7-day trial · <!-- price -->US$19<!-- /price --> once, three Macs</p>
           <p class="fineprint"><a href="#install">How to install</a></p>
@@ -326,23 +326,27 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
     <h2 id="install-title">Download and install</h2>
     <div class="body">
       <!-- download:soon -->
-      <div class="soon">
+      <div class="soon" hidden>
         <p class="soon-title">Coming soon</p>
         <p class="fineprint">The first public release is being prepared. Until then there is nothing to download. Watch the <a href="https://github.com/tasict/Turnout">GitHub repository</a> or its <a href="https://github.com/tasict/Turnout/releases">Releases page</a> for the first one.</p>
       </div>
       <!-- /download:soon -->
       <!-- download:live -->
-      <div class="live" hidden>
+      <div class="live">
       <ol class="steps">
         <li>Download the installer, the <code>.pkg</code> file, from the <a href="https://github.com/tasict/Turnout/releases/latest">latest release on GitHub</a>.</li>
         <li>Open it and follow the steps. Turnout is installed in your Applications folder and opens when the installer finishes.</li>
-        <li>In Turnout's window, install the background service, then allow it when macOS asks, in System Settings › General › Login Items &amp; Extensions.</li>
+        <li>Turnout's welcome tour walks you through installing the background service; allow it when macOS asks, in System Settings › General › Login Items &amp; Extensions.</li>
       </ol>
       <!-- gatekeeper:open-anyway -->
       <p class="gatekeeper" hidden>The installer is signed with a Developer ID but not yet notarized by Apple, so macOS may refuse to open it. If it does, go to System Settings › Privacy &amp; Security, choose Open Anyway, and open the installer again.</p>
       <!-- /gatekeeper:open-anyway -->
       <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">Download Turnout</a></p>
       <p class="fineprint">macOS 15 or later · Apple silicon and Intel · 7-day trial · <!-- price -->US$19<!-- /price --> once, three Macs</p>
+      <p>Or install it with <a href="https://brew.sh">Homebrew</a>, which installs the same package:</p>
+<pre><code>brew tap tasict/tap
+brew install --cask tasict/tap/turnout</code></pre>
+      <p class="fineprint">Either way Turnout updates itself, so <code>brew upgrade</code> leaves it alone. <code>brew uninstall --cask turnout</code> runs Turnout's own uninstaller and keeps your saved tunnels.</p>
       </div>
       <!-- /download:live -->
     </div>
@@ -355,22 +359,22 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
     <div class="body">
       <p class="intro"><!-- price -->US$19<!-- /price -->, once, for three Macs, with every update to Turnout 1. Try it first: seven days free, and seven more if you ask. No account, no card, and no license check during the trial.</p>
       <!-- launch -->
-      <p class="launch" hidden></p>
+      <p class="launch">Launch price US$10 until 25 November 2026, then US$19.</p>
       <!-- /launch -->
       <div class="buy-row">
         <!-- download:soon -->
-        <div class="soon">
+        <div class="soon" hidden>
           <p class="soon-title">Coming soon</p>
         </div>
         <!-- /download:soon -->
         <!-- download:live -->
-        <div class="live" hidden>
+        <div class="live">
           <a class="download" href="https://github.com/tasict/Turnout/releases/latest">Download Turnout</a>
           <p class="fineprint">free for 7 days</p>
         </div>
         <!-- /download:live -->
         <!-- link:checkout -->
-        <p class="buy" hidden><a>Buy a license, <!-- price -->US$19<!-- /price --></a></p>
+        <p class="buy"><a href="https://buy.polar.sh/polar_cl_6vhwN9nVD3PohFkvGN9YDGQsTxcLNL3Ioo3yV1jagMT?utm_source=site">Buy a license, <!-- price -->US$19<!-- /price --></a></p>
         <!-- /link:checkout -->
       </div>
       <p>Three Macs: yours, your household's, or within one organization. Polar handles the payment and tax and sends the receipt. As soon as you have paid, Polar's page shows your license key, ready to copy into Turnout, and your Polar purchases page keeps it. Not for you? Refund within 14 days, no questions.</p>
