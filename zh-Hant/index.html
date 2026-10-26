@@ -15,9 +15,9 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
-<link rel="icon" type="image/png" href="../assets/favicon.png">
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
+<link rel="stylesheet" href="../assets/site.css?v=53a6c08c">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout：原生 App 版的 wg-quick">
@@ -87,8 +87,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="./"><picture>
-      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
-      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg?v=1bbb3786">
+      <img src="../assets/logo.svg?v=6b9d5cd5" width="130" height="30" alt="Turnout">
     </picture></a>
     <nav class="site-nav" aria-label="網站">
       <ul>
@@ -132,8 +132,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <div class="wrap">
       <div class="motion">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/1-path.jpg">
-          <img class="shot" src="../assets/screenshots/light/1-path.jpg" width="1600" height="1000" alt="Turnout 主視窗中一條已連線的通道：路徑從通道經過它出去的網路介面連到伺服器，雙向都有流量。">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/1-path.jpg?v=45ae20c5">
+          <img class="shot" src="../assets/screenshots/light/1-path.jpg?v=56eb2458" width="1600" height="1000" alt="Turnout 主視窗中一條已連線的通道：路徑從通道經過它出去的網路介面連到伺服器，雙向都有流量。">
         </picture>
         <!-- cable -->
 <svg class="cable" viewBox="0 0 1600 1000" aria-hidden="true" focusable="false">
@@ -246,8 +246,8 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>規則就是設定檔裡的幾行，從通道的頁面設定。Turnout 開著時才會執行這些規則，所以它提供「在登入時打開」。Wi-Fi 規則需要定位權限，因為 macOS 把 Wi-Fi 網路名稱視為位置資訊；Turnout 只在你設定這類規則時才會詢問，啟動時絕不會問。</p>
       <figure class="shot-figure">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg">
-          <img class="shot" src="../assets/screenshots/light/4-automation.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="為通道設定自動連線：每週的時段，以及要連線的 Wi-Fi 網路。">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg?v=3893c740">
+          <img class="shot" src="../assets/screenshots/light/4-automation.jpg?v=fb1af9cb" width="1600" height="1000" loading="lazy" decoding="async" alt="為通道設定自動連線：每週的時段，以及要連線的 Wi-Fi 網路。">
         </picture>
         <figcaption>在通道的頁面設定時段與 Wi-Fi 網路。</figcaption>
       </figure>
@@ -263,8 +263,8 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>修改只會改寫有動到的那幾行，你的註解和順序都留在原處。問題會連同行號列出，全部解決之後才能儲存。新增的通道會附上一組新產生的金鑰。</p>
       <figure class="shot-figure">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg">
-          <img class="shot" src="../assets/screenshots/light/2-editor.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="Turnout 的編輯器以表單顯示一條通道的設定。">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg?v=3af1ffaa">
+          <img class="shot" src="../assets/screenshots/light/2-editor.jpg?v=c53cade6" width="1600" height="1000" loading="lazy" decoding="async" alt="Turnout 的編輯器以表單顯示一條通道的設定。">
         </picture>
         <figcaption>表單和文字是同一個檔案的兩種檢視。</figcaption>
       </figure>
@@ -272,8 +272,8 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>「檔案」›「輸出通道⋯」則反過來：每條通道各一個 <code>.conf</code>，放進同一個 zip，結構和官方 App 匯出與匯入的一樣。單一通道的「輸出⋯」只儲存它自己的檔案。</p>
       <figure class="shot-figure">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg">
-          <img class="shot" src="../assets/screenshots/light/3-import.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="匯入面板列出 zip 裡的多條通道，每條都可以切入或略過。">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg?v=4fc917bc">
+          <img class="shot" src="../assets/screenshots/light/3-import.jpg?v=399ded0a" width="1600" height="1000" loading="lazy" decoding="async" alt="匯入面板列出 zip 裡的多條通道，每條都可以切入或略過。">
         </picture>
         <figcaption>匯入中的每條通道都是一條支線：切入，或是略過。</figcaption>
       </figure>
@@ -294,8 +294,8 @@ Endpoint = vpn.example.com:51820</code></pre>
              600x420 (the 300-point popover at 2x). If the popover's height
              changes, change width/height here and MENU_SIZE in publish-site.sh. -->
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/menu-dark.png">
-          <img class="shot menu" src="../assets/menu-light.png" width="600" height="434" loading="lazy" decoding="async" alt="選單列中的 Turnout 選單，列出每條通道和各自的開關。">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/menu-dark.png?v=8f0b365f">
+          <img class="shot menu" src="../assets/menu-light.png?v=66ec5a0d" width="600" height="434" loading="lazy" decoding="async" alt="選單列中的 Turnout 選單，列出每條通道和各自的開關。">
         </picture>
         <figcaption>每條通道都有自己的開關，已連線的通道會標出它走哪個網路介面。</figcaption>
       </figure>

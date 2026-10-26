@@ -15,9 +15,9 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
-<link rel="icon" type="image/png" href="../assets/favicon.png">
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
+<link rel="stylesheet" href="../assets/site.css?v=53a6c08c">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout：ネイティブアプリになったMac用のwg-quick">
@@ -87,8 +87,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="./"><picture>
-      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
-      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg?v=1bbb3786">
+      <img src="../assets/logo.svg?v=6b9d5cd5" width="130" height="30" alt="Turnout">
     </picture></a>
     <nav class="site-nav" aria-label="サイト">
       <ul>
@@ -132,8 +132,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <div class="wrap">
       <div class="motion">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/1-path.jpg">
-          <img class="shot" src="../assets/screenshots/light/1-path.jpg" width="1600" height="1000" alt="接続中のトンネルを表示したTurnoutのメインウインドウ。経路はトンネルから、出ていくネットワークインターフェイスを経てサーバーまで続き、両方向に通信が流れています。">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/1-path.jpg?v=45ae20c5">
+          <img class="shot" src="../assets/screenshots/light/1-path.jpg?v=56eb2458" width="1600" height="1000" alt="接続中のトンネルを表示したTurnoutのメインウインドウ。経路はトンネルから、出ていくネットワークインターフェイスを経てサーバーまで続き、両方向に通信が流れています。">
         </picture>
         <!-- cable -->
 <svg class="cable" viewBox="0 0 1600 1000" aria-hidden="true" focusable="false">
@@ -246,8 +246,8 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>ルールは構成ファイルの中の行で、トンネルのページから設定します。Turnoutは開いている間だけルールに従って動くので、“ログイン時に開く”を用意しています。Wi-Fiルールには位置情報へのアクセスが必要です。macOSはWi-Fiネットワークの名前を位置情報として扱うためです。Turnoutはルールを設定するときにアクセスを求め、起動時に求めることはありません。</p>
       <figure class="shot-figure">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg">
-          <img class="shot" src="../assets/screenshots/light/4-automation.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="トンネルの自動接続の設定：週ごとのスケジュールと、接続するWi-Fiネットワーク。">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg?v=3893c740">
+          <img class="shot" src="../assets/screenshots/light/4-automation.jpg?v=fb1af9cb" width="1600" height="1000" loading="lazy" decoding="async" alt="トンネルの自動接続の設定：週ごとのスケジュールと、接続するWi-Fiネットワーク。">
         </picture>
         <figcaption>トンネルのスケジュールとWi-Fiネットワークは、そのトンネルのページで設定します。</figcaption>
       </figure>
@@ -263,8 +263,8 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>変更は関係する行だけを書き換えるので、コメントや並び順はそのまま残ります。問題は行番号付きで一覧され、問題がなくなるまで“保存”はできません。新しいトンネルには、新しく生成した鍵ペアが付きます。</p>
       <figure class="shot-figure">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg">
-          <img class="shot" src="../assets/screenshots/light/2-editor.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="トンネルの構成をフォームで表示したTurnoutのエディタ。">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg?v=3af1ffaa">
+          <img class="shot" src="../assets/screenshots/light/2-editor.jpg?v=c53cade6" width="1600" height="1000" loading="lazy" decoding="async" alt="トンネルの構成をフォームで表示したTurnoutのエディタ。">
         </picture>
         <figcaption>フォームとテキストは、同じファイルの2つの表示です。</figcaption>
       </figure>
@@ -272,8 +272,8 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>“ファイル” › “トンネルを書き出す…”はその逆です。トンネルごとに<code>.conf</code>を1つずつ入れたzipを、公式アプリが書き出し、読み込むのと同じ構成で作ります。各トンネルの“書き出す…”は、そのトンネルのファイルだけを保存します。</p>
       <figure class="shot-figure">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg">
-          <img class="shot" src="../assets/screenshots/light/3-import.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="zipの中の複数のトンネルを一覧した読み込みシート。それぞれ、読み込むか外すかを切り替えられます。">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg?v=4fc917bc">
+          <img class="shot" src="../assets/screenshots/light/3-import.jpg?v=399ded0a" width="1600" height="1000" loading="lazy" decoding="async" alt="zipの中の複数のトンネルを一覧した読み込みシート。それぞれ、読み込むか外すかを切り替えられます。">
         </picture>
         <figcaption>読み込むトンネルはそれぞれが支線です。本線に入れるか、外しておくかを選びます。</figcaption>
       </figure>
@@ -294,8 +294,8 @@ Endpoint = vpn.example.com:51820</code></pre>
              600x420 (the 300-point popover at 2x). If the popover's height
              changes, change width/height here and MENU_SIZE in publish-site.sh. -->
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/menu-dark.png">
-          <img class="shot menu" src="../assets/menu-light.png" width="600" height="434" loading="lazy" decoding="async" alt="メニューバーのTurnoutメニュー。トンネルごとにスイッチが並んでいます。">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/menu-dark.png?v=8f0b365f">
+          <img class="shot menu" src="../assets/menu-light.png?v=66ec5a0d" width="600" height="434" loading="lazy" decoding="async" alt="メニューバーのTurnoutメニュー。トンネルごとにスイッチが並んでいます。">
         </picture>
         <figcaption>トンネルごとのスイッチと、接続中のトンネルが使っているインターフェイス。</figcaption>
       </figure>

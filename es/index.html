@@ -15,9 +15,9 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
-<link rel="icon" type="image/png" href="../assets/favicon.png">
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
+<link rel="stylesheet" href="../assets/site.css?v=53a6c08c">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout: wg-quick para tu Mac, en una app nativa">
@@ -87,8 +87,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="./"><picture>
-      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
-      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg?v=1bbb3786">
+      <img src="../assets/logo.svg?v=6b9d5cd5" width="130" height="30" alt="Turnout">
     </picture></a>
     <nav class="site-nav" aria-label="Sitio">
       <ul>
@@ -132,8 +132,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <div class="wrap">
       <div class="motion">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/1-path.jpg">
-          <img class="shot" src="../assets/screenshots/light/1-path.jpg" width="1600" height="1000" alt="La ventana principal de Turnout con un túnel conectado. Su ruta va del túnel, por la interfaz de red por la que sale, hasta el servidor, con tráfico en ambos sentidos.">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/1-path.jpg?v=45ae20c5">
+          <img class="shot" src="../assets/screenshots/light/1-path.jpg?v=56eb2458" width="1600" height="1000" alt="La ventana principal de Turnout con un túnel conectado. Su ruta va del túnel, por la interfaz de red por la que sale, hasta el servidor, con tráfico en ambos sentidos.">
         </picture>
         <!-- cable -->
 <svg class="cable" viewBox="0 0 1600 1000" aria-hidden="true" focusable="false">
@@ -246,8 +246,8 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>Las reglas son líneas del archivo de configuración y se configuran desde la página del túnel. Turnout las aplica mientras está abierto, por eso ofrece Abrir al iniciar sesión. Una regla de Wi-Fi necesita acceso a la ubicación, porque macOS considera el nombre de una red Wi-Fi como información de ubicación; Turnout lo pide cuando configuras la regla, nunca al abrirse.</p>
       <figure class="shot-figure">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg">
-          <img class="shot" src="../assets/screenshots/light/4-automation.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="Configuración de la conexión automática de un túnel: un horario semanal y las redes Wi-Fi en las que se conecta.">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg?v=3893c740">
+          <img class="shot" src="../assets/screenshots/light/4-automation.jpg?v=fb1af9cb" width="1600" height="1000" loading="lazy" decoding="async" alt="Configuración de la conexión automática de un túnel: un horario semanal y las redes Wi-Fi en las que se conecta.">
         </picture>
         <figcaption>El horario y las redes Wi-Fi de un túnel, configurados desde su página.</figcaption>
       </figure>
@@ -263,8 +263,8 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>Los cambios reescriben solo las líneas que tocan, así que tus comentarios y el orden se quedan donde los pusiste. Los problemas se listan con su número de línea, y Guardar espera a que no quede ninguno. Un túnel nuevo viene con un par de claves recién generado.</p>
       <figure class="shot-figure">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg">
-          <img class="shot" src="../assets/screenshots/light/2-editor.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="El editor de Turnout mostrando la configuración de un túnel como formulario.">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg?v=3af1ffaa">
+          <img class="shot" src="../assets/screenshots/light/2-editor.jpg?v=c53cade6" width="1600" height="1000" loading="lazy" decoding="async" alt="El editor de Turnout mostrando la configuración de un túnel como formulario.">
         </picture>
         <figcaption>El formulario y el texto son dos vistas del mismo archivo.</figcaption>
       </figure>
@@ -272,8 +272,8 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>Archivo › Exportar túneles… hace el camino inverso: un zip con un <code>.conf</code> por túnel, organizado como lo escribe e importa la app oficial. Desde un túnel, Exportar… guarda solo su archivo.</p>
       <figure class="shot-figure">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg">
-          <img class="shot" src="../assets/screenshots/light/3-import.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="La hoja de importación con varios túneles de un zip, cada uno incluido o dejado fuera.">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg?v=4fc917bc">
+          <img class="shot" src="../assets/screenshots/light/3-import.jpg?v=399ded0a" width="1600" height="1000" loading="lazy" decoding="async" alt="La hoja de importación con varios túneles de un zip, cada uno incluido o dejado fuera.">
         </picture>
         <figcaption>Cada túnel de una importación es un ramal: inclúyelo o déjalo fuera.</figcaption>
       </figure>
@@ -294,8 +294,8 @@ Endpoint = vpn.example.com:51820</code></pre>
              600x420 (the 300-point popover at 2x). If the popover's height
              changes, change width/height here and MENU_SIZE in publish-site.sh. -->
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/menu-dark.png">
-          <img class="shot menu" src="../assets/menu-light.png" width="600" height="434" loading="lazy" decoding="async" alt="El menú de Turnout en la barra de menús, con un interruptor para cada túnel.">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/menu-dark.png?v=8f0b365f">
+          <img class="shot menu" src="../assets/menu-light.png?v=66ec5a0d" width="600" height="434" loading="lazy" decoding="async" alt="El menú de Turnout en la barra de menús, con un interruptor para cada túnel.">
         </picture>
         <figcaption>Cada túnel con su interruptor, y la interfaz por la que sale uno conectado.</figcaption>
       </figure>

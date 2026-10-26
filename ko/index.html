@@ -15,9 +15,9 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
-<link rel="icon" type="image/png" href="../assets/favicon.png">
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
+<link rel="stylesheet" href="../assets/site.css?v=53a6c08c">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout: 네이티브 앱으로 쓰는 Mac용 wg-quick">
@@ -87,8 +87,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="./"><picture>
-      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
-      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg?v=1bbb3786">
+      <img src="../assets/logo.svg?v=6b9d5cd5" width="130" height="30" alt="Turnout">
     </picture></a>
     <nav class="site-nav" aria-label="사이트">
       <ul>
@@ -132,8 +132,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <div class="wrap">
       <div class="motion">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/1-path.jpg">
-          <img class="shot" src="../assets/screenshots/light/1-path.jpg" width="1600" height="1000" alt="연결된 터널이 있는 Turnout의 메인 윈도우. 경로가 터널에서 시작해 터널이 나가는 네트워크 인터페이스를 거쳐 서버까지 이어지며, 트래픽이 양방향으로 움직입니다.">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/1-path.jpg?v=45ae20c5">
+          <img class="shot" src="../assets/screenshots/light/1-path.jpg?v=56eb2458" width="1600" height="1000" alt="연결된 터널이 있는 Turnout의 메인 윈도우. 경로가 터널에서 시작해 터널이 나가는 네트워크 인터페이스를 거쳐 서버까지 이어지며, 트래픽이 양방향으로 움직입니다.">
         </picture>
         <!-- cable -->
 <svg class="cable" viewBox="0 0 1600 1000" aria-hidden="true" focusable="false">
@@ -246,8 +246,8 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>규칙은 구성 파일 안의 줄이며, 터널 페이지에서 설정합니다. Turnout은 열려 있는 동안 규칙에 따라 동작하므로 ‘로그인 시 열기’를 제공합니다. macOS는 Wi-Fi 네트워크의 이름을 위치 정보로 취급하므로 Wi-Fi 규칙에는 위치 접근 권한이 필요합니다. Turnout은 실행할 때가 아니라 규칙을 설정할 때 이 권한을 요청합니다.</p>
       <figure class="shot-figure">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg">
-          <img class="shot" src="../assets/screenshots/light/4-automation.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="터널의 자동 연결 설정: 주간 스케줄과 터널을 연결할 Wi-Fi 네트워크.">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg?v=3893c740">
+          <img class="shot" src="../assets/screenshots/light/4-automation.jpg?v=fb1af9cb" width="1600" height="1000" loading="lazy" decoding="async" alt="터널의 자동 연결 설정: 주간 스케줄과 터널을 연결할 Wi-Fi 네트워크.">
         </picture>
         <figcaption>터널 페이지에서 설정하는 터널의 스케줄과 Wi-Fi 네트워크.</figcaption>
       </figure>
@@ -263,8 +263,8 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>변경 사항은 해당하는 줄만 다시 쓰므로 주석과 순서가 작성한 그대로 유지됩니다. 문제는 줄 번호와 함께 표시되며, 문제가 모두 해결될 때까지 ‘저장’은 사용할 수 없습니다. 새 터널에는 새로운 키 쌍이 함께 만들어집니다.</p>
       <figure class="shot-figure">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg">
-          <img class="shot" src="../assets/screenshots/light/2-editor.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="터널의 구성을 양식으로 보여 주는 Turnout 편집기.">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg?v=3af1ffaa">
+          <img class="shot" src="../assets/screenshots/light/2-editor.jpg?v=c53cade6" width="1600" height="1000" loading="lazy" decoding="async" alt="터널의 구성을 양식으로 보여 주는 Turnout 편집기.">
         </picture>
         <figcaption>양식과 텍스트는 같은 파일을 보는 두 가지 보기입니다.</figcaption>
       </figure>
@@ -272,8 +272,8 @@ Endpoint = vpn.example.com:51820</code></pre>
       <p>‘파일’ › ‘터널 내보내기…’는 그 반대입니다. 터널마다 <code>.conf</code> 파일 하나씩을 담은 zip 하나를 공식 앱이 쓰고 가져오는 것과 같은 구조로 만듭니다. 각 터널의 ‘내보내기…’는 그 터널의 파일만 저장합니다.</p>
       <figure class="shot-figure">
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg">
-          <img class="shot" src="../assets/screenshots/light/3-import.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="zip에 들어 있는 여러 터널을 나열하고 각 터널을 포함하거나 제외한 상태를 보여 주는 가져오기 시트.">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg?v=4fc917bc">
+          <img class="shot" src="../assets/screenshots/light/3-import.jpg?v=399ded0a" width="1600" height="1000" loading="lazy" decoding="async" alt="zip에 들어 있는 여러 터널을 나열하고 각 터널을 포함하거나 제외한 상태를 보여 주는 가져오기 시트.">
         </picture>
         <figcaption>가져올 각 터널은 하나의 지선입니다. 선로를 전환해 넣거나 빼 두십시오.</figcaption>
       </figure>
@@ -294,8 +294,8 @@ Endpoint = vpn.example.com:51820</code></pre>
              600x420 (the 300-point popover at 2x). If the popover's height
              changes, change width/height here and MENU_SIZE in publish-site.sh. -->
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="../assets/menu-dark.png">
-          <img class="shot menu" src="../assets/menu-light.png" width="600" height="434" loading="lazy" decoding="async" alt="메뉴 막대에 있는 Turnout의 메뉴. 터널마다 스위치가 있는 목록을 보여 줍니다.">
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/menu-dark.png?v=8f0b365f">
+          <img class="shot menu" src="../assets/menu-light.png?v=66ec5a0d" width="600" height="434" loading="lazy" decoding="async" alt="메뉴 막대에 있는 Turnout의 메뉴. 터널마다 스위치가 있는 목록을 보여 줍니다.">
         </picture>
         <figcaption>모든 터널과 각 터널의 스위치, 그리고 연결된 터널이 나가는 인터페이스.</figcaption>
       </figure>
