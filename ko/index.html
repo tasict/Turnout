@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=53a6c08c">
+<link rel="stylesheet" href="../assets/site.css?v=69d649f1">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout: 네이티브 앱으로 쓰는 Mac용 wg-quick">
@@ -93,7 +93,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <nav class="site-nav" aria-label="사이트">
       <ul>
         <li><a href="how-it-works.html">작동 방식</a></li>
-        <li class="lang"><a href="../" hreflang="en" lang="en">English</a></li>
+      </ul>
+    </nav>
+    <nav class="lang-nav" aria-label="언어">
+      <ul>
+        <li><a href="../" hreflang="en" lang="en">English</a></li>
         <li><a href="../zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
         <li><a href="../ja/" hreflang="ja" lang="ja">日本語</a></li>
         <li><a href="../es/" hreflang="es" lang="es">Español</a></li>
@@ -244,7 +248,7 @@ Endpoint = vpn.example.com:51820</code></pre>
 <pre><code>#@ Schedule = Mon-Fri 09:00-18:00
 #@ OnWiFi = Office</code></pre>
       <p>규칙은 구성 파일 안의 줄이며, 터널 페이지에서 설정합니다. Turnout은 열려 있는 동안 규칙에 따라 동작하므로 ‘로그인 시 열기’를 제공합니다. macOS는 Wi-Fi 네트워크의 이름을 위치 정보로 취급하므로 Wi-Fi 규칙에는 위치 접근 권한이 필요합니다. Turnout은 실행할 때가 아니라 규칙을 설정할 때 이 권한을 요청합니다.</p>
-      <figure class="shot-figure">
+      <figure class="shot-figure shot-automation">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg?v=3893c740">
           <img class="shot" src="../assets/screenshots/light/4-automation.jpg?v=fb1af9cb" width="1600" height="1000" loading="lazy" decoding="async" alt="터널의 자동 연결 설정: 주간 스케줄과 터널을 연결할 Wi-Fi 네트워크.">
@@ -261,7 +265,7 @@ Endpoint = vpn.example.com:51820</code></pre>
     <div class="body">
       <p class="intro">터널을 양식이나 텍스트로 편집하고, 언제든지 둘 사이를 전환할 수 있습니다.</p>
       <p>변경 사항은 해당하는 줄만 다시 쓰므로 주석과 순서가 작성한 그대로 유지됩니다. 문제는 줄 번호와 함께 표시되며, 문제가 모두 해결될 때까지 ‘저장’은 사용할 수 없습니다. 새 터널에는 새로운 키 쌍이 함께 만들어집니다.</p>
-      <figure class="shot-figure">
+      <figure class="shot-figure shot-editor">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg?v=3af1ffaa">
           <img class="shot" src="../assets/screenshots/light/2-editor.jpg?v=c53cade6" width="1600" height="1000" loading="lazy" decoding="async" alt="터널의 구성을 양식으로 보여 주는 Turnout 편집기.">
@@ -270,7 +274,7 @@ Endpoint = vpn.example.com:51820</code></pre>
       </figure>
       <p><code>.conf</code> 파일이나 <code>.zip</code> 파일을 윈도우에 드롭하거나, ‘파일’ › ‘파일에서 가져오기…’를 선택하거나, ‘파일’ › ‘클립보드에서 새 터널…’로 복사한 구성을 붙여 넣으십시오. 공식 WireGuard 앱이 내보낸 zip은 일괄 가져오기로 열립니다. 모든 터널을 검토하고, 일부는 제외하고, 나머지를 한 번에 가져올 수 있습니다.</p>
       <p>‘파일’ › ‘터널 내보내기…’는 그 반대입니다. 터널마다 <code>.conf</code> 파일 하나씩을 담은 zip 하나를 공식 앱이 쓰고 가져오는 것과 같은 구조로 만듭니다. 각 터널의 ‘내보내기…’는 그 터널의 파일만 저장합니다.</p>
-      <figure class="shot-figure">
+      <figure class="shot-figure shot-import">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg?v=4fc917bc">
           <img class="shot" src="../assets/screenshots/light/3-import.jpg?v=399ded0a" width="1600" height="1000" loading="lazy" decoding="async" alt="zip에 들어 있는 여러 터널을 나열하고 각 터널을 포함하거나 제외한 상태를 보여 주는 가져오기 시트.">

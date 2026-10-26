@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="assets/site.css?v=53a6c08c">
+<link rel="stylesheet" href="assets/site.css?v=69d649f1">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout: wg-quick for your Mac, in a native app">
@@ -93,7 +93,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <nav class="site-nav" aria-label="Site">
       <ul>
         <li><a href="how-it-works.html">How it works</a></li>
-        <li class="lang"><a href="./" hreflang="en" lang="en" aria-current="page">English</a></li>
+      </ul>
+    </nav>
+    <nav class="lang-nav" aria-label="Language">
+      <ul>
+        <li><a href="./" hreflang="en" lang="en" aria-current="page">English</a></li>
         <li><a href="zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
         <li><a href="ja/" hreflang="ja" lang="ja">日本語</a></li>
         <li><a href="es/" hreflang="es" lang="es">Español</a></li>
@@ -244,7 +248,7 @@ Endpoint = vpn.example.com:51820</code></pre>
 <pre><code>#@ Schedule = Mon-Fri 09:00-18:00
 #@ OnWiFi = Office</code></pre>
       <p>The rules are lines in the config file, set up from the tunnel's page. Turnout acts on them while it is open, so it offers Open at Login. A Wi-Fi rule needs Location access, because macOS counts the name of a Wi-Fi network as location; Turnout asks for it when you set up the rule, never at launch.</p>
-      <figure class="shot-figure">
+      <figure class="shot-figure shot-automation">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/dark/4-automation.jpg?v=3893c740">
           <img class="shot" src="assets/screenshots/light/4-automation.jpg?v=fb1af9cb" width="1600" height="1000" loading="lazy" decoding="async" alt="Setting up automatic connection for a tunnel: a weekly schedule and the Wi-Fi networks it connects on.">
@@ -261,7 +265,7 @@ Endpoint = vpn.example.com:51820</code></pre>
     <div class="body">
       <p class="intro">Edit a tunnel as a form or as text, and switch between the two at any time.</p>
       <p>Changes rewrite only the lines they touch, so your comments and ordering stay where you put them. Problems are listed with their line numbers, and Save waits until there are none. A new tunnel comes with a fresh key pair.</p>
-      <figure class="shot-figure">
+      <figure class="shot-figure shot-editor">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/dark/2-editor.jpg?v=3af1ffaa">
           <img class="shot" src="assets/screenshots/light/2-editor.jpg?v=c53cade6" width="1600" height="1000" loading="lazy" decoding="async" alt="Turnout's editor showing a tunnel's config as a form.">
@@ -270,7 +274,7 @@ Endpoint = vpn.example.com:51820</code></pre>
       </figure>
       <p>Drop <code>.conf</code> files or a <code>.zip</code> on the window, choose File › Import from File…, or paste a copied configuration with File › New Tunnel from Clipboard…. The zip the official WireGuard app exports opens as a batch: review every tunnel, leave some out, and import the rest at once.</p>
       <p>File › Export Tunnels… goes the other way: one zip with a <code>.conf</code> per tunnel, laid out the way the official app writes and imports it. A tunnel's own Export… saves just its file.</p>
-      <figure class="shot-figure">
+      <figure class="shot-figure shot-import">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/dark/3-import.jpg?v=4fc917bc">
           <img class="shot" src="assets/screenshots/light/3-import.jpg?v=399ded0a" width="1600" height="1000" loading="lazy" decoding="async" alt="The import sheet listing several tunnels from a zip, each one switched in or left out.">

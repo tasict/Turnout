@@ -81,6 +81,9 @@ body {
 
 :lang(zh-Hant) body, :lang(ja) body { line-height: 1.8; }
 
+/* Korean breaks between words, as it is written, not inside them. */
+:lang(ko) body { word-break: keep-all; }
+
 img { max-width: 100%; height: auto; display: block; }
 
 a { color: var(--blue); text-underline-offset: 0.18em; }
@@ -127,15 +130,14 @@ p code, li code, dd code, dt code, td code, figcaption code {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem 1.5rem;
-  padding-block: 1.1rem;
+  gap: 0.5rem 1.25rem;
+  padding-block: 1rem 0.9rem;
 }
 
-.brand { display: block; line-height: 0; }
+.brand { display: block; line-height: 0; margin-right: auto; }
 .brand img { width: 130px; height: 30px; }
 
-.site-nav ul {
+.site-nav ul, .lang-nav ul {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem 1.25rem;
@@ -145,16 +147,37 @@ p code, li code, dd code, dt code, td code, figcaption code {
   font-size: 0.95rem;
 }
 
-.site-nav a { color: var(--muted); text-decoration: none; }
-.site-nav a:hover { color: var(--ink); text-decoration: underline; }
-.site-nav a[aria-current="page"] {
+.site-nav a, .lang-nav a {
+  display: inline-block;
+  padding-block: 0.15rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+.site-nav a:hover, .lang-nav a:hover { color: var(--ink); text-decoration: underline; }
+.site-nav a[aria-current="page"], .lang-nav a[aria-current="page"] {
   color: var(--ink);
   font-weight: 600;
   text-decoration: underline;
   text-decoration-color: var(--blue);
   text-decoration-thickness: 2px;
 }
-.site-nav .lang { padding-left: 1.25rem; border-left: 1px solid var(--rule); }
+
+/* On a phone the five languages do not fit beside the logo: they take a row
+   of their own under it, in smaller type, and the page link stays up by the
+   logo. From a tablet's width it is one row, the languages set off by a rule. */
+.lang-nav { flex-basis: 100%; }
+.lang-nav ul { gap: 0 1rem; font-size: 0.875rem; }
+
+/* Narrow phones: still one row. */
+@media (max-width: 22.49rem) {
+  .lang-nav ul { gap: 0 0.75rem; font-size: 0.8125rem; }
+}
+
+@media (min-width: 48rem) {
+  .site-header .wrap { gap: 0.75rem 1.25rem; padding-block: 1.1rem; }
+  .lang-nav { flex-basis: auto; padding-left: 1.25rem; border-left: 1px solid var(--rule); }
+  .lang-nav ul { gap: 0.25rem 1.25rem; font-size: 0.95rem; }
+}
 
 /* Hero: the message, the download, and the live path standing on the
    ground, as the portal does in the icon. -------------------------------- */
@@ -184,7 +207,7 @@ p code, li code, dd code, dt code, td code, figcaption code {
 
 .hero-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
 
-@media (min-width: 60rem) {
+@media (min-width: 72rem) {
   .hero-row { grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 4rem; }
 }
 
@@ -213,6 +236,7 @@ p code, li code, dd code, dt code, td code, figcaption code {
 .download:hover { background: color-mix(in srgb, var(--blue) 84%, var(--ink)); }
 
 .fineprint { color: var(--muted); font-size: 0.92rem; margin: 0; }
+.fineprint a { white-space: nowrap; }
 
 .live { display: grid; gap: 0.6rem; justify-items: start; }
 
@@ -249,6 +273,21 @@ p code, li code, dd code, dt code, td code, figcaption code {
 .stage .shot {
   border-radius: 12px;
   box-shadow: 0 0 0 1px var(--rule), 0 30px 60px -30px var(--shadow);
+}
+
+/* On a phone the whole window would shrink to a fifth of its size, so the
+   stage runs edge to edge and leaves the window's sidebar out (the left 322
+   of the screenshot's 1600 pixels): the tunnel's page and its path fill the
+   width. The cable is drawn inside .motion, so it moves with the picture. */
+@media (max-width: 39.99rem) {
+  .stage {
+    --cut: calc(100vw * 1600 / 1278 * 0.3125);
+    overflow-x: clip;
+  }
+  .stage .wrap { padding-inline: 0; }
+  .stage .motion { width: calc(100% * 1600 / 1278); margin-left: calc(-100% * 322 / 1278); }
+  .stage .shot { border-radius: 0; box-shadow: 0 0 0 1px var(--rule); }
+  .stage figcaption { padding-inline: var(--gutter); }
 }
 
 /* The path on the landing page: the screenshot, with its cable drawn again on
@@ -354,7 +393,7 @@ h2 {
 
 h3 { font-size: 1.1rem; line-height: 1.35; margin: 0 0 0.35rem; }
 
-.body { min-width: 0; }
+.body { min-width: 0; container-type: inline-size; }
 .body > * { margin-block: 0; }
 .body > * + * { margin-top: 1.25rem; }
 .body p, .body ul, .body ol { max-width: var(--measure); }
@@ -365,6 +404,31 @@ figure figcaption { margin-top: 0.75rem; color: var(--muted); font-size: 0.95rem
 
 .body .shot-figure { margin-top: 2rem; }
 .body .shot-figure .shot { box-shadow: 0 0 0 1px var(--rule), 0 24px 48px -30px var(--shadow); }
+
+/* The other screenshots on a phone: edge to edge as well, each cut to the
+   part that tells its story, in the 1600 x 1000 pixels of the screenshot:
+   the sheet that is open, or the page without the sidebar. */
+@media (max-width: 39.99rem) {
+  .shot-automation { --crop-x: 362; --crop-y: 64; --crop-w: 876; --crop-h: 904; }
+  .shot-import { --crop-x: 320; --crop-y: 264; --crop-w: 960; --crop-h: 472; }
+  .shot-editor { --crop-x: 322; --crop-y: 0; --crop-w: 1278; --crop-h: 1000; }
+
+  :is(.shot-automation, .shot-import, .shot-editor) picture {
+    display: block;
+    overflow: hidden;
+    margin-inline: calc(-1 * var(--gutter));
+    aspect-ratio: var(--crop-w) / var(--crop-h);
+    box-shadow: 0 0 0 1px var(--rule);
+  }
+  .body :is(.shot-automation, .shot-import, .shot-editor) .shot {
+    width: calc(100% * 1600 / var(--crop-w));
+    max-width: none;
+    margin-left: calc(-100% * var(--crop-x) / var(--crop-w));
+    margin-top: calc(-100% * var(--crop-y) / var(--crop-w));
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
 
 /* Config keys and what Turnout does with them, as a spec sheet. */
 .keys { margin: 0; max-width: 46rem; }
@@ -378,7 +442,7 @@ figure figcaption { margin-top: 0.75rem; color: var(--muted); font-size: 0.95rem
 .keys dt { display: flex; flex-wrap: wrap; gap: 0.3rem; align-content: start; }
 .keys dd { margin: 0; color: var(--muted); }
 
-@media (min-width: 40rem) {
+@container (min-width: 36rem) {
   .keys > div { grid-template-columns: 13rem minmax(0, 1fr); }
 }
 
@@ -403,11 +467,18 @@ pre {
 pre code { font-size: 1em; }
 pre .c { color: var(--code-muted); }
 
+/* On a phone code wraps rather than hiding behind a sideways scroll, and a
+   comment goes on its own line under its command. */
+@media (max-width: 39.99rem) {
+  pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+  pre .c { display: block; }
+}
+
 /* The config with its two routes marked: blue into the tunnel, orange
    around it, the bound interface in ink. */
 .conf { display: grid; gap: 1.5rem; max-width: 52rem; }
 
-@media (min-width: 52rem) {
+@container (min-width: 45rem) {
   .conf { grid-template-columns: minmax(0, 23rem) minmax(0, 1fr); gap: 2rem; align-items: start; }
 }
 
@@ -571,6 +642,10 @@ body:has(> .consent) { padding-bottom: 9rem; }
 }
 .consent button[data-consent="granted"] { background: var(--blue); color: var(--on-blue); box-shadow: none; }
 
+@media (max-width: 39.99rem) {
+  .consent { font-size: 0.875rem; padding: 0.75rem 0.9rem; gap: 0.6rem 1rem; }
+}
+
 /* Footer ---------------------------------------------------------------- */
 
 .site-footer { border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.92rem; }
@@ -620,7 +695,13 @@ body:has(> .consent) { padding-bottom: 9rem; }
   padding-top: 1rem;
 }
 .toc p { margin: 0 0 0.5rem; color: var(--muted); }
-.toc ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
+.toc ul { list-style: none; margin: 0; padding: 0; column-width: 8rem; column-gap: 1.5rem; }
+.toc li { break-inside: avoid; padding-bottom: 0.35rem; }
+
+@media (min-width: 64rem) {
+  .toc ul { columns: auto; display: grid; gap: 0.35rem; }
+  .toc li { padding-bottom: 0; }
+}
 .toc a { color: var(--ink); text-decoration: none; }
 .toc a:hover { color: var(--blue); text-decoration: underline; }
 

@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=53a6c08c">
+<link rel="stylesheet" href="../assets/site.css?v=69d649f1">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout: wg-quick para tu Mac, en una app nativa">
@@ -93,7 +93,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <nav class="site-nav" aria-label="Sitio">
       <ul>
         <li><a href="how-it-works.html">Cómo funciona</a></li>
-        <li class="lang"><a href="../" hreflang="en" lang="en">English</a></li>
+      </ul>
+    </nav>
+    <nav class="lang-nav" aria-label="Idioma">
+      <ul>
+        <li><a href="../" hreflang="en" lang="en">English</a></li>
         <li><a href="../zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
         <li><a href="../ja/" hreflang="ja" lang="ja">日本語</a></li>
         <li><a href="./" hreflang="es" lang="es" aria-current="page">Español</a></li>
@@ -244,7 +248,7 @@ Endpoint = vpn.example.com:51820</code></pre>
 <pre><code>#@ Schedule = Mon-Fri 09:00-18:00
 #@ OnWiFi = Office</code></pre>
       <p>Las reglas son líneas del archivo de configuración y se configuran desde la página del túnel. Turnout las aplica mientras está abierto, por eso ofrece Abrir al iniciar sesión. Una regla de Wi-Fi necesita acceso a la ubicación, porque macOS considera el nombre de una red Wi-Fi como información de ubicación; Turnout lo pide cuando configuras la regla, nunca al abrirse.</p>
-      <figure class="shot-figure">
+      <figure class="shot-figure shot-automation">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg?v=3893c740">
           <img class="shot" src="../assets/screenshots/light/4-automation.jpg?v=fb1af9cb" width="1600" height="1000" loading="lazy" decoding="async" alt="Configuración de la conexión automática de un túnel: un horario semanal y las redes Wi-Fi en las que se conecta.">
@@ -261,7 +265,7 @@ Endpoint = vpn.example.com:51820</code></pre>
     <div class="body">
       <p class="intro">Edita un túnel como formulario o como texto, y cambia entre los dos cuando quieras.</p>
       <p>Los cambios reescriben solo las líneas que tocan, así que tus comentarios y el orden se quedan donde los pusiste. Los problemas se listan con su número de línea, y Guardar espera a que no quede ninguno. Un túnel nuevo viene con un par de claves recién generado.</p>
-      <figure class="shot-figure">
+      <figure class="shot-figure shot-editor">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg?v=3af1ffaa">
           <img class="shot" src="../assets/screenshots/light/2-editor.jpg?v=c53cade6" width="1600" height="1000" loading="lazy" decoding="async" alt="El editor de Turnout mostrando la configuración de un túnel como formulario.">
@@ -270,7 +274,7 @@ Endpoint = vpn.example.com:51820</code></pre>
       </figure>
       <p>Arrastra archivos <code>.conf</code> o un <code>.zip</code> a la ventana, elige Archivo › Importar desde archivo…, o pega una configuración copiada con Archivo › Nuevo túnel desde el portapapeles…. El zip que exporta la app oficial de WireGuard se abre como un lote: revisa cada túnel, deja fuera los que no quieras e importa el resto de una vez.</p>
       <p>Archivo › Exportar túneles… hace el camino inverso: un zip con un <code>.conf</code> por túnel, organizado como lo escribe e importa la app oficial. Desde un túnel, Exportar… guarda solo su archivo.</p>
-      <figure class="shot-figure">
+      <figure class="shot-figure shot-import">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg?v=4fc917bc">
           <img class="shot" src="../assets/screenshots/light/3-import.jpg?v=399ded0a" width="1600" height="1000" loading="lazy" decoding="async" alt="La hoja de importación con varios túneles de un zip, cada uno incluido o dejado fuera.">

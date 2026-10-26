@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=53a6c08c">
+<link rel="stylesheet" href="../assets/site.css?v=69d649f1">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout：原生 App 版的 wg-quick">
@@ -93,7 +93,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <nav class="site-nav" aria-label="網站">
       <ul>
         <li><a href="how-it-works.html">運作方式</a></li>
-        <li class="lang"><a href="../" hreflang="en" lang="en">English</a></li>
+      </ul>
+    </nav>
+    <nav class="lang-nav" aria-label="語言">
+      <ul>
+        <li><a href="../" hreflang="en" lang="en">English</a></li>
         <li><a href="./" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></li>
         <li><a href="../ja/" hreflang="ja" lang="ja">日本語</a></li>
         <li><a href="../es/" hreflang="es" lang="es">Español</a></li>
@@ -244,7 +248,7 @@ Endpoint = vpn.example.com:51820</code></pre>
 <pre><code>#@ Schedule = Mon-Fri 09:00-18:00
 #@ OnWiFi = Office</code></pre>
       <p>規則就是設定檔裡的幾行，從通道的頁面設定。Turnout 開著時才會執行這些規則，所以它提供「在登入時打開」。Wi-Fi 規則需要定位權限，因為 macOS 把 Wi-Fi 網路名稱視為位置資訊；Turnout 只在你設定這類規則時才會詢問，啟動時絕不會問。</p>
-      <figure class="shot-figure">
+      <figure class="shot-figure shot-automation">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg?v=3893c740">
           <img class="shot" src="../assets/screenshots/light/4-automation.jpg?v=fb1af9cb" width="1600" height="1000" loading="lazy" decoding="async" alt="為通道設定自動連線：每週的時段，以及要連線的 Wi-Fi 網路。">
@@ -261,7 +265,7 @@ Endpoint = vpn.example.com:51820</code></pre>
     <div class="body">
       <p class="intro">用表單或文字編輯通道，隨時都能切換。</p>
       <p>修改只會改寫有動到的那幾行，你的註解和順序都留在原處。問題會連同行號列出，全部解決之後才能儲存。新增的通道會附上一組新產生的金鑰。</p>
-      <figure class="shot-figure">
+      <figure class="shot-figure shot-editor">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/2-editor.jpg?v=3af1ffaa">
           <img class="shot" src="../assets/screenshots/light/2-editor.jpg?v=c53cade6" width="1600" height="1000" loading="lazy" decoding="async" alt="Turnout 的編輯器以表單顯示一條通道的設定。">
@@ -270,7 +274,7 @@ Endpoint = vpn.example.com:51820</code></pre>
       </figure>
       <p>把 <code>.conf</code> 檔或 <code>.zip</code> 拖到視窗上、選擇「檔案」›「從檔案匯入⋯」，或用「檔案」›「從剪貼板新增通道⋯」貼上複製的設定檔。官方 WireGuard App 匯出的 zip 會以批次方式開啟：逐一檢查每條通道，略過不要的，其餘一次匯入。</p>
       <p>「檔案」›「輸出通道⋯」則反過來：每條通道各一個 <code>.conf</code>，放進同一個 zip，結構和官方 App 匯出與匯入的一樣。單一通道的「輸出⋯」只儲存它自己的檔案。</p>
-      <figure class="shot-figure">
+      <figure class="shot-figure shot-import">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/3-import.jpg?v=4fc917bc">
           <img class="shot" src="../assets/screenshots/light/3-import.jpg?v=399ded0a" width="1600" height="1000" loading="lazy" decoding="async" alt="匯入面板列出 zip 裡的多條通道，每條都可以切入或略過。">
