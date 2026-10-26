@@ -120,7 +120,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- download:live -->
         <div class="live">
           <a class="download" href="https://github.com/tasict/Turnout/releases/latest">Turnoutをダウンロード</a>
-          <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.0.0</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-10-26">2026年10月26日</time><!-- /released -->公開）· <a href="https://github.com/tasict/Turnout/releases/latest">リリースノート</a></p>
+          <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.0.1</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-10-26">2026年10月26日</time><!-- /released -->公開）· <a href="https://github.com/tasict/Turnout/releases/latest">リリースノート</a></p>
           <p class="fineprint">macOS 15以降 · AppleシリコンとIntel · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、Mac 3台</p>
           <p class="fineprint"><a href="#install">インストール方法</a></p>
         </div>
@@ -136,7 +136,21 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
           <img class="shot" src="../assets/screenshots/light/1-path.jpg" width="1600" height="1000" alt="接続中のトンネルを表示したTurnoutのメインウインドウ。経路はトンネルから、出ていくネットワークインターフェイスを経てサーバーまで続き、両方向に通信が流れています。">
         </picture>
         <!-- cable -->
-        <!-- /cable -->
+<svg class="cable" viewBox="0 0 1600 1000" aria-hidden="true" focusable="false">
+<defs><linearGradient id="cable-fade"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="0.12" stop-color="#fff"/><stop offset="0.88" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<mask id="cable-fade-0" maskUnits="userSpaceOnUse" x="670" y="240.02" width="199" height="16.949"><rect x="670" y="240.02" width="199" height="16.949" fill="url(#cable-fade)"/></mask>
+<mask id="cable-fade-1" maskUnits="userSpaceOnUse" x="1050" y="240.02" width="198" height="16.949"><rect x="1050" y="240.02" width="198" height="16.949" fill="url(#cable-fade)"/></mask>
+</defs>
+<line class="wire" x1="672.333" y1="243.492" x2="866.667" y2="243.492" stroke-width="4.667"/>
+<line class="wire" x1="672.333" y1="253.496" x2="866.667" y2="253.496" stroke-width="4.667"/>
+<line class="wire" x1="1052.333" y1="243.492" x2="1245.667" y2="243.492" stroke-width="4.667"/>
+<line class="wire" x1="1052.333" y1="253.496" x2="1245.667" y2="253.496" stroke-width="4.667"/>
+<line class="packets" x1="670" y1="243.492" x2="869" y2="243.492" stroke-width="3.472" stroke-dasharray="10.556 28.333" mask="url(#cable-fade-0)"><animate attributeName="stroke-dashoffset" from="0" to="-38.889" dur="0.123s" repeatCount="indefinite"/></line>
+<line class="packets" x1="869" y1="253.496" x2="670" y2="253.496" stroke-width="3.472" stroke-dasharray="13.889 8.333" mask="url(#cable-fade-0)"><animate attributeName="stroke-dashoffset" from="0" to="-22.222" dur="0.044s" repeatCount="indefinite"/></line>
+<line class="packets" x1="1050" y1="243.492" x2="1248" y2="243.492" stroke-width="3.472" stroke-dasharray="10.556 28.333" mask="url(#cable-fade-1)"><animate attributeName="stroke-dashoffset" from="0" to="-38.889" dur="0.123s" repeatCount="indefinite"/></line>
+<line class="packets" x1="1248" y1="253.496" x2="1050" y2="253.496" stroke-width="3.472" stroke-dasharray="13.889 8.333" mask="url(#cable-fade-1)"><animate attributeName="stroke-dashoffset" from="0" to="-22.222" dur="0.044s" repeatCount="indefinite"/></line>
+</svg>
+<!-- /cable -->
       </div>
       <figcaption>各トンネルには、リアルタイムの経路が表示されます。トンネル、出ていくネットワークインターフェイス、そしてサーバーです。サーバーが応答すると線が実線になり、パケットは通信量に合わせた速さで線の上を動きます。</figcaption>
     </div>
@@ -344,7 +358,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
         <li>Turnoutのようこそツアーに沿ってバックグラウンドサービスをインストールし、macOSに尋ねられたら“システム設定” › “一般” › “ログイン項目と機能拡張”で許可します。</li>
       </ol>
       <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">Turnoutをダウンロード</a></p>
-      <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.0.0</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-10-26">2026年10月26日</time><!-- /released -->公開）· <a href="https://github.com/tasict/Turnout/releases/latest">リリースノート</a></p>
+      <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.0.1</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-10-26">2026年10月26日</time><!-- /released -->公開）· <a href="https://github.com/tasict/Turnout/releases/latest">リリースノート</a></p>
       <p class="fineprint">macOS 15以降 · AppleシリコンとIntel · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、Mac 3台</p>
       <p><a href="https://brew.sh">Homebrew</a>でもインストールできます。インストールされるのは同じパッケージです。</p>
 <pre><code>brew tap tasict/tap

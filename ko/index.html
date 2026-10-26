@@ -120,7 +120,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- download:live -->
         <div class="live">
           <a class="download" href="https://github.com/tasict/Turnout/releases/latest">Turnout 다운로드</a>
-          <p class="fineprint">버전 <!-- version --><span data-latest="version">1.0.0</span><!-- /version -->, <!-- released --><time data-latest="date" datetime="2026-10-26">2026년 10월 26일</time><!-- /released --> 출시 · <a href="https://github.com/tasict/Turnout/releases/latest">릴리스 노트</a></p>
+          <p class="fineprint">버전 <!-- version --><span data-latest="version">1.0.1</span><!-- /version -->, <!-- released --><time data-latest="date" datetime="2026-10-26">2026년 10월 26일</time><!-- /released --> 출시 · <a href="https://github.com/tasict/Turnout/releases/latest">릴리스 노트</a></p>
           <p class="fineprint">macOS 15 이상 · Apple 실리콘 및 Intel · 7일 체험 · <!-- price --><span data-price>US$19</span><!-- /price --> 1회 결제, Mac 3대</p>
           <p class="fineprint"><a href="#install">설치 방법</a></p>
         </div>
@@ -136,7 +136,21 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
           <img class="shot" src="../assets/screenshots/light/1-path.jpg" width="1600" height="1000" alt="연결된 터널이 있는 Turnout의 메인 윈도우. 경로가 터널에서 시작해 터널이 나가는 네트워크 인터페이스를 거쳐 서버까지 이어지며, 트래픽이 양방향으로 움직입니다.">
         </picture>
         <!-- cable -->
-        <!-- /cable -->
+<svg class="cable" viewBox="0 0 1600 1000" aria-hidden="true" focusable="false">
+<defs><linearGradient id="cable-fade"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="0.12" stop-color="#fff"/><stop offset="0.88" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<mask id="cable-fade-0" maskUnits="userSpaceOnUse" x="670" y="240.02" width="199" height="16.949"><rect x="670" y="240.02" width="199" height="16.949" fill="url(#cable-fade)"/></mask>
+<mask id="cable-fade-1" maskUnits="userSpaceOnUse" x="1050" y="240.02" width="198" height="16.949"><rect x="1050" y="240.02" width="198" height="16.949" fill="url(#cable-fade)"/></mask>
+</defs>
+<line class="wire" x1="672.333" y1="243.492" x2="866.667" y2="243.492" stroke-width="4.667"/>
+<line class="wire" x1="672.333" y1="253.496" x2="866.667" y2="253.496" stroke-width="4.667"/>
+<line class="wire" x1="1052.333" y1="243.492" x2="1245.667" y2="243.492" stroke-width="4.667"/>
+<line class="wire" x1="1052.333" y1="253.496" x2="1245.667" y2="253.496" stroke-width="4.667"/>
+<line class="packets" x1="670" y1="243.492" x2="869" y2="243.492" stroke-width="3.472" stroke-dasharray="10.556 28.333" mask="url(#cable-fade-0)"><animate attributeName="stroke-dashoffset" from="0" to="-38.889" dur="0.123s" repeatCount="indefinite"/></line>
+<line class="packets" x1="869" y1="253.496" x2="670" y2="253.496" stroke-width="3.472" stroke-dasharray="13.889 8.333" mask="url(#cable-fade-0)"><animate attributeName="stroke-dashoffset" from="0" to="-22.222" dur="0.044s" repeatCount="indefinite"/></line>
+<line class="packets" x1="1050" y1="243.492" x2="1248" y2="243.492" stroke-width="3.472" stroke-dasharray="10.556 28.333" mask="url(#cable-fade-1)"><animate attributeName="stroke-dashoffset" from="0" to="-38.889" dur="0.123s" repeatCount="indefinite"/></line>
+<line class="packets" x1="1248" y1="253.496" x2="1050" y2="253.496" stroke-width="3.472" stroke-dasharray="13.889 8.333" mask="url(#cable-fade-1)"><animate attributeName="stroke-dashoffset" from="0" to="-22.222" dur="0.044s" repeatCount="indefinite"/></line>
+</svg>
+<!-- /cable -->
       </div>
       <figcaption>각 터널은 터널, 터널이 나가는 네트워크 인터페이스, 서버로 이어지는 실시간 경로를 보여 줍니다. 서버가 응답하면 선이 실선으로 바뀌고, 트래픽에 따라 정해지는 속도로 패킷이 선을 따라 움직입니다.</figcaption>
     </div>
@@ -344,7 +358,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
         <li>Turnout의 환영 둘러보기에 따라 백그라운드 서비스를 설치한 다음, macOS가 요청하면 ‘시스템 설정’ › ‘일반’ › ‘로그인 항목 및 확장 프로그램’에서 허용하십시오.</li>
       </ol>
       <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">Turnout 다운로드</a></p>
-      <p class="fineprint">버전 <!-- version --><span data-latest="version">1.0.0</span><!-- /version -->, <!-- released --><time data-latest="date" datetime="2026-10-26">2026년 10월 26일</time><!-- /released --> 출시 · <a href="https://github.com/tasict/Turnout/releases/latest">릴리스 노트</a></p>
+      <p class="fineprint">버전 <!-- version --><span data-latest="version">1.0.1</span><!-- /version -->, <!-- released --><time data-latest="date" datetime="2026-10-26">2026년 10월 26일</time><!-- /released --> 출시 · <a href="https://github.com/tasict/Turnout/releases/latest">릴리스 노트</a></p>
       <p class="fineprint">macOS 15 이상 · Apple 실리콘 및 Intel · 7일 체험 · <!-- price --><span data-price>US$19</span><!-- /price --> 1회 결제, Mac 3대</p>
       <p><a href="https://brew.sh">Homebrew</a>로도 설치할 수 있습니다. 설치되는 패키지는 같습니다.</p>
 <pre><code>brew tap tasict/tap
