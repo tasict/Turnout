@@ -1,0 +1,15 @@
+{
+  "about": "Turnout's price and any sale, as the pages show them. Every page with a price reads this file when it opens; scripts/publish-site.sh also writes it into the pages for browsers without scripts. price: the list price. sale: null, or the sale price, the last day it applies (YYYY-MM-DD; the line disappears the day after) and one sentence per language naming {sale}, {ends} (written as a date in that language) and {price}. Polar's checkout applies the discount itself: its end date there must be the same day.",
+  "price": "US$19",
+  "sale": {
+    "price": "US$10",
+    "ends": "2026-11-25",
+    "text": {
+      "en": "Launch price {sale} until {ends}, then {price}.",
+      "zh-Hant": "上市優惠價 {sale}，到 {ends}為止，之後為 {price}。",
+      "ja": "発売記念価格{sale}（{ends}まで）。その後は{price}です。",
+      "es": "Precio de lanzamiento: {sale} hasta el {ends}; después, {price}.",
+      "ko": "출시 기념 가격 {sale}({ends}까지), 이후 {price}."
+    }
+  }
+}
