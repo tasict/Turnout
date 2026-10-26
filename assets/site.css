@@ -251,6 +251,21 @@ p code, li code, dd code, dt code, td code, figcaption code {
   box-shadow: 0 0 0 1px var(--rule), 0 30px 60px -30px var(--shadow);
 }
 
+/* The path on the landing page: the still, with a few seconds of the app's
+   own recording laid exactly over it and looping. Until the video plays, and
+   for anyone who asks for less motion, the still is what shows. */
+.motion { position: relative; }
+.motion video.shot {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  background: none;
+  box-shadow: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion video.shot { display: none; }
+}
+
 .stage figcaption {
   margin-top: 1.25rem;
   max-width: var(--measure);

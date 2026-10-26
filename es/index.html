@@ -130,10 +130,16 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
   </div>
   <figure class="stage">
     <div class="wrap">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/1-path.jpg">
-        <img class="shot" src="../assets/screenshots/light/1-path.jpg" width="1600" height="1000" alt="La ventana principal de Turnout con un túnel conectado. Su ruta va del túnel, por la interfaz de red por la que sale, hasta el servidor, con tráfico en ambos sentidos.">
-      </picture>
+      <div class="motion">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/1-path.jpg">
+          <img class="shot" src="../assets/screenshots/light/1-path.jpg" width="1600" height="1000" alt="La ventana principal de Turnout con un túnel conectado. Su ruta va del túnel, por la interfaz de red por la que sale, hasta el servidor, con tráfico en ambos sentidos.">
+        </picture>
+        <video class="shot" width="1600" height="1000" autoplay muted loop playsinline aria-hidden="true">
+          <source media="(prefers-color-scheme: dark)" src="../assets/screenshots/dark/1-path.mp4" type="video/mp4">
+          <source src="../assets/screenshots/light/1-path.mp4" type="video/mp4">
+        </video>
+      </div>
       <figcaption>Cada túnel muestra su ruta en vivo: el túnel, la interfaz de red por la que sale y el servidor. La línea se vuelve continua cuando el servidor responde, y los paquetes avanzan por ella al ritmo de tu tráfico.</figcaption>
     </div>
   </figure>
