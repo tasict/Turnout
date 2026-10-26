@@ -121,7 +121,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <div class="live">
           <a class="download" href="https://github.com/tasict/Turnout/releases/latest">Turnout 다운로드</a>
           <p class="fineprint">버전 <!-- version --><span data-latest="version">1.0.0</span><!-- /version -->, <!-- released --><time data-latest="date" datetime="2026-10-26">2026년 10월 26일</time><!-- /released --> 출시 · <a href="https://github.com/tasict/Turnout/releases/latest">릴리스 노트</a></p>
-          <p class="fineprint">macOS 15 이상 · Apple 실리콘 및 Intel · 7일 체험 · <!-- price -->US$19<!-- /price --> 1회 결제, Mac 3대</p>
+          <p class="fineprint">macOS 15 이상 · Apple 실리콘 및 Intel · 7일 체험 · <!-- price --><span data-price>US$19</span><!-- /price --> 1회 결제, Mac 3대</p>
           <p class="fineprint"><a href="#install">설치 방법</a></p>
         </div>
         <!-- /download:live -->
@@ -341,7 +341,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       </ol>
       <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">Turnout 다운로드</a></p>
       <p class="fineprint">버전 <!-- version --><span data-latest="version">1.0.0</span><!-- /version -->, <!-- released --><time data-latest="date" datetime="2026-10-26">2026년 10월 26일</time><!-- /released --> 출시 · <a href="https://github.com/tasict/Turnout/releases/latest">릴리스 노트</a></p>
-      <p class="fineprint">macOS 15 이상 · Apple 실리콘 및 Intel · 7일 체험 · <!-- price -->US$19<!-- /price --> 1회 결제, Mac 3대</p>
+      <p class="fineprint">macOS 15 이상 · Apple 실리콘 및 Intel · 7일 체험 · <!-- price --><span data-price>US$19</span><!-- /price --> 1회 결제, Mac 3대</p>
       <p><a href="https://brew.sh">Homebrew</a>로도 설치할 수 있습니다. 설치되는 패키지는 같습니다.</p>
 <pre><code>brew tap tasict/tap
 brew install --cask tasict/tap/turnout</code></pre>
@@ -356,7 +356,7 @@ brew install --cask tasict/tap/turnout</code></pre>
   <div class="wrap">
     <h2 id="pricing-title">라이선스 하나로 Mac 3대</h2>
     <div class="body">
-      <p class="intro"><!-- price -->US$19<!-- /price -->를 한 번만 결제하면 Mac 3대에서 사용할 수 있으며 Turnout 1의 모든 업데이트가 포함됩니다. 먼저 체험해 보십시오. 7일 동안 무료이며, 원하면 7일을 더 사용할 수 있습니다. 계정도 카드도 필요 없고, 체험 기간에는 라이선스를 확인하지 않습니다.</p>
+      <p class="intro"><!-- price --><span data-price>US$19</span><!-- /price -->를 한 번만 결제하면 Mac 3대에서 사용할 수 있으며 Turnout 1의 모든 업데이트가 포함됩니다. 먼저 체험해 보십시오. 7일 동안 무료이며, 원하면 7일을 더 사용할 수 있습니다. 계정도 카드도 필요 없고, 체험 기간에는 라이선스를 확인하지 않습니다.</p>
       <!-- launch -->
       <p class="launch">출시 기념 가격 US$10(2026년 11월 25일까지), 이후 US$19.</p>
       <!-- /launch -->
@@ -373,7 +373,7 @@ brew install --cask tasict/tap/turnout</code></pre>
         </div>
         <!-- /download:live -->
         <!-- link:checkout -->
-        <p class="buy"><a href="https://buy.polar.sh/polar_cl_6vhwN9nVD3PohFkvGN9YDGQsTxcLNL3Ioo3yV1jagMT?utm_source=site">라이선스 구입(<!-- price -->US$19<!-- /price -->)</a></p>
+        <p class="buy"><a href="https://buy.polar.sh/polar_cl_6vhwN9nVD3PohFkvGN9YDGQsTxcLNL3Ioo3yV1jagMT?utm_source=site">라이선스 구입(<!-- price --><span data-price>US$19</span><!-- /price -->)</a></p>
         <!-- /link:checkout -->
       </div>
       <p>Mac 3대는 본인의 Mac, 같은 가정의 Mac 또는 한 조직 안의 Mac이면 됩니다. 결제와 세금 처리, 영수증 발송은 Polar가 담당합니다. 결제를 마치면 바로 Polar 페이지에 라이선스 키가 표시되어 Turnout에 복사해 넣을 수 있으며, 키는 Polar의 구입 내역 페이지에도 보관됩니다. 마음에 들지 않으면 14일 이내에 이유를 묻지 않고 환불해 드립니다.</p>
@@ -390,5 +390,54 @@ brew install --cask tasict/tap/turnout</code></pre>
     <p>© 2026 tasict. Mac 및 macOS는 Apple Inc.의 상표입니다. WireGuard는 Jason A. Donenfeld의 등록 상표입니다.</p>
   </div>
 </footer>
+<!-- latest -->
+<script>
+(function () {
+  var months = {"en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], "es": ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]};
+  var lang = document.documentElement.lang;
+  function dateText(iso) {
+    var part = iso.split("-"), year = +part[0], month = +part[1], day = +part[2];
+    if (lang === "zh-Hant") return year + " 年 " + month + " 月 " + day + " 日";
+    if (lang === "ja") return year + "年" + month + "月" + day + "日";
+    if (lang === "ko") return year + "년 " + month + "월 " + day + "일";
+    if (lang === "es") return day + " de " + months.es[month - 1] + " de " + year;
+    return day + " " + months.en[month - 1] + " " + year;
+  }
+  function each(selector, apply) {
+    Array.prototype.forEach.call(document.querySelectorAll(selector), apply);
+  }
+  function json(response) {
+    if (!response.ok) throw new Error(response.status);
+    return response.json();
+  }
+  if (!window.fetch) return;
+  fetch("../assets/pricing.json", {cache: "no-cache"}).then(json).then(function (pricing) {
+    var price = String(pricing.price || ""), sale = pricing.sale;
+    if (!price) return;
+    each("[data-price]", function (element) { element.textContent = price; });
+    var now = new Date();
+    var today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
+    var text = sale && sale.text && sale.text[lang];
+    var on = Boolean(text) && /^\d{4}-\d{2}-\d{2}$/.test(sale.ends) && today <= sale.ends;
+    each("p.launch", function (element) {
+      element.textContent = on ? text.replace("{sale}", sale.price).replace("{ends}", dateText(sale.ends))
+        .replace("{price}", price) : "";
+      element.hidden = !on;
+    });
+  }).catch(function () {});
+  if (!document.querySelector("[data-latest]")) return;
+  fetch("https://api.github.com/repos/tasict/Turnout/releases/latest", {credentials: "omit"}).then(json).then(function (release) {
+    var version = String(release.tag_name || "").replace(/^v/, "");
+    var date = String(release.published_at || "").slice(0, 10);
+    if (!/^\d+(\.\d+)*$/.test(version) || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+    each('[data-latest="version"]', function (element) { element.textContent = version; });
+    each('[data-latest="date"]', function (element) {
+      element.setAttribute("datetime", date);
+      element.textContent = dateText(date);
+    });
+  }).catch(function () {});
+})();
+</script>
+<!-- /latest -->
 </body>
 </html>

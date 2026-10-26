@@ -121,7 +121,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <div class="live">
           <a class="download" href="https://github.com/tasict/Turnout/releases/latest">Descargar Turnout</a>
           <p class="fineprint">Versión <!-- version --><span data-latest="version">1.0.0</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-10-26">26 de octubre de 2026</time><!-- /released --> · <a href="https://github.com/tasict/Turnout/releases/latest">Notas de la versión</a></p>
-          <p class="fineprint">macOS 15 o posterior · Apple silicon e Intel · prueba de 7 días · <!-- price -->US$19<!-- /price --> en un solo pago, tres Mac</p>
+          <p class="fineprint">macOS 15 o posterior · Apple silicon e Intel · prueba de 7 días · <!-- price --><span data-price>US$19</span><!-- /price --> en un solo pago, tres Mac</p>
           <p class="fineprint"><a href="#install">Cómo instalar</a></p>
         </div>
         <!-- /download:live -->
@@ -341,7 +341,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       </ol>
       <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">Descargar Turnout</a></p>
       <p class="fineprint">Versión <!-- version --><span data-latest="version">1.0.0</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-10-26">26 de octubre de 2026</time><!-- /released --> · <a href="https://github.com/tasict/Turnout/releases/latest">Notas de la versión</a></p>
-      <p class="fineprint">macOS 15 o posterior · Apple silicon e Intel · prueba de 7 días · <!-- price -->US$19<!-- /price --> en un solo pago, tres Mac</p>
+      <p class="fineprint">macOS 15 o posterior · Apple silicon e Intel · prueba de 7 días · <!-- price --><span data-price>US$19</span><!-- /price --> en un solo pago, tres Mac</p>
       <p>O instálalo con <a href="https://brew.sh">Homebrew</a>, que instala el mismo paquete:</p>
 <pre><code>brew tap tasict/tap
 brew install --cask tasict/tap/turnout</code></pre>
@@ -356,7 +356,7 @@ brew install --cask tasict/tap/turnout</code></pre>
   <div class="wrap">
     <h2 id="pricing-title">Una licencia, tres Mac</h2>
     <div class="body">
-      <p class="intro"><!-- price -->US$19<!-- /price -->, en un solo pago, para tres Mac, con todas las actualizaciones de Turnout 1. Pruébalo primero: siete días gratis, y siete más si los pides. Sin cuenta, sin tarjeta y sin comprobación de licencia durante la prueba.</p>
+      <p class="intro"><!-- price --><span data-price>US$19</span><!-- /price -->, en un solo pago, para tres Mac, con todas las actualizaciones de Turnout 1. Pruébalo primero: siete días gratis, y siete más si los pides. Sin cuenta, sin tarjeta y sin comprobación de licencia durante la prueba.</p>
       <!-- launch -->
       <p class="launch">Precio de lanzamiento: US$10 hasta el 25 de noviembre de 2026; después, US$19.</p>
       <!-- /launch -->
@@ -373,7 +373,7 @@ brew install --cask tasict/tap/turnout</code></pre>
         </div>
         <!-- /download:live -->
         <!-- link:checkout -->
-        <p class="buy"><a href="https://buy.polar.sh/polar_cl_6vhwN9nVD3PohFkvGN9YDGQsTxcLNL3Ioo3yV1jagMT?utm_source=site">Comprar una licencia, <!-- price -->US$19<!-- /price --></a></p>
+        <p class="buy"><a href="https://buy.polar.sh/polar_cl_6vhwN9nVD3PohFkvGN9YDGQsTxcLNL3Ioo3yV1jagMT?utm_source=site">Comprar una licencia, <!-- price --><span data-price>US$19</span><!-- /price --></a></p>
         <!-- /link:checkout -->
       </div>
       <p>Tres Mac: los tuyos, los de tu hogar o los de una misma organización. Polar se encarga del pago y de los impuestos, y te envía el recibo. En cuanto pagas, la página de Polar muestra tu clave de licencia, lista para copiarla en Turnout, y tu página de compras de Polar la guarda. ¿No es para ti? Reembolso en 14 días, sin preguntas.</p>
@@ -390,5 +390,54 @@ brew install --cask tasict/tap/turnout</code></pre>
     <p>© 2026 tasict. Mac y macOS son marcas comerciales de Apple Inc. WireGuard es una marca registrada de Jason A. Donenfeld.</p>
   </div>
 </footer>
+<!-- latest -->
+<script>
+(function () {
+  var months = {"en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], "es": ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]};
+  var lang = document.documentElement.lang;
+  function dateText(iso) {
+    var part = iso.split("-"), year = +part[0], month = +part[1], day = +part[2];
+    if (lang === "zh-Hant") return year + " 年 " + month + " 月 " + day + " 日";
+    if (lang === "ja") return year + "年" + month + "月" + day + "日";
+    if (lang === "ko") return year + "년 " + month + "월 " + day + "일";
+    if (lang === "es") return day + " de " + months.es[month - 1] + " de " + year;
+    return day + " " + months.en[month - 1] + " " + year;
+  }
+  function each(selector, apply) {
+    Array.prototype.forEach.call(document.querySelectorAll(selector), apply);
+  }
+  function json(response) {
+    if (!response.ok) throw new Error(response.status);
+    return response.json();
+  }
+  if (!window.fetch) return;
+  fetch("../assets/pricing.json", {cache: "no-cache"}).then(json).then(function (pricing) {
+    var price = String(pricing.price || ""), sale = pricing.sale;
+    if (!price) return;
+    each("[data-price]", function (element) { element.textContent = price; });
+    var now = new Date();
+    var today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
+    var text = sale && sale.text && sale.text[lang];
+    var on = Boolean(text) && /^\d{4}-\d{2}-\d{2}$/.test(sale.ends) && today <= sale.ends;
+    each("p.launch", function (element) {
+      element.textContent = on ? text.replace("{sale}", sale.price).replace("{ends}", dateText(sale.ends))
+        .replace("{price}", price) : "";
+      element.hidden = !on;
+    });
+  }).catch(function () {});
+  if (!document.querySelector("[data-latest]")) return;
+  fetch("https://api.github.com/repos/tasict/Turnout/releases/latest", {credentials: "omit"}).then(json).then(function (release) {
+    var version = String(release.tag_name || "").replace(/^v/, "");
+    var date = String(release.published_at || "").slice(0, 10);
+    if (!/^\d+(\.\d+)*$/.test(version) || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+    each('[data-latest="version"]', function (element) { element.textContent = version; });
+    each('[data-latest="date"]', function (element) {
+      element.setAttribute("datetime", date);
+      element.textContent = dateText(date);
+    });
+  }).catch(function () {});
+})();
+</script>
+<!-- /latest -->
 </body>
 </html>

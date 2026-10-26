@@ -111,7 +111,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 
   <div class="wrap">
     <div class="doc-body">
-      <p class="short">A license is <!-- price -->US$19<!-- /price -->, paid once, for three Macs, with every update to Turnout 1. Try Turnout for 7 days first, and 7 more if you ask. Not for you? A refund within 14 days, no questions.</p>
+      <p class="short">A license is <!-- price --><span data-price>US$19</span><!-- /price -->, paid once, for three Macs, with every update to Turnout 1. Try Turnout for 7 days first, and 7 more if you ask. Not for you? A refund within 14 days, no questions.</p>
 
       <section id="macs" aria-labelledby="macs-title">
         <h2 id="macs-title">One license, three Macs</h2>
@@ -131,7 +131,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 
       <section id="buying" aria-labelledby="buying-title">
         <h2 id="buying-title">Price, payment and tax</h2>
-        <p>A license is <!-- price -->US$19<!-- /price -->, paid once; tax may be added at checkout depending on your country. There is no subscription and no account.</p>
+        <p>A license is <!-- price --><span data-price>US$19</span><!-- /price -->, paid once; tax may be added at checkout depending on your country. There is no subscription and no account.</p>
         <!-- launch -->
         <p class="launch">Launch price US$10 until 25 November 2026, then US$19.</p>
         <!-- /launch -->
@@ -176,5 +176,54 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
   </div>
 </footer>
+<!-- latest -->
+<script>
+(function () {
+  var months = {"en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], "es": ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]};
+  var lang = document.documentElement.lang;
+  function dateText(iso) {
+    var part = iso.split("-"), year = +part[0], month = +part[1], day = +part[2];
+    if (lang === "zh-Hant") return year + " 年 " + month + " 月 " + day + " 日";
+    if (lang === "ja") return year + "年" + month + "月" + day + "日";
+    if (lang === "ko") return year + "년 " + month + "월 " + day + "일";
+    if (lang === "es") return day + " de " + months.es[month - 1] + " de " + year;
+    return day + " " + months.en[month - 1] + " " + year;
+  }
+  function each(selector, apply) {
+    Array.prototype.forEach.call(document.querySelectorAll(selector), apply);
+  }
+  function json(response) {
+    if (!response.ok) throw new Error(response.status);
+    return response.json();
+  }
+  if (!window.fetch) return;
+  fetch("assets/pricing.json", {cache: "no-cache"}).then(json).then(function (pricing) {
+    var price = String(pricing.price || ""), sale = pricing.sale;
+    if (!price) return;
+    each("[data-price]", function (element) { element.textContent = price; });
+    var now = new Date();
+    var today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
+    var text = sale && sale.text && sale.text[lang];
+    var on = Boolean(text) && /^\d{4}-\d{2}-\d{2}$/.test(sale.ends) && today <= sale.ends;
+    each("p.launch", function (element) {
+      element.textContent = on ? text.replace("{sale}", sale.price).replace("{ends}", dateText(sale.ends))
+        .replace("{price}", price) : "";
+      element.hidden = !on;
+    });
+  }).catch(function () {});
+  if (!document.querySelector("[data-latest]")) return;
+  fetch("https://api.github.com/repos/tasict/Turnout/releases/latest", {credentials: "omit"}).then(json).then(function (release) {
+    var version = String(release.tag_name || "").replace(/^v/, "");
+    var date = String(release.published_at || "").slice(0, 10);
+    if (!/^\d+(\.\d+)*$/.test(version) || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+    each('[data-latest="version"]', function (element) { element.textContent = version; });
+    each('[data-latest="date"]', function (element) {
+      element.setAttribute("datetime", date);
+      element.textContent = dateText(date);
+    });
+  }).catch(function () {});
+})();
+</script>
+<!-- /latest -->
 </body>
 </html>

@@ -121,7 +121,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <div class="live">
           <a class="download" href="https://github.com/tasict/Turnout/releases/latest">Turnoutをダウンロード</a>
           <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.0.0</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-10-26">2026年10月26日</time><!-- /released -->公開）· <a href="https://github.com/tasict/Turnout/releases/latest">リリースノート</a></p>
-          <p class="fineprint">macOS 15以降 · AppleシリコンとIntel · 7日間の試用 · <!-- price -->US$19<!-- /price -->の買い切り、Mac 3台</p>
+          <p class="fineprint">macOS 15以降 · AppleシリコンとIntel · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、Mac 3台</p>
           <p class="fineprint"><a href="#install">インストール方法</a></p>
         </div>
         <!-- /download:live -->
@@ -341,7 +341,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       </ol>
       <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">Turnoutをダウンロード</a></p>
       <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.0.0</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-10-26">2026年10月26日</time><!-- /released -->公開）· <a href="https://github.com/tasict/Turnout/releases/latest">リリースノート</a></p>
-      <p class="fineprint">macOS 15以降 · AppleシリコンとIntel · 7日間の試用 · <!-- price -->US$19<!-- /price -->の買い切り、Mac 3台</p>
+      <p class="fineprint">macOS 15以降 · AppleシリコンとIntel · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、Mac 3台</p>
       <p><a href="https://brew.sh">Homebrew</a>でもインストールできます。インストールされるのは同じパッケージです。</p>
 <pre><code>brew tap tasict/tap
 brew install --cask tasict/tap/turnout</code></pre>
@@ -356,7 +356,7 @@ brew install --cask tasict/tap/turnout</code></pre>
   <div class="wrap">
     <h2 id="pricing-title">1つのライセンスでMac 3台</h2>
     <div class="body">
-      <p class="intro"><!-- price -->US$19<!-- /price -->の買い切りで、Mac 3台に使えます。Turnout 1のアップデートはすべて含まれます。まずは試してください。7日間無料で使え、希望すればさらに7日間延長できます。アカウントもカードも不要で、試用期間中はライセンスの確認も行いません。</p>
+      <p class="intro"><!-- price --><span data-price>US$19</span><!-- /price -->の買い切りで、Mac 3台に使えます。Turnout 1のアップデートはすべて含まれます。まずは試してください。7日間無料で使え、希望すればさらに7日間延長できます。アカウントもカードも不要で、試用期間中はライセンスの確認も行いません。</p>
       <!-- launch -->
       <p class="launch">発売記念価格US$10（2026年11月25日まで）。その後はUS$19です。</p>
       <!-- /launch -->
@@ -373,7 +373,7 @@ brew install --cask tasict/tap/turnout</code></pre>
         </div>
         <!-- /download:live -->
         <!-- link:checkout -->
-        <p class="buy"><a href="https://buy.polar.sh/polar_cl_6vhwN9nVD3PohFkvGN9YDGQsTxcLNL3Ioo3yV1jagMT?utm_source=site">ライセンスを購入（<!-- price -->US$19<!-- /price -->）</a></p>
+        <p class="buy"><a href="https://buy.polar.sh/polar_cl_6vhwN9nVD3PohFkvGN9YDGQsTxcLNL3Ioo3yV1jagMT?utm_source=site">ライセンスを購入（<!-- price --><span data-price>US$19</span><!-- /price -->）</a></p>
         <!-- /link:checkout -->
       </div>
       <p>Mac 3台：あなたのMac、家族のMac、または同じ組織内のMacに使えます。支払いと税金の処理、領収書の送付はPolarが行います。支払いが済むとすぐにPolarのページにライセンスキーが表示されるので、コピーしてTurnoutに貼り付けてください。キーはPolarの購入履歴ページにも残ります。合わなければ、14日以内なら理由を問わず返金します。</p>
@@ -390,5 +390,54 @@ brew install --cask tasict/tap/turnout</code></pre>
     <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
   </div>
 </footer>
+<!-- latest -->
+<script>
+(function () {
+  var months = {"en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], "es": ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]};
+  var lang = document.documentElement.lang;
+  function dateText(iso) {
+    var part = iso.split("-"), year = +part[0], month = +part[1], day = +part[2];
+    if (lang === "zh-Hant") return year + " 年 " + month + " 月 " + day + " 日";
+    if (lang === "ja") return year + "年" + month + "月" + day + "日";
+    if (lang === "ko") return year + "년 " + month + "월 " + day + "일";
+    if (lang === "es") return day + " de " + months.es[month - 1] + " de " + year;
+    return day + " " + months.en[month - 1] + " " + year;
+  }
+  function each(selector, apply) {
+    Array.prototype.forEach.call(document.querySelectorAll(selector), apply);
+  }
+  function json(response) {
+    if (!response.ok) throw new Error(response.status);
+    return response.json();
+  }
+  if (!window.fetch) return;
+  fetch("../assets/pricing.json", {cache: "no-cache"}).then(json).then(function (pricing) {
+    var price = String(pricing.price || ""), sale = pricing.sale;
+    if (!price) return;
+    each("[data-price]", function (element) { element.textContent = price; });
+    var now = new Date();
+    var today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
+    var text = sale && sale.text && sale.text[lang];
+    var on = Boolean(text) && /^\d{4}-\d{2}-\d{2}$/.test(sale.ends) && today <= sale.ends;
+    each("p.launch", function (element) {
+      element.textContent = on ? text.replace("{sale}", sale.price).replace("{ends}", dateText(sale.ends))
+        .replace("{price}", price) : "";
+      element.hidden = !on;
+    });
+  }).catch(function () {});
+  if (!document.querySelector("[data-latest]")) return;
+  fetch("https://api.github.com/repos/tasict/Turnout/releases/latest", {credentials: "omit"}).then(json).then(function (release) {
+    var version = String(release.tag_name || "").replace(/^v/, "");
+    var date = String(release.published_at || "").slice(0, 10);
+    if (!/^\d+(\.\d+)*$/.test(version) || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+    each('[data-latest="version"]', function (element) { element.textContent = version; });
+    each('[data-latest="date"]', function (element) {
+      element.setAttribute("datetime", date);
+      element.textContent = dateText(date);
+    });
+  }).catch(function () {});
+})();
+</script>
+<!-- /latest -->
 </body>
 </html>

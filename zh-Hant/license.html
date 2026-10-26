@@ -111,7 +111,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 
   <div class="wrap">
     <div class="doc-body">
-      <p class="short">一份授權 <!-- price -->US$19<!-- /price -->，一次買斷，可以用在三台 Mac 上，Turnout 1 的每一次更新都包含在內。先試用 7 天，需要的話再多 7 天。不適合你？14 天內可以退款，不問原因。</p>
+      <p class="short">一份授權 <!-- price --><span data-price>US$19</span><!-- /price -->，一次買斷，可以用在三台 Mac 上，Turnout 1 的每一次更新都包含在內。先試用 7 天，需要的話再多 7 天。不適合你？14 天內可以退款，不問原因。</p>
 
       <section id="macs" aria-labelledby="macs-title">
         <h2 id="macs-title">一份授權，三台 Mac</h2>
@@ -131,7 +131,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 
       <section id="buying" aria-labelledby="buying-title">
         <h2 id="buying-title">價格、付款與稅金</h2>
-        <p>一份授權 <!-- price -->US$19<!-- /price -->，一次買斷；依你所在的國家，結帳時可能會另外加上稅金。沒有訂閱，也沒有帳號。</p>
+        <p>一份授權 <!-- price --><span data-price>US$19</span><!-- /price -->，一次買斷；依你所在的國家，結帳時可能會另外加上稅金。沒有訂閱，也沒有帳號。</p>
         <!-- launch -->
         <p class="launch">上市優惠價 US$10，到 2026 年 11 月 25 日為止，之後為 US$19。</p>
         <!-- /launch -->
@@ -176,5 +176,54 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
   </div>
 </footer>
+<!-- latest -->
+<script>
+(function () {
+  var months = {"en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], "es": ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]};
+  var lang = document.documentElement.lang;
+  function dateText(iso) {
+    var part = iso.split("-"), year = +part[0], month = +part[1], day = +part[2];
+    if (lang === "zh-Hant") return year + " 年 " + month + " 月 " + day + " 日";
+    if (lang === "ja") return year + "年" + month + "月" + day + "日";
+    if (lang === "ko") return year + "년 " + month + "월 " + day + "일";
+    if (lang === "es") return day + " de " + months.es[month - 1] + " de " + year;
+    return day + " " + months.en[month - 1] + " " + year;
+  }
+  function each(selector, apply) {
+    Array.prototype.forEach.call(document.querySelectorAll(selector), apply);
+  }
+  function json(response) {
+    if (!response.ok) throw new Error(response.status);
+    return response.json();
+  }
+  if (!window.fetch) return;
+  fetch("../assets/pricing.json", {cache: "no-cache"}).then(json).then(function (pricing) {
+    var price = String(pricing.price || ""), sale = pricing.sale;
+    if (!price) return;
+    each("[data-price]", function (element) { element.textContent = price; });
+    var now = new Date();
+    var today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
+    var text = sale && sale.text && sale.text[lang];
+    var on = Boolean(text) && /^\d{4}-\d{2}-\d{2}$/.test(sale.ends) && today <= sale.ends;
+    each("p.launch", function (element) {
+      element.textContent = on ? text.replace("{sale}", sale.price).replace("{ends}", dateText(sale.ends))
+        .replace("{price}", price) : "";
+      element.hidden = !on;
+    });
+  }).catch(function () {});
+  if (!document.querySelector("[data-latest]")) return;
+  fetch("https://api.github.com/repos/tasict/Turnout/releases/latest", {credentials: "omit"}).then(json).then(function (release) {
+    var version = String(release.tag_name || "").replace(/^v/, "");
+    var date = String(release.published_at || "").slice(0, 10);
+    if (!/^\d+(\.\d+)*$/.test(version) || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+    each('[data-latest="version"]', function (element) { element.textContent = version; });
+    each('[data-latest="date"]', function (element) {
+      element.setAttribute("datetime", date);
+      element.textContent = dateText(date);
+    });
+  }).catch(function () {});
+})();
+</script>
+<!-- /latest -->
 </body>
 </html>
