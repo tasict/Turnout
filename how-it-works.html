@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="assets/site.css?v=69d649f1">
+<link rel="stylesheet" href="assets/site.css?v=956cecc7">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="What Turnout does to your Mac">
@@ -121,6 +121,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <li><a href="#changes">What it changes</a></li>
         <li><a href="#configs">Your configs</a></li>
         <li><a href="#hooks">Hooks</a></li>
+        <li><a href="#phantun">Phantun</a></li>
         <li><a href="#clients">Who it answers</a></li>
         <li><a href="#recovery">After a crash</a></li>
         <li><a href="#network">Network connections</a></li>
@@ -156,6 +157,10 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
             <dt><code>/usr/sbin/networksetup</code></dt>
             <dd>DNS servers and search domains on your network services.</dd>
           </div>
+          <div>
+            <dt><code>/sbin/pfctl</code></dt>
+            <dd>Only for a tunnel through Phantun: one packet filter rule for its TCP connection, while it is connected (<a href="#phantun">below</a>).</dd>
+          </div>
         </dl>
         <p>So the usual commands show exactly what it did:</p>
 <pre><code>netstat -rn
@@ -179,6 +184,14 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># or another service from th
           <li>Edits that leave the hooks alone need no new approval.</li>
         </ul>
         <p>Read a config's hooks before you approve them, as you would a script you run with <code>sudo</code>.</p>
+      </section>
+
+      <section id="phantun" aria-labelledby="phantun-title">
+        <h2 id="phantun-title">Phantun's TCP connection</h2>
+        <p>A peer with <code>#@ Phantun</code> is reached through a Phantun server, over TCP. The service makes that connection itself: it writes WireGuard's packets as TCP segments to a raw socket on the exit interface and reads the server's answers with BPF on the same interface. No other program runs, and there is no local relay port.</p>
+        <p>macOS does not know that connection, so its own TCP would answer the server with resets. While such a tunnel is connected, the service therefore enables the packet filter (pf) with a reference of its own and puts one rule per Phantun server in its anchor, <code>com.apple/cc.ctsite.turnout</code>: incoming TCP from that server's address and port is dropped before macOS's TCP sees it. Disconnecting removes the rule and releases the reference. Both are in the journal, like routes and DNS.</p>
+<pre><code>sudo pfctl -a com.apple/cc.ctsite.turnout -s rules</code></pre>
+        <p><a href="https://github.com/dndx/phantun">Phantun</a> is an open-source project by Datong Sun, under the MIT or the Apache 2.0 license. The transport follows its fake-tcp library and Server Setup… follows its own files; About › Open-source licenses lists both.</p>
       </section>
 
       <section id="clients" aria-labelledby="clients-title">
@@ -247,7 +260,8 @@ ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnout and
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh
 defaults read cc.ctsite.turnout analyticsClientID  <span class="c"># the random installation ID</span>
 netstat -rn
-networksetup -getdnsservers Wi-Fi</code></pre>
+networksetup -getdnsservers Wi-Fi
+sudo pfctl -a com.apple/cc.ctsite.turnout -s rules   <span class="c"># Phantun's rule, while such a tunnel is up</span></code></pre>
         <p>The uninstaller is a shell script inside the app. Read it before you run it.</p>
       </section>
 

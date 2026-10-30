@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=69d649f1">
+<link rel="stylesheet" href="../assets/site.css?v=956cecc7">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Qué hace Turnout en tu Mac">
@@ -121,6 +121,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <li><a href="#changes">Qué cambia</a></li>
         <li><a href="#configs">Tus configuraciones</a></li>
         <li><a href="#hooks">Hooks</a></li>
+        <li><a href="#phantun">Phantun</a></li>
         <li><a href="#clients">A quién responde</a></li>
         <li><a href="#recovery">Después de un fallo</a></li>
         <li><a href="#network">Conexiones de red</a></li>
@@ -156,6 +157,10 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
             <dt><code>/usr/sbin/networksetup</code></dt>
             <dd>Los servidores DNS y dominios de búsqueda de tus servicios de red.</dd>
           </div>
+          <div>
+            <dt><code>/sbin/pfctl</code></dt>
+            <dd>Solo para un túnel a través de Phantun: una regla del filtro de paquetes para su conexión TCP mientras está conectado (<a href="#phantun">más abajo</a>).</dd>
+          </div>
         </dl>
         <p>Así, los comandos de siempre muestran exactamente lo que hizo:</p>
 <pre><code>netstat -rn
@@ -179,6 +184,14 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># u otro servicio de la list
           <li>Los cambios que no tocan los hooks no necesitan una nueva aprobación.</li>
         </ul>
         <p>Lee los hooks de una configuración antes de aprobarlos, como harías con un script que ejecutas con <code>sudo</code>.</p>
+      </section>
+
+      <section id="phantun" aria-labelledby="phantun-title">
+        <h2 id="phantun-title">La conexión TCP de Phantun</h2>
+        <p>Un par con <code>#@ Phantun</code> se alcanza a través de un servidor Phantun, por TCP. El servicio crea esa conexión él mismo: escribe los paquetes de WireGuard como segmentos TCP en un socket raw de la interfaz de salida y lee las respuestas del servidor con BPF en esa misma interfaz. No se ejecuta ningún otro programa y no hay ningún puerto de reenvío local.</p>
+        <p>macOS no conoce esa conexión, así que su propio TCP respondería al servidor con reinicios. Por eso, mientras un túnel así está conectado, el servicio activa el filtro de paquetes (pf) con una referencia propia y pone una regla por cada servidor Phantun en su ancla, <code>com.apple/cc.ctsite.turnout</code>: el TCP que llega desde la dirección y el puerto de ese servidor se descarta antes de que lo vea el TCP de macOS. Al desconectar, se quita la regla y se libera la referencia. Ambas cosas quedan en el registro, como las rutas y el DNS.</p>
+<pre><code>sudo pfctl -a com.apple/cc.ctsite.turnout -s rules</code></pre>
+        <p><a href="https://github.com/dndx/phantun">Phantun</a> es un proyecto de código abierto de Datong Sun, con licencia MIT o Apache 2.0. El transporte sigue su biblioteca fake-tcp y Configuración del servidor… sigue sus propios archivos; Acerca de › Licencias de código abierto los recoge a ambos.</p>
       </section>
 
       <section id="clients" aria-labelledby="clients-title">
@@ -247,7 +260,8 @@ ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnout y t
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh
 defaults read cc.ctsite.turnout analyticsClientID  <span class="c"># el identificador de instalación aleatorio</span>
 netstat -rn
-networksetup -getdnsservers Wi-Fi</code></pre>
+networksetup -getdnsservers Wi-Fi
+sudo pfctl -a com.apple/cc.ctsite.turnout -s rules   <span class="c"># la regla de Phantun, mientras un túnel así está activo</span></code></pre>
         <p>El desinstalador es un script de shell dentro de la app. Léelo antes de ejecutarlo.</p>
       </section>
 

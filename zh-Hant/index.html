@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=69d649f1">
+<link rel="stylesheet" href="../assets/site.css?v=956cecc7">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout：原生 App 版的 wg-quick">
@@ -124,7 +124,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- download:live -->
         <div class="live">
           <a class="download" href="https://github.com/tasict/Turnout/releases/latest">下載 Turnout</a>
-          <p class="fineprint">版本 <!-- version --><span data-latest="version">1.0.1</span><!-- /version -->，<!-- released --><time data-latest="date" datetime="2026-10-26">2026 年 10 月 26 日</time><!-- /released -->發布 · <a href="https://github.com/tasict/Turnout/releases/latest">版本說明</a></p>
+          <p class="fineprint">版本 <!-- version --><span data-latest="version">1.1.0</span><!-- /version -->，<!-- released --><time data-latest="date" datetime="2026-10-30">2026 年 10 月 30 日</time><!-- /released -->發布 · <a href="https://github.com/tasict/Turnout/releases/latest">版本說明</a></p>
           <p class="fineprint">macOS 15 以上 · Apple 晶片與 Intel · 試用 7 天 · <!-- price --><span data-price>US$19</span><!-- /price --> 一次買斷，三台 Mac</p>
           <p class="fineprint"><a href="#install">如何安裝</a></p>
         </div>
@@ -159,6 +159,18 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       <figcaption>每條通道都會顯示即時路徑：通道、它出去的網路介面，以及伺服器。伺服器一回應，線就變成實線，封包沿著線移動的快慢跟著你的流量走。</figcaption>
     </div>
   </figure>
+</section>
+
+<section class="feature" id="tour" aria-labelledby="tour-title">
+  <div class="wrap">
+    <h2 id="tour-title">50 秒看 Turnout</h2>
+    <div class="body">
+      <figure class="video-figure">
+        <video controls preload="none" playsinline width="1920" height="1080" poster="../assets/video/turnout-zh-Hant.jpg?v=53a0d386"><source src="../assets/video/turnout-zh-Hant.mp4?v=566470b3" type="video/mp4"><a href="../assets/video/turnout-zh-Hant.mp4?v=566470b3">50 秒看 Turnout（MP4，10 MB）</a></video>
+        <figcaption>網路介面、排程與 Wi-Fi 規則，還有 Phantun，全部用 App 實際的畫面呈現。配有輕快的音樂；關掉聲音，字幕也說得清楚。</figcaption>
+      </figure>
+    </div>
+  </div>
 </section>
 
 <section class="feature" id="wg-quick" aria-labelledby="wg-quick-title">
@@ -235,6 +247,29 @@ Endpoint = vpn.example.com:51820</code></pre>
     <div class="body">
       <p class="intro">閘道、網路介面或連線狀態改變，或是 Mac 從睡眠中喚醒時，Turnout 會把經由實體網路的路由重新指向目前的閘道、重新計算自動 MTU，並重新套用 DNS。</p>
       <p>通道綁定的網路介面消失後又回來時，通道會重新綁定並再次交握。介面若一直沒回來，通往伺服器的路由會變成黑洞路由，交握封包就不會溜進通道本身；不走通道的路由則會等介面回來再恢復。</p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="phantun" aria-labelledby="phantun-title">
+  <div class="wrap">
+    <h2 id="phantun-title">UDP 被擋時改走 TCP</h2>
+    <div class="body">
+      <p class="intro">有些網路會封鎖或限速 WireGuard 使用的 UDP：飯店和訪客 Wi-Fi、部分辦公室、部分電信業者。把對等端切換成 Phantun，Turnout 就會把 WireGuard 的封包包在 TCP 連線裡送到 Phantun 伺服器，再由它交給你的 WireGuard 伺服器。</p>
+<pre><code>[Peer]
+PublicKey = …
+Endpoint = vpn.example.com:51820
+#@ Phantun = 4567</code></pre>
+      <p>這一行對 wg-quick 來說是註解，所以同一個檔案在別的地方照樣用 UDP 連線。Phantun 跑在 WireGuard 伺服器前面的一台 Linux 主機上，「伺服器設定⋯」會列出它需要的指令，可以用 Docker 或 Phantun 的發行版執行檔，通道的連接埠和 MTU 都已經填好。你的 Mac 上不必多跑任何程式：Phantun 的 TCP 由 Turnout 自己處理。</p>
+      <p>路徑會把 TCP 連線畫成包住傳輸線的套管，有哪一段沒有回應，也會告訴你該檢查哪一邊。UDP 通道收不到回應時，路徑上的「使用Phantun⋯」可以直接切換過去。Phantun 能穿過封鎖或限速 UDP 的網路，但過不了會檢查流量是否為真正網頁連線的防火牆。</p>
+      <figure class="shot-figure shot-phantun">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/5-phantun.jpg?v=16570c5c">
+          <img class="shot" src="../assets/screenshots/light/5-phantun.jpg?v=387367fd" width="1600" height="1000" loading="lazy" decoding="async" alt="透過 Phantun 伺服器連線的通道。標著 TCP 4567 的套管包住網路介面到伺服器之間的路徑。">
+        </picture>
+        <figcaption>走 Phantun 的通道：TCP 連線包住通往伺服器的路徑。</figcaption>
+      </figure>
+      <p><a href="https://github.com/dndx/phantun">Phantun</a> 是 Datong Sun 的開源專案。<a href="how-it-works.html#phantun">走 Phantun 的通道會對你的 Mac 做什麼</a>。</p>
     </div>
   </div>
 </section>
@@ -335,7 +370,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="your-mac-title">它對你的 Mac 做了什麼</h2>
     <div class="body">
-      <p class="intro">Turnout 會安裝一個以 root 身分執行的背景服務。它用和 wg-quick 相同的工具修改位址、路由與 DNS，把設定檔放在只有 root 能讀取的資料夾，而且設定檔裡的 hook 要經過管理者核准才會執行。每一項你都能自己檢查。</p>
+      <p class="intro">Turnout 會安裝一個以 root 身分執行的背景服務。它用和 wg-quick 相同的工具修改位址、路由與 DNS，把設定檔放在只有 root 能讀取的資料夾，而且設定檔裡的 hook 要經過管理者核准才會執行。走 Phantun 的通道在連線期間，還會加上一條封包過濾規則。每一項你都能自己檢查。</p>
 <pre><code>netstat -rn                         <span class="c"># 它加入的路由</span>
 networksetup -getdnsservers Wi-Fi   <span class="c"># 它設定的 DNS 伺服器</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
@@ -362,7 +397,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
         <li>Turnout 的歡迎導覽會帶你安裝背景服務；macOS 詢問時，在「系統設定 › 一般 › 登入項目與延伸功能」中允許它。</li>
       </ol>
       <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">下載 Turnout</a></p>
-      <p class="fineprint">版本 <!-- version --><span data-latest="version">1.0.1</span><!-- /version -->，<!-- released --><time data-latest="date" datetime="2026-10-26">2026 年 10 月 26 日</time><!-- /released -->發布 · <a href="https://github.com/tasict/Turnout/releases/latest">版本說明</a></p>
+      <p class="fineprint">版本 <!-- version --><span data-latest="version">1.1.0</span><!-- /version -->，<!-- released --><time data-latest="date" datetime="2026-10-30">2026 年 10 月 30 日</time><!-- /released -->發布 · <a href="https://github.com/tasict/Turnout/releases/latest">版本說明</a></p>
       <p class="fineprint">macOS 15 以上 · Apple 晶片與 Intel · 試用 7 天 · <!-- price --><span data-price>US$19</span><!-- /price --> 一次買斷，三台 Mac</p>
       <p>也可以用 <a href="https://brew.sh">Homebrew</a> 安裝，裝的是同一個安裝程式：</p>
 <pre><code>brew tap tasict/tap

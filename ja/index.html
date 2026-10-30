@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=69d649f1">
+<link rel="stylesheet" href="../assets/site.css?v=956cecc7">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout：ネイティブアプリになったMac用のwg-quick">
@@ -124,7 +124,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- download:live -->
         <div class="live">
           <a class="download" href="https://github.com/tasict/Turnout/releases/latest">Turnoutをダウンロード</a>
-          <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.0.1</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-10-26">2026年10月26日</time><!-- /released -->公開）· <a href="https://github.com/tasict/Turnout/releases/latest">リリースノート</a></p>
+          <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.1.0</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-10-30">2026年10月30日</time><!-- /released -->公開）· <a href="https://github.com/tasict/Turnout/releases/latest">リリースノート</a></p>
           <p class="fineprint">macOS 15以降 · AppleシリコンとIntel · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、Mac 3台</p>
           <p class="fineprint"><a href="#install">インストール方法</a></p>
         </div>
@@ -159,6 +159,18 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       <figcaption>各トンネルには、リアルタイムの経路が表示されます。トンネル、出ていくネットワークインターフェイス、そしてサーバーです。サーバーが応答すると線が実線になり、パケットは通信量に合わせた速さで線の上を動きます。</figcaption>
     </div>
   </figure>
+</section>
+
+<section class="feature" id="tour" aria-labelledby="tour-title">
+  <div class="wrap">
+    <h2 id="tour-title">50秒でわかるTurnout</h2>
+    <div class="body">
+      <figure class="video-figure">
+        <video controls preload="none" playsinline width="1920" height="1080" poster="../assets/video/turnout-ja.jpg?v=3a4c74a2"><source src="../assets/video/turnout-ja.mp4?v=fced5520" type="video/mp4"><a href="../assets/video/turnout-ja.mp4?v=fced5520">50秒でわかるTurnout（MP4、10 MB）</a></video>
+        <figcaption>ネットワークインターフェイス、スケジュールとWi-Fiルール、そしてPhantunを、アプリの実際の画面で紹介します。軽い音楽付きですが、音を消しても字幕で伝わります。</figcaption>
+      </figure>
+    </div>
+  </div>
 </section>
 
 <section class="feature" id="wg-quick" aria-labelledby="wg-quick-title">
@@ -235,6 +247,29 @@ Endpoint = vpn.example.com:51820</code></pre>
     <div class="body">
       <p class="intro">ゲートウェイ、インターフェイス、リンクが変わったときや、Macがスリープから復帰したとき、Turnoutは物理ネットワークを通るトンネルのルートを現在のゲートウェイに付け直し、自動MTUを計算し直し、DNSを適用し直します。</p>
       <p>トンネルを固定したインターフェイスが一度なくなって戻ってくると、トンネルはそこに固定し直して、もう一度ハンドシェイクします。インターフェイスが戻らなければ、サーバーへのルートはブラックホールになり、ハンドシェイクがトンネル自身に入り込むことはありません。トンネルを通らないルートは、インターフェイスが戻るまで待機します。</p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="phantun" aria-labelledby="phantun-title">
+  <div class="wrap">
+    <h2 id="phantun-title">UDPがふさがれたらTCPで</h2>
+    <div class="body">
+      <p class="intro">WireGuardが使うUDPをブロックしたり遅くしたりするネットワークがあります。ホテルやゲスト用のWi-Fi、一部のオフィスや通信事業者です。ピアをPhantunに切り替えると、TurnoutはWireGuardのパケットをTCP接続に包んでPhantunサーバーに送り、そこからWireGuardサーバーに渡されます。</p>
+<pre><code>[Peer]
+PublicKey = …
+Endpoint = vpn.example.com:51820
+#@ Phantun = 4567</code></pre>
+      <p>この1行はwg-quickにとってはコメントなので、同じファイルはほかの場所では今までどおりUDPで接続します。PhantunはWireGuardサーバーの手前のLinuxホストで動きます。“サーバ設定…”は、そのためのコマンドを、DockerまたはPhantunのリリース版バイナリで、トンネルのポートとMTUを埋めた状態で表示します。Mac側で別のプログラムを動かす必要はありません。PhantunのTCPはTurnout自身が扱います。</p>
+      <p>経路はTCP接続をケーブルを包むスリーブとして描き、応答がないときはどちら側を確かめればよいかを示します。UDPのトンネルに応答がないときは、経路の“Phantunを使う…”からそのまま切り替えられます。PhantunはUDPをブロックしたり遅くしたりするネットワークを通り抜けますが、本物のWeb通信かどうかを調べるファイアウォールは越えられません。</p>
+      <figure class="shot-figure shot-phantun">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/5-phantun.jpg?v=16570c5c">
+          <img class="shot" src="../assets/screenshots/light/5-phantun.jpg?v=387367fd" width="1600" height="1000" loading="lazy" decoding="async" alt="Phantunサーバー経由で接続したトンネル。“TCP 4567”と書かれたスリーブが、ネットワークインターフェイスとサーバーの間の経路を包んでいます。">
+        </picture>
+        <figcaption>Phantun経由のトンネル。TCP接続がサーバーまでの経路を包みます。</figcaption>
+      </figure>
+      <p><a href="https://github.com/dndx/phantun">Phantun</a>はDatong Sun氏によるオープンソースプロジェクトです。<a href="how-it-works.html#phantun">Phantun経由のトンネルがMacに対して行うこと</a>。</p>
     </div>
   </div>
 </section>
@@ -335,7 +370,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="your-mac-title">Macに対して行うこと</h2>
     <div class="body">
-      <p class="intro">Turnoutはrootとして動くバックグラウンドサービスをインストールします。wg-quickと同じツールでアドレス、ルート、DNSを変更し、構成はrootしか読めないフォルダに置き、構成のフックは管理者が承認してから実行します。どれもご自身で確かめられます。</p>
+      <p class="intro">Turnoutはrootとして動くバックグラウンドサービスをインストールします。wg-quickと同じツールでアドレス、ルート、DNSを変更し、構成はrootしか読めないフォルダに置き、構成のフックは管理者が承認してから実行します。Phantun経由のトンネルは、接続している間、パケットフィルタのルールを1つ追加します。どれもご自身で確かめられます。</p>
 <pre><code>netstat -rn                         <span class="c"># 追加されたルート</span>
 networksetup -getdnsservers Wi-Fi   <span class="c"># 設定されたDNSサーバー</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
@@ -362,7 +397,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
         <li>Turnoutのようこそツアーに沿ってバックグラウンドサービスをインストールし、macOSに尋ねられたら“システム設定” › “一般” › “ログイン項目と機能拡張”で許可します。</li>
       </ol>
       <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">Turnoutをダウンロード</a></p>
-      <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.0.1</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-10-26">2026年10月26日</time><!-- /released -->公開）· <a href="https://github.com/tasict/Turnout/releases/latest">リリースノート</a></p>
+      <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.1.0</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-10-30">2026年10月30日</time><!-- /released -->公開）· <a href="https://github.com/tasict/Turnout/releases/latest">リリースノート</a></p>
       <p class="fineprint">macOS 15以降 · AppleシリコンとIntel · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、Mac 3台</p>
       <p><a href="https://brew.sh">Homebrew</a>でもインストールできます。インストールされるのは同じパッケージです。</p>
 <pre><code>brew tap tasict/tap

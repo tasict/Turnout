@@ -405,6 +405,18 @@ figure figcaption { margin-top: 0.75rem; color: var(--muted); font-size: 0.95rem
 .body .shot-figure { margin-top: 2rem; }
 .body .shot-figure .shot { box-shadow: 0 0 0 1px var(--rule), 0 24px 48px -30px var(--shadow); }
 
+/* The 50-second tour: the video in the screenshots' frame. It has sound, so
+   it plays only when asked, and loads nothing before that but its poster. */
+.video-figure video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  background: var(--sunk);
+  box-shadow: 0 0 0 1px var(--rule), 0 24px 48px -30px var(--shadow);
+}
+
 /* The other screenshots on a phone: edge to edge as well, each cut to the
    part that tells its story, in the 1600 x 1000 pixels of the screenshot:
    the sheet that is open, or the page without the sidebar. */
@@ -412,15 +424,16 @@ figure figcaption { margin-top: 0.75rem; color: var(--muted); font-size: 0.95rem
   .shot-automation { --crop-x: 362; --crop-y: 64; --crop-w: 876; --crop-h: 904; }
   .shot-import { --crop-x: 320; --crop-y: 264; --crop-w: 960; --crop-h: 472; }
   .shot-editor { --crop-x: 322; --crop-y: 0; --crop-w: 1278; --crop-h: 1000; }
+  .shot-phantun { --crop-x: 322; --crop-y: 0; --crop-w: 1278; --crop-h: 1000; }
 
-  :is(.shot-automation, .shot-import, .shot-editor) picture {
+  :is(.shot-automation, .shot-import, .shot-editor, .shot-phantun) picture {
     display: block;
     overflow: hidden;
     margin-inline: calc(-1 * var(--gutter));
     aspect-ratio: var(--crop-w) / var(--crop-h);
     box-shadow: 0 0 0 1px var(--rule);
   }
-  .body :is(.shot-automation, .shot-import, .shot-editor) .shot {
+  .body :is(.shot-automation, .shot-import, .shot-editor, .shot-phantun) .shot {
     width: calc(100% * 1600 / var(--crop-w));
     max-width: none;
     margin-left: calc(-100% * var(--crop-x) / var(--crop-w));

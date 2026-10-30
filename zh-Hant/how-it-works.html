@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=69d649f1">
+<link rel="stylesheet" href="../assets/site.css?v=956cecc7">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout 對你的 Mac 做了什麼">
@@ -121,6 +121,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <li><a href="#changes">它改了什麼</a></li>
         <li><a href="#configs">你的設定檔</a></li>
         <li><a href="#hooks">Hook</a></li>
+        <li><a href="#phantun">Phantun</a></li>
         <li><a href="#clients">服務回應誰</a></li>
         <li><a href="#recovery">當機之後</a></li>
         <li><a href="#network">網路連線</a></li>
@@ -156,6 +157,10 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
             <dt><code>/usr/sbin/networksetup</code></dt>
             <dd>各個網路服務上的 DNS 伺服器與搜尋網域。</dd>
           </div>
+          <div>
+            <dt><code>/sbin/pfctl</code></dt>
+            <dd>只用於走 Phantun 的通道：連線期間為它的 TCP 連線加上一條封包過濾規則（見<a href="#phantun">下方</a>）。</dd>
+          </div>
         </dl>
         <p>所以用平常的指令就能看到它到底做了什麼：</p>
 <pre><code>netstat -rn
@@ -179,6 +184,14 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># 或清單中的其他服�
           <li>沒有動到 hook 的修改不需要重新核准。</li>
         </ul>
         <p>核准之前先讀一遍設定檔裡的 hook，就像你會先讀過要用 <code>sudo</code> 執行的指令稿一樣。</p>
+      </section>
+
+      <section id="phantun" aria-labelledby="phantun-title">
+        <h2 id="phantun-title">Phantun 的 TCP 連線</h2>
+        <p>設了 <code>#@ Phantun</code> 的對等端，會經由 Phantun 伺服器透過 TCP 連線。這條連線由服務自己建立：它把 WireGuard 的封包寫成 TCP 區段，送進出口介面上的 raw socket，再用同一個介面上的 BPF 讀取伺服器的回應。不會執行其他程式，也沒有本機轉送連接埠。</p>
+        <p>macOS 並不知道這條連線，它自己的 TCP 會用重設（reset）回應伺服器。所以這類通道連線期間，服務會以自己的參照啟用封包過濾器（pf），並在它的錨點 <code>com.apple/cc.ctsite.turnout</code> 中為每台 Phantun 伺服器加上一條規則：來自該伺服器位址與連接埠的 TCP，在 macOS 的 TCP 看到之前就丟棄。中斷連線時會移除規則並釋放參照。這兩項和路由、DNS 一樣都寫在日誌裡。</p>
+<pre><code>sudo pfctl -a com.apple/cc.ctsite.turnout -s rules</code></pre>
+        <p><a href="https://github.com/dndx/phantun">Phantun</a> 是 Datong Sun 的開源專案，採用 MIT 或 Apache 2.0 授權。傳輸方式依循它的 fake-tcp 程式庫，「伺服器設定⋯」依循它自己的檔案；「關於」›「開源授權」兩者都有列出。</p>
       </section>
 
       <section id="clients" aria-labelledby="clients-title">
@@ -247,7 +260,8 @@ ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnout 與
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh
 defaults read cc.ctsite.turnout analyticsClientID  <span class="c"># 隨機產生的安裝 ID</span>
 netstat -rn
-networksetup -getdnsservers Wi-Fi</code></pre>
+networksetup -getdnsservers Wi-Fi
+sudo pfctl -a com.apple/cc.ctsite.turnout -s rules   <span class="c"># 走 Phantun 的通道連線時的規則</span></code></pre>
         <p>解除安裝程式是 App 裡的一個 shell 指令稿，執行前可以先讀過。</p>
       </section>
 

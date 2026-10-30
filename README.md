@@ -5,7 +5,7 @@
   </picture>
 </p>
 
-Turnout is a VPN client for macOS that connects to WireGuard servers the way `wg-quick` does, in a native app: your `PreUp`/`PostUp` hooks run, your routes stay yours, and you choose which network interface the tunnel leaves through. It lives in the menu bar, follows the network as it changes, can connect by schedule or Wi-Fi network, and cleans up after itself. It is a paid app: US$19 once for three Macs, after a 7-day trial ([price and license](#price)).
+Turnout is a VPN client for macOS that connects to WireGuard servers the way `wg-quick` does, in a native app: your `PreUp`/`PostUp` hooks run, your routes stay yours, and you choose which network interface the tunnel leaves through. It lives in the menu bar, follows the network as it changes, can connect by schedule or Wi-Fi network, and cleans up after itself. Where a network blocks or slows down UDP, a tunnel can go over TCP through a [Phantun](https://github.com/dndx/phantun) server. It is a paid app: US$19 once for three Macs, after a 7-day trial ([price and license](#price)).
 
 This repository holds:
 

@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="assets/site.css?v=69d649f1">
+<link rel="stylesheet" href="assets/site.css?v=956cecc7">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout: wg-quick for your Mac, in a native app">
@@ -124,7 +124,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- download:live -->
         <div class="live">
           <a class="download" href="https://github.com/tasict/Turnout/releases/latest">Download Turnout</a>
-          <p class="fineprint">Version <!-- version --><span data-latest="version">1.0.1</span><!-- /version -->, released <!-- released --><time data-latest="date" datetime="2026-10-26">26 October 2026</time><!-- /released --> · <a href="https://github.com/tasict/Turnout/releases/latest">Release notes</a></p>
+          <p class="fineprint">Version <!-- version --><span data-latest="version">1.1.0</span><!-- /version -->, released <!-- released --><time data-latest="date" datetime="2026-10-30">30 October 2026</time><!-- /released --> · <a href="https://github.com/tasict/Turnout/releases/latest">Release notes</a></p>
           <p class="fineprint">macOS 15 or later · Apple silicon and Intel · 7-day trial · <!-- price --><span data-price>US$19</span><!-- /price --> once, three Macs</p>
           <p class="fineprint"><a href="#install">How to install</a></p>
         </div>
@@ -159,6 +159,18 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       <figcaption>Each tunnel shows its live path: the tunnel, the network interface it leaves through, and the server. The line goes solid once the server answers, and packets move along it at a pace set by your traffic.</figcaption>
     </div>
   </figure>
+</section>
+
+<section class="feature" id="tour" aria-labelledby="tour-title">
+  <div class="wrap">
+    <h2 id="tour-title">Turnout in 50 seconds</h2>
+    <div class="body">
+      <figure class="video-figure">
+        <video controls preload="none" playsinline width="1920" height="1080" poster="assets/video/turnout-en.jpg?v=5a72c53d"><source src="assets/video/turnout-en.mp4?v=1d266372" type="video/mp4"><a href="assets/video/turnout-en.mp4?v=1d266372">Turnout in 50 seconds (MP4, 10 MB)</a></video>
+        <figcaption>The network interface, schedules and Wi-Fi rules, and Phantun, in the app itself. With light music; the captions tell it all with the sound off.</figcaption>
+      </figure>
+    </div>
+  </div>
 </section>
 
 <section class="feature" id="wg-quick" aria-labelledby="wg-quick-title">
@@ -235,6 +247,29 @@ Endpoint = vpn.example.com:51820</code></pre>
     <div class="body">
       <p class="intro">When gateways, interfaces or links change, or the Mac wakes from sleep, Turnout puts the tunnel's routes through your physical network back on the current gateways, works out the automatic MTU again and re-applies DNS.</p>
       <p>If the interface a tunnel is bound to goes away and comes back, the tunnel binds to it again and handshakes again. If it disappears for good, the route to the server becomes a blackhole, so handshakes cannot slip into the tunnel itself, and routes that skip the tunnel wait until the interface returns.</p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="phantun" aria-labelledby="phantun-title">
+  <div class="wrap">
+    <h2 id="phantun-title">Over TCP when UDP is blocked</h2>
+    <div class="body">
+      <p class="intro">Some networks block or slow down UDP, which WireGuard travels on: hotel and guest Wi-Fi, some offices, some carriers. Switch a peer to Phantun, and Turnout sends WireGuard's packets inside a TCP connection to a Phantun server, which hands them to your WireGuard server.</p>
+<pre><code>[Peer]
+PublicKey = …
+Endpoint = vpn.example.com:51820
+#@ Phantun = 4567</code></pre>
+      <p>That one line is a comment to wg-quick, so the same file still connects over UDP anywhere else. Phantun runs on a Linux host in front of your WireGuard server, and Server Setup… gives you its commands, with Docker or Phantun's release binary, already filled in with the tunnel's ports and MTU. Nothing else runs on your Mac: Turnout handles Phantun's TCP itself.</p>
+      <p>The path draws the TCP connection as a sleeve around the cable and, when something does not answer, says which side to check. When a UDP tunnel gets no answer, Use Phantun… on its path switches it over. Phantun gets through networks that block or slow down UDP; it does not get past firewalls that inspect traffic for real web connections.</p>
+      <figure class="shot-figure shot-phantun">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/dark/5-phantun.jpg?v=16570c5c">
+          <img class="shot" src="assets/screenshots/light/5-phantun.jpg?v=387367fd" width="1600" height="1000" loading="lazy" decoding="async" alt="A tunnel connected through a Phantun server. A sleeve marked TCP 4567 wraps the path between the network interface and the server.">
+        </picture>
+        <figcaption>A tunnel through Phantun: the TCP connection wraps the path to the server.</figcaption>
+      </figure>
+      <p><a href="https://github.com/dndx/phantun">Phantun</a> is an open-source project by Datong Sun. <a href="how-it-works.html#phantun">What a tunnel through Phantun does to your Mac</a>.</p>
     </div>
   </div>
 </section>
@@ -335,7 +370,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="your-mac-title">What it does to your Mac</h2>
     <div class="body">
-      <p class="intro">Turnout installs a background service that runs as root. It changes addresses, routes and DNS with the same tools wg-quick uses, keeps configs in a folder only root can read, and runs a config's hooks only after an administrator approves them. You can check each of these yourself.</p>
+      <p class="intro">Turnout installs a background service that runs as root. It changes addresses, routes and DNS with the same tools wg-quick uses, keeps configs in a folder only root can read, and runs a config's hooks only after an administrator approves them. A tunnel through Phantun also adds one packet filter rule while it is connected. You can check each of these yourself.</p>
 <pre><code>netstat -rn                         <span class="c"># the routes it added</span>
 networksetup -getdnsservers Wi-Fi   <span class="c"># the DNS servers it set</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
@@ -362,7 +397,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
         <li>Turnout's welcome tour walks you through installing the background service; allow it when macOS asks, in System Settings › General › Login Items &amp; Extensions.</li>
       </ol>
       <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">Download Turnout</a></p>
-      <p class="fineprint">Version <!-- version --><span data-latest="version">1.0.1</span><!-- /version -->, released <!-- released --><time data-latest="date" datetime="2026-10-26">26 October 2026</time><!-- /released --> · <a href="https://github.com/tasict/Turnout/releases/latest">Release notes</a></p>
+      <p class="fineprint">Version <!-- version --><span data-latest="version">1.1.0</span><!-- /version -->, released <!-- released --><time data-latest="date" datetime="2026-10-30">30 October 2026</time><!-- /released --> · <a href="https://github.com/tasict/Turnout/releases/latest">Release notes</a></p>
       <p class="fineprint">macOS 15 or later · Apple silicon and Intel · 7-day trial · <!-- price --><span data-price>US$19</span><!-- /price --> once, three Macs</p>
       <p>Or install it with <a href="https://brew.sh">Homebrew</a>, which installs the same package:</p>
 <pre><code>brew tap tasict/tap

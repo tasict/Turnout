@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=69d649f1">
+<link rel="stylesheet" href="../assets/site.css?v=956cecc7">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="TurnoutがMacに対して行うこと">
@@ -121,6 +121,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <li><a href="#changes">変更するもの</a></li>
         <li><a href="#configs">構成ファイル</a></li>
         <li><a href="#hooks">フック</a></li>
+        <li><a href="#phantun">Phantun</a></li>
         <li><a href="#clients">応答する相手</a></li>
         <li><a href="#recovery">クラッシュのあと</a></li>
         <li><a href="#network">ネットワーク接続</a></li>
@@ -156,6 +157,10 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
             <dt><code>/usr/sbin/networksetup</code></dt>
             <dd>ネットワークサービスのDNSサーバーと検索ドメイン。</dd>
           </div>
+          <div>
+            <dt><code>/sbin/pfctl</code></dt>
+            <dd>Phantun経由のトンネルだけ：接続している間、そのTCP接続のためのパケットフィルタのルールを1つ（<a href="#phantun">後述</a>）。</dd>
+          </div>
         </dl>
         <p>なので、いつものコマンドで何をしたかがそのまま分かります：</p>
 <pre><code>netstat -rn
@@ -179,6 +184,14 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># または一覧にある�
           <li>フックに触れない編集なら、改めて承認する必要はありません。</li>
         </ul>
         <p>承認する前に、構成のフックを読んでください。<code>sudo</code>で実行するスクリプトを読むのと同じです。</p>
+      </section>
+
+      <section id="phantun" aria-labelledby="phantun-title">
+        <h2 id="phantun-title">PhantunのTCP接続</h2>
+        <p><code>#@ Phantun</code>を設定したピアには、Phantunサーバー経由でTCPで接続します。この接続はサービスが自分で作ります。WireGuardのパケットをTCPセグメントとして出口インターフェイスのrawソケットに書き込み、サーバーからの応答は同じインターフェイスのBPFで読み取ります。ほかのプログラムは動かず、ローカルの中継ポートもありません。</p>
+        <p>macOSはこの接続を知らないため、macOS自身のTCPがサーバーにリセットを返してしまいます。そこで、このようなトンネルが接続している間、サービスは自分の参照でパケットフィルタ（pf）を有効にし、アンカー<code>com.apple/cc.ctsite.turnout</code>にPhantunサーバーごとに1つのルールを置きます。そのサーバーのアドレスとポートから届くTCPを、macOSのTCPが受け取る前に破棄するルールです。接続を解除するとルールを取り除き、参照を解放します。どちらもルートやDNSと同じくジャーナルに記録されます。</p>
+<pre><code>sudo pfctl -a com.apple/cc.ctsite.turnout -s rules</code></pre>
+        <p><a href="https://github.com/dndx/phantun">Phantun</a>はDatong Sun氏によるオープンソースプロジェクトで、MITまたはApache 2.0ライセンスです。転送方式はそのfake-tcpライブラリに、“サーバ設定…”はPhantun自身のファイルに従っています。“情報” › “オープンソースライセンス”に両方が載っています。</p>
       </section>
 
       <section id="clients" aria-labelledby="clients-title">
@@ -247,7 +260,8 @@ ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnoutとt
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh
 defaults read cc.ctsite.turnout analyticsClientID  <span class="c"># ランダムなインストールID</span>
 netstat -rn
-networksetup -getdnsservers Wi-Fi</code></pre>
+networksetup -getdnsservers Wi-Fi
+sudo pfctl -a com.apple/cc.ctsite.turnout -s rules   <span class="c"># Phantun経由のトンネルが接続している間のルール</span></code></pre>
         <p>アンインストーラは、アプリの中にあるシェルスクリプトです。実行する前に読んでみてください。</p>
       </section>
 

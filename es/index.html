@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=69d649f1">
+<link rel="stylesheet" href="../assets/site.css?v=956cecc7">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout: wg-quick para tu Mac, en una app nativa">
@@ -124,7 +124,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- download:live -->
         <div class="live">
           <a class="download" href="https://github.com/tasict/Turnout/releases/latest">Descargar Turnout</a>
-          <p class="fineprint">Versión <!-- version --><span data-latest="version">1.0.1</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-10-26">26 de octubre de 2026</time><!-- /released --> · <a href="https://github.com/tasict/Turnout/releases/latest">Notas de la versión</a></p>
+          <p class="fineprint">Versión <!-- version --><span data-latest="version">1.1.0</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-10-30">30 de octubre de 2026</time><!-- /released --> · <a href="https://github.com/tasict/Turnout/releases/latest">Notas de la versión</a></p>
           <p class="fineprint">macOS 15 o posterior · Apple silicon e Intel · prueba de 7 días · <!-- price --><span data-price>US$19</span><!-- /price --> en un solo pago, tres Mac</p>
           <p class="fineprint"><a href="#install">Cómo instalar</a></p>
         </div>
@@ -159,6 +159,18 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       <figcaption>Cada túnel muestra su ruta en vivo: el túnel, la interfaz de red por la que sale y el servidor. La línea se vuelve continua cuando el servidor responde, y los paquetes avanzan por ella al ritmo de tu tráfico.</figcaption>
     </div>
   </figure>
+</section>
+
+<section class="feature" id="tour" aria-labelledby="tour-title">
+  <div class="wrap">
+    <h2 id="tour-title">Turnout en 50 segundos</h2>
+    <div class="body">
+      <figure class="video-figure">
+        <video controls preload="none" playsinline width="1920" height="1080" poster="../assets/video/turnout-en.jpg?v=5a72c53d"><source src="../assets/video/turnout-en.mp4?v=1d266372" type="video/mp4"><a href="../assets/video/turnout-en.mp4?v=1d266372">Turnout en 50 segundos (MP4, 10 MB, en inglés)</a></video>
+        <figcaption>La interfaz de red, los horarios y las reglas de Wi-Fi, y Phantun, en la propia app. En inglés, con música suave; los subtítulos lo cuentan todo sin sonido.</figcaption>
+      </figure>
+    </div>
+  </div>
 </section>
 
 <section class="feature" id="wg-quick" aria-labelledby="wg-quick-title">
@@ -235,6 +247,29 @@ Endpoint = vpn.example.com:51820</code></pre>
     <div class="body">
       <p class="intro">Cuando cambian las puertas de enlace, las interfaces o los enlaces, o el Mac sale del reposo, Turnout vuelve a apuntar las rutas del túnel que pasan por tu red física a las puertas de enlace actuales, recalcula la MTU automática y vuelve a aplicar el DNS.</p>
       <p>Si la interfaz a la que está vinculado un túnel desaparece y vuelve, el túnel se vincula a ella de nuevo y repite la negociación. Si desaparece del todo, la ruta al servidor se convierte en un agujero negro, para que la negociación no se cuele en el propio túnel, y las rutas que evitan el túnel esperan a que la interfaz vuelva.</p>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="phantun" aria-labelledby="phantun-title">
+  <div class="wrap">
+    <h2 id="phantun-title">Por TCP cuando UDP está bloqueado</h2>
+    <div class="body">
+      <p class="intro">Algunas redes bloquean o ralentizan UDP, el protocolo por el que viaja WireGuard: el Wi-Fi de hoteles y de invitados, algunas oficinas, algunos operadores. Cambia un par a Phantun y Turnout enviará los paquetes de WireGuard dentro de una conexión TCP a un servidor Phantun, que se los entrega a tu servidor WireGuard.</p>
+<pre><code>[Peer]
+PublicKey = …
+Endpoint = vpn.example.com:51820
+#@ Phantun = 4567</code></pre>
+      <p>Esa línea es un comentario para wg-quick, así que el mismo archivo sigue conectándose por UDP en cualquier otro sitio. Phantun se ejecuta en un host Linux delante de tu servidor WireGuard, y Configuración del servidor… te da sus comandos, con Docker o con el binario publicado de Phantun, ya rellenos con los puertos y el MTU del túnel. En tu Mac no se ejecuta nada más: Turnout se encarga él mismo del TCP de Phantun.</p>
+      <p>La ruta dibuja la conexión TCP como una funda alrededor del cable y, cuando algo no responde, te dice qué lado revisar. Cuando un túnel UDP no recibe respuesta, Usar Phantun… en su ruta lo cambia. Phantun atraviesa redes que bloquean o ralentizan UDP; no supera cortafuegos que inspeccionan el tráfico en busca de conexiones web reales.</p>
+      <figure class="shot-figure shot-phantun">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/5-phantun.jpg?v=16570c5c">
+          <img class="shot" src="../assets/screenshots/light/5-phantun.jpg?v=387367fd" width="1600" height="1000" loading="lazy" decoding="async" alt="Un túnel conectado a través de un servidor Phantun. Una funda marcada TCP 4567 envuelve la ruta entre la interfaz de red y el servidor.">
+        </picture>
+        <figcaption>Un túnel a través de Phantun: la conexión TCP envuelve la ruta hasta el servidor.</figcaption>
+      </figure>
+      <p><a href="https://github.com/dndx/phantun">Phantun</a> es un proyecto de código abierto de Datong Sun. <a href="how-it-works.html#phantun">Qué hace en tu Mac un túnel a través de Phantun</a>.</p>
     </div>
   </div>
 </section>
@@ -335,7 +370,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="your-mac-title">Qué hace en tu Mac</h2>
     <div class="body">
-      <p class="intro">Turnout instala un servicio en segundo plano que se ejecuta como root. Cambia direcciones, rutas y DNS con las mismas herramientas que usa wg-quick, guarda las configuraciones en una carpeta que solo root puede leer y ejecuta los hooks de una configuración solo después de que un administrador los apruebe. Puedes comprobar cada punto tú mismo.</p>
+      <p class="intro">Turnout instala un servicio en segundo plano que se ejecuta como root. Cambia direcciones, rutas y DNS con las mismas herramientas que usa wg-quick, guarda las configuraciones en una carpeta que solo root puede leer y ejecuta los hooks de una configuración solo después de que un administrador los apruebe. Un túnel a través de Phantun añade además una regla al filtro de paquetes mientras está conectado. Puedes comprobar cada punto tú mismo.</p>
 <pre><code>netstat -rn                         <span class="c"># las rutas que añadió</span>
 networksetup -getdnsservers Wi-Fi   <span class="c"># los servidores DNS que configuró</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
@@ -362,7 +397,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
         <li>El recorrido de bienvenida de Turnout te guía para instalar el servicio en segundo plano; permítelo cuando macOS lo pida, en Ajustes del Sistema › General › Ítems de inicio y extensiones.</li>
       </ol>
       <p><a class="download" href="https://github.com/tasict/Turnout/releases/latest">Descargar Turnout</a></p>
-      <p class="fineprint">Versión <!-- version --><span data-latest="version">1.0.1</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-10-26">26 de octubre de 2026</time><!-- /released --> · <a href="https://github.com/tasict/Turnout/releases/latest">Notas de la versión</a></p>
+      <p class="fineprint">Versión <!-- version --><span data-latest="version">1.1.0</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-10-30">30 de octubre de 2026</time><!-- /released --> · <a href="https://github.com/tasict/Turnout/releases/latest">Notas de la versión</a></p>
       <p class="fineprint">macOS 15 o posterior · Apple silicon e Intel · prueba de 7 días · <!-- price --><span data-price>US$19</span><!-- /price --> en un solo pago, tres Mac</p>
       <p>O instálalo con <a href="https://brew.sh">Homebrew</a>, que instala el mismo paquete:</p>
 <pre><code>brew tap tasict/tap

@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=69d649f1">
+<link rel="stylesheet" href="../assets/site.css?v=956cecc7">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout이 Mac에서 하는 일">
@@ -121,6 +121,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <li><a href="#changes">변경하는 항목</a></li>
         <li><a href="#configs">구성</a></li>
         <li><a href="#hooks">훅</a></li>
+        <li><a href="#phantun">Phantun</a></li>
         <li><a href="#clients">응답하는 대상</a></li>
         <li><a href="#recovery">충돌 후</a></li>
         <li><a href="#network">네트워크 연결</a></li>
@@ -156,6 +157,10 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
             <dt><code>/usr/sbin/networksetup</code></dt>
             <dd>네트워크 서비스의 DNS 서버와 검색 도메인.</dd>
           </div>
+          <div>
+            <dt><code>/sbin/pfctl</code></dt>
+            <dd>Phantun을 거치는 터널에만 해당: 연결되어 있는 동안 그 TCP 연결을 위한 패킷 필터 규칙 하나(<a href="#phantun">아래</a> 참조).</dd>
+          </div>
         </dl>
         <p>따라서 평소에 쓰는 명령으로 서비스가 한 일을 정확히 볼 수 있습니다.</p>
 <pre><code>netstat -rn
@@ -179,6 +184,14 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># 또는 목록에 있는 �
           <li>훅을 건드리지 않는 편집에는 새로운 승인이 필요하지 않습니다.</li>
         </ul>
         <p><code>sudo</code>로 실행하는 스크립트를 대할 때처럼, 승인하기 전에 구성의 훅을 읽어 보십시오.</p>
+      </section>
+
+      <section id="phantun" aria-labelledby="phantun-title">
+        <h2 id="phantun-title">Phantun의 TCP 연결</h2>
+        <p><code>#@ Phantun</code>이 설정된 피어에는 Phantun 서버를 거쳐 TCP로 연결합니다. 이 연결은 서비스가 직접 만듭니다. WireGuard 패킷을 TCP 세그먼트로 출구 인터페이스의 raw 소켓에 쓰고, 서버의 응답은 같은 인터페이스의 BPF로 읽습니다. 다른 프로그램은 실행되지 않으며 로컬 중계 포트도 없습니다.</p>
+        <p>macOS는 이 연결을 알지 못하므로 macOS 자체의 TCP가 서버에 리셋으로 응답하게 됩니다. 그래서 이런 터널이 연결되어 있는 동안 서비스는 자체 참조로 패킷 필터(pf)를 켜고, 앵커 <code>com.apple/cc.ctsite.turnout</code>에 Phantun 서버마다 규칙을 하나씩 둡니다. 해당 서버의 주소와 포트에서 들어오는 TCP를 macOS의 TCP가 보기 전에 버리는 규칙입니다. 연결을 해제하면 규칙을 제거하고 참조를 해제합니다. 둘 다 경로와 DNS처럼 저널에 기록됩니다.</p>
+<pre><code>sudo pfctl -a com.apple/cc.ctsite.turnout -s rules</code></pre>
+        <p><a href="https://github.com/dndx/phantun">Phantun</a>은 Datong Sun이 만든 오픈 소스 프로젝트로, MIT 또는 Apache 2.0 라이선스입니다. 전송 방식은 그 fake-tcp 라이브러리를, ‘서버 설정…’은 Phantun 자체의 파일을 따릅니다. ‘정보’ › ‘오픈 소스 라이선스’에 둘 다 실려 있습니다.</p>
       </section>
 
       <section id="clients" aria-labelledby="clients-title">
@@ -247,7 +260,8 @@ ls -l /Applications/Turnout.app/Contents/MacOS/    <span class="c"># Turnout과 
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh
 defaults read cc.ctsite.turnout analyticsClientID  <span class="c"># 무작위 설치 ID</span>
 netstat -rn
-networksetup -getdnsservers Wi-Fi</code></pre>
+networksetup -getdnsservers Wi-Fi
+sudo pfctl -a com.apple/cc.ctsite.turnout -s rules   <span class="c"># Phantun을 거치는 터널이 연결된 동안의 규칙</span></code></pre>
         <p>제거 프로그램은 앱 안에 있는 셸 스크립트입니다. 실행하기 전에 읽어 보십시오.</p>
       </section>
 
