@@ -67,7 +67,7 @@ Turnout is paid: US$19 once for three Macs (yours, your household's, or within o
 
 ## The website
 
-Plain static HTML and one stylesheet, in four languages (English, 繁體中文, 日本語, Español), served by GitHub Pages from this repository's `main` branch as it stands, at <https://turnout.ctsite.cc/>; there is no build step. The screenshots in `assets/` are taken from the app itself.
+Plain static HTML and one stylesheet, in five languages (English, 繁體中文, 日本語, Español, 한국어), deployed as this repository's `main` branch stands to Cloudflare Pages, at <https://turnout.ctsite.cc/>; there is no build step. `_redirects` holds the site's stable addresses for the releases and the issues, which the apps use, and leads them here. The screenshots in `assets/` are taken from the app itself.
 
 - [Turnout](https://turnout.ctsite.cc/)
 - [What Turnout does to your Mac](https://turnout.ctsite.cc/how-it-works.html)
