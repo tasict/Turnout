@@ -1,0 +1,22 @@
+# Stable addresses. The apps' update feeds and packages, the links in the
+# apps and the Windows installer, the pages of this site and the Homebrew cask
+# name only these; each leads to where the releases and the issue tracker are
+# hosted now. Moving them changes these lines and a deploy of the site, never
+# an installed app. 302, not 301, so no client keeps an old target.
+#
+#   /latest/<file>            that file of the newest release (update.json,
+#                             update-windows.json)
+#   /download/v<v>/<file>     that file of release v<v> (the packages)
+#   /releases/v<v>            release v<v>'s page
+#   /releases, /releases/latest, /issues
+#
+# scripts/publish-site.sh checks that every one is here and that all lead to
+# the repository it names (REPO); scripts/release.sh publishes to the
+# repository the /latest/* line names, and checks the deployed site leads
+# there before it publishes anything.
+/releases          https://github.com/tasict/Turnout/releases  302
+/releases/latest   https://github.com/tasict/Turnout/releases/latest  302
+/releases/*        https://github.com/tasict/Turnout/releases/tag/:splat  302
+/latest/*          https://github.com/tasict/Turnout/releases/latest/download/:splat  302
+/download/*        https://github.com/tasict/Turnout/releases/download/:splat  302
+/issues            https://github.com/tasict/Turnout/issues  302

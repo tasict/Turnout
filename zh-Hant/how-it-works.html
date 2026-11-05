@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Turnout 對你的 Mac 做了什麼</title>
 <meta name="description" content="Turnout 的背景服務以 root 身分執行。它是什麼、改了什麼、用哪些工具、設定檔放在哪裡、hook 何時執行、App 連到哪裡，以及如何自己逐項檢查。">
-<link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
-<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works.html">
-<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
-<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/how-it-works.html">
-<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/how-it-works.html">
-<link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/how-it-works.html">
-<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works.html">
+<link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/how-it-works">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/how-it-works">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/how-it-works">
+<link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/how-it-works">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout 對你的 Mac 做了什麼">
 <meta property="og:description" content="背景服務、它執行的工具、它保存的檔案、它執行的 hook，以及 App 的網路連線，每一項都附上檢查指令。">
-<meta property="og:url" content="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
+<meta property="og:url" content="https://turnout.ctsite.cc/zh-Hant/how-it-works">
 <meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
 <meta property="og:image:width" content="1600">
 <meta property="og:image:height" content="1000">
@@ -207,10 +207,10 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># 或清單中的其他服�
 
       <section id="network" aria-labelledby="network-title">
         <h2 id="network-title">網路連線</h2>
-        <p>為了更新，App 本身會連到兩個地方：GitHub，用來查看有沒有新版本；以及 Google Analytics，用來計算安裝數。為了授權，它會在你買了授權之後連到 Polar，也會連到你的 iCloud 帳號；什麼時候、送出什麼，請見下方的<a href="#license">授權</a>。</p>
+        <p>為了更新，App 本身會連到兩個地方：本網站（它會把 App 轉往最新版本），用來查看有沒有新版本；以及 Google Analytics，用來計算安裝數。為了授權，它會在你買了授權之後連到 Polar，也會連到你的 iCloud 帳號；什麼時候、送出什麼，請見下方的<a href="#license">授權</a>。</p>
         <ul>
           <li>只有 <code>/Applications</code> 裡的那份會自動檢查，最多每小時一次，時機是你打開選單或視窗時。「Turnout」›「檢查更新項目⋯」則是你選它就檢查。</li>
-          <li>檢查時會向 GitHub 上這個專案的最新版本索取一個小檔案。請求不帶任何帳號，也不含任何關於你或你的通道的資訊。GitHub 看得到這個請求和你的 IP 位址。</li>
+          <li>檢查時會向本網站索取這個專案最新版本中的一個小檔案，本網站再把請求轉到存放各版本的地方，目前是 GitHub。請求不帶任何帳號，也不含任何關於你或你的通道的資訊。架設本網站的 Cloudflare 和 GitHub 看得到這個請求和你的 IP 位址。</li>
           <li>每次檢查時，App 也會送出一個事件給 Google Analytics（<code>www.google-analytics.com</code>，透過它的 Measurement Protocol）：一個 Turnout 第一次使用時隨機產生、存在偏好設定裡的安裝 ID，絕不是從硬體推算出來的；Turnout 的版本與建置編號；macOS 版本；處理器架構；系統語言；以及 Google Analytics 計數需要的兩個欄位：取自 Turnout 啟動時間的工作階段編號，和一個固定的參與時間。不含任何關於通道、伺服器、金鑰或網路的資訊，也沒有帳號或使用者 ID。Google 看得到這個請求和你的 IP 位址，適用 <a href="https://policies.google.com/privacy">Google 隱私權政策</a>。</li>
           <li>在「一般」（「Turnout」›「設定⋯」）關掉「自動檢查更新項目」，自動檢查和這份回報都會停止。之後選「檢查更新項目⋯」仍會檢查，但不會送出回報。</li>
           <li>如果你安裝更新，安裝程式來自同一個版本，Turnout 會先檢查它的檢查碼與 Developer ID 簽署，才交給 macOS 的安裝程式。</li>
@@ -285,7 +285,7 @@ sudo pfctl -a com.apple/cc.ctsite.turnout -s rules   <span class="c"># 走 Phant
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">隱私權</a> <a href="license.html">授權條款</a> <a href="https://github.com/tasict/Turnout/issues">回報問題</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a> <a href="../ko/how-it-works.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">隱私權</a> <a href="license.html">授權條款</a> <a href="../issues">回報問題</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a> <a href="../ko/how-it-works.html" hreflang="ko" lang="ko">한국어</a></p>
     <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
   </div>
 </footer>

@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Turnout이 Mac에서 하는 일</title>
 <meta name="description" content="Turnout의 백그라운드 서비스는 root 권한으로 실행됩니다. 이 서비스가 무엇인지, 무엇을 어떤 도구로 변경하는지, 구성이 어디에 보관되는지, 훅이 언제 실행되는지, 앱이 어디에 연결하는지, 그리고 이 모든 것을 직접 확인하는 방법을 설명합니다.">
-<link rel="canonical" href="https://turnout.ctsite.cc/ko/how-it-works.html">
-<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works.html">
-<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
-<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/how-it-works.html">
-<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/how-it-works.html">
-<link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/how-it-works.html">
-<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works.html">
+<link rel="canonical" href="https://turnout.ctsite.cc/ko/how-it-works">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/how-it-works">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/how-it-works">
+<link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/how-it-works">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout이 Mac에서 하는 일">
 <meta property="og:description" content="백그라운드 서비스, 서비스가 실행하는 도구, 보관하는 파일, 실행하는 훅, 앱이 만드는 연결을 각각 확인할 수 있는 명령과 함께 설명합니다.">
-<meta property="og:url" content="https://turnout.ctsite.cc/ko/how-it-works.html">
+<meta property="og:url" content="https://turnout.ctsite.cc/ko/how-it-works">
 <meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
 <meta property="og:image:width" content="1600">
 <meta property="og:image:height" content="1000">
@@ -207,10 +207,10 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># 또는 목록에 있는 �
 
       <section id="network" aria-labelledby="network-title">
         <h2 id="network-title">네트워크 연결</h2>
-        <p>업데이트를 위해 앱 자체는 두 곳에 연결합니다. 새 버전이 있는지 확인하기 위해 GitHub에, 설치 수를 집계하기 위해 Google Analytics에 연결합니다. 라이선스를 위해서는 라이선스를 구입한 후 Polar에, 그리고 사용자의 iCloud 계정에 연결합니다. 언제, 무엇을 보내는지는 아래의 <a href="#license">라이선스</a>에 나와 있습니다.</p>
+        <p>업데이트를 위해 앱 자체는 두 곳에 연결합니다. 새 버전이 있는지 확인하기 위해 앱을 최신 릴리스로 안내하는 이 웹 사이트에, 설치 수를 집계하기 위해 Google Analytics에 연결합니다. 라이선스를 위해서는 라이선스를 구입한 후 Polar에, 그리고 사용자의 iCloud 계정에 연결합니다. 언제, 무엇을 보내는지는 아래의 <a href="#license">라이선스</a>에 나와 있습니다.</p>
         <ul>
           <li><code>/Applications</code>에 있는 사본만 메뉴나 윈도우를 열 때 최대 1시간에 한 번 스스로 확인합니다. Turnout › ‘업데이트 확인…’을 선택하면 언제든지 확인합니다.</li>
-          <li>확인할 때는 GitHub에 있는 이 프로젝트의 최신 릴리스에서 작은 파일 하나를 요청합니다. 이 요청에는 계정 정보도, 사용자나 사용자의 터널에 관한 정보도 담기지 않습니다. GitHub는 요청과 사용자의 IP 주소를 볼 수 있습니다.</li>
+          <li>확인할 때는 이 프로젝트의 최신 릴리스에 있는 작은 파일 하나를 이 웹 사이트에 요청하며, 웹 사이트는 그 요청을 릴리스가 보관된 곳(현재는 GitHub)으로 전달합니다. 이 요청에는 계정 정보도, 사용자나 사용자의 터널에 관한 정보도 담기지 않습니다. 웹 사이트를 호스팅하는 Cloudflare와 GitHub는 요청과 사용자의 IP 주소를 볼 수 있습니다.</li>
           <li>확인할 때마다 앱은 Google Analytics(<code>www.google-analytics.com</code>, Measurement Protocol 사용)에 이벤트 하나를 보냅니다. 이 이벤트에는 Turnout이 처음 사용될 때 만들어 환경설정에 보관하는 무작위 설치 ID(하드웨어에서 만든 값이 아님), Turnout 버전과 빌드, macOS 버전, 프로세서 아키텍처, 시스템 언어, 그리고 Google Analytics가 집계에 필요로 하는 두 필드인 Turnout 시작 시각에서 가져온 세션 번호와 고정된 참여 시간이 담깁니다. 터널, 서버, 키, 네트워크에 관한 정보는 없으며, 계정이나 사용자 ID도 없습니다. Google은 <a href="https://policies.google.com/privacy">Google 개인정보처리방침</a>에 따라 요청과 사용자의 IP 주소를 볼 수 있습니다.</li>
           <li>‘일반’(Turnout › ‘설정…’)에서 ‘자동으로 업데이트 확인’을 끄면 자동 확인과 보고서가 모두 중단됩니다. ‘업데이트 확인…’은 선택하면 여전히 확인하지만 보고서는 보내지 않습니다.</li>
           <li>업데이트를 설치하면 설치 프로그램은 같은 릴리스에서 받으며, Turnout은 macOS 설치 프로그램에 넘기기 전에 설치 프로그램의 체크섬과 Developer ID 서명을 확인합니다.</li>
@@ -285,7 +285,7 @@ sudo pfctl -a com.apple/cc.ctsite.turnout -s rules   <span class="c"># Phantun�
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">개인정보 처리방침</a> <a href="license.html">라이선스 약관</a> <a href="https://github.com/tasict/Turnout/issues">문제 보고</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">개인정보 처리방침</a> <a href="license.html">라이선스 약관</a> <a href="../issues">문제 보고</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a></p>
     <p>© 2026 tasict. Mac 및 macOS는 Apple Inc.의 상표입니다. WireGuard는 Jason A. Donenfeld의 등록 상표입니다.</p>
   </div>
 </footer>

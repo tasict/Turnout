@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>What Turnout does to your Mac</title>
 <meta name="description" content="Turnout's background service runs as root. What it is, what it changes and with which tools, where configs live, when hooks run, what the app connects to, and how to check all of it yourself.">
-<link rel="canonical" href="https://turnout.ctsite.cc/how-it-works.html">
-<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works.html">
-<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
-<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/how-it-works.html">
-<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/how-it-works.html">
-<link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/how-it-works.html">
-<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works.html">
+<link rel="canonical" href="https://turnout.ctsite.cc/how-it-works">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/how-it-works">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/how-it-works">
+<link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/how-it-works">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="What Turnout does to your Mac">
 <meta property="og:description" content="The background service, the tools it runs, the files it keeps, the hooks it runs and the connections the app makes, with commands to check each of them.">
-<meta property="og:url" content="https://turnout.ctsite.cc/how-it-works.html">
+<meta property="og:url" content="https://turnout.ctsite.cc/how-it-works">
 <meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
 <meta property="og:image:width" content="1600">
 <meta property="og:image:height" content="1000">
@@ -207,10 +207,10 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># or another service from th
 
       <section id="network" aria-labelledby="network-title">
         <h2 id="network-title">Network connections</h2>
-        <p>For updates, the app itself connects to two places: GitHub, to see whether there is a new version, and Google Analytics, to count the installation. For the license it connects to Polar, once you have bought one, and to your iCloud account; <a href="#license">The license</a> below says when, and with what.</p>
+        <p>For updates, the app itself connects to two places: this website, which sends it on to the newest release, to see whether there is a new version, and Google Analytics, to count the installation. For the license it connects to Polar, once you have bought one, and to your iCloud account; <a href="#license">The license</a> below says when, and with what.</p>
         <ul>
           <li>Only the copy in <code>/Applications</code> checks on its own, at most once an hour, when you open the menu or a window. Turnout › Check for Updates… checks whenever you choose it.</li>
-          <li>The check asks for a small file in this project's latest release on GitHub. It carries no account and nothing about you or your tunnels. GitHub sees the request and your IP address.</li>
+          <li>The check asks this website for a small file in this project's latest release, and the website sends it on to where the releases are kept, GitHub at present. It carries no account and nothing about you or your tunnels. Cloudflare, which hosts the website, and GitHub see the request and your IP address.</li>
           <li>With each check, the app sends one event to Google Analytics (<code>www.google-analytics.com</code>, through its Measurement Protocol): a random installation ID that Turnout makes up on first use and keeps in its preferences, never derived from the hardware; the Turnout version and build; the macOS version; the processor architecture; the system language; and two fields Google Analytics needs to count it, a session number taken from when Turnout was started and a fixed engagement time. Nothing about tunnels, servers, keys or networks, and no account or user ID. Google sees the request and your IP address, under the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</li>
           <li>Switching off Check for updates automatically in General (Turnout › Settings…) stops both the automatic check and the report. Check for Updates… still checks when you choose it, and sends no report.</li>
           <li>If you install an update, the installer comes from the same release, and Turnout checks its checksum and its Developer ID signature before handing it to the macOS installer.</li>
@@ -285,7 +285,7 @@ sudo pfctl -a com.apple/cc.ctsite.turnout -s rules   <span class="c"># Phantun's
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">Privacy</a> <a href="license.html">License terms</a> <a href="https://github.com/tasict/Turnout/issues">Report a problem</a> <a href="zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a> <a href="es/how-it-works.html" hreflang="es" lang="es">Español</a> <a href="ko/how-it-works.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">Privacy</a> <a href="license.html">License terms</a> <a href="issues">Report a problem</a> <a href="zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a> <a href="es/how-it-works.html" hreflang="es" lang="es">Español</a> <a href="ko/how-it-works.html" hreflang="ko" lang="ko">한국어</a></p>
     <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
   </div>
 </footer>

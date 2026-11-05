@@ -1,0 +1,5 @@
+# Every file may be read from another site's page, as GitHub Pages, which
+# served the site before, allowed: www.ctsite.cc's home page reads
+# assets/pricing.json in the browser for Turnout's price and sale line.
+/*
+  Access-Control-Allow-Origin: *

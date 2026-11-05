@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TurnoutがMacに対して行うこと</title>
 <meta name="description" content="Turnoutのバックグラウンドサービスはrootとして動きます。それが何か、何をどのツールで変更するか、構成はどこにあるか、フックはいつ実行されるか、アプリがどこに接続するか、そしてそのすべてを自分で確かめる方法。">
-<link rel="canonical" href="https://turnout.ctsite.cc/ja/how-it-works.html">
-<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works.html">
-<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works.html">
-<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/how-it-works.html">
-<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/how-it-works.html">
-<link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/how-it-works.html">
-<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works.html">
+<link rel="canonical" href="https://turnout.ctsite.cc/ja/how-it-works">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/how-it-works">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/how-it-works">
+<link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/how-it-works">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/how-it-works">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="TurnoutがMacに対して行うこと">
 <meta property="og:description" content="バックグラウンドサービス、それが実行するツール、保存するファイル、実行するフック、アプリの接続先。それぞれを確かめるコマンド付きです。">
-<meta property="og:url" content="https://turnout.ctsite.cc/ja/how-it-works.html">
+<meta property="og:url" content="https://turnout.ctsite.cc/ja/how-it-works">
 <meta property="og:image" content="https://turnout.ctsite.cc/assets/screenshots/light/1-path.jpg">
 <meta property="og:image:width" content="1600">
 <meta property="og:image:height" content="1000">
@@ -207,10 +207,10 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># または一覧にある�
 
       <section id="network" aria-labelledby="network-title">
         <h2 id="network-title">ネットワーク接続</h2>
-        <p>アップデートのために、アプリ自体は2か所に接続します。新しいバージョンがあるかを確かめるGitHubと、インストール数を数えるGoogle Analyticsです。ライセンスのためには、購入後はPolarに、そしてあなたのiCloudアカウントに接続します。いつ何を送るかは、下の<a href="#license">ライセンス</a>にあります。</p>
+        <p>アップデートのために、アプリ自体は2か所に接続します。新しいバージョンがあるかを確かめるこのサイト（アプリを最新リリースへ転送）と、インストール数を数えるGoogle Analyticsです。ライセンスのためには、購入後はPolarに、そしてあなたのiCloudアカウントに接続します。いつ何を送るかは、下の<a href="#license">ライセンス</a>にあります。</p>
         <ul>
           <li>自動で確認するのは<code>/Applications</code>にあるコピーだけで、メニューかウインドウを開いたときに、多くても1時間に1回です。“Turnout” › “アップデートを確認…”は、選べばいつでも確認します。</li>
-          <li>確認では、GitHub上のこのプロジェクトの最新リリースにある小さなファイルを取得します。アカウントは使わず、あなたやトンネルに関する情報も含みません。GitHubに見えるのは、そのリクエストとあなたのIPアドレスです。</li>
+          <li>確認では、このプロジェクトの最新リリースにある小さなファイルをこのサイトに求めます。このサイトはそのリクエストを、リリースを置いている場所（現在はGitHub）へ転送します。アカウントは使わず、あなたやトンネルに関する情報も含みません。このサイトをホストしているCloudflareとGitHubに見えるのは、そのリクエストとあなたのIPアドレスです。</li>
           <li>確認のたびに、アプリはGoogle Analyticsにイベントを1件送ります（<code>www.google-analytics.com</code>、Measurement Protocol経由）。内容は、Turnoutが最初の使用時に作って環境設定に保存するランダムなインストールID（ハードウェアから導いたものではありません）、Turnoutのバージョンとビルド、macOSのバージョン、プロセッサのアーキテクチャ、システムの言語、そしてGoogle Analyticsが数えるのに必要な2つの項目（Turnoutの起動時刻から取ったセッション番号と、固定のエンゲージメント時間）です。トンネル、サーバー、鍵、ネットワークに関する情報は含まず、アカウントやユーザIDもありません。Googleに見えるのはそのリクエストとあなたのIPアドレスで、<a href="https://policies.google.com/privacy">Googleのプライバシーポリシー</a>が適用されます。</li>
           <li>“一般”（“Turnout” › “設定…”）で“アップデートを自動的に確認”をオフにすると、自動の確認とこの報告の両方が止まります。“アップデートを確認…”は選べば確認しますが、報告は送りません。</li>
           <li>アップデートをインストールする場合、インストーラは同じリリースから取得され、TurnoutはそのチェックサムとDeveloper IDの署名を確認してから、macOSのインストーラに渡します。</li>
@@ -285,7 +285,7 @@ sudo pfctl -a com.apple/cc.ctsite.turnout -s rules   <span class="c"># Phantun�
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">プライバシー</a> <a href="license.html">ライセンス条項</a> <a href="https://github.com/tasict/Turnout/issues">問題を報告</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a> <a href="../ko/how-it-works.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">プライバシー</a> <a href="license.html">ライセンス条項</a> <a href="../issues">問題を報告</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/how-it-works.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a> <a href="../ko/how-it-works.html" hreflang="ko" lang="ko">한국어</a></p>
     <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
   </div>
 </footer>
