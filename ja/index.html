@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnout：WireGuardサーバーに接続するmacOSとWindows用のVPNクライアント</title>
 <meta name="description" content="Turnoutは、MacやWindows PCをWireGuardサーバーにwg-quickと同じやり方でつなぐネイティブアプリです。フックは実行され、ルートはあなたのまま。トンネルがどのネットワークインターフェイスから出ていくかも選べます。">
 <link rel="canonical" href="https://turnout.ctsite.cc/ja/">
@@ -17,7 +18,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=a2fde089">
+<link rel="stylesheet" href="../assets/site.css?v=19e101c5">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout：ネイティブアプリになったMacとPC用のwg-quick">
@@ -33,6 +34,24 @@
 <meta property="og:locale:alternate" content="es_ES">
 <meta property="og:locale:alternate" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Turnout",
+  "description": "Turnoutは、MacやWindows PCをWireGuardサーバーにwg-quickと同じやり方でつなぐネイティブアプリです。フックは実行され、ルートはあなたのまま。トンネルがどのネットワークインターフェイスから出ていくかも選べます。",
+  "url": "https://turnout.ctsite.cc/ja/",
+  "image": "https://turnout.ctsite.cc/assets/app-icon.png",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "macOS 15 or later, Windows 11",
+  "inLanguage": "ja",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ctsite.cc",
+    "url": "https://www.ctsite.cc/"
+  }
+}
+</script>
 <!-- analytics -->
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -78,7 +97,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析"><p>このサイトへの訪問をGoogle Analyticsで数えてもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy.html#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析"><p>このサイトへの訪問をGoogle Analyticsで数えてもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -92,8 +111,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     </picture></a>
     <nav class="site-nav" aria-label="サイト">
       <ul>
-        <li><a href="how-it-works.html">仕組み</a></li>
-        <li><a href="windows.html">Windows</a></li>
+        <li><a href="how-it-works">仕組み</a></li>
+        <li><a href="windows">Windows</a></li>
       </ul>
     </nav>
     <nav class="lang-nav" aria-label="言語">
@@ -127,7 +146,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
           <a class="download" href="../releases/latest">Mac版をダウンロード</a>
           <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.1.4</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-11-06">2026年11月6日</time><!-- /released -->公開）· <a href="../releases/latest">リリースノート</a></p>
           <p class="fineprint">macOS 15以降 · AppleシリコンとIntel · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、コンピュータ3台</p>
-          <p class="fineprint"><a href="#install">インストール方法</a> · <a href="windows.html">Windows版Turnout</a>（Windows 11用）</p>
+          <p class="fineprint"><a href="#install">インストール方法</a> · <a href="windows">Windows版Turnout</a>（Windows 11用）</p>
         </div>
         <!-- /download:live -->
       </div>
@@ -182,7 +201,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       <dl class="keys">
         <div>
           <dt><code>PreUp</code> <code>PostUp</code> <code>PreDown</code> <code>PostDown</code></dt>
-          <dd>フックが実行されます。<code>%i</code>はトンネルの<code>utun</code>インターフェイスに、<code>%I</code>はトンネル名に置き換えられます。ファイルのフックは、管理者が承認してから実行されます。<a href="how-it-works.html#hooks">その仕組み</a>。</dd>
+          <dd>フックが実行されます。<code>%i</code>はトンネルの<code>utun</code>インターフェイスに、<code>%I</code>はトンネル名に置き換えられます。ファイルのフックは、管理者が承認してから実行されます。<a href="how-it-works#hooks">その仕組み</a>。</dd>
         </div>
         <div>
           <dt><code>AllowedIPs</code></dt>
@@ -270,7 +289,7 @@ Endpoint = vpn.example.com:51820
         </picture>
         <figcaption>Phantun経由のトンネル。TCP接続がサーバーまでの経路を包みます。</figcaption>
       </figure>
-      <p><a href="https://github.com/dndx/phantun">Phantun</a>はDatong Sun氏によるオープンソースプロジェクトです。<a href="how-it-works.html#phantun">Phantun経由のトンネルがMacに対して行うこと</a>。</p>
+      <p><a href="https://github.com/dndx/phantun">Phantun</a>はDatong Sun氏によるオープンソースプロジェクトです。<a href="how-it-works#phantun">Phantun経由のトンネルがMacに対して行うこと</a>。</p>
     </div>
   </div>
 </section>
@@ -349,7 +368,7 @@ Endpoint = vpn.example.com:51820
     <div class="body">
       <p class="intro">TurnoutがルートやDNSに加える変更は、すべて変更する前に記録されます。</p>
       <p>トンネルの接続中にMacがクラッシュしたり電源が落ちたりしても、バックグラウンドサービスは次の起動時に残った変更を元に戻し、それが終わるまでトンネルを接続しません。“Turnout” › “ネットワーク設定を修復…”で、いつでも同じことができます。</p>
-      <p>アンインストールの経路はひとつです。アプリから始めても、インストーラから始めても、先に中身を読めるシェルスクリプトから始めても同じです。すべてのトンネルの接続を解除し、ルートとDNSを元に戻し、バックグラウンドサービスをログイン項目から外し、アプリ、ログ、環境設定を削除します。保存済みのトンネルは、削除を選ばない限り残ります。アプリからアンインストールすると、ライセンスでそのMacが使っていた枠も空きます。<a href="how-it-works.html#uninstall">それぞれの方法で削除されるもの</a></p>
+      <p>アンインストールの経路はひとつです。アプリから始めても、インストーラから始めても、先に中身を読めるシェルスクリプトから始めても同じです。すべてのトンネルの接続を解除し、ルートとDNSを元に戻し、バックグラウンドサービスをログイン項目から外し、アプリ、ログ、環境設定を削除します。保存済みのトンネルは、削除を選ばない限り残ります。アプリからアンインストールすると、ライセンスでそのMacが使っていた枠も空きます。<a href="how-it-works#uninstall">それぞれの方法で削除されるもの</a></p>
     </div>
   </div>
 </section>
@@ -375,7 +394,7 @@ Endpoint = vpn.example.com:51820
 <pre><code>netstat -rn                         <span class="c"># 追加されたルート</span>
 networksetup -getdnsservers Wi-Fi   <span class="c"># 設定されたDNSサーバー</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
-      <p><a class="more" href="how-it-works.html">TurnoutがMacに対して行うこと</a></p>
+      <p><a class="more" href="how-it-works">TurnoutがMacに対して行うこと</a></p>
     </div>
   </div>
 </section>
@@ -404,7 +423,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
 <pre><code>brew tap tasict/tap
 brew install --cask tasict/tap/turnout</code></pre>
       <p class="fineprint">どちらの方法でも、Turnoutは自分でアップデートするので、<code>brew upgrade</code>はTurnoutに手を加えません。<code>brew uninstall --cask turnout</code>はTurnout自身のアンインストーラを実行し、保存したトンネルは残します。</p>
-      <p><strong>Windows PCの場合：</strong>同じリリースに、x64版Windows 11用のWindowsインストーラ（<code>.msi</code>ファイル）があります。<a href="windows.html#install">WindowsにTurnoutをインストールする方法</a></p>
+      <p><strong>Windows PCの場合：</strong>同じリリースに、x64版Windows 11用のWindowsインストーラ（<code>.msi</code>ファイル）があります。<a href="windows#install">WindowsにTurnoutをインストールする方法</a></p>
       </div>
       <!-- /download:live -->
     </div>
@@ -436,7 +455,7 @@ brew install --cask tasict/tap/turnout</code></pre>
         <!-- /link:checkout -->
       </div>
       <p>コンピュータ3台（MacでもWindowsでも）：あなたや家族のコンピュータ、または同じ組織内のコンピュータに使えます。支払いと税金の処理、領収書の送付はPolarが行います。支払いが済むとすぐにPolarのページにライセンスキーが表示されるので、コピーしてTurnoutに貼り付けてください。キーはPolarの購入履歴ページにも残ります。合わなければ、14日以内なら理由を問わず返金します。</p>
-      <p class="pricing-links"><a href="license.html">ライセンス条項と返金</a> <a href="privacy.html#license">プライバシー</a></p>
+      <p class="pricing-links"><a href="license">ライセンス条項と返金</a> <a href="privacy#license">プライバシー</a></p>
     </div>
   </div>
 </section>
@@ -445,7 +464,16 @@ brew install --cask tasict/tap/turnout</code></pre>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="how-it-works.html">TurnoutがMacに対して行うこと</a> <a href="privacy.html">プライバシー</a> <a href="license.html">ライセンス条項</a> <a href="windows.html">Windows版Turnout</a> <a href="../issues">問題を報告</a> <a href="../" hreflang="en" lang="en">English</a> <a href="../zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/" hreflang="es" lang="es">Español</a> <a href="../ko/" hreflang="ko" lang="ko">한국어</a></p>
+    <p class="footer-links"><a href="how-it-works">TurnoutがMacに対して行うこと</a> <a href="privacy">プライバシー</a> <a href="license">ライセンス条項</a> <a href="windows">Windows版Turnout</a> <a href="../issues">問題を報告</a> <a href="../" hreflang="en" lang="en">English</a> <a href="../zh-Hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/" hreflang="es" lang="es">Español</a> <a href="../ko/" hreflang="ko" lang="ko">한국어</a></p>
+    <nav class="family" aria-label="ctsite.cc のほかの製品">
+      <p class="family-title"><a href="https://www.ctsite.cc/" hreflang="en">ctsite.cc のほかの製品</a></p>
+      <ul>
+        <li><a href="https://inputweave.ctsite.cc/" hreflang="en"><strong>InputWeave</strong> 1組のキーボードとマウスで机の上のすべてのコンピュータを</a></li>
+        <li><a href="https://peaberry.ctsite.cc/ja/"><strong>Peaberry</strong> AIエージェントの作業中はMacをスリープさせない</a></li>
+        <li><a href="https://wata.ctsite.cc/ja/"><strong>Wata</strong> iPhoneとApple Watchの水分補給リマインダー</a></li>
+        <li><a href="https://www.ctsite.cc/#smart-home" hreflang="en"><strong>Homebridge プラグイン</strong> Daikin、Hitachi、Panasonic、RoborockをAppleのホームに</a></li>
+      </ul>
+    </nav>
     <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。Windowsは、Microsoftグループの企業の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
   </div>
 </footer>

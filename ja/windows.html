@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Windows版Turnout</title>
 <meta name="description" content="Windows 11のTurnout：WireGuardサーバーにwg-quickと同じやり方で接続するVPNクライアントです。ネットワークインターフェイスはあなたが選び、トンネルは自動で接続します。インストール方法、Macとの違い、そしてPCに対して行うことを説明します。">
 <link rel="canonical" href="https://turnout.ctsite.cc/ja/windows">
@@ -17,7 +18,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=a2fde089">
+<link rel="stylesheet" href="../assets/site.css?v=19e101c5">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Windows版Turnout">
@@ -78,7 +79,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析"><p>このサイトへの訪問をGoogle Analyticsで数えてもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy.html#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析"><p>このサイトへの訪問をGoogle Analyticsで数えてもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -92,17 +93,17 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     </picture></a>
     <nav class="site-nav" aria-label="サイト">
       <ul>
-        <li><a href="how-it-works.html">仕組み</a></li>
-        <li><a href="windows.html" aria-current="page">Windows</a></li>
+        <li><a href="how-it-works">仕組み</a></li>
+        <li><a href="windows" aria-current="page">Windows</a></li>
       </ul>
     </nav>
     <nav class="lang-nav" aria-label="言語">
       <ul>
-        <li><a href="../windows.html" hreflang="en" lang="en">English</a></li>
-        <li><a href="../zh-Hant/windows.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
-        <li><a href="windows.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li>
-        <li><a href="../es/windows.html" hreflang="es" lang="es">Español</a></li>
-        <li><a href="../ko/windows.html" hreflang="ko" lang="ko">한국어</a></li>
+        <li><a href="../windows" hreflang="en" lang="en">English</a></li>
+        <li><a href="../zh-Hant/windows" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="windows" hreflang="ja" lang="ja" aria-current="page">日本語</a></li>
+        <li><a href="../es/windows" hreflang="es" lang="es">Español</a></li>
+        <li><a href="../ko/windows" hreflang="ko" lang="ko">한국어</a></li>
       </ul>
     </nav>
   </div>
@@ -220,7 +221,7 @@ Get-DnsClientServerAddress          <span class="c"># トンネルのアダプ�
 
       <section id="license" aria-labelledby="license-title">
         <h2 id="license-title">ライセンス</h2>
-        <p>同じキーが、MacとPCを合わせて3台のコンピュータで使えます。まずは各PCで7日間、すべての機能を使えます。キーは、Turnoutのウインドウの“ライセンス”に貼り付けてください。WindowsにはキーをほかのPCに届けるiCloudがないので、PCごとに入力します。キーはWindowsの資格情報マネージャーに保存されます。<a href="license.html">ライセンス条項</a> · <a href="privacy.html#windows">Windowsでのプライバシー</a></p>
+        <p>同じキーが、MacとPCを合わせて3台のコンピュータで使えます。まずは各PCで7日間、すべての機能を使えます。キーは、Turnoutのウインドウの“ライセンス”に貼り付けてください。WindowsにはキーをほかのPCに届けるiCloudがないので、PCごとに入力します。キーはWindowsの資格情報マネージャーに保存されます。<a href="license">ライセンス条項</a> · <a href="privacy#windows">Windowsでのプライバシー</a></p>
       </section>
 
       <section id="uninstall" aria-labelledby="uninstall-title">
@@ -233,7 +234,16 @@ Get-DnsClientServerAddress          <span class="c"># トンネルのアダプ�
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">TurnoutがMacに対して行うこと</a> <a href="privacy.html">プライバシー</a> <a href="license.html">ライセンス条項</a> <a href="../issues">問題を報告</a> <a href="../windows.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/windows.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/windows.html" hreflang="es" lang="es">Español</a> <a href="../ko/windows.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works">TurnoutがMacに対して行うこと</a> <a href="privacy">プライバシー</a> <a href="license">ライセンス条項</a> <a href="../issues">問題を報告</a> <a href="../windows" hreflang="en" lang="en">English</a> <a href="../zh-Hant/windows" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/windows" hreflang="es" lang="es">Español</a> <a href="../ko/windows" hreflang="ko" lang="ko">한국어</a></p>
+    <nav class="family" aria-label="ctsite.cc のほかの製品">
+      <p class="family-title"><a href="https://www.ctsite.cc/" hreflang="en">ctsite.cc のほかの製品</a></p>
+      <ul>
+        <li><a href="https://inputweave.ctsite.cc/" hreflang="en"><strong>InputWeave</strong> 1組のキーボードとマウスで机の上のすべてのコンピュータを</a></li>
+        <li><a href="https://peaberry.ctsite.cc/ja/"><strong>Peaberry</strong> AIエージェントの作業中はMacをスリープさせない</a></li>
+        <li><a href="https://wata.ctsite.cc/ja/"><strong>Wata</strong> iPhoneとApple Watchの水分補給リマインダー</a></li>
+        <li><a href="https://www.ctsite.cc/#smart-home" hreflang="en"><strong>Homebridge プラグイン</strong> Daikin、Hitachi、Panasonic、RoborockをAppleのホームに</a></li>
+      </ul>
+    </nav>
     <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。Windowsは、Microsoftグループの企業の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
   </div>
 </footer>

@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnout：連線到 WireGuard 伺服器的 macOS 與 Windows VPN 用戶端</title>
 <meta name="description" content="Turnout 用原生 App，照 wg-quick 的做法把你的 Mac 或 Windows 電腦連上 WireGuard 伺服器：hook 照樣執行，路由由你作主，通道要從哪個網路介面出去也由你決定。">
 <link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/">
@@ -17,7 +18,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=a2fde089">
+<link rel="stylesheet" href="../assets/site.css?v=19e101c5">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout：Mac 與 Windows 上的原生 App 版 wg-quick">
@@ -33,6 +34,24 @@
 <meta property="og:locale:alternate" content="es_ES">
 <meta property="og:locale:alternate" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Turnout",
+  "description": "Turnout 用原生 App，照 wg-quick 的做法把你的 Mac 或 Windows 電腦連上 WireGuard 伺服器：hook 照樣執行，路由由你作主，通道要從哪個網路介面出去也由你決定。",
+  "url": "https://turnout.ctsite.cc/zh-Hant/",
+  "image": "https://turnout.ctsite.cc/assets/app-icon.png",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "macOS 15 or later, Windows 11",
+  "inLanguage": "zh-Hant",
+  "publisher": {
+    "@type": "Organization",
+    "name": "ctsite.cc",
+    "url": "https://www.ctsite.cc/"
+  }
+}
+</script>
 <!-- analytics -->
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -78,7 +97,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="網站分析"><p>可以讓本網站用 Google Analytics 統計這次造訪嗎？除非你接受，否則不會傳送任何資料給 Google。 <a href="privacy.html#analytics">隱私權政策</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒絕</button> <button type="button" data-consent="granted">接受</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="網站分析"><p>可以讓本網站用 Google Analytics 統計這次造訪嗎？除非你接受，否則不會傳送任何資料給 Google。 <a href="privacy#analytics">隱私權政策</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒絕</button> <button type="button" data-consent="granted">接受</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -92,8 +111,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     </picture></a>
     <nav class="site-nav" aria-label="網站">
       <ul>
-        <li><a href="how-it-works.html">運作方式</a></li>
-        <li><a href="windows.html">Windows</a></li>
+        <li><a href="how-it-works">運作方式</a></li>
+        <li><a href="windows">Windows</a></li>
       </ul>
     </nav>
     <nav class="lang-nav" aria-label="語言">
@@ -127,7 +146,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
           <a class="download" href="../releases/latest">下載 Mac 版</a>
           <p class="fineprint">版本 <!-- version --><span data-latest="version">1.1.4</span><!-- /version -->，<!-- released --><time data-latest="date" datetime="2026-11-06">2026 年 11 月 6 日</time><!-- /released -->發布 · <a href="../releases/latest">版本說明</a></p>
           <p class="fineprint">macOS 15 以上 · Apple 晶片與 Intel · 試用 7 天 · <!-- price --><span data-price>US$19</span><!-- /price --> 一次買斷，三台電腦</p>
-          <p class="fineprint"><a href="#install">如何安裝</a> · <a href="windows.html">Windows 版 Turnout</a>，適用於 Windows 11</p>
+          <p class="fineprint"><a href="#install">如何安裝</a> · <a href="windows">Windows 版 Turnout</a>，適用於 Windows 11</p>
         </div>
         <!-- /download:live -->
       </div>
@@ -182,7 +201,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       <dl class="keys">
         <div>
           <dt><code>PreUp</code> <code>PostUp</code> <code>PreDown</code> <code>PostDown</code></dt>
-          <dd>hook 會執行，<code>%i</code> 換成通道的 <code>utun</code> 介面，<code>%I</code> 換成通道名稱。檔案裡的 hook 要先經過管理者核准才會執行；<a href="how-it-works.html#hooks">運作方式</a>。</dd>
+          <dd>hook 會執行，<code>%i</code> 換成通道的 <code>utun</code> 介面，<code>%I</code> 換成通道名稱。檔案裡的 hook 要先經過管理者核准才會執行；<a href="how-it-works#hooks">運作方式</a>。</dd>
         </div>
         <div>
           <dt><code>AllowedIPs</code></dt>
@@ -270,7 +289,7 @@ Endpoint = vpn.example.com:51820
         </picture>
         <figcaption>走 Phantun 的通道：TCP 連線包住通往伺服器的路徑。</figcaption>
       </figure>
-      <p><a href="https://github.com/dndx/phantun">Phantun</a> 是 Datong Sun 的開源專案。<a href="how-it-works.html#phantun">走 Phantun 的通道會對你的 Mac 做什麼</a>。</p>
+      <p><a href="https://github.com/dndx/phantun">Phantun</a> 是 Datong Sun 的開源專案。<a href="how-it-works#phantun">走 Phantun 的通道會對你的 Mac 做什麼</a>。</p>
     </div>
   </div>
 </section>
@@ -349,7 +368,7 @@ Endpoint = vpn.example.com:51820
     <div class="body">
       <p class="intro">Turnout 對路由和 DNS 的每一項變更，都會先記錄下來才動手。</p>
       <p>如果 Mac 在通道連線時當機或斷電，背景服務下次啟動時會復原留下的變更，完成之前不會連線任何通道。「Turnout」›「修復網路設定⋯」也能隨時手動做同樣的事。</p>
-      <p>解除安裝只有一條路，不論你從 App、從安裝程式，還是從一個可以先讀過內容的 shell 指令稿開始。它會中斷所有通道、恢復路由與 DNS、把背景服務從登入項目移除，並刪除 App、它的記錄檔和偏好設定。已儲存的通道會保留，除非你選擇一併刪除。從 App 解除安裝時，也會空出這部 Mac 在你授權上的名額。<a href="how-it-works.html#uninstall">各種方式會移除什麼</a></p>
+      <p>解除安裝只有一條路，不論你從 App、從安裝程式，還是從一個可以先讀過內容的 shell 指令稿開始。它會中斷所有通道、恢復路由與 DNS、把背景服務從登入項目移除，並刪除 App、它的記錄檔和偏好設定。已儲存的通道會保留，除非你選擇一併刪除。從 App 解除安裝時，也會空出這部 Mac 在你授權上的名額。<a href="how-it-works#uninstall">各種方式會移除什麼</a></p>
     </div>
   </div>
 </section>
@@ -375,7 +394,7 @@ Endpoint = vpn.example.com:51820
 <pre><code>netstat -rn                         <span class="c"># 它加入的路由</span>
 networksetup -getdnsservers Wi-Fi   <span class="c"># 它設定的 DNS 伺服器</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
-      <p><a class="more" href="how-it-works.html">Turnout 對你的 Mac 做了什麼</a></p>
+      <p><a class="more" href="how-it-works">Turnout 對你的 Mac 做了什麼</a></p>
     </div>
   </div>
 </section>
@@ -404,7 +423,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
 <pre><code>brew tap tasict/tap
 brew install --cask tasict/tap/turnout</code></pre>
       <p class="fineprint">不論用哪種方式安裝，Turnout 都會自行更新，所以 <code>brew upgrade</code> 不會動到它。<code>brew uninstall --cask turnout</code> 會執行 Turnout 自己的解除安裝程式，並保留你儲存的通道。</p>
-      <p><strong>在 Windows 電腦上：</strong>同一個版本也附有 Windows 安裝程式，也就是 <code>.msi</code> 檔，適用於 x64 電腦上的 Windows 11。<a href="windows.html#install">如何在 Windows 上安裝 Turnout</a></p>
+      <p><strong>在 Windows 電腦上：</strong>同一個版本也附有 Windows 安裝程式，也就是 <code>.msi</code> 檔，適用於 x64 電腦上的 Windows 11。<a href="windows#install">如何在 Windows 上安裝 Turnout</a></p>
       </div>
       <!-- /download:live -->
     </div>
@@ -436,7 +455,7 @@ brew install --cask tasict/tap/turnout</code></pre>
         <!-- /link:checkout -->
       </div>
       <p>三台電腦，Mac 或 Windows 皆可：你自己的、家裡的，或同一個組織內的。付款和稅務由 Polar 處理，收據也由 Polar 寄給你。付款完成後，Polar 的頁面會立刻顯示你的授權金鑰，複製起來貼進 Turnout 就好；之後在你的 Polar 購買記錄頁面也找得到。不適合你？14 天內可以退款，不問原因。</p>
-      <p class="pricing-links"><a href="license.html">授權條款與退款</a> <a href="privacy.html#license">隱私權</a></p>
+      <p class="pricing-links"><a href="license">授權條款與退款</a> <a href="privacy#license">隱私權</a></p>
     </div>
   </div>
 </section>
@@ -445,7 +464,16 @@ brew install --cask tasict/tap/turnout</code></pre>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="how-it-works.html">Turnout 對你的 Mac 做了什麼</a> <a href="privacy.html">隱私權</a> <a href="license.html">授權條款</a> <a href="windows.html">Windows 版 Turnout</a> <a href="../issues">回報問題</a> <a href="../" hreflang="en" lang="en">English</a> <a href="../ja/" hreflang="ja" lang="ja">日本語</a> <a href="../es/" hreflang="es" lang="es">Español</a> <a href="../ko/" hreflang="ko" lang="ko">한국어</a></p>
+    <p class="footer-links"><a href="how-it-works">Turnout 對你的 Mac 做了什麼</a> <a href="privacy">隱私權</a> <a href="license">授權條款</a> <a href="windows">Windows 版 Turnout</a> <a href="../issues">回報問題</a> <a href="../" hreflang="en" lang="en">English</a> <a href="../ja/" hreflang="ja" lang="ja">日本語</a> <a href="../es/" hreflang="es" lang="es">Español</a> <a href="../ko/" hreflang="ko" lang="ko">한국어</a></p>
+    <nav class="family" aria-label="ctsite.cc 的其他產品">
+      <p class="family-title"><a href="https://www.ctsite.cc/" hreflang="en">ctsite.cc 的其他產品</a></p>
+      <ul>
+        <li><a href="https://inputweave.ctsite.cc/zh-Hant/"><strong>InputWeave</strong> 一組鍵盤滑鼠，控制桌上的每一台電腦</a></li>
+        <li><a href="https://peaberry.ctsite.cc/zh-Hant/"><strong>Peaberry</strong> AI agent 還在工作，Mac 就不睡</a></li>
+        <li><a href="https://wata.ctsite.cc/zh-Hant/"><strong>Wata</strong> iPhone 與 Apple Watch 的喝水提醒</a></li>
+        <li><a href="https://www.ctsite.cc/#smart-home" hreflang="en"><strong>Homebridge 外掛</strong> 把 Daikin、Hitachi、Panasonic、Roborock 帶進 Apple 家庭</a></li>
+      </ul>
+    </nav>
     <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。Windows 是 Microsoft 集團旗下公司的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
   </div>
 </footer>

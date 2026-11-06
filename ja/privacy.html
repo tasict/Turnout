@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnoutプライバシーポリシー</title>
 <meta name="description" content="Turnoutにはアカウントも広告もクラッシュレポートもありません。アプリが送るのはアップデートの確認とそれに伴う匿名の報告1件、そしてライセンスの購入後は、週に1回程度のPolarへのライセンス確認です。">
 <link rel="canonical" href="https://turnout.ctsite.cc/ja/privacy">
@@ -17,7 +18,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=a2fde089">
+<link rel="stylesheet" href="../assets/site.css?v=19e101c5">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnoutプライバシーポリシー">
@@ -78,7 +79,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析"><p>このサイトへの訪問をGoogle Analyticsで数えてもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy.html#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析"><p>このサイトへの訪問をGoogle Analyticsで数えてもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -92,17 +93,17 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     </picture></a>
     <nav class="site-nav" aria-label="サイト">
       <ul>
-        <li><a href="how-it-works.html">仕組み</a></li>
-        <li><a href="windows.html">Windows</a></li>
+        <li><a href="how-it-works">仕組み</a></li>
+        <li><a href="windows">Windows</a></li>
       </ul>
     </nav>
     <nav class="lang-nav" aria-label="言語">
       <ul>
-        <li><a href="../privacy.html" hreflang="en" lang="en">English</a></li>
-        <li><a href="../zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
-        <li><a href="privacy.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li>
-        <li><a href="../es/privacy.html" hreflang="es" lang="es">Español</a></li>
-        <li><a href="../ko/privacy.html" hreflang="ko" lang="ko">한국어</a></li>
+        <li><a href="../privacy" hreflang="en" lang="en">English</a></li>
+        <li><a href="../zh-Hant/privacy" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="privacy" hreflang="ja" lang="ja" aria-current="page">日本語</a></li>
+        <li><a href="../es/privacy" hreflang="es" lang="es">Español</a></li>
+        <li><a href="../ko/privacy" hreflang="ko" lang="ko">한국어</a></li>
       </ul>
     </nav>
   </div>
@@ -156,7 +157,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
           <li>このMacのキーチェーンにあるライセンスの項目（<code>cc.ctsite.turnout.license</code>）。試用を始めた日時と、購入後はライセンスキー、購入に使ったメールアドレス、このMacの認証情報、最後にライセンスを確認した日時です。このMacの外に出ることはありません。</li>
           <li>ログ：バックグラウンドサービスの<code>/Library/Logs/<wbr>cc.ctsite.turnout.daemon.log</code>、アップデートのインストール時の<code>/Library/Logs/<wbr>cc.ctsite.turnout.update.log</code>、そしてmacOSのシステムログにあるアプリのメッセージ。</li>
         </ul>
-        <p>Turnoutをアンインストールすると、アプリ、ログ、全ユーザのTurnoutの環境設定（インストールIDを含む）が削除され、選べば保存済みのトンネルも削除されます。新しくインストールすると、新しいIDが作られます。キーチェーンのライセンスの項目は残るので、インストールし直しても試用が始まり直すことはありません。アプリの“Turnoutをアンインストール…”は、このMacをライセンスから外し、iCloudアカウントにあるこのMacのレコードも削除します（確認のときに外さないことも選べます）。インストーラとターミナルのスクリプトではこれができないので、その場合は別のMacの“ライセンス”パネルか、PolarのカスタマーポータルでこのMacを外してください。ほかのMacが使うライセンスキーは、iCloudアカウントに残ります。<a href="how-it-works.html#uninstall">アンインストールの方法</a></p>
+        <p>Turnoutをアンインストールすると、アプリ、ログ、全ユーザのTurnoutの環境設定（インストールIDを含む）が削除され、選べば保存済みのトンネルも削除されます。新しくインストールすると、新しいIDが作られます。キーチェーンのライセンスの項目は残るので、インストールし直しても試用が始まり直すことはありません。アプリの“Turnoutをアンインストール…”は、このMacをライセンスから外し、iCloudアカウントにあるこのMacのレコードも削除します（確認のときに外さないことも選べます）。インストーラとターミナルのスクリプトではこれができないので、その場合は別のMacの“ライセンス”パネルか、PolarのカスタマーポータルでこのMacを外してください。ほかのMacが使うライセンスキーは、iCloudアカウントに残ります。<a href="how-it-works#uninstall">アンインストールの方法</a></p>
       </section>
 
       <section id="windows" aria-labelledby="windows-title">
@@ -168,7 +169,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
           <li><strong>位置情報。</strong>Windowsも、Wi-Fiネットワークの名前を位置情報として扱います。Turnoutがそれを読むのはWi-Fiルールのためだけで、Windowsの位置情報へのアクセスが許可されているか、“許可…”を選んだあとに限ります。最初にWindowsから尋ねられることがあります。アクセスは“設定” › “プライバシーとセキュリティ” › “位置情報”で取り消せます。</li>
           <li><strong>PCに残るもの：</strong>トンネル（秘密鍵を含む）。SYSTEMと管理者しか読めない<code>%ProgramData%\cc.ctsite.turnout\tunnels</code>にあります。アプリの環境設定は<code>HKEY_CURRENT_USER\Software\cc.ctsite.turnout</code>にあり、ランダムなインストールIDもそこに含まれます。ライセンスの項目<code>cc.ctsite.turnout.license</code>はWindowsの資格情報マネージャーにあり、PCの外に出ることはありません。ログは<code>%ProgramData%\cc.ctsite.turnout\logs\daemon.log</code>と<code>%LOCALAPPDATA%\Turnout\app.log</code>です。</li>
         </ul>
-        <p>アンインストールすると、アプリ、バックグラウンドサービス、ログ、Turnoutの環境設定（インストールIDを含む）が削除され、選べば保存済みのトンネルも削除されます。ライセンスの項目は残るので、インストールし直しても試用が始まり直すことはありません。アプリの“Turnoutをアンインストール…”では、先にこのPCをライセンスから外すこともできます。<a href="windows.html#uninstall">Windowsでのアンインストールの方法</a></p>
+        <p>アンインストールすると、アプリ、バックグラウンドサービス、ログ、Turnoutの環境設定（インストールIDを含む）が削除され、選べば保存済みのトンネルも削除されます。ライセンスの項目は残るので、インストールし直しても試用が始まり直すことはありません。アプリの“Turnoutをアンインストール…”では、先にこのPCをライセンスから外すこともできます。<a href="windows#uninstall">Windowsでのアンインストールの方法</a></p>
       </section>
 
       <!-- analytics:on -->
@@ -209,7 +210,16 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">TurnoutがMacに対して行うこと</a> <a href="license.html">ライセンス条項</a> <a href="windows.html">Windows版Turnout</a> <a href="../issues">問題を報告</a> <a href="../privacy.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/privacy.html" hreflang="es" lang="es">Español</a> <a href="../ko/privacy.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works">TurnoutがMacに対して行うこと</a> <a href="license">ライセンス条項</a> <a href="windows">Windows版Turnout</a> <a href="../issues">問題を報告</a> <a href="../privacy" hreflang="en" lang="en">English</a> <a href="../zh-Hant/privacy" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/privacy" hreflang="es" lang="es">Español</a> <a href="../ko/privacy" hreflang="ko" lang="ko">한국어</a></p>
+    <nav class="family" aria-label="ctsite.cc のほかの製品">
+      <p class="family-title"><a href="https://www.ctsite.cc/" hreflang="en">ctsite.cc のほかの製品</a></p>
+      <ul>
+        <li><a href="https://inputweave.ctsite.cc/" hreflang="en"><strong>InputWeave</strong> 1組のキーボードとマウスで机の上のすべてのコンピュータを</a></li>
+        <li><a href="https://peaberry.ctsite.cc/ja/"><strong>Peaberry</strong> AIエージェントの作業中はMacをスリープさせない</a></li>
+        <li><a href="https://wata.ctsite.cc/ja/"><strong>Wata</strong> iPhoneとApple Watchの水分補給リマインダー</a></li>
+        <li><a href="https://www.ctsite.cc/#smart-home" hreflang="en"><strong>Homebridge プラグイン</strong> Daikin、Hitachi、Panasonic、RoborockをAppleのホームに</a></li>
+      </ul>
+    </nav>
     <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。Windowsは、Microsoftグループの企業の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
   </div>
 </footer>

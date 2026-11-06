@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Windows용 Turnout</title>
 <meta name="description" content="Windows 11에서 쓰는 Turnout: wg-quick과 같은 방식으로 WireGuard 서버에 연결하는 VPN 클라이언트로, 네트워크 인터페이스를 직접 선택할 수 있고 터널이 스스로 연결됩니다. 설치 방법, Mac과 다른 점, 그리고 Turnout이 PC에서 하는 일을 설명합니다.">
 <link rel="canonical" href="https://turnout.ctsite.cc/ko/windows">
@@ -17,7 +18,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=a2fde089">
+<link rel="stylesheet" href="../assets/site.css?v=19e101c5">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Windows용 Turnout">
@@ -78,7 +79,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="웹 사이트 분석"><p>이 사이트가 Google Analytics로 방문을 집계해도 될까요? 동의하기 전에는 Google에 아무것도 전송되지 않습니다. <a href="privacy.html#analytics">개인정보 처리방침</a></p><p class="consent-actions"><button type="button" data-consent="denied">거부</button> <button type="button" data-consent="granted">동의</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="웹 사이트 분석"><p>이 사이트가 Google Analytics로 방문을 집계해도 될까요? 동의하기 전에는 Google에 아무것도 전송되지 않습니다. <a href="privacy#analytics">개인정보 처리방침</a></p><p class="consent-actions"><button type="button" data-consent="denied">거부</button> <button type="button" data-consent="granted">동의</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -92,17 +93,17 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     </picture></a>
     <nav class="site-nav" aria-label="사이트">
       <ul>
-        <li><a href="how-it-works.html">작동 방식</a></li>
-        <li><a href="windows.html" aria-current="page">Windows</a></li>
+        <li><a href="how-it-works">작동 방식</a></li>
+        <li><a href="windows" aria-current="page">Windows</a></li>
       </ul>
     </nav>
     <nav class="lang-nav" aria-label="언어">
       <ul>
-        <li><a href="../windows.html" hreflang="en" lang="en">English</a></li>
-        <li><a href="../zh-Hant/windows.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
-        <li><a href="../ja/windows.html" hreflang="ja" lang="ja">日本語</a></li>
-        <li><a href="../es/windows.html" hreflang="es" lang="es">Español</a></li>
-        <li><a href="windows.html" hreflang="ko" lang="ko" aria-current="page">한국어</a></li>
+        <li><a href="../windows" hreflang="en" lang="en">English</a></li>
+        <li><a href="../zh-Hant/windows" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="../ja/windows" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="../es/windows" hreflang="es" lang="es">Español</a></li>
+        <li><a href="windows" hreflang="ko" lang="ko" aria-current="page">한국어</a></li>
       </ul>
     </nav>
   </div>
@@ -220,7 +221,7 @@ Get-DnsClientServerAddress          <span class="c"># 터널 어댑터의 DNS �
 
       <section id="license" aria-labelledby="license-title">
         <h2 id="license-title">라이선스</h2>
-        <p>같은 키를 Mac과 PC에서 합쳐 컴퓨터 3대까지 사용할 수 있습니다. 먼저 각 PC에서 7일 동안 Turnout의 모든 기능을 사용할 수 있습니다. Turnout 윈도우의 ‘라이선스’에 키를 붙여 넣으십시오. Windows에는 키를 가져다줄 iCloud가 없으므로 PC마다 키를 입력합니다. 키는 Windows 자격 증명 관리자에 보관됩니다. <a href="license.html">라이선스 약관</a> · <a href="privacy.html#windows">Windows에서의 개인정보 처리</a></p>
+        <p>같은 키를 Mac과 PC에서 합쳐 컴퓨터 3대까지 사용할 수 있습니다. 먼저 각 PC에서 7일 동안 Turnout의 모든 기능을 사용할 수 있습니다. Turnout 윈도우의 ‘라이선스’에 키를 붙여 넣으십시오. Windows에는 키를 가져다줄 iCloud가 없으므로 PC마다 키를 입력합니다. 키는 Windows 자격 증명 관리자에 보관됩니다. <a href="license">라이선스 약관</a> · <a href="privacy#windows">Windows에서의 개인정보 처리</a></p>
       </section>
 
       <section id="uninstall" aria-labelledby="uninstall-title">
@@ -233,7 +234,16 @@ Get-DnsClientServerAddress          <span class="c"># 터널 어댑터의 DNS �
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">Turnout이 Mac에서 하는 일</a> <a href="privacy.html">개인정보 처리방침</a> <a href="license.html">라이선스 약관</a> <a href="../issues">문제 보고</a> <a href="../windows.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/windows.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/windows.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/windows.html" hreflang="es" lang="es">Español</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works">Turnout이 Mac에서 하는 일</a> <a href="privacy">개인정보 처리방침</a> <a href="license">라이선스 약관</a> <a href="../issues">문제 보고</a> <a href="../windows" hreflang="en" lang="en">English</a> <a href="../zh-Hant/windows" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/windows" hreflang="ja" lang="ja">日本語</a> <a href="../es/windows" hreflang="es" lang="es">Español</a></p>
+    <nav class="family" aria-label="ctsite.cc의 다른 제품">
+      <p class="family-title"><a href="https://www.ctsite.cc/" hreflang="en">ctsite.cc의 다른 제품</a></p>
+      <ul>
+        <li><a href="https://inputweave.ctsite.cc/" hreflang="en"><strong>InputWeave</strong> 키보드와 마우스 하나로 책상 위의 모든 컴퓨터를</a></li>
+        <li><a href="https://peaberry.ctsite.cc/" hreflang="en"><strong>Peaberry</strong> AI 에이전트가 일하는 동안 Mac을 깨워 둡니다</a></li>
+        <li><a href="https://wata.ctsite.cc/ko/"><strong>Wata</strong> iPhone과 Apple Watch용 물 마시기 알림</a></li>
+        <li><a href="https://www.ctsite.cc/#smart-home" hreflang="en"><strong>Homebridge 플러그인</strong> Daikin, Hitachi, Panasonic, Roborock을 Apple 홈으로</a></li>
+      </ul>
+    </nav>
     <p>© 2026 tasict. Mac 및 macOS는 Apple Inc.의 상표입니다. Windows는 Microsoft 그룹 계열사의 상표입니다. WireGuard는 Jason A. Donenfeld의 등록 상표입니다.</p>
   </div>
 </footer>

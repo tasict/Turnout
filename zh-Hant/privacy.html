@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnout 隱私權政策</title>
 <meta name="description" content="Turnout 沒有帳號、沒有廣告、沒有當機回報。App 會送出檢查更新與附帶的一份匿名回報；買了授權之後，還會大約每週向 Polar 檢查一次授權。">
 <link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/privacy">
@@ -17,7 +18,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=a2fde089">
+<link rel="stylesheet" href="../assets/site.css?v=19e101c5">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout 隱私權政策">
@@ -78,7 +79,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="網站分析"><p>可以讓本網站用 Google Analytics 統計這次造訪嗎？除非你接受，否則不會傳送任何資料給 Google。 <a href="privacy.html#analytics">隱私權政策</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒絕</button> <button type="button" data-consent="granted">接受</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="網站分析"><p>可以讓本網站用 Google Analytics 統計這次造訪嗎？除非你接受，否則不會傳送任何資料給 Google。 <a href="privacy#analytics">隱私權政策</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒絕</button> <button type="button" data-consent="granted">接受</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -92,17 +93,17 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     </picture></a>
     <nav class="site-nav" aria-label="網站">
       <ul>
-        <li><a href="how-it-works.html">運作方式</a></li>
-        <li><a href="windows.html">Windows</a></li>
+        <li><a href="how-it-works">運作方式</a></li>
+        <li><a href="windows">Windows</a></li>
       </ul>
     </nav>
     <nav class="lang-nav" aria-label="語言">
       <ul>
-        <li><a href="../privacy.html" hreflang="en" lang="en">English</a></li>
-        <li><a href="privacy.html" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></li>
-        <li><a href="../ja/privacy.html" hreflang="ja" lang="ja">日本語</a></li>
-        <li><a href="../es/privacy.html" hreflang="es" lang="es">Español</a></li>
-        <li><a href="../ko/privacy.html" hreflang="ko" lang="ko">한국어</a></li>
+        <li><a href="../privacy" hreflang="en" lang="en">English</a></li>
+        <li><a href="privacy" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></li>
+        <li><a href="../ja/privacy" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="../es/privacy" hreflang="es" lang="es">Español</a></li>
+        <li><a href="../ko/privacy" hreflang="ko" lang="ko">한국어</a></li>
       </ul>
     </nav>
   </div>
@@ -156,7 +157,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
           <li>這部 Mac 鑰匙圈裡的授權項目 <code>cc.ctsite.turnout.license</code>：試用開始的時間；買了授權之後，還有授權金鑰、購買時用的電子郵件地址、這部 Mac 的啟用資料，以及上次檢查授權的時間。它從不離開這部 Mac。</li>
           <li>記錄檔：背景服務的 <code>/Library/Logs/<wbr>cc.ctsite.turnout.daemon.log</code>、安裝更新時的 <code>/Library/Logs/<wbr>cc.ctsite.turnout.update.log</code>，以及 App 寫在 macOS 系統記錄中的訊息。</li>
         </ul>
-        <p>解除安裝 Turnout 會刪除 App、它的記錄檔，以及每位使用者的 Turnout 偏好設定（安裝 ID 也一併刪除）；若你選擇，也會刪除已儲存的通道。重新安裝會產生新的 ID。鑰匙圈裡的授權項目會保留，所以重新安裝不會重新開始試用。從 App 選擇「解除安裝Turnout⋯」時，它也會把這部 Mac 從你的授權中移除，並刪除它在你 iCloud 帳號中的記錄（確認時可以選擇不要這麼做）；安裝程式和終端機指令稿做不到這一點，用這兩種方式解除安裝後，請在另一部 Mac 的「授權」面板或 Polar 的客戶入口移除這部 Mac。你其他 Mac 使用的授權金鑰仍會留在你的 iCloud 帳號中。<a href="how-it-works.html#uninstall">如何解除安裝</a></p>
+        <p>解除安裝 Turnout 會刪除 App、它的記錄檔，以及每位使用者的 Turnout 偏好設定（安裝 ID 也一併刪除）；若你選擇，也會刪除已儲存的通道。重新安裝會產生新的 ID。鑰匙圈裡的授權項目會保留，所以重新安裝不會重新開始試用。從 App 選擇「解除安裝Turnout⋯」時，它也會把這部 Mac 從你的授權中移除，並刪除它在你 iCloud 帳號中的記錄（確認時可以選擇不要這麼做）；安裝程式和終端機指令稿做不到這一點，用這兩種方式解除安裝後，請在另一部 Mac 的「授權」面板或 Polar 的客戶入口移除這部 Mac。你其他 Mac 使用的授權金鑰仍會留在你的 iCloud 帳號中。<a href="how-it-works#uninstall">如何解除安裝</a></p>
       </section>
 
       <section id="windows" aria-labelledby="windows-title">
@@ -168,7 +169,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
           <li><strong>定位。</strong>Windows 也把 Wi-Fi 網路的名稱視為位置資訊。Turnout 只在有 Wi-Fi 規則時才讀取它，而且要等 Windows 的位置取用權限允許，或你選擇「允許⋯」之後；第一次讀取時，Windows 可能會詢問你。你可以在「設定 › 隱私權與安全性 › 位置」中收回權限。</li>
           <li><strong>哪些東西留在電腦上：</strong>你的通道（包括私鑰），位於 <code>%ProgramData%\cc.ctsite.turnout\tunnels</code>，只有 SYSTEM 和管理者能讀取；App 的偏好設定，位於 <code>HKEY_CURRENT_USER\Software\cc.ctsite.turnout</code>，隨機產生的安裝 ID 也在其中；Windows 認證管理員中的授權項目 <code>cc.ctsite.turnout.license</code>，它從不離開這台電腦；以及記錄檔 <code>%ProgramData%\cc.ctsite.turnout\logs\daemon.log</code> 和 <code>%LOCALAPPDATA%\Turnout\app.log</code>。</li>
         </ul>
-        <p>解除安裝會刪除 App、背景服務、記錄檔和你的 Turnout 偏好設定（安裝 ID 也一併刪除）；若你選擇，也會刪除已儲存的通道。授權項目會保留，所以重新安裝不會重新開始試用。從 App 選擇「解除安裝Turnout⋯」時，也可以先把這台電腦從你的授權中移除。<a href="windows.html#uninstall">如何在 Windows 上解除安裝</a></p>
+        <p>解除安裝會刪除 App、背景服務、記錄檔和你的 Turnout 偏好設定（安裝 ID 也一併刪除）；若你選擇，也會刪除已儲存的通道。授權項目會保留，所以重新安裝不會重新開始試用。從 App 選擇「解除安裝Turnout⋯」時，也可以先把這台電腦從你的授權中移除。<a href="windows#uninstall">如何在 Windows 上解除安裝</a></p>
       </section>
 
       <!-- analytics:on -->
@@ -209,7 +210,16 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">Turnout 對你的 Mac 做了什麼</a> <a href="license.html">授權條款</a> <a href="windows.html">Windows 版 Turnout</a> <a href="../issues">回報問題</a> <a href="../privacy.html" hreflang="en" lang="en">English</a> <a href="../ja/privacy.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/privacy.html" hreflang="es" lang="es">Español</a> <a href="../ko/privacy.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works">Turnout 對你的 Mac 做了什麼</a> <a href="license">授權條款</a> <a href="windows">Windows 版 Turnout</a> <a href="../issues">回報問題</a> <a href="../privacy" hreflang="en" lang="en">English</a> <a href="../ja/privacy" hreflang="ja" lang="ja">日本語</a> <a href="../es/privacy" hreflang="es" lang="es">Español</a> <a href="../ko/privacy" hreflang="ko" lang="ko">한국어</a></p>
+    <nav class="family" aria-label="ctsite.cc 的其他產品">
+      <p class="family-title"><a href="https://www.ctsite.cc/" hreflang="en">ctsite.cc 的其他產品</a></p>
+      <ul>
+        <li><a href="https://inputweave.ctsite.cc/zh-Hant/"><strong>InputWeave</strong> 一組鍵盤滑鼠，控制桌上的每一台電腦</a></li>
+        <li><a href="https://peaberry.ctsite.cc/zh-Hant/"><strong>Peaberry</strong> AI agent 還在工作，Mac 就不睡</a></li>
+        <li><a href="https://wata.ctsite.cc/zh-Hant/"><strong>Wata</strong> iPhone 與 Apple Watch 的喝水提醒</a></li>
+        <li><a href="https://www.ctsite.cc/#smart-home" hreflang="en"><strong>Homebridge 外掛</strong> 把 Daikin、Hitachi、Panasonic、Roborock 帶進 Apple 家庭</a></li>
+      </ul>
+    </nav>
     <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。Windows 是 Microsoft 集團旗下公司的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
   </div>
 </footer>

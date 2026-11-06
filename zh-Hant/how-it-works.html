@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnout 對你的 Mac 做了什麼</title>
 <meta name="description" content="Turnout 的背景服務以 root 身分執行。它是什麼、改了什麼、用哪些工具、設定檔放在哪裡、hook 何時執行、App 連到哪裡，以及如何自己逐項檢查。">
 <link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/how-it-works">
@@ -17,7 +18,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=a2fde089">
+<link rel="stylesheet" href="../assets/site.css?v=19e101c5">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout 對你的 Mac 做了什麼">
@@ -78,7 +79,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="網站分析"><p>可以讓本網站用 Google Analytics 統計這次造訪嗎？除非你接受，否則不會傳送任何資料給 Google。 <a href="privacy.html#analytics">隱私權政策</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒絕</button> <button type="button" data-consent="granted">接受</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="網站分析"><p>可以讓本網站用 Google Analytics 統計這次造訪嗎？除非你接受，否則不會傳送任何資料給 Google。 <a href="privacy#analytics">隱私權政策</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒絕</button> <button type="button" data-consent="granted">接受</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -92,17 +93,17 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     </picture></a>
     <nav class="site-nav" aria-label="網站">
       <ul>
-        <li><a href="how-it-works.html" aria-current="page">運作方式</a></li>
-        <li><a href="windows.html">Windows</a></li>
+        <li><a href="how-it-works" aria-current="page">運作方式</a></li>
+        <li><a href="windows">Windows</a></li>
       </ul>
     </nav>
     <nav class="lang-nav" aria-label="語言">
       <ul>
-        <li><a href="../how-it-works.html" hreflang="en" lang="en">English</a></li>
-        <li><a href="how-it-works.html" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></li>
-        <li><a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a></li>
-        <li><a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a></li>
-        <li><a href="../ko/how-it-works.html" hreflang="ko" lang="ko">한국어</a></li>
+        <li><a href="../how-it-works" hreflang="en" lang="en">English</a></li>
+        <li><a href="how-it-works" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></li>
+        <li><a href="../ja/how-it-works" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="../es/how-it-works" hreflang="es" lang="es">Español</a></li>
+        <li><a href="../ko/how-it-works" hreflang="ko" lang="ko">한국어</a></li>
       </ul>
     </nav>
   </div>
@@ -111,7 +112,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <main id="main" class="doc">
   <div class="wrap doc-head">
     <h1>Turnout 對你的 Mac 做了什麼</h1>
-    <p class="lede">Turnout 會安裝一個以 root 身分執行的服務，所以這裡把它做的事和檢查方法交代清楚：這個服務是什麼、它改了什麼、留下什麼、連到哪裡，每一項都能在你自己的 Mac 上確認。Windows 電腦的部分，<a href="windows.html#your-pc">Windows 版 Turnout</a> 一頁有同樣的交代。</p>
+    <p class="lede">Turnout 會安裝一個以 root 身分執行的服務，所以這裡把它做的事和檢查方法交代清楚：這個服務是什麼、它改了什麼、留下什麼、連到哪裡，每一項都能在你自己的 Mac 上確認。Windows 電腦的部分，<a href="windows#your-pc">Windows 版 Turnout</a> 一頁有同樣的交代。</p>
   </div>
 
   <div class="wrap doc-grid">
@@ -229,7 +230,7 @@ networksetup -getdnsservers Wi-Fi   <span class="c"># 或清單中的其他服�
           <li>連不上 Polar 時什麼都不會改變：已授權的 Mac 不論離線多久都照樣能連線，「授權」面板只會說明上次確認授權是什麼時候。</li>
           <li>授權金鑰和使用它的 Mac 清單，會以記錄的形式存在你 iCloud 帳號中屬於 Turnout 的區域（CloudKit），所以登入同一個帳號的其他 Mac 找得到授權，按一下就能使用。App 啟動時，以及你打開選單或視窗時，會讀取這些記錄；只有在啟用、檢查或移除之後才會寫入。它們受 Apple 標準的 iCloud 保護，但不是端對端加密。沒有登入 iCloud 的 Mac 不會同步任何東西，要在那部 Mac 上手動輸入授權金鑰。</li>
         </ul>
-        <p>會送出的所有東西和接收者，列在<a href="privacy.html#license">隱私權政策</a>裡；條款請見<a href="license.html">授權條款</a>。</p>
+        <p>會送出的所有東西和接收者，列在<a href="privacy#license">隱私權政策</a>裡；條款請見<a href="license">授權條款</a>。</p>
       </section>
 
       <section id="location" aria-labelledby="location-title">
@@ -286,7 +287,16 @@ sudo pfctl -a com.apple/cc.ctsite.turnout -s rules   <span class="c"># 走 Phant
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy.html">隱私權</a> <a href="license.html">授權條款</a> <a href="windows.html">Windows 版 Turnout</a> <a href="../issues">回報問題</a> <a href="../how-it-works.html" hreflang="en" lang="en">English</a> <a href="../ja/how-it-works.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/how-it-works.html" hreflang="es" lang="es">Español</a> <a href="../ko/how-it-works.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="privacy">隱私權</a> <a href="license">授權條款</a> <a href="windows">Windows 版 Turnout</a> <a href="../issues">回報問題</a> <a href="../how-it-works" hreflang="en" lang="en">English</a> <a href="../ja/how-it-works" hreflang="ja" lang="ja">日本語</a> <a href="../es/how-it-works" hreflang="es" lang="es">Español</a> <a href="../ko/how-it-works" hreflang="ko" lang="ko">한국어</a></p>
+    <nav class="family" aria-label="ctsite.cc 的其他產品">
+      <p class="family-title"><a href="https://www.ctsite.cc/" hreflang="en">ctsite.cc 的其他產品</a></p>
+      <ul>
+        <li><a href="https://inputweave.ctsite.cc/zh-Hant/"><strong>InputWeave</strong> 一組鍵盤滑鼠，控制桌上的每一台電腦</a></li>
+        <li><a href="https://peaberry.ctsite.cc/zh-Hant/"><strong>Peaberry</strong> AI agent 還在工作，Mac 就不睡</a></li>
+        <li><a href="https://wata.ctsite.cc/zh-Hant/"><strong>Wata</strong> iPhone 與 Apple Watch 的喝水提醒</a></li>
+        <li><a href="https://www.ctsite.cc/#smart-home" hreflang="en"><strong>Homebridge 外掛</strong> 把 Daikin、Hitachi、Panasonic、Roborock 帶進 Apple 家庭</a></li>
+      </ul>
+    </nav>
     <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。Windows 是 Microsoft 集團旗下公司的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
   </div>
 </footer>
