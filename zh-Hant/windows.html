@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Windows 版 Turnout</title>
+<meta name="description" content="Windows 11 上的 Turnout：照 wg-quick 的做法連線到 WireGuard 伺服器的 VPN 用戶端，網路介面由你選擇，通道也會自己連線。這裡說明如何安裝、和 Mac 上有哪些不同，以及它對你的電腦做了什麼。">
+<link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/windows">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/windows">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/windows">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/windows">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/windows">
+<link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/windows">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/windows">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Windows 版 Turnout">
+<meta property="og:description" content="連線到 WireGuard 伺服器的 VPN 用戶端，現在也在 Windows 11 上：設定檔照 wg-quick 的方式讀取，網路介面由你選擇，通道還能依排程或 Wi-Fi 網路自動連線。">
+<meta property="og:url" content="https://turnout.ctsite.cc/zh-Hant/windows">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/windows/main.png">
+<meta property="og:image:width" content="1044">
+<meta property="og:image:height" content="712">
+<meta property="og:image:alt" content="Windows 11 上的 Turnout 視窗，顯示一條已連線通道的路徑">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<a class="skip" href="#main">跳到主要內容</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
+      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="網站">
+      <ul>
+        <li><a href="how-it-works.html">運作方式</a></li>
+        <li><a href="windows.html" aria-current="page">Windows</a></li>
+      </ul>
+    </nav>
+    <nav class="lang-nav" aria-label="語言">
+      <ul>
+        <li><a href="../windows.html" hreflang="en" lang="en">English</a></li>
+        <li><a href="windows.html" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a></li>
+        <li><a href="../ja/windows.html" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="../es/windows.html" hreflang="es" lang="es">Español</a></li>
+        <li><a href="../ko/windows.html" hreflang="ko" lang="ko">한국어</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="doc">
+  <div class="wrap doc-head">
+    <h1>Windows 版 Turnout</h1>
+    <p class="lede">同一套連線到 WireGuard 伺服器的 VPN 用戶端，現在也在 Windows 11 上：設定檔照 wg-quick 的方式讀取，每條通道要走的網路介面由你選擇，通道還能依排程或 Wi-Fi 網路自己連線。它待在通知區域裡，一份授權就能同時用在你的 Mac 和 Windows 電腦上。</p>
+    <p><a class="download" href="../releases/latest">下載 Windows 版</a></p>
+    <p class="fineprint">版本 <!-- version --><span data-latest="version">1.1.3</span><!-- /version -->，<!-- released --><time data-latest="date" datetime="2026-11-05">2026 年 11 月 5 日</time><!-- /released -->發布 · <a href="../releases/latest">版本說明</a></p>
+    <p class="fineprint">x64 電腦（Intel 或 AMD）上的 Windows 11 · 試用 7 天 · <!-- price --><span data-price>US$19</span><!-- /price --> 一次買斷，三台電腦，Mac 或 Windows 皆可</p>
+  </div>
+
+  <div class="wrap doc-grid">
+    <nav class="toc" aria-labelledby="toc-title">
+      <p id="toc-title">本頁內容</p>
+      <ul>
+        <li><a href="#same">和 Mac 上一樣</a></li>
+        <li><a href="#different">不同之處</a></li>
+        <li><a href="#install">下載與安裝</a></li>
+        <li><a href="#updates">更新</a></li>
+        <li><a href="#your-pc">它對你的電腦做了什麼</a></li>
+        <li><a href="#license">授權</a></li>
+        <li><a href="#uninstall">解除安裝</a></li>
+      </ul>
+    </nav>
+
+    <div class="doc-body">
+      <figure class="shot-figure">
+        <img class="shot" src="../assets/windows/main.png" width="1044" height="712" alt="Windows 11 上的 Turnout 視窗中一條已連線的通道：路徑從通道經過它出去的網路介面卡連到伺服器，雙向都有流量。">
+        <figcaption>已連線通道的路徑：通道、它的流量出去的網路介面卡，以及伺服器。</figcaption>
+      </figure>
+
+      <section id="same" aria-labelledby="same-title">
+        <h2 id="same-title">和 Mac 上一樣</h2>
+        <ul>
+          <li><strong>你的設定檔，照 wg-quick 的方式讀取。</strong>匯入 WireGuard 的 <code>.conf</code> 檔和裝著它們的 zip，包括官方 App 匯出的檔案，也能再匯出。編輯器有表單和文字兩種檢視；註解和它不認得的行，都會照你寫的樣子保留。</li>
+          <li><strong>網路介面由你選擇。</strong><code>#@ BindInterface</code> 讓通道的加密流量從你指定的網路介面卡出去，例如 <code>Ethernet 2</code>；<code>#@ Route … dev</code> 則讓你選的網段改從某個網路介面卡出去，不走通道。每條通道最上方的路徑會顯示是哪個網路介面卡在傳送它的流量。</li>
+          <li><strong>自己連線。</strong>排程或你列出的 Wi-Fi 網路會讓通道連線，之後再中斷；這中間你手動做的操作會維持不變。</li>
+          <li><strong>Hook。</strong><code>PreUp</code>、<code>PostUp</code>、<code>PreDown</code> 和 <code>PostDown</code> 和在 Mac 上一樣會執行，但要先經過管理者核准。</li>
+          <li><strong>通知、五種語言和一份授權。</strong>同樣的通知、選單和視窗，有 English、繁體中文、日本語、Español 和 한국어 可選；一份授權可以用在三台電腦上，Mac 或 Windows 皆可。</li>
+        </ul>
+      </section>
+
+      <section id="different" aria-labelledby="different-title">
+        <h2 id="different-title">不同之處</h2>
+        <ul>
+          <li><strong>待在通知區域。</strong>按一下 Turnout 的圖示會打開一個面板，列出每條通道和它的開關；視窗裡則有每條通道的路徑、路由、對等端和設定檔，以及各項設定。Windows 可能會把新的圖示收在工作列的 ^ 後面：把它拖到工作列上，或在「設定 › 個人化 › 工作列 › 其他系統匣圖示」中打開 Turnout，它就會一直顯示。</li>
+          <li><strong>全通道的流量留在通道裡。</strong>承接所有流量的通道連線期間，Windows 的防火牆會封鎖原本會從通道外送出的流量，以及送往通道 DNS 伺服器以外的 DNS 查詢，做法和官方 WireGuard App 相同。你的繞過路由、區域網路必要的流量（DHCP、loopback），以及通道本身連到伺服器的連線，都會放行。</li>
+          <li><strong>還沒有 Phantun。</strong>經由 Phantun 連到伺服器的設定檔會照常顯示，但在 Windows 上不會連線。</li>
+          <li><strong>用命令列取代「捷徑」。</strong><code>Turnout.exe connect &lt;tunnel&gt;</code>、<code>disconnect &lt;tunnel&gt;</code> 和 <code>status [tunnel]</code>。</li>
+          <li><strong>只支援 x64 電腦上的 Windows 11。</strong>不支援 Windows 10、Arm 版 Windows，也不支援 Windows Server。</li>
+        </ul>
+        <figure class="shot-figure">
+          <img class="shot shot-panel" src="../assets/windows/panel.png" width="340" height="334" alt="通知區域上方的 Turnout 面板：每條通道和它的開關、已連線通道出去的網路介面卡和它的流量，以及「設定」和「打開Turnout」按鈕。">
+          <figcaption>從通知區域的 Turnout 圖示打開的面板。</figcaption>
+        </figure>
+      </section>
+
+      <section id="install" aria-labelledby="install-title">
+        <h2 id="install-title">下載與安裝</h2>
+        <ol class="steps">
+          <li>從<a href="../releases/latest">最新版本</a>下載安裝程式 <code>Turnout-&lt;version&gt;-x64.msi</code>。</li>
+          <li>打開它。這個安裝程式沒有用 Windows 的程式碼簽署憑證簽署，所以 Windows SmartScreen 可能會顯示「Windows 已保護您的電腦」：請選擇「其他資訊」，再選「仍要執行」。接著 Windows 會要求管理者核准。</li>
+          <li>Turnout 會安裝到 <code>C:\Program Files\Turnout</code>，背景服務隨即啟動，接著 Turnout 會打開。它的歡迎導覽會告訴你圖示在哪裡。</li>
+        </ol>
+        <p>在開啟了「智慧型應用程式控制」的電腦上，Windows 完全不讓沒有程式碼簽署憑證的安裝程式執行。更新則不依賴憑證：每一次更新都帶有 Turnout 自己的簽章，背景服務會先檢查它，才安裝任何東西。</p>
+      </section>
+
+      <section id="updates" aria-labelledby="updates-title">
+        <h2 id="updates-title">更新</h2>
+        <p>Turnout 的面板或視窗開著時，它最多每小時檢查一次有沒有新版本，你選擇「檢查更新項目⋯」時也會檢查；「一般」中的開關可以把自動檢查關掉。「安裝並重新開啟」會下載安裝程式並交給背景服務，由它檢查大小、檢查碼和 Turnout 的簽章，再用 Windows Installer 安裝。安裝期間通道會中斷連線；新版本會打開它的視窗，並把原本已連線的通道重新連線。</p>
+      </section>
+
+      <section id="your-pc" aria-labelledby="your-pc-title">
+        <h2 id="your-pc-title">它對你的電腦做了什麼</h2>
+        <p>Turnout 會安裝一個以 SYSTEM 身分執行的背景服務，所以這裡說明它是什麼、改了什麼，每一項都附上檢查的方法。</p>
+        <dl class="paths">
+          <div>
+            <dt><code>cc.ctsite.turnout.daemon</code></dt>
+            <dd>服務本身，在「服務」中顯示為 Turnout：<code>C:\Program Files\Turnout\turnout-daemon.exe</code>，隨 Windows 啟動，失敗後會重新啟動。App 本身（<code>C:\Program Files\Turnout\App\Turnout.exe</code>）以你的身分執行，沒有任何特殊權限，由它請服務連線或中斷連線。</dd>
+          </div>
+          <div>
+            <dt>Wintun</dt>
+            <dd>每條已連線的通道都是一個以它命名的 Wintun 網路介面卡，來自 WireGuard 自己的驅動程式，隨 Turnout 一起安裝。WireGuard 在服務中以 <a href="https://github.com/mullvad/gotatun">GotaTun</a> 執行；GotaTun 是 Mullvad 開發、以 MPL-2.0 授權的實作。</dd>
+          </div>
+          <div>
+            <dt>位址、路由與 DNS</dt>
+            <dd>透過 Windows 的 IP Helper 函式設定：通道的位址、導入通道的路由、讓伺服器位址留在實體網路上的路由，以及不走通道的路由。DNS 伺服器設定在通道自己的網路介面卡上，所以不需要還原其他任何東西。</dd>
+          </div>
+          <div>
+            <dt>Windows Filtering Platform</dt>
+            <dd>只用於承接所有流量的通道，而且只在它連線期間：就是上面說的那些規則。它們放在服務自己的工作階段中，所以通道中斷連線或服務停止時就會消失。</dd>
+          </div>
+          <div>
+            <dt><code>%ProgramData%\cc.ctsite.turnout\tunnels</code></dt>
+            <dd>你的設定檔（包括私鑰），只有 SYSTEM 和管理者能讀取。只有服務會寫入這裡；儲存一個 hook 是新的或有變動的設定檔時，需要管理者核准。</dd>
+          </div>
+          <div>
+            <dt><code>\\.\pipe\cc.ctsite.turnout.daemon</code></dt>
+            <dd>App 和服務溝通的管道。它只回應這台電腦上的使用者，絕不回應其他電腦。</dd>
+          </div>
+          <div>
+            <dt><code>%ProgramData%\cc.ctsite.turnout\logs\daemon.log</code></dt>
+            <dd>服務做了什麼，以及它的錯誤。App 自己的記錄檔是 <code>%LOCALAPPDATA%\Turnout\app.log</code>。</dd>
+          </div>
+        </dl>
+        <p>Hook 以 SYSTEM 身分透過 <code>cmd.exe /C</code> 執行，<code>%i</code> 換成通道的網路介面卡，<code>%I</code> 換成通道名稱。每一項路由變更在動手之前都會先記錄下來，所以服務下次啟動時會復原當機留下的變更。想自己看看，可以在 PowerShell 中執行：</p>
+<pre><code>Get-Service cc.ctsite.turnout.daemon
+Get-NetAdapter                      <span class="c"># 已連線通道的 Wintun 網路介面卡</span>
+Get-NetRoute -AddressFamily IPv4    <span class="c"># 它加入的路由</span>
+Get-DnsClientServerAddress          <span class="c"># 通道網路介面卡的 DNS 伺服器</span></code></pre>
+      </section>
+
+      <section id="license" aria-labelledby="license-title">
+        <h2 id="license-title">授權</h2>
+        <p>同一組金鑰可以用在你的 Mac 和 Windows 電腦上，總共三台電腦。每台電腦都會先有 7 天可以使用 Turnout 的全部功能。在 Turnout 視窗的「授權」中貼上金鑰；Windows 上沒有 iCloud 可以把它帶過來，所以要在每台電腦上各自輸入。金鑰存在 Windows 認證管理員中。<a href="license.html">授權條款</a> · <a href="privacy.html#windows">Windows 上的隱私權</a></p>
+      </section>
+
+      <section id="uninstall" aria-labelledby="uninstall-title">
+        <h2 id="uninstall-title">解除安裝</h2>
+        <p>在「設定 › 應用程式 › 已安裝的應用程式」中解除安裝 Turnout，或在 Turnout 視窗的「關於」中選擇「解除安裝Turnout⋯」；在那裡你還可以一併刪除已儲存的通道，並空出這台電腦在授權上的名額。不論用哪種方式，所有通道都會中斷連線，服務和 Wintun 驅動程式會被移除，當機留下的變更會復原，App、它的記錄檔和你的 Turnout 偏好設定也會刪除。除非你選擇刪除，否則已儲存的通道會保留；從命令列執行 <code>msiexec /x</code> 並加上 <code>PURGE=1</code>，也會一併刪除它們。</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">Turnout 對你的 Mac 做了什麼</a> <a href="privacy.html">隱私權</a> <a href="license.html">授權條款</a> <a href="../issues">回報問題</a> <a href="../windows.html" hreflang="en" lang="en">English</a> <a href="../ja/windows.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/windows.html" hreflang="es" lang="es">Español</a> <a href="../ko/windows.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。Windows 是 Microsoft 集團旗下公司的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
+  </div>
+</footer>
+</body>
+</html>

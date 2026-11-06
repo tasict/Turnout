@@ -93,6 +93,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <nav class="site-nav" aria-label="Sitio">
       <ul>
         <li><a href="how-it-works.html">Cómo funciona</a></li>
+        <li><a href="windows.html">Windows</a></li>
       </ul>
     </nav>
     <nav class="lang-nav" aria-label="Idioma">
@@ -110,7 +111,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <main id="main" class="doc policy">
   <div class="wrap doc-head">
     <h1>Política de privacidad</h1>
-    <p class="effective">En vigor desde el 5 de noviembre de 2026</p>
+    <p class="effective">En vigor desde el 6 de noviembre de 2026</p>
   </div>
 
   <div class="wrap">
@@ -158,6 +159,18 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <p>Desinstalar Turnout borra la app, sus registros y las preferencias de Turnout de cada usuario, con el identificador de instalación, y también los túneles guardados si lo eliges. Una instalación nueva crea un identificador nuevo. El elemento de licencia se queda en el llavero, así que instalar de nuevo no empieza otra prueba. Desinstalar Turnout… en la app también quita este Mac de tu licencia y borra su registro de tu cuenta de iCloud (en la confirmación puedes elegir no hacerlo); el instalador y el script de Terminal no pueden, así que después de usarlos quita el Mac desde el panel Licencia de otro Mac o en el portal de clientes de Polar. La clave que usan tus otros Mac se queda en tu cuenta de iCloud. <a href="how-it-works.html#uninstall">Cómo desinstalar</a></p>
       </section>
 
+      <section id="windows" aria-labelledby="windows-title">
+        <h2 id="windows-title">En Windows</h2>
+        <p>Turnout para Windows envía lo mismo que en el Mac, a los mismos sitios: la comprobación de actualizaciones a través de este sitio web, el informe anónimo con ella (su campo de sistema operativo es la versión de Windows) y las comprobaciones de licencia con Polar. Un solo interruptor en General desactiva las dos primeras. Lo que cambia:</p>
+        <ul>
+          <li><strong>Activar un equipo</strong> envía la clave de licencia; el nombre que le das al equipo (el nombre que tiene en Windows, salvo que lo cambies); el fabricante y el modelo que indica su firmware; las versiones de Windows y de Turnout; y un hash unidireccional del identificador de hardware del equipo (el UUID de su firmware o, si el firmware no tiene ninguno, el identificador de máquina de Windows).</li>
+          <li><strong>No se sincroniza nada.</strong> En Windows no hay iCloud: la clave se introduce en cada equipo, y ningún registro de ella sale del equipo, salvo las solicitudes a Polar de arriba.</li>
+          <li><strong>Ubicación.</strong> Windows también considera el nombre de la red Wi-Fi como información de ubicación. Turnout solo lo lee para una regla de Wi-Fi, cuando el acceso a la ubicación de Windows lo permite o después de que elijas Permitir…, y Windows puede preguntarte la primera vez. Puedes retirar el acceso en Configuración › Privacidad y seguridad › Ubicación.</li>
+          <li><strong>Qué se queda en el equipo:</strong> tus túneles, claves privadas incluidas, en <code>%ProgramData%\cc.ctsite.turnout\tunnels</code>, que solo SYSTEM y los administradores pueden leer; las preferencias de la app, en <code>HKEY_CURRENT_USER\Software\cc.ctsite.turnout</code>, con el identificador de instalación aleatorio; el elemento de licencia <code>cc.ctsite.turnout.license</code> en el Administrador de credenciales de Windows, que nunca sale del equipo; y los registros <code>%ProgramData%\cc.ctsite.turnout\logs\daemon.log</code> y <code>%LOCALAPPDATA%\Turnout\app.log</code>.</li>
+        </ul>
+        <p>Desinstalar borra la app, el servicio en segundo plano, los registros y tus preferencias de Turnout, con el identificador de instalación, y también los túneles guardados si lo eliges. El elemento de licencia se queda, así que instalar de nuevo no empieza otra prueba. Desinstalar Turnout… en la app también puede quitar antes este equipo de tu licencia. <a href="windows.html#uninstall">Cómo desinstalar en Windows</a></p>
+      </section>
+
       <!-- analytics:on -->
       <section id="analytics" aria-labelledby="analytics-title">
         <h2 id="analytics-title">Analítica en este sitio web</h2>
@@ -196,8 +209,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">Qué hace Turnout en tu Mac</a> <a href="license.html">Términos de la licencia</a> <a href="../issues">Informar de un problema</a> <a href="../privacy.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/privacy.html" hreflang="ja" lang="ja">日本語</a> <a href="../ko/privacy.html" hreflang="ko" lang="ko">한국어</a></p>
-    <p>© 2026 tasict. Mac y macOS son marcas comerciales de Apple Inc. WireGuard es una marca registrada de Jason A. Donenfeld.</p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">Qué hace Turnout en tu Mac</a> <a href="license.html">Términos de la licencia</a> <a href="windows.html">Turnout para Windows</a> <a href="../issues">Informar de un problema</a> <a href="../privacy.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../ja/privacy.html" hreflang="ja" lang="ja">日本語</a> <a href="../ko/privacy.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p>© 2026 tasict. Mac y macOS son marcas comerciales de Apple Inc. Windows es una marca comercial del grupo de empresas Microsoft. WireGuard es una marca registrada de Jason A. Donenfeld.</p>
   </div>
 </footer>
 </body>

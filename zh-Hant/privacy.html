@@ -93,6 +93,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <nav class="site-nav" aria-label="網站">
       <ul>
         <li><a href="how-it-works.html">運作方式</a></li>
+        <li><a href="windows.html">Windows</a></li>
       </ul>
     </nav>
     <nav class="lang-nav" aria-label="語言">
@@ -110,7 +111,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <main id="main" class="doc policy">
   <div class="wrap doc-head">
     <h1>隱私權政策</h1>
-    <p class="effective">生效日期：2026 年 11 月 5 日</p>
+    <p class="effective">生效日期：2026 年 11 月 6 日</p>
   </div>
 
   <div class="wrap">
@@ -158,6 +159,18 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <p>解除安裝 Turnout 會刪除 App、它的記錄檔，以及每位使用者的 Turnout 偏好設定（安裝 ID 也一併刪除）；若你選擇，也會刪除已儲存的通道。重新安裝會產生新的 ID。鑰匙圈裡的授權項目會保留，所以重新安裝不會重新開始試用。從 App 選擇「解除安裝Turnout⋯」時，它也會把這部 Mac 從你的授權中移除，並刪除它在你 iCloud 帳號中的記錄（確認時可以選擇不要這麼做）；安裝程式和終端機指令稿做不到這一點，用這兩種方式解除安裝後，請在另一部 Mac 的「授權」面板或 Polar 的客戶入口移除這部 Mac。你其他 Mac 使用的授權金鑰仍會留在你的 iCloud 帳號中。<a href="how-it-works.html#uninstall">如何解除安裝</a></p>
       </section>
 
+      <section id="windows" aria-labelledby="windows-title">
+        <h2 id="windows-title">在 Windows 上</h2>
+        <p>Windows 版 Turnout 送出的東西和 Mac 上相同，也送到相同的地方：透過本網站檢查更新、每次檢查附帶的匿名回報（其中的作業系統欄位是 Windows 版本），以及向 Polar 檢查授權。「一般」中的一個開關就能把前兩者都關掉。不同之處如下：</p>
+        <ul>
+          <li><strong>啟用一台電腦</strong>時會送出：授權金鑰；你為這台電腦取的名稱（預設是它的電腦名稱，可以修改）；韌體回報的製造商與型號；Windows 與 Turnout 的版本；以及由電腦的硬體識別碼算出的單向雜湊值（硬體識別碼是韌體的 UUID；韌體沒有時，則是 Windows 的機器 ID）。</li>
+          <li><strong>不會同步任何東西。</strong>Windows 上沒有 iCloud：授權金鑰要在每台電腦上各自輸入，除了上述送往 Polar 的請求之外，沒有任何關於它的記錄會離開這台電腦。</li>
+          <li><strong>定位。</strong>Windows 也把 Wi-Fi 網路的名稱視為位置資訊。Turnout 只在有 Wi-Fi 規則時才讀取它，而且要等 Windows 的位置取用權限允許，或你選擇「允許⋯」之後；第一次讀取時，Windows 可能會詢問你。你可以在「設定 › 隱私權與安全性 › 位置」中收回權限。</li>
+          <li><strong>哪些東西留在電腦上：</strong>你的通道（包括私鑰），位於 <code>%ProgramData%\cc.ctsite.turnout\tunnels</code>，只有 SYSTEM 和管理者能讀取；App 的偏好設定，位於 <code>HKEY_CURRENT_USER\Software\cc.ctsite.turnout</code>，隨機產生的安裝 ID 也在其中；Windows 認證管理員中的授權項目 <code>cc.ctsite.turnout.license</code>，它從不離開這台電腦；以及記錄檔 <code>%ProgramData%\cc.ctsite.turnout\logs\daemon.log</code> 和 <code>%LOCALAPPDATA%\Turnout\app.log</code>。</li>
+        </ul>
+        <p>解除安裝會刪除 App、背景服務、記錄檔和你的 Turnout 偏好設定（安裝 ID 也一併刪除）；若你選擇，也會刪除已儲存的通道。授權項目會保留，所以重新安裝不會重新開始試用。從 App 選擇「解除安裝Turnout⋯」時，也可以先把這台電腦從你的授權中移除。<a href="windows.html#uninstall">如何在 Windows 上解除安裝</a></p>
+      </section>
+
       <!-- analytics:on -->
       <section id="analytics" aria-labelledby="analytics-title">
         <h2 id="analytics-title">本網站的分析</h2>
@@ -196,8 +209,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">Turnout 對你的 Mac 做了什麼</a> <a href="license.html">授權條款</a> <a href="../issues">回報問題</a> <a href="../privacy.html" hreflang="en" lang="en">English</a> <a href="../ja/privacy.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/privacy.html" hreflang="es" lang="es">Español</a> <a href="../ko/privacy.html" hreflang="ko" lang="ko">한국어</a></p>
-    <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">Turnout 對你的 Mac 做了什麼</a> <a href="license.html">授權條款</a> <a href="windows.html">Windows 版 Turnout</a> <a href="../issues">回報問題</a> <a href="../privacy.html" hreflang="en" lang="en">English</a> <a href="../ja/privacy.html" hreflang="ja" lang="ja">日本語</a> <a href="../es/privacy.html" hreflang="es" lang="es">Español</a> <a href="../ko/privacy.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p>© 2026 tasict。Mac 與 macOS 是 Apple Inc. 的商標。Windows 是 Microsoft 集團旗下公司的商標。WireGuard 是 Jason A. Donenfeld 的註冊商標。</p>
   </div>
 </footer>
 </body>

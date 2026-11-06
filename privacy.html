@@ -93,6 +93,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <nav class="site-nav" aria-label="Site">
       <ul>
         <li><a href="how-it-works.html">How it works</a></li>
+        <li><a href="windows.html">Windows</a></li>
       </ul>
     </nav>
     <nav class="lang-nav" aria-label="Language">
@@ -110,7 +111,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <main id="main" class="doc policy">
   <div class="wrap doc-head">
     <h1>Privacy policy</h1>
-    <p class="effective">Effective 5 November 2026</p>
+    <p class="effective">Effective 6 November 2026</p>
   </div>
 
   <div class="wrap">
@@ -158,6 +159,18 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <p>Uninstalling Turnout deletes the app, its logs and every user's Turnout preferences, the installation ID with them, and the saved tunnels too if you choose. A new installation makes up a new ID. The license item stays in the keychain, so installing again does not start a new trial. Uninstall Turnout… in the app also takes this Mac off your license and removes its record from your iCloud account, unless you choose otherwise in the confirmation; the installer and the Terminal script cannot, so after those, remove the Mac in the License pane on another Mac or in Polar's customer portal. The key your other Macs use stays in your iCloud account. <a href="how-it-works.html#uninstall">How to uninstall</a></p>
       </section>
 
+      <section id="windows" aria-labelledby="windows-title">
+        <h2 id="windows-title">On Windows</h2>
+        <p>Turnout for Windows sends the same things as on the Mac, to the same places: the update check through this website, the anonymous report with it (its operating system field is the Windows version), and the license checks with Polar. One switch in General turns the first two off. What differs:</p>
+        <ul>
+          <li><strong>Activating a PC</strong> sends the license key; the name you give the PC (its computer name, unless you change it); the manufacturer and model its firmware reports; the Windows and Turnout versions; and a one-way hash of the PC's hardware identifier (its firmware UUID, or Windows' machine ID where the firmware has none).</li>
+          <li><strong>Nothing is synced.</strong> There is no iCloud on Windows: the key is entered on each PC, and no record of it leaves the PC except the requests to Polar above.</li>
+          <li><strong>Location.</strong> Windows also counts the Wi-Fi network's name as location. Turnout reads it only for a Wi-Fi rule, once Windows' location access allows it or after you choose Allow…, and Windows may ask you the first time. You can take access back in Settings › Privacy &amp; security › Location.</li>
+          <li><strong>What stays on the PC:</strong> your tunnels, private keys included, in <code>%ProgramData%\cc.ctsite.turnout\tunnels</code>, which only SYSTEM and administrators can read; the app's preferences under <code>HKEY_CURRENT_USER\Software\cc.ctsite.turnout</code>, the random installation ID with them; the license item <code>cc.ctsite.turnout.license</code> in Windows Credential Manager, which never leaves the PC; and the logs <code>%ProgramData%\cc.ctsite.turnout\logs\daemon.log</code> and <code>%LOCALAPPDATA%\Turnout\app.log</code>.</li>
+        </ul>
+        <p>Uninstalling deletes the app, the background service, the logs and your Turnout preferences, the installation ID with them, and the saved tunnels too if you choose. The license item stays, so installing again does not start a new trial. Uninstall Turnout… in the app can also take this PC off your license first. <a href="windows.html#uninstall">How to uninstall on Windows</a></p>
+      </section>
+
       <!-- analytics:on -->
       <section id="analytics" aria-labelledby="analytics-title">
         <h2 id="analytics-title">Analytics on this website</h2>
@@ -196,8 +209,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">What Turnout does to your Mac</a> <a href="license.html">License terms</a> <a href="issues">Report a problem</a> <a href="zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/privacy.html" hreflang="ja" lang="ja">日本語</a> <a href="es/privacy.html" hreflang="es" lang="es">Español</a> <a href="ko/privacy.html" hreflang="ko" lang="ko">한국어</a></p>
-    <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">What Turnout does to your Mac</a> <a href="license.html">License terms</a> <a href="windows.html">Turnout for Windows</a> <a href="issues">Report a problem</a> <a href="zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/privacy.html" hreflang="ja" lang="ja">日本語</a> <a href="es/privacy.html" hreflang="es" lang="es">Español</a> <a href="ko/privacy.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. Windows is a trademark of the Microsoft group of companies. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
   </div>
 </footer>
 </body>

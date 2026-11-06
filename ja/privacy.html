@@ -93,6 +93,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <nav class="site-nav" aria-label="サイト">
       <ul>
         <li><a href="how-it-works.html">仕組み</a></li>
+        <li><a href="windows.html">Windows</a></li>
       </ul>
     </nav>
     <nav class="lang-nav" aria-label="言語">
@@ -110,7 +111,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <main id="main" class="doc policy">
   <div class="wrap doc-head">
     <h1>プライバシーポリシー</h1>
-    <p class="effective">施行日：2026年11月5日</p>
+    <p class="effective">施行日：2026年11月6日</p>
   </div>
 
   <div class="wrap">
@@ -158,6 +159,18 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <p>Turnoutをアンインストールすると、アプリ、ログ、全ユーザのTurnoutの環境設定（インストールIDを含む）が削除され、選べば保存済みのトンネルも削除されます。新しくインストールすると、新しいIDが作られます。キーチェーンのライセンスの項目は残るので、インストールし直しても試用が始まり直すことはありません。アプリの“Turnoutをアンインストール…”は、このMacをライセンスから外し、iCloudアカウントにあるこのMacのレコードも削除します（確認のときに外さないことも選べます）。インストーラとターミナルのスクリプトではこれができないので、その場合は別のMacの“ライセンス”パネルか、PolarのカスタマーポータルでこのMacを外してください。ほかのMacが使うライセンスキーは、iCloudアカウントに残ります。<a href="how-it-works.html#uninstall">アンインストールの方法</a></p>
       </section>
 
+      <section id="windows" aria-labelledby="windows-title">
+        <h2 id="windows-title">Windowsの場合</h2>
+        <p>Windows版Turnoutが送るものと送り先は、Macと同じです。このサイトを通したアップデートの確認、それに伴う匿名の報告（OSの項目はWindowsのバージョンになります）、そしてPolarへのライセンスの確認です。“一般”の1つのスイッチで、最初の2つをオフにできます。異なる点は次のとおりです：</p>
+        <ul>
+          <li><strong>PCのライセンス認証</strong>：ライセンスキー、PCに付けた名前（変えない限りコンピュータ名）、ファームウェアが報告する製造元とモデル、WindowsとTurnoutのバージョン、そしてPCのハードウェア識別子（ファームウェアのUUID、ファームウェアにない場合はWindowsのマシンID）から計算した一方向のハッシュを送ります。</li>
+          <li><strong>同期するものはありません。</strong>WindowsにはiCloudがないので、キーはPCごとに入力します。上に挙げたPolarへのリクエストを除いて、キーの記録がPCの外に出ることはありません。</li>
+          <li><strong>位置情報。</strong>Windowsも、Wi-Fiネットワークの名前を位置情報として扱います。Turnoutがそれを読むのはWi-Fiルールのためだけで、Windowsの位置情報へのアクセスが許可されているか、“許可…”を選んだあとに限ります。最初にWindowsから尋ねられることがあります。アクセスは“設定” › “プライバシーとセキュリティ” › “位置情報”で取り消せます。</li>
+          <li><strong>PCに残るもの：</strong>トンネル（秘密鍵を含む）。SYSTEMと管理者しか読めない<code>%ProgramData%\cc.ctsite.turnout\tunnels</code>にあります。アプリの環境設定は<code>HKEY_CURRENT_USER\Software\cc.ctsite.turnout</code>にあり、ランダムなインストールIDもそこに含まれます。ライセンスの項目<code>cc.ctsite.turnout.license</code>はWindowsの資格情報マネージャーにあり、PCの外に出ることはありません。ログは<code>%ProgramData%\cc.ctsite.turnout\logs\daemon.log</code>と<code>%LOCALAPPDATA%\Turnout\app.log</code>です。</li>
+        </ul>
+        <p>アンインストールすると、アプリ、バックグラウンドサービス、ログ、Turnoutの環境設定（インストールIDを含む）が削除され、選べば保存済みのトンネルも削除されます。ライセンスの項目は残るので、インストールし直しても試用が始まり直すことはありません。アプリの“Turnoutをアンインストール…”では、先にこのPCをライセンスから外すこともできます。<a href="windows.html#uninstall">Windowsでのアンインストールの方法</a></p>
+      </section>
+
       <!-- analytics:on -->
       <section id="analytics" aria-labelledby="analytics-title">
         <h2 id="analytics-title">このWebサイトのアクセス解析</h2>
@@ -196,8 +209,8 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 
 <footer class="site-footer">
   <div class="wrap">
-    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">TurnoutがMacに対して行うこと</a> <a href="license.html">ライセンス条項</a> <a href="../issues">問題を報告</a> <a href="../privacy.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/privacy.html" hreflang="es" lang="es">Español</a> <a href="../ko/privacy.html" hreflang="ko" lang="ko">한국어</a></p>
-    <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">TurnoutがMacに対して行うこと</a> <a href="license.html">ライセンス条項</a> <a href="windows.html">Windows版Turnout</a> <a href="../issues">問題を報告</a> <a href="../privacy.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/privacy.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/privacy.html" hreflang="es" lang="es">Español</a> <a href="../ko/privacy.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。Windowsは、Microsoftグループの企業の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
   </div>
 </footer>
 </body>

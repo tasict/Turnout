@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turnout for Windows</title>
+<meta name="description" content="Turnout on Windows 11: a VPN client that connects to WireGuard servers the way wg-quick does, with the network interface you choose and tunnels that connect by themselves. How to install it, what differs from the Mac, and what it does to your PC.">
+<link rel="canonical" href="https://turnout.ctsite.cc/windows">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/windows">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/windows">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/windows">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/windows">
+<link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/windows">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/windows">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Turnout for Windows">
+<meta property="og:description" content="The VPN client for WireGuard servers, on Windows 11: your configs as wg-quick reads them, the network interface you choose, and tunnels that connect on a schedule or a Wi-Fi network.">
+<meta property="og:url" content="https://turnout.ctsite.cc/windows">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/windows/main.png">
+<meta property="og:image:width" content="1044">
+<meta property="og:image:height" content="712">
+<meta property="og:image:alt" content="Turnout's window on Windows 11, showing a connected tunnel's path">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+      <img src="assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="Site">
+      <ul>
+        <li><a href="how-it-works.html">How it works</a></li>
+        <li><a href="windows.html" aria-current="page">Windows</a></li>
+      </ul>
+    </nav>
+    <nav class="lang-nav" aria-label="Language">
+      <ul>
+        <li><a href="windows.html" hreflang="en" lang="en" aria-current="page">English</a></li>
+        <li><a href="zh-Hant/windows.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="ja/windows.html" hreflang="ja" lang="ja">日本語</a></li>
+        <li><a href="es/windows.html" hreflang="es" lang="es">Español</a></li>
+        <li><a href="ko/windows.html" hreflang="ko" lang="ko">한국어</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="doc">
+  <div class="wrap doc-head">
+    <h1>Turnout for Windows</h1>
+    <p class="lede">The same VPN client for WireGuard servers, on Windows 11: your configs as wg-quick reads them, the network interface you choose for each tunnel, and tunnels that connect by themselves on a schedule or a Wi-Fi network. It lives in the notification area, and one license covers your Macs and PCs together.</p>
+    <p><a class="download" href="releases/latest">Download for Windows</a></p>
+    <p class="fineprint">Version <!-- version --><span data-latest="version">1.1.3</span><!-- /version -->, released <!-- released --><time data-latest="date" datetime="2026-11-05">5 November 2026</time><!-- /released --> · <a href="releases/latest">Release notes</a></p>
+    <p class="fineprint">Windows 11 on an x64 PC (Intel or AMD) · 7-day trial · <!-- price --><span data-price>US$19</span><!-- /price --> once, three computers, Mac or Windows</p>
+  </div>
+
+  <div class="wrap doc-grid">
+    <nav class="toc" aria-labelledby="toc-title">
+      <p id="toc-title">On this page</p>
+      <ul>
+        <li><a href="#same">As on the Mac</a></li>
+        <li><a href="#different">What differs</a></li>
+        <li><a href="#install">Download and install</a></li>
+        <li><a href="#updates">Updates</a></li>
+        <li><a href="#your-pc">What it does to your PC</a></li>
+        <li><a href="#license">The license</a></li>
+        <li><a href="#uninstall">Uninstalling</a></li>
+      </ul>
+    </nav>
+
+    <div class="doc-body">
+      <figure class="shot-figure">
+        <img class="shot" src="assets/windows/main.png" width="1044" height="712" alt="Turnout's window on Windows 11 with a connected tunnel: its path from the tunnel through the network adapter it leaves by to the server, with the traffic in both directions.">
+        <figcaption>A connected tunnel's path: the tunnel, the network adapter its traffic leaves through, and the server.</figcaption>
+      </figure>
+
+      <section id="same" aria-labelledby="same-title">
+        <h2 id="same-title">As on the Mac</h2>
+        <ul>
+          <li><strong>Your configs, as wg-quick reads them.</strong> Import WireGuard <code>.conf</code> files and zips of them, including the official app's exports, and export them again. The editor has a form and the text; comments and lines it does not know stay as you wrote them.</li>
+          <li><strong>The network interface you choose.</strong> <code>#@ BindInterface</code> sends a tunnel's encrypted traffic out through the adapter you name, such as <code>Ethernet 2</code>, and <code>#@ Route … dev</code> sends chosen networks out through an adapter instead of the tunnel. The path at the top of each tunnel shows which adapter carries it.</li>
+          <li><strong>Connects by itself.</strong> A schedule, or the Wi-Fi networks you list, connect a tunnel and disconnect it again; in between, what you do by hand stands.</li>
+          <li><strong>Hooks.</strong> <code>PreUp</code>, <code>PostUp</code>, <code>PreDown</code> and <code>PostDown</code> run as on the Mac, once an administrator approves them.</li>
+          <li><strong>Notifications, five languages and one license.</strong> The same notifications, menus and windows in English, 繁體中文, 日本語, Español and 한국어, and one license for three computers, Mac or Windows.</li>
+        </ul>
+      </section>
+
+      <section id="different" aria-labelledby="different-title">
+        <h2 id="different-title">What differs</h2>
+        <ul>
+          <li><strong>In the notification area.</strong> Turnout's icon opens a panel with every tunnel and its switch; the window has each tunnel's path, routes, peers and configuration, and the settings. Windows may keep a new icon behind ^ on the taskbar: drag it onto the taskbar, or turn Turnout on in Settings › Personalization › Taskbar › Other system tray icons, to keep it in sight.</li>
+          <li><strong>Full tunnels stay inside.</strong> While a tunnel that takes all traffic is connected, Windows' firewall blocks traffic that would leave outside it, and DNS to servers other than the tunnel's, as the official WireGuard app does. Your bypass routes, the local network's essentials (DHCP, loopback) and the tunnel's own connection to the server are let through.</li>
+          <li><strong>No Phantun yet.</strong> A config that reaches its server through Phantun is shown, but does not connect on Windows.</li>
+          <li><strong>From the command line,</strong> in place of Shortcuts: <code>Turnout.exe connect &lt;tunnel&gt;</code>, <code>disconnect &lt;tunnel&gt;</code> and <code>status [tunnel]</code>.</li>
+          <li><strong>Windows 11 on x64 only.</strong> No Windows 10, no Windows on Arm and no Windows Server.</li>
+        </ul>
+        <figure class="shot-figure">
+          <img class="shot shot-panel" src="assets/windows/panel.png" width="340" height="334" alt="Turnout's panel above the notification area: every tunnel with its switch, the adapter a connected one leaves through and its traffic, and the Settings and Open Turnout buttons.">
+          <figcaption>The panel that opens from Turnout's icon in the notification area.</figcaption>
+        </figure>
+      </section>
+
+      <section id="install" aria-labelledby="install-title">
+        <h2 id="install-title">Download and install</h2>
+        <ol class="steps">
+          <li>Download the installer, <code>Turnout-&lt;version&gt;-x64.msi</code>, from the <a href="releases/latest">latest release</a>.</li>
+          <li>Open it. The installer is not signed with a Windows code-signing certificate, so Windows SmartScreen may say it protected your PC: choose More info, then Run anyway. Windows then asks for an administrator's approval.</li>
+          <li>Turnout is installed in <code>C:\Program Files\Turnout</code>, its background service starts, and Turnout opens. Its welcome tour shows where its icon is.</li>
+        </ol>
+        <p>On a PC with Smart App Control turned on, Windows does not let an installer without a code-signing certificate run at all. Updates do not depend on a certificate: each one carries Turnout's own signature, which the background service checks before it installs anything.</p>
+      </section>
+
+      <section id="updates" aria-labelledby="updates-title">
+        <h2 id="updates-title">Updates</h2>
+        <p>Turnout looks for a newer version at most once an hour while its panel or window is open, and whenever you choose Check for Updates…; the switch in General turns that off. Install and Relaunch downloads the installer and hands it to the background service, which checks its size, checksum and Turnout's signature and installs it with Windows Installer. Tunnels disconnect while it installs; the new version opens its window and reconnects the tunnels that were connected.</p>
+      </section>
+
+      <section id="your-pc" aria-labelledby="your-pc-title">
+        <h2 id="your-pc-title">What it does to your PC</h2>
+        <p>Turnout installs a background service that runs as SYSTEM, so here is what it is and what it changes, each with a way to check it.</p>
+        <dl class="paths">
+          <div>
+            <dt><code>cc.ctsite.turnout.daemon</code></dt>
+            <dd>The service, shown as Turnout in Services: <code>C:\Program Files\Turnout\turnout-daemon.exe</code>, started with Windows and restarted after a failure. The app, <code>C:\Program Files\Turnout\App\Turnout.exe</code>, runs as you, with no special privileges, and asks the service to connect and disconnect.</dd>
+          </div>
+          <div>
+            <dt>Wintun</dt>
+            <dd>Each connected tunnel is a Wintun network adapter named after it, from WireGuard's own driver, installed with Turnout. WireGuard runs in the service with <a href="https://github.com/mullvad/gotatun">GotaTun</a>, Mullvad's implementation under the MPL-2.0 license.</dd>
+          </div>
+          <div>
+            <dt>Addresses, routes and DNS</dt>
+            <dd>Set through Windows' IP Helper functions: the tunnel's addresses, routes into the tunnel, the route that keeps the server on your physical network, and the routes that skip the tunnel. DNS servers are set on the tunnel's own adapter, so nothing else needs putting back.</dd>
+          </div>
+          <div>
+            <dt>Windows Filtering Platform</dt>
+            <dd>Only for a tunnel that takes all traffic, while it is connected: the rules above. They live in a session of the service's own, so they go away when the tunnel disconnects or the service stops.</dd>
+          </div>
+          <div>
+            <dt><code>%ProgramData%\cc.ctsite.turnout\tunnels</code></dt>
+            <dd>Your configs, private keys included, readable by SYSTEM and administrators only. Only the service writes there; saving a config whose hooks are new or changed needs an administrator's approval.</dd>
+          </div>
+          <div>
+            <dt><code>\\.\pipe\cc.ctsite.turnout.daemon</code></dt>
+            <dd>How the app talks to the service. It answers only this PC's users, never another computer.</dd>
+          </div>
+          <div>
+            <dt><code>%ProgramData%\cc.ctsite.turnout\logs\daemon.log</code></dt>
+            <dd>What the service did, and its errors. The app's own log is <code>%LOCALAPPDATA%\Turnout\app.log</code>.</dd>
+          </div>
+        </dl>
+        <p>Hooks run as SYSTEM through <code>cmd.exe /C</code>, with <code>%i</code> replaced by the tunnel's adapter and <code>%I</code> by the tunnel's name. Every change to routes is written down before it is made, so the service undoes at its next start what a crash left behind. To look for yourself, in PowerShell:</p>
+<pre><code>Get-Service cc.ctsite.turnout.daemon
+Get-NetAdapter                      <span class="c"># a connected tunnel's Wintun adapter</span>
+Get-NetRoute -AddressFamily IPv4    <span class="c"># the routes it added</span>
+Get-DnsClientServerAddress          <span class="c"># the tunnel adapter's DNS servers</span></code></pre>
+      </section>
+
+      <section id="license" aria-labelledby="license-title">
+        <h2 id="license-title">The license</h2>
+        <p>The same key works on your Macs and PCs, three computers in all. Turnout works in full for 7 days on each PC first. Paste the key in License in Turnout's window; on Windows it is entered on each PC, since there is no iCloud to bring it over. The key is kept in Windows Credential Manager. <a href="license.html">License terms</a> · <a href="privacy.html#windows">Privacy on Windows</a></p>
+      </section>
+
+      <section id="uninstall" aria-labelledby="uninstall-title">
+        <h2 id="uninstall-title">Uninstalling</h2>
+        <p>Uninstall Turnout in Settings › Apps › Installed apps, or choose Uninstall Turnout… in About in Turnout's window, where you can also delete saved tunnels and free this PC on your license. Either way every tunnel disconnects, the service and the Wintun driver are removed, anything a crash left behind is undone, and the app, its logs and your Turnout preferences are deleted. Saved tunnels stay unless you choose to delete them; from the command line, <code>msiexec /x</code> with <code>PURGE=1</code> deletes them too.</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">What Turnout does to your Mac</a> <a href="privacy.html">Privacy</a> <a href="license.html">License terms</a> <a href="issues">Report a problem</a> <a href="zh-Hant/windows.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="ja/windows.html" hreflang="ja" lang="ja">日本語</a> <a href="es/windows.html" hreflang="es" lang="es">Español</a> <a href="ko/windows.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p>© 2026 tasict. Mac and macOS are trademarks of Apple Inc. Windows is a trademark of the Microsoft group of companies. WireGuard is a registered trademark of Jason A. Donenfeld.</p>
+  </div>
+</footer>
+</body>
+</html>

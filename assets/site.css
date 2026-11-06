@@ -353,6 +353,8 @@ p code, li code, dd code, dt code, td code, figcaption code {
 }
 
 .shot.menu { width: 300px; aspect-ratio: auto 600 / 434; }
+/* The Windows panel at its own size (340 by 334 at 100 %), like the Mac menu. */
+.shot.shot-panel { width: 340px; max-width: 100%; aspect-ratio: auto 340 / 334; }
 
 /* Sections: the heading in its own column on a wide screen. ------------- */
 
@@ -402,8 +404,10 @@ h3 { font-size: 1.1rem; line-height: 1.35; margin: 0 0 0.35rem; }
 figure { margin: 0; }
 figure figcaption { margin-top: 0.75rem; color: var(--muted); font-size: 0.95rem; max-width: var(--measure); }
 
-.body .shot-figure { margin-top: 2rem; }
-.body .shot-figure .shot { box-shadow: 0 0 0 1px var(--rule), 0 24px 48px -30px var(--shadow); }
+.body .shot-figure, .doc-body .shot-figure { margin-top: 2rem; }
+.body .shot-figure .shot, .doc-body .shot-figure .shot { box-shadow: 0 0 0 1px var(--rule), 0 24px 48px -30px var(--shadow); }
+/* The Windows page's screenshots: the window leads the page, the panel sits in its section. */
+.doc-body > .shot-figure:first-child { margin-top: 0; margin-bottom: 2.75rem; }
 
 /* The 50-second tour: the video in the screenshots' frame. It has sound, so
    it plays only when asked, and loads nothing before that but its poster. */

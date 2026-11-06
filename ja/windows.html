@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Windows版Turnout</title>
+<meta name="description" content="Windows 11のTurnout：WireGuardサーバーにwg-quickと同じやり方で接続するVPNクライアントです。ネットワークインターフェイスはあなたが選び、トンネルは自動で接続します。インストール方法、Macとの違い、そしてPCに対して行うことを説明します。">
+<link rel="canonical" href="https://turnout.ctsite.cc/ja/windows">
+<link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/windows">
+<link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/windows">
+<link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/windows">
+<link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/windows">
+<link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/windows">
+<link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/windows">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Turnout">
+<meta property="og:title" content="Windows版Turnout">
+<meta property="og:description" content="WireGuardサーバーに接続するVPNクライアントが、Windows 11でも。構成ファイルはwg-quickが読むとおりに扱い、ネットワークインターフェイスはあなたが選び、トンネルはスケジュールやWi-Fiネットワークに合わせて自動で接続します。">
+<meta property="og:url" content="https://turnout.ctsite.cc/ja/windows">
+<meta property="og:image" content="https://turnout.ctsite.cc/assets/windows/main.png">
+<meta property="og:image:width" content="1044">
+<meta property="og:image:height" content="712">
+<meta property="og:image:alt" content="接続中のトンネルの経路を表示した、Windows 11のTurnoutのウインドウ">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./"><picture>
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
+      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+    </picture></a>
+    <nav class="site-nav" aria-label="サイト">
+      <ul>
+        <li><a href="how-it-works.html">仕組み</a></li>
+        <li><a href="windows.html" aria-current="page">Windows</a></li>
+      </ul>
+    </nav>
+    <nav class="lang-nav" aria-label="言語">
+      <ul>
+        <li><a href="../windows.html" hreflang="en" lang="en">English</a></li>
+        <li><a href="../zh-Hant/windows.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+        <li><a href="windows.html" hreflang="ja" lang="ja" aria-current="page">日本語</a></li>
+        <li><a href="../es/windows.html" hreflang="es" lang="es">Español</a></li>
+        <li><a href="../ko/windows.html" hreflang="ko" lang="ko">한국어</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="doc">
+  <div class="wrap doc-head">
+    <h1>Windows版Turnout</h1>
+    <p class="lede">WireGuardサーバーに接続する同じVPNクライアントが、Windows 11でも使えます。構成ファイルはwg-quickが読むとおりに扱い、ネットワークインターフェイスはトンネルごとにあなたが選び、トンネルはスケジュールやWi-Fiネットワークに合わせて自動で接続します。Turnoutは通知領域にいて、1つのライセンスでMacとPCをまとめて使えます。</p>
+    <p><a class="download" href="../releases/latest">Windows版をダウンロード</a></p>
+    <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.1.3</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-11-05">2026年11月5日</time><!-- /released -->公開）· <a href="../releases/latest">リリースノート</a></p>
+    <p class="fineprint">x64 PC（IntelまたはAMD）のWindows 11 · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、コンピュータ3台（MacでもWindowsでも）</p>
+  </div>
+
+  <div class="wrap doc-grid">
+    <nav class="toc" aria-labelledby="toc-title">
+      <p id="toc-title">このページの内容</p>
+      <ul>
+        <li><a href="#same">Macと同じところ</a></li>
+        <li><a href="#different">異なるところ</a></li>
+        <li><a href="#install">ダウンロードとインストール</a></li>
+        <li><a href="#updates">アップデート</a></li>
+        <li><a href="#your-pc">PCに対して行うこと</a></li>
+        <li><a href="#license">ライセンス</a></li>
+        <li><a href="#uninstall">アンインストール</a></li>
+      </ul>
+    </nav>
+
+    <div class="doc-body">
+      <figure class="shot-figure">
+        <img class="shot" src="../assets/windows/main.png" width="1044" height="712" alt="接続中のトンネルを表示した、Windows 11のTurnoutのウインドウ。経路はトンネルから、出ていくネットワークアダプタを経てサーバーまで続き、両方向に通信が流れています。">
+        <figcaption>接続中のトンネルの経路。トンネル、その通信が出ていくネットワークアダプタ、そしてサーバーです。</figcaption>
+      </figure>
+
+      <section id="same" aria-labelledby="same-title">
+        <h2 id="same-title">Macと同じところ</h2>
+        <ul>
+          <li><strong>構成ファイルはwg-quickのとおりに。</strong>WireGuardの<code>.conf</code>ファイルや、それをまとめたzip（公式アプリが書き出したものを含む）を読み込み、また書き出せます。エディタにはフォームとテキストがあり、コメントやエディタが知らない行も、書いたとおりに残ります。</li>
+          <li><strong>ネットワークインターフェイスを選べます。</strong><code>#@ BindInterface</code>は、トンネルの暗号化された通信を、指定したアダプタ（たとえば<code>Ethernet 2</code>）から送り出します。<code>#@ Route … dev</code>は、選んだネットワークを、トンネルではなくアダプタから送り出します。どのアダプタが通信を運んでいるかは、各トンネルの上部にある経路に表示されます。</li>
+          <li><strong>自動で接続。</strong>スケジュールや、一覧にしたWi-Fiネットワークに合わせて、トンネルが接続され、また接続が解除されます。その間に手動で行った操作はそのまま保たれます。</li>
+          <li><strong>フック。</strong><code>PreUp</code>、<code>PostUp</code>、<code>PreDown</code>、<code>PostDown</code>は、管理者が承認すれば、Macと同じように実行されます。</li>
+          <li><strong>通知、5つの言語、1つのライセンス。</strong>同じ通知、メニュー、ウインドウが、English、繁體中文、日本語、Español、한국어で表示されます。そして1つのライセンスで、MacでもWindowsでも、コンピュータ3台に使えます。</li>
+        </ul>
+      </section>
+
+      <section id="different" aria-labelledby="different-title">
+        <h2 id="different-title">異なるところ</h2>
+        <ul>
+          <li><strong>通知領域にいます。</strong>Turnoutのアイコンをクリックすると、すべてのトンネルとそのスイッチが並んだパネルが開きます。ウインドウには、各トンネルの経路、ルート、ピア、構成と、設定があります。Windowsは新しいアイコンをタスクバーの^の中にしまうことがあります。常に見えるようにするには、アイコンをタスクバーにドラッグするか、“設定” › “個人用設定” › “タスク バー” › “その他のシステム トレイ アイコン”でTurnoutをオンにしてください。</li>
+          <li><strong>フルトンネルは、通信をトンネルの外に出しません。</strong>すべての通信を通すトンネルが接続している間、Windowsのファイアウォールは、トンネルの外へ出ようとする通信と、トンネルのもの以外のDNSサーバーへの問い合わせをブロックします。公式のWireGuardアプリと同じです。設定したバイパスルート、ローカルネットワークに欠かせない通信（DHCP、ループバック）、そしてトンネル自身のサーバーへの接続は、そのまま通ります。</li>
+          <li><strong>Phantunはまだありません。</strong>Phantun経由でサーバーに接続する構成は表示されますが、Windowsでは接続しません。</li>
+          <li><strong>コマンドラインから。</strong>“ショートカット”の代わりに、<code>Turnout.exe connect &lt;tunnel&gt;</code>、<code>disconnect &lt;tunnel&gt;</code>、<code>status [tunnel]</code>を使えます。</li>
+          <li><strong>x64のWindows 11のみ。</strong>Windows 10、Arm版Windows、Windows Serverには対応していません。</li>
+        </ul>
+        <figure class="shot-figure">
+          <img class="shot shot-panel" src="../assets/windows/panel.png" width="340" height="334" alt="通知領域の上に開いたTurnoutのパネル。すべてのトンネルとそのスイッチ、接続中のトンネルが出ていくアダプタとその通信量、そして“設定”と“Turnoutを開く”のボタンが並んでいます。">
+          <figcaption>通知領域のTurnoutのアイコンから開くパネル。</figcaption>
+        </figure>
+      </section>
+
+      <section id="install" aria-labelledby="install-title">
+        <h2 id="install-title">ダウンロードとインストール</h2>
+        <ol class="steps">
+          <li>インストーラ（<code>Turnout-&lt;version&gt;-x64.msi</code>）を<a href="../releases/latest">最新リリース</a>からダウンロードします。</li>
+          <li>開きます。インストーラはWindowsのコード署名証明書で署名されていないため、Windows SmartScreenが、PCを保護したと表示することがあります。その場合は“詳細情報”を選び、“実行”を選んでください。続いて、Windowsが管理者の承認を求めます。</li>
+          <li>Turnoutが<code>C:\Program Files\Turnout</code>にインストールされ、バックグラウンドサービスが起動し、Turnoutが開きます。ようこそツアーが、アイコンのある場所を示します。</li>
+        </ol>
+        <p>スマート アプリ コントロールがオンになっているPCでは、Windowsはコード署名証明書のないインストーラをまったく実行させません。アップデートは証明書に頼りません。アップデートにはそれぞれTurnout自身の署名が付いていて、バックグラウンドサービスがそれを確かめてからインストールします。</p>
+      </section>
+
+      <section id="updates" aria-labelledby="updates-title">
+        <h2 id="updates-title">アップデート</h2>
+        <p>Turnoutは、パネルかウインドウが開いている間（多くても1時間に1回）と、“アップデートを確認…”を選んだときに、新しいバージョンを探します。“一般”のスイッチでこれをオフにできます。“インストールして再起動”を選ぶと、インストーラをダウンロードしてバックグラウンドサービスに渡します。サービスはそのサイズ、チェックサム、Turnoutの署名を確認し、Windowsインストーラでインストールします。インストール中はトンネルの接続が解除され、新しいバージョンがウインドウを開いて、接続していたトンネルをもう一度接続します。</p>
+      </section>
+
+      <section id="your-pc" aria-labelledby="your-pc-title">
+        <h2 id="your-pc-title">PCに対して行うこと</h2>
+        <p>TurnoutはSYSTEMとして動くバックグラウンドサービスをインストールします。そこで、それが何で、何を変更するのかを、それぞれ確かめる方法と一緒に説明します。</p>
+        <dl class="paths">
+          <div>
+            <dt><code>cc.ctsite.turnout.daemon</code></dt>
+            <dd>サービスです。“サービス”にはTurnoutとして表示されます。プログラムは<code>C:\Program Files\Turnout\turnout-daemon.exe</code>で、Windowsと一緒に起動し、失敗したあとは再起動されます。アプリ（<code>C:\Program Files\Turnout\App\Turnout.exe</code>）はあなたのユーザとして、特別な権限なしに動き、サービスに接続と接続解除を頼みます。</dd>
+          </div>
+          <div>
+            <dt>Wintun</dt>
+            <dd>接続中のトンネルは、それぞれその名前が付いたWintunネットワークアダプタです。WintunはWireGuard自身のドライバで、Turnoutと一緒にインストールされます。WireGuardはサービスの中で、<a href="https://github.com/mullvad/gotatun">GotaTun</a>（MullvadによるMPL-2.0ライセンスの実装）で動きます。</dd>
+          </div>
+          <div>
+            <dt>アドレス、ルート、DNS</dt>
+            <dd>WindowsのIP Helperの関数で設定します。トンネルのアドレス、トンネルへのルート、サーバーのアドレスを物理ネットワーク側に保つルート、そしてトンネルを通らないルートです。DNSサーバーはトンネル自身のアダプタに設定するので、ほかに元に戻すものはありません。</dd>
+          </div>
+          <div>
+            <dt>Windows Filtering Platform</dt>
+            <dd>すべての通信を通すトンネルが接続している間だけ：前述のルールです。ルールはサービス自身のセッションにあるので、トンネルの接続を解除するか、サービスが止まると消えます。</dd>
+          </div>
+          <div>
+            <dt><code>%ProgramData%\cc.ctsite.turnout\tunnels</code></dt>
+            <dd>構成ファイル（秘密鍵を含む）。SYSTEMと管理者しか読めません。そこに書き込むのはサービスだけで、フックが新しい、または変更された構成を保存するには、管理者の承認が必要です。</dd>
+          </div>
+          <div>
+            <dt><code>\\.\pipe\cc.ctsite.turnout.daemon</code></dt>
+            <dd>アプリがサービスと通信する経路です。サービスはこのPCのユーザにだけ応答し、ほかのコンピュータには決して応答しません。</dd>
+          </div>
+          <div>
+            <dt><code>%ProgramData%\cc.ctsite.turnout\logs\daemon.log</code></dt>
+            <dd>サービスが行ったことと、そのエラー。アプリ自体のログは<code>%LOCALAPPDATA%\Turnout\app.log</code>です。</dd>
+          </div>
+        </dl>
+        <p>フックはSYSTEMとして<code>cmd.exe /C</code>で実行され、<code>%i</code>はトンネルのアダプタに、<code>%I</code>はトンネル名に置き換えられます。ルートへの変更はすべて行う前に記録されるので、クラッシュが残したものは、サービスが次に起動したときに元に戻します。自分で確かめるには、PowerShellで：</p>
+<pre><code>Get-Service cc.ctsite.turnout.daemon
+Get-NetAdapter                      <span class="c"># 接続中のトンネルのWintunアダプタ</span>
+Get-NetRoute -AddressFamily IPv4    <span class="c"># 追加されたルート</span>
+Get-DnsClientServerAddress          <span class="c"># トンネルのアダプタのDNSサーバー</span></code></pre>
+      </section>
+
+      <section id="license" aria-labelledby="license-title">
+        <h2 id="license-title">ライセンス</h2>
+        <p>同じキーが、MacとPCを合わせて3台のコンピュータで使えます。まずは各PCで7日間、すべての機能を使えます。キーは、Turnoutのウインドウの“ライセンス”に貼り付けてください。WindowsにはキーをほかのPCに届けるiCloudがないので、PCごとに入力します。キーはWindowsの資格情報マネージャーに保存されます。<a href="license.html">ライセンス条項</a> · <a href="privacy.html#windows">Windowsでのプライバシー</a></p>
+      </section>
+
+      <section id="uninstall" aria-labelledby="uninstall-title">
+        <h2 id="uninstall-title">アンインストール</h2>
+        <p>“設定” › “アプリ” › “インストールされているアプリ”でTurnoutをアンインストールするか、Turnoutのウインドウの“情報”で“Turnoutをアンインストール…”を選びます。こちらでは、保存済みのトンネルを削除することも、このPCのライセンス枠を空けることもできます。どちらの方法でも、すべてのトンネルの接続が解除され、サービスとWintunドライバが削除され、クラッシュが残したものが元に戻され、アプリ、ログ、Turnoutの環境設定が削除されます。保存済みのトンネルは、削除を選ばない限り残ります。コマンドラインでは、<code>msiexec /x</code>に<code>PURGE=1</code>を付けると、それも削除されます。</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-links"><a href="./">Turnout</a> <a href="how-it-works.html">TurnoutがMacに対して行うこと</a> <a href="privacy.html">プライバシー</a> <a href="license.html">ライセンス条項</a> <a href="../issues">問題を報告</a> <a href="../windows.html" hreflang="en" lang="en">English</a> <a href="../zh-Hant/windows.html" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> <a href="../es/windows.html" hreflang="es" lang="es">Español</a> <a href="../ko/windows.html" hreflang="ko" lang="ko">한국어</a></p>
+    <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。Windowsは、Microsoftグループの企業の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
+  </div>
+</footer>
+</body>
+</html>
