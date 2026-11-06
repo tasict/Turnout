@@ -18,7 +18,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=19e101c5">
+<link rel="stylesheet" href="../assets/site.css?v=2acdb75b">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout：Mac 與 Windows 上的原生 App 版 wg-quick">
@@ -111,7 +111,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     </picture></a>
     <nav class="site-nav" aria-label="網站">
       <ul>
-        <li><a href="how-it-works">運作方式</a></li>
+        <li><a href="how-it-works">Mac</a></li>
         <li><a href="windows">Windows</a></li>
       </ul>
     </nav>
@@ -143,10 +143,10 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- /download:soon -->
         <!-- download:live -->
         <div class="live">
-          <a class="download" href="../releases/latest">下載 Mac 版</a>
+          <p class="downloads"><a class="download" href="../releases/latest">下載 Mac 版</a> <a class="download" href="../releases/latest">下載 Windows 版</a></p>
           <p class="fineprint">版本 <!-- version --><span data-latest="version">1.1.4</span><!-- /version -->，<!-- released --><time data-latest="date" datetime="2026-11-06">2026 年 11 月 6 日</time><!-- /released -->發布 · <a href="../releases/latest">版本說明</a></p>
-          <p class="fineprint">macOS 15 以上 · Apple 晶片與 Intel · 試用 7 天 · <!-- price --><span data-price>US$19</span><!-- /price --> 一次買斷，三台電腦</p>
-          <p class="fineprint"><a href="#install">如何安裝</a> · <a href="windows">Windows 版 Turnout</a>，適用於 Windows 11</p>
+          <p class="fineprint">macOS 15 以上，支援 Apple 晶片與 Intel · x64 電腦上的 Windows 11 · 試用 7 天 · <!-- price --><span data-price>US$19</span><!-- /price --> 一次買斷，三台電腦，Mac 或 Windows 皆可</p>
+          <p class="fineprint"><a href="#install">如何安裝</a> · <a href="#mac">Mac 上多了什麼</a></p>
         </div>
         <!-- /download:live -->
       </div>
@@ -197,11 +197,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
   <div class="wrap">
     <h2 id="wg-quick-title">設定檔照 <span class="nb">wg-quick</span> 的方式執行</h2>
     <div class="body">
-      <p class="intro">Turnout 讀取你原本給 wg-quick 用的 <code>.conf</code> 設定檔，照 wg-quick 在 macOS 上的做法一步步套用，用的也是同樣的系統工具。</p>
+      <p class="intro">Turnout 讀取你原本給 wg-quick 用的 <code>.conf</code> 設定檔，照 wg-quick 的做法一步步套用：在 Mac 上用的是同樣的系統工具，在 Windows 上則用 Windows 自己的網路函式。</p>
       <dl class="keys">
         <div>
           <dt><code>PreUp</code> <code>PostUp</code> <code>PreDown</code> <code>PostDown</code></dt>
-          <dd>hook 會執行，<code>%i</code> 換成通道的 <code>utun</code> 介面，<code>%I</code> 換成通道名稱。檔案裡的 hook 要先經過管理者核准才會執行；<a href="how-it-works#hooks">運作方式</a>。</dd>
+          <dd>hook 會執行，<code>%i</code> 換成通道的介面（在 Mac 上是它的 <code>utun</code> 介面，在 Windows 上是它的 Wintun 網路介面卡），<code>%I</code> 換成通道名稱。檔案裡的 hook 要先經過管理者核准才會執行；<a href="how-it-works#hooks">運作方式</a>。</dd>
         </div>
         <div>
           <dt><code>AllowedIPs</code></dt>
@@ -213,7 +213,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         </div>
         <div>
           <dt><code>DNS</code></dt>
-          <dd>通道連線期間，DNS 伺服器與搜尋網域會設定到你的網路服務上；中斷連線後就恢復成你原本的設定。</dd>
+          <dd>DNS 伺服器與搜尋網域在通道連線期間生效。在 Mac 上，它們會設定到你的網路服務上，中斷連線後就恢復成你原本的設定；在 Windows 上，它們設定在通道自己的網路介面卡上，所以不需要還原其他任何東西。</dd>
         </div>
         <div>
           <dt><code>MTU</code></dt>
@@ -257,6 +257,7 @@ Endpoint = vpn.example.com:51820</code></pre>
         </dl>
       </div>
       <p>已連線的通道也能直接在主視窗的路徑上切換出口介面：Turnout 會中斷連線、儲存變更，再重新連線。</p>
+      <p>在 Windows 上，網路介面就是 Windows 顯示的網路介面卡名稱，例如 <code>Ethernet 2</code>：<code>#@ BindInterface = Ethernet 2</code>。</p>
     </div>
   </div>
 </section>
@@ -265,7 +266,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="network-title">跟著網路走</h2>
     <div class="body">
-      <p class="intro">閘道、網路介面或連線狀態改變，或是 Mac 從睡眠中喚醒時，Turnout 會把經由實體網路的路由重新指向目前的閘道、重新計算自動 MTU，並重新套用 DNS。</p>
+      <p class="intro">閘道、網路介面或連線狀態改變，或是電腦從睡眠中喚醒時，Turnout 會把經由實體網路的路由重新指向目前的閘道、重新計算自動 MTU，並重新套用 DNS。</p>
       <p>通道綁定的網路介面消失後又回來時，通道會重新綁定並再次交握。介面若一直沒回來，通往伺服器的路由會變成黑洞路由，交握封包就不會溜進通道本身；不走通道的路由則會等介面回來再恢復。</p>
     </div>
   </div>
@@ -275,6 +276,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="phantun-title">UDP 被擋時改走 TCP</h2>
     <div class="body">
+      <p class="fineprint">僅限 Mac。在 Windows 版 Turnout 中，經由 Phantun 連到伺服器的設定檔會照常顯示，但還不會連線。</p>
       <p class="intro">有些網路會封鎖或限速 WireGuard 使用的 UDP：飯店和訪客 Wi-Fi、部分辦公室、部分電信業者。把對等端切換成 Phantun，Turnout 就會把 WireGuard 的封包包在 TCP 連線裡送到 Phantun 伺服器，再由它交給你的 WireGuard 伺服器。</p>
 <pre><code>[Peer]
 PublicKey = …
@@ -299,10 +301,10 @@ Endpoint = vpn.example.com:51820
     <h2 id="automatic-title">自動連線</h2>
     <div class="body">
       <p class="intro">幫通道設定時段、Wi-Fi 網路清單，或兩者都設。</p>
-      <p>排定的時段一開始，Turnout 就連線，時段結束就中斷。Mac 加入清單上的網路時通道會連線，離開時就中斷。這中間你手動做的操作會維持不變，修改規則本身也不會連線或中斷任何東西。</p>
+      <p>排定的時段一開始，Turnout 就連線，時段結束就中斷。電腦加入清單上的網路時通道會連線，離開時就中斷。這中間你手動做的操作會維持不變，修改規則本身也不會連線或中斷任何東西。</p>
 <pre><code>#@ Schedule = Mon-Fri 09:00-18:00
 #@ OnWiFi = Office</code></pre>
-      <p>規則就是設定檔裡的幾行，從通道的頁面設定。Turnout 開著時才會執行這些規則，所以它提供「在登入時打開」。Wi-Fi 規則需要定位權限，因為 macOS 把 Wi-Fi 網路名稱視為位置資訊；Turnout 只在你設定這類規則時才會詢問，啟動時絕不會問。</p>
+      <p>規則就是設定檔裡的幾行，從通道的頁面設定。Turnout 開著時才會執行這些規則，所以它提供「在登入時打開」。Wi-Fi 規則需要定位權限，因為 macOS 和 Windows 都把 Wi-Fi 網路名稱視為位置資訊；Turnout 只在你設定這類規則時才會詢問，啟動時絕不會問。</p>
       <figure class="shot-figure shot-automation">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg?v=3893c740">
@@ -344,10 +346,10 @@ Endpoint = vpn.example.com:51820
   <div class="wrap">
     <h2 id="menu-bar-title">不打擾你</h2>
     <div class="body">
-      <p class="intro">Turnout 待在選單列裡。在那裡連線、中斷通道，需要細節時再打開視窗。</p>
-      <p>通道在 Turnout 的背景服務中執行，所以關掉 App 也會繼續連著。在視窗開著的情況下量測，App 閒置時約佔 0.5% CPU，繪製即時流量時約 2–4%。只有選單或視窗開著時才會讀取統計資料；如果你要求在伺服器沒有回應時收到通知，則會每分鐘讀取一次。</p>
+      <p class="intro">Turnout 在 Mac 上待在選單列裡，在 Windows 上待在通知區域裡。在那裡連線、中斷通道，需要細節時再打開視窗。</p>
+      <p>通道在 Turnout 的背景服務中執行，所以關掉 App 也會繼續連著。在 Mac 上、視窗開著的情況下量測，App 閒置時約佔 0.5% CPU，繪製即時流量時約 2–4%。只有選單或視窗開著時才會讀取統計資料；如果你要求在伺服器沒有回應時收到通知，則會每分鐘讀取一次。</p>
       <p>排程或 Wi-Fi 規則讓通道連線或中斷連線時、通道連線失敗或在沒有要求下停止時，以及試用結束的前一天，Turnout 都會發出通知。每一種通知都有自己的開關，伺服器沒有回應的那一種預設關閉，等你需要時再打開。</p>
-      <p>它的選單和視窗會跟著你 Mac 的語言，使用 English、繁體中文、日本語、Español 或 한국어。</p>
+      <p>它的選單和視窗會跟著你電腦的語言，使用 English、繁體中文、日本語、Español 或 한국어。</p>
       <figure class="shot-figure">
         <!-- scripts/screenshots.sh must write menu-light.png and menu-dark.png at
              600x420 (the 300-point popover at 2x). If the popover's height
@@ -367,8 +369,9 @@ Endpoint = vpn.example.com:51820
     <h2 id="cleanup-title">不留下痕跡</h2>
     <div class="body">
       <p class="intro">Turnout 對路由和 DNS 的每一項變更，都會先記錄下來才動手。</p>
-      <p>如果 Mac 在通道連線時當機或斷電，背景服務下次啟動時會復原留下的變更，完成之前不會連線任何通道。「Turnout」›「修復網路設定⋯」也能隨時手動做同樣的事。</p>
-      <p>解除安裝只有一條路，不論你從 App、從安裝程式，還是從一個可以先讀過內容的 shell 指令稿開始。它會中斷所有通道、恢復路由與 DNS、把背景服務從登入項目移除，並刪除 App、它的記錄檔和偏好設定。已儲存的通道會保留，除非你選擇一併刪除。從 App 解除安裝時，也會空出這部 Mac 在你授權上的名額。<a href="how-it-works#uninstall">各種方式會移除什麼</a></p>
+      <p>如果電腦在通道連線時當機或斷電，背景服務下次啟動時會復原留下的變更，完成之前不會連線任何通道。在 Mac 上，「Turnout」›「修復網路設定⋯」也能隨時手動做同樣的事。</p>
+      <p>在 Mac 上，解除安裝只有一條路，不論你從 App、從安裝程式，還是從一個可以先讀過內容的 shell 指令稿開始。它會中斷所有通道、恢復路由與 DNS、把背景服務從登入項目移除，並刪除 App、它的記錄檔和偏好設定。已儲存的通道會保留，除非你選擇一併刪除。從 App 解除安裝時，也會空出這部 Mac 在你授權上的名額。<a href="how-it-works#uninstall">各種方式會移除什麼</a></p>
+      <p>在 Windows 上，可以在「設定 › 應用程式 › 已安裝的應用程式」中解除安裝 Turnout，或在 Turnout 視窗的「關於」中選擇「解除安裝Turnout⋯」。不論用哪種方式，所有通道都會中斷連線，服務和 Wintun 驅動程式也會隨 App 一起移除。<a href="windows#uninstall">在 Windows 上解除安裝</a></p>
     </div>
   </div>
 </section>
@@ -378,23 +381,41 @@ Endpoint = vpn.example.com:51820
     <h2 id="not-title">它不是什麼</h2>
     <div class="body">
       <ul class="nots">
-        <li><strong>還沒有 kill switch。</strong>Turnout 不會阻擋通道以外的流量。通道中斷時，你的 Mac 會走原本的網路。</li>
+        <li><strong>還沒有 kill switch。</strong>通道中斷時，你的 Mac 或 Windows 電腦會走原本的網路。在 Mac 上，通道連線時 Turnout 也不會阻擋通道以外的流量；在 Windows 上，承接所有流量的通道連線時，會把流量留在通道裡。</li>
         <li><strong>不是 VPN 服務商。</strong>請自備伺服器，或使用服務商、網管給你的設定檔。</li>
-        <li><strong>沒有使用 NetworkExtension。</strong>通道在 Turnout 自己的背景服務中執行，hook 能執行、路由由你作主，靠的就是這一點。也因此通道不會出現在「系統設定 › VPN」中。</li>
+        <li><strong>沒有使用 NetworkExtension。</strong>不論在 Mac 還是 Windows 上，通道都在 Turnout 自己的背景服務中執行，hook 能執行、路由由你作主，靠的就是這一點。在 Mac 上，通道也因此不會出現在「系統設定 › VPN」中。</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="mac" aria-labelledby="mac-title">
+  <div class="wrap">
+    <h2 id="mac-title">Mac 上還多了幾項</h2>
+    <div class="body">
+      <p class="intro">Windows 版 Turnout 有同樣的設定檔、網路介面、規則、通知和授權。有幾項是 Mac 上才有的。</p>
+      <ul class="extras">
+        <li><strong>UDP 被擋時改走 TCP。</strong>通道可以經由 <a href="#phantun">Phantun</a> 伺服器連線。在 Windows 上，經由 Phantun 連到伺服器的設定檔會照常顯示，但還不會連線。</li>
+        <li><strong>「捷徑」。</strong>提供連線、中斷通道和讀取通道狀態的動作，讓你用在自己的捷徑和自動化中。在 Windows 上則用命令列取代：<code>Turnout.exe connect &lt;tunnel&gt;</code>、<code>disconnect</code> 和 <code>status</code>。</li>
+        <li><strong>Homebrew。</strong><code>brew install --cask tasict/tap/turnout</code> 裝的和下載的是同一個安裝程式。</li>
+        <li><strong>每部 Mac 都找得到授權。</strong>登入同一個 iCloud 帳號的其他 Mac 會找到這份授權，按一下就能使用。Windows 電腦則要在每一台上各自貼上金鑰。</li>
+      </ul>
+      <p>有一點正好相反。在 Windows 上，承接所有流量的通道連線期間，Windows 的防火牆會封鎖原本會從通道外送出的流量，以及送往通道 DNS 伺服器以外的 DNS 查詢，做法和官方 WireGuard App 相同。<a href="windows#different">Windows 上的不同之處</a></p>
     </div>
   </div>
 </section>
 
 <section class="feature inspect" id="your-mac" aria-labelledby="your-mac-title">
   <div class="wrap">
-    <h2 id="your-mac-title">它對你的 Mac 做了什麼</h2>
+    <h2 id="your-mac-title">它對你的電腦做了什麼</h2>
     <div class="body">
-      <p class="intro">Turnout 會安裝一個以 root 身分執行的背景服務。它用和 wg-quick 相同的工具修改位址、路由與 DNS，把設定檔放在只有 root 能讀取的資料夾，而且設定檔裡的 hook 要經過管理者核准才會執行。走 Phantun 的通道在連線期間，還會加上一條封包過濾規則。每一項你都能自己檢查。</p>
+      <p class="intro">在 Mac 上，Turnout 會安裝一個以 root 身分執行的背景服務。它用和 wg-quick 相同的工具修改位址、路由與 DNS，把設定檔放在只有 root 能讀取的資料夾，而且設定檔裡的 hook 要經過管理者核准才會執行。走 Phantun 的通道在連線期間，還會加上一條封包過濾規則。每一項你都能自己檢查。</p>
 <pre><code>netstat -rn                         <span class="c"># 它加入的路由</span>
 networksetup -getdnsservers Wi-Fi   <span class="c"># 它設定的 DNS 伺服器</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       <p><a class="more" href="how-it-works">Turnout 對你的 Mac 做了什麼</a></p>
+      <p>在 Windows 上，服務以 SYSTEM 身分執行，每條已連線的通道都是一個以它命名的 Wintun 網路介面卡。在 PowerShell 中就看得到它改了什麼。</p>
+      <p><a class="more" href="windows#your-pc">Turnout 對你的 Windows 電腦做了什麼</a></p>
     </div>
   </div>
 </section>
@@ -411,19 +432,26 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       <!-- /download:soon -->
       <!-- download:live -->
       <div class="live">
+      <p class="downloads"><a class="download" href="../releases/latest">下載 Mac 版</a> <a class="download" href="../releases/latest">下載 Windows 版</a></p>
+      <p class="fineprint">版本 <!-- version --><span data-latest="version">1.1.4</span><!-- /version -->，<!-- released --><time data-latest="date" datetime="2026-11-06">2026 年 11 月 6 日</time><!-- /released -->發布 · <a href="../releases/latest">版本說明</a></p>
+      <p class="fineprint">macOS 15 以上，支援 Apple 晶片與 Intel · x64 電腦上的 Windows 11 · 試用 7 天 · <!-- price --><span data-price>US$19</span><!-- /price --> 一次買斷，三台電腦，Mac 或 Windows 皆可</p>
+      <h3>在 Mac 上</h3>
       <ol class="steps">
         <li>從<a href="../releases/latest">最新版本</a>下載安裝程式（<code>.pkg</code> 檔）。</li>
         <li>打開它並依照步驟進行。Turnout 會安裝到「應用程式」檔案夾，安裝完成後自動開啟。</li>
         <li>Turnout 的歡迎導覽會帶你安裝背景服務；macOS 詢問時，在「系統設定 › 一般 › 登入項目與延伸功能」中允許它。</li>
       </ol>
-      <p><a class="download" href="../releases/latest">下載 Turnout</a></p>
-      <p class="fineprint">版本 <!-- version --><span data-latest="version">1.1.4</span><!-- /version -->，<!-- released --><time data-latest="date" datetime="2026-11-06">2026 年 11 月 6 日</time><!-- /released -->發布 · <a href="../releases/latest">版本說明</a></p>
-      <p class="fineprint">macOS 15 以上 · Apple 晶片與 Intel · 試用 7 天 · <!-- price --><span data-price>US$19</span><!-- /price --> 一次買斷，三台電腦</p>
       <p>也可以用 <a href="https://brew.sh">Homebrew</a> 安裝，裝的是同一個安裝程式：</p>
 <pre><code>brew tap tasict/tap
 brew install --cask tasict/tap/turnout</code></pre>
       <p class="fineprint">不論用哪種方式安裝，Turnout 都會自行更新，所以 <code>brew upgrade</code> 不會動到它。<code>brew uninstall --cask turnout</code> 會執行 Turnout 自己的解除安裝程式，並保留你儲存的通道。</p>
-      <p><strong>在 Windows 電腦上：</strong>同一個版本也附有 Windows 安裝程式，也就是 <code>.msi</code> 檔，適用於 x64 電腦上的 Windows 11。<a href="windows#install">如何在 Windows 上安裝 Turnout</a></p>
+      <h3>在 Windows 上</h3>
+      <ol class="steps">
+        <li>下載安裝程式 <code>Turnout-&lt;version&gt;-x64.msi</code>，可以在<a href="../releases/latest">最新版本</a>中找到。</li>
+        <li>打開它。這個安裝程式沒有用 Windows 的程式碼簽署憑證簽署，所以 Windows SmartScreen 可能會顯示「Windows 已保護您的電腦」：請選擇「其他資訊」，再選「仍要執行」。接著 Windows 會要求管理者核准。</li>
+        <li>Turnout 會安裝到 <code>C:\Program Files\Turnout</code>，背景服務隨即啟動，接著 Turnout 會打開。它的歡迎導覽會告訴你圖示在哪裡。</li>
+      </ol>
+      <p class="fineprint">在開啟了「智慧型應用程式控制」的電腦上，Windows 完全不讓沒有程式碼簽署憑證的安裝程式執行。<a href="windows#install">在 Windows 上安裝</a></p>
       </div>
       <!-- /download:live -->
     </div>

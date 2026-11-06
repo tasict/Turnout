@@ -18,7 +18,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=19e101c5">
+<link rel="stylesheet" href="../assets/site.css?v=2acdb75b">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout：ネイティブアプリになったMacとPC用のwg-quick">
@@ -111,7 +111,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     </picture></a>
     <nav class="site-nav" aria-label="サイト">
       <ul>
-        <li><a href="how-it-works">仕組み</a></li>
+        <li><a href="how-it-works">Mac</a></li>
         <li><a href="windows">Windows</a></li>
       </ul>
     </nav>
@@ -143,10 +143,10 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- /download:soon -->
         <!-- download:live -->
         <div class="live">
-          <a class="download" href="../releases/latest">Mac版をダウンロード</a>
+          <p class="downloads"><a class="download" href="../releases/latest">Mac版をダウンロード</a> <a class="download" href="../releases/latest">Windows版をダウンロード</a></p>
           <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.1.4</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-11-06">2026年11月6日</time><!-- /released -->公開）· <a href="../releases/latest">リリースノート</a></p>
-          <p class="fineprint">macOS 15以降 · AppleシリコンとIntel · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、コンピュータ3台</p>
-          <p class="fineprint"><a href="#install">インストール方法</a> · <a href="windows">Windows版Turnout</a>（Windows 11用）</p>
+          <p class="fineprint">macOS 15以降（AppleシリコンとIntel）· x64のWindows 11 · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、コンピュータ3台（MacでもWindowsでも）</p>
+          <p class="fineprint"><a href="#install">インストール方法</a> · <a href="#mac">Macで加わる機能</a></p>
         </div>
         <!-- /download:live -->
       </div>
@@ -197,11 +197,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
   <div class="wrap">
     <h2 id="wg-quick-title">構成ファイルは<span class="nb">wg-quick</span>のとおりに</h2>
     <div class="body">
-      <p class="intro">Turnoutは、wg-quickで使っている<code>.conf</code>ファイルをそのまま読み込み、macOS上のwg-quickと同じ手順で、同じシステムツールを使って適用します。</p>
+      <p class="intro">Turnoutは、wg-quickで使っている<code>.conf</code>ファイルをそのまま読み込み、wg-quickと同じ手順で適用します。Macでは同じシステムツールを使い、WindowsではWindows自身のネットワーク関数を使います。</p>
       <dl class="keys">
         <div>
           <dt><code>PreUp</code> <code>PostUp</code> <code>PreDown</code> <code>PostDown</code></dt>
-          <dd>フックが実行されます。<code>%i</code>はトンネルの<code>utun</code>インターフェイスに、<code>%I</code>はトンネル名に置き換えられます。ファイルのフックは、管理者が承認してから実行されます。<a href="how-it-works#hooks">その仕組み</a>。</dd>
+          <dd>フックが実行されます。<code>%i</code>はトンネルのインターフェイス（Macでは<code>utun</code>インターフェイス、WindowsではWintunアダプタ）に、<code>%I</code>はトンネル名に置き換えられます。ファイルのフックは、管理者が承認してから実行されます。<a href="how-it-works#hooks">その仕組み</a>。</dd>
         </div>
         <div>
           <dt><code>AllowedIPs</code></dt>
@@ -213,7 +213,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         </div>
         <div>
           <dt><code>DNS</code></dt>
-          <dd>トンネルの接続中は、DNSサーバーと検索ドメインがネットワークサービスに設定され、接続を解除すると元の設定に戻ります。</dd>
+          <dd>DNSサーバーと検索ドメインは、トンネルの接続中に適用されます。Macではネットワークサービスに設定され、接続を解除すると元の設定に戻ります。Windowsではトンネル自身のアダプタに設定されるので、元に戻すものはありません。</dd>
         </div>
         <div>
           <dt><code>MTU</code></dt>
@@ -257,6 +257,7 @@ Endpoint = vpn.example.com:51820</code></pre>
         </dl>
       </div>
       <p>接続中のトンネルの出口インターフェイスは、メインウインドウの経路から変更することもできます。Turnoutは接続を解除し、変更を保存して、もう一度接続します。</p>
+      <p>Windowsでは、インターフェイスには、Windowsに表示されるネットワークアダプタの名前（たとえば<code>Ethernet 2</code>）を使います：<code>#@ BindInterface = Ethernet 2</code>。</p>
     </div>
   </div>
 </section>
@@ -265,7 +266,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="network-title">ネットワークの変化についていく</h2>
     <div class="body">
-      <p class="intro">ゲートウェイ、インターフェイス、リンクが変わったときや、Macがスリープから復帰したとき、Turnoutは物理ネットワークを通るトンネルのルートを現在のゲートウェイに付け直し、自動MTUを計算し直し、DNSを適用し直します。</p>
+      <p class="intro">ゲートウェイ、インターフェイス、リンクが変わったときや、コンピュータがスリープから復帰したとき、Turnoutは物理ネットワークを通るトンネルのルートを現在のゲートウェイに付け直し、自動MTUを計算し直し、DNSを適用し直します。</p>
       <p>トンネルを固定したインターフェイスが一度なくなって戻ってくると、トンネルはそこに固定し直して、もう一度ハンドシェイクします。インターフェイスが戻らなければ、サーバーへのルートはブラックホールになり、ハンドシェイクがトンネル自身に入り込むことはありません。トンネルを通らないルートは、インターフェイスが戻るまで待機します。</p>
     </div>
   </div>
@@ -275,6 +276,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="phantun-title">UDPがふさがれたらTCPで</h2>
     <div class="body">
+      <p class="fineprint">Mac版の機能です。Windows版Turnoutでは、Phantun経由でサーバーに接続する構成は表示されますが、まだ接続しません。</p>
       <p class="intro">WireGuardが使うUDPをブロックしたり遅くしたりするネットワークがあります。ホテルやゲスト用のWi-Fi、一部のオフィスや通信事業者です。ピアをPhantunに切り替えると、TurnoutはWireGuardのパケットをTCP接続に包んでPhantunサーバーに送り、そこからWireGuardサーバーに渡されます。</p>
 <pre><code>[Peer]
 PublicKey = …
@@ -299,10 +301,10 @@ Endpoint = vpn.example.com:51820
     <h2 id="automatic-title">自動で接続</h2>
     <div class="body">
       <p class="intro">トンネルには、スケジュール、Wi-Fiネットワークの一覧、またはその両方を設定できます。</p>
-      <p>スケジュールの時間帯が始まるとTurnoutはトンネルを接続し、終わると接続を解除します。一覧のネットワークにMacが接続するとトンネルが接続され、離れると接続が解除されます。その間に手動で行った操作はそのまま保たれ、ルールを変えただけで接続や接続解除が起きることはありません。</p>
+      <p>スケジュールの時間帯が始まるとTurnoutはトンネルを接続し、終わると接続を解除します。一覧のネットワークにコンピュータが接続するとトンネルが接続され、離れると接続が解除されます。その間に手動で行った操作はそのまま保たれ、ルールを変えただけで接続や接続解除が起きることはありません。</p>
 <pre><code>#@ Schedule = Mon-Fri 09:00-18:00
 #@ OnWiFi = Office</code></pre>
-      <p>ルールは構成ファイルの中の行で、トンネルのページから設定します。Turnoutは開いている間だけルールに従って動くので、“ログイン時に開く”を用意しています。Wi-Fiルールには位置情報へのアクセスが必要です。macOSはWi-Fiネットワークの名前を位置情報として扱うためです。Turnoutはルールを設定するときにアクセスを求め、起動時に求めることはありません。</p>
+      <p>ルールは構成ファイルの中の行で、トンネルのページから設定します。Turnoutは開いている間だけルールに従って動くので、“ログイン時に開く”を用意しています。Wi-Fiルールには位置情報へのアクセスが必要です。macOSとWindowsはWi-Fiネットワークの名前を位置情報として扱うためです。Turnoutはルールを設定するときにアクセスを求め、起動時に求めることはありません。</p>
       <figure class="shot-figure shot-automation">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg?v=3893c740">
@@ -344,10 +346,10 @@ Endpoint = vpn.example.com:51820
   <div class="wrap">
     <h2 id="menu-bar-title">じゃまにならない</h2>
     <div class="body">
-      <p class="intro">Turnoutはメニューバーにいます。トンネルの接続と接続解除はそこから行い、詳しく見たいときだけウインドウを開きます。</p>
-      <p>トンネルはTurnoutのバックグラウンドサービスで動くので、アプリを閉じても接続されたままです。ウインドウを開いた状態で測ると、待機中のCPU使用率は約0.5%、リアルタイムの通信を描いている間は2〜4%です。統計情報を取得するのは、メニューかウインドウが開いている間だけです。ただし、サーバーが応答しなくなったら知らせるよう設定している場合は、1分に1回取得します。</p>
+      <p class="intro">Turnoutは、Macではメニューバーに、Windowsでは通知領域にいます。トンネルの接続と接続解除はそこから行い、詳しく見たいときだけウインドウを開きます。</p>
+      <p>トンネルはTurnoutのバックグラウンドサービスで動くので、アプリを閉じても接続されたままです。Macでウインドウを開いた状態で測ると、待機中のCPU使用率は約0.5%、リアルタイムの通信を描いている間は2〜4%です。統計情報を取得するのは、メニューかウインドウが開いている間だけです。ただし、サーバーが応答しなくなったら知らせるよう設定している場合は、1分に1回取得します。</p>
       <p>スケジュールやWi-Fiルールがトンネルを接続または接続解除したとき、トンネルが失敗したり指示なしに停止したりしたとき、そして試用期間が終わる前日に、通知が届きます。通知の種類ごとにスイッチがあり、サーバーが応答しないことを知らせる通知は、必要になるまでオフのままです。</p>
-      <p>Turnoutのメニューとウインドウは、Macの言語に合わせてEnglish、繁體中文、日本語、Español、한국어で表示されます。</p>
+      <p>Turnoutのメニューとウインドウは、コンピュータの言語に合わせてEnglish、繁體中文、日本語、Español、한국어で表示されます。</p>
       <figure class="shot-figure">
         <!-- scripts/screenshots.sh must write menu-light.png and menu-dark.png at
              600x420 (the 300-point popover at 2x). If the popover's height
@@ -367,8 +369,9 @@ Endpoint = vpn.example.com:51820
     <h2 id="cleanup-title">何も残さない</h2>
     <div class="body">
       <p class="intro">TurnoutがルートやDNSに加える変更は、すべて変更する前に記録されます。</p>
-      <p>トンネルの接続中にMacがクラッシュしたり電源が落ちたりしても、バックグラウンドサービスは次の起動時に残った変更を元に戻し、それが終わるまでトンネルを接続しません。“Turnout” › “ネットワーク設定を修復…”で、いつでも同じことができます。</p>
-      <p>アンインストールの経路はひとつです。アプリから始めても、インストーラから始めても、先に中身を読めるシェルスクリプトから始めても同じです。すべてのトンネルの接続を解除し、ルートとDNSを元に戻し、バックグラウンドサービスをログイン項目から外し、アプリ、ログ、環境設定を削除します。保存済みのトンネルは、削除を選ばない限り残ります。アプリからアンインストールすると、ライセンスでそのMacが使っていた枠も空きます。<a href="how-it-works#uninstall">それぞれの方法で削除されるもの</a></p>
+      <p>トンネルの接続中にコンピュータがクラッシュしたり電源が落ちたりしても、バックグラウンドサービスは次の起動時に残った変更を元に戻し、それが終わるまでトンネルを接続しません。Macでは、“Turnout” › “ネットワーク設定を修復…”で、いつでも同じことができます。</p>
+      <p>Macでは、アンインストールの経路はひとつです。アプリから始めても、インストーラから始めても、先に中身を読めるシェルスクリプトから始めても同じです。すべてのトンネルの接続を解除し、ルートとDNSを元に戻し、バックグラウンドサービスをログイン項目から外し、アプリ、ログ、環境設定を削除します。保存済みのトンネルは、削除を選ばない限り残ります。アプリからアンインストールすると、ライセンスでそのMacが使っていた枠も空きます。<a href="how-it-works#uninstall">それぞれの方法で削除されるもの</a></p>
+      <p>Windowsでは、“設定” › “アプリ” › “インストールされているアプリ”でTurnoutをアンインストールするか、Turnoutのウインドウの“情報”で“Turnoutをアンインストール…”を選びます。どちらの方法でも、すべてのトンネルの接続が解除され、サービスとWintunドライバもアプリと一緒に削除されます。<a href="windows#uninstall">Windowsでのアンインストール</a></p>
     </div>
   </div>
 </section>
@@ -378,23 +381,41 @@ Endpoint = vpn.example.com:51820
     <h2 id="not-title">Turnoutではないもの</h2>
     <div class="body">
       <ul class="nots">
-        <li><strong>キルスイッチはまだありません。</strong>Turnoutはトンネル外の通信を遮断しません。トンネルが切れている間、Macは通常のネットワークを使います。</li>
+        <li><strong>キルスイッチはまだありません。</strong>トンネルが切れている間、MacやPCは通常のネットワークを使います。Macでは、Turnoutは接続中のトンネルの外の通信も遮断しません。Windowsでは、すべての通信を通すトンネルは、接続している間、通信をトンネルの外に出しません。</li>
         <li><strong>VPNプロバイダではありません。</strong>サーバーはご自身で用意するか、プロバイダやネットワーク管理者から受け取った構成を使ってください。</li>
-        <li><strong>NetworkExtensionは使っていません。</strong>トンネルはTurnout自身のバックグラウンドサービスで動きます。だからフックが実行でき、ルートがあなたのままなのです。そのため“システム設定” › “VPN”には表示されません。</li>
+        <li><strong>NetworkExtensionは使っていません。</strong>トンネルは、MacでもWindowsでも、Turnout自身のバックグラウンドサービスで動きます。だからフックが実行でき、ルートがあなたのままなのです。Macでは、“システム設定” › “VPN”には表示されません。</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="mac" aria-labelledby="mac-title">
+  <div class="wrap">
+    <h2 id="mac-title">Macには、もう少しあります</h2>
+    <div class="body">
+      <p class="intro">Windows版Turnoutにも、同じ構成ファイル、ネットワークインターフェイス、ルール、通知、ライセンスがあります。Macだけのものが、いくつかあります。</p>
+      <ul class="extras">
+        <li><strong>UDPがふさがれたらTCPで。</strong><a href="#phantun">Phantun</a>サーバーを経由してトンネルを接続します。Windowsでは、Phantun経由でサーバーに接続する構成は表示されますが、まだ接続しません。</li>
+        <li><strong>ショートカット。</strong>トンネルを接続、接続解除し、その状態を読み取るアクションを、ショートカットやオートメーションで使えます。Windowsでは、“ショートカット”の代わりに、コマンドラインで<code>Turnout.exe connect &lt;tunnel&gt;</code>、<code>disconnect</code>、<code>status</code>を使えます。</li>
+        <li><strong>Homebrew。</strong><code>brew install --cask tasict/tap/turnout</code>で、ダウンロードと同じパッケージをインストールできます。</li>
+        <li><strong>すべてのMacにライセンスを。</strong>同じiCloudアカウントにサインインしているほかのMacがライセンスを見つけ、クリック1回で使えます。Windows PCでは、PCごとにキーを貼り付けます。</li>
+      </ul>
+      <p>逆に、Windowsだけのものがひとつあります。Windowsでは、すべての通信を通すトンネルが接続している間、Windowsのファイアウォールは、トンネルの外へ出ようとする通信と、トンネルのもの以外のDNSサーバーへの問い合わせをブロックします。公式のWireGuardアプリと同じです。<a href="windows#different">Windowsで異なるところ</a></p>
     </div>
   </div>
 </section>
 
 <section class="feature inspect" id="your-mac" aria-labelledby="your-mac-title">
   <div class="wrap">
-    <h2 id="your-mac-title">Macに対して行うこと</h2>
+    <h2 id="your-mac-title">コンピュータに対して行うこと</h2>
     <div class="body">
-      <p class="intro">Turnoutはrootとして動くバックグラウンドサービスをインストールします。wg-quickと同じツールでアドレス、ルート、DNSを変更し、構成はrootしか読めないフォルダに置き、構成のフックは管理者が承認してから実行します。Phantun経由のトンネルは、接続している間、パケットフィルタのルールを1つ追加します。どれもご自身で確かめられます。</p>
+      <p class="intro">Macでは、Turnoutはrootとして動くバックグラウンドサービスをインストールします。wg-quickと同じツールでアドレス、ルート、DNSを変更し、構成はrootしか読めないフォルダに置き、構成のフックは管理者が承認してから実行します。Phantun経由のトンネルは、接続している間、パケットフィルタのルールを1つ追加します。どれもご自身で確かめられます。</p>
 <pre><code>netstat -rn                         <span class="c"># 追加されたルート</span>
 networksetup -getdnsservers Wi-Fi   <span class="c"># 設定されたDNSサーバー</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       <p><a class="more" href="how-it-works">TurnoutがMacに対して行うこと</a></p>
+      <p>Windowsでは、サービスはSYSTEMとして動き、接続中のトンネルは、それぞれその名前が付いたWintunネットワークアダプタです。変更したものはPowerShellで確かめられます。</p>
+      <p><a class="more" href="windows#your-pc">TurnoutがPCに対して行うこと</a></p>
     </div>
   </div>
 </section>
@@ -411,19 +432,26 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       <!-- /download:soon -->
       <!-- download:live -->
       <div class="live">
+      <p class="downloads"><a class="download" href="../releases/latest">Mac版をダウンロード</a> <a class="download" href="../releases/latest">Windows版をダウンロード</a></p>
+      <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.1.4</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-11-06">2026年11月6日</time><!-- /released -->公開）· <a href="../releases/latest">リリースノート</a></p>
+      <p class="fineprint">macOS 15以降（AppleシリコンとIntel）· x64のWindows 11 · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、コンピュータ3台（MacでもWindowsでも）</p>
+      <h3>Macの場合</h3>
       <ol class="steps">
         <li>インストーラ（<code>.pkg</code>ファイル）を<a href="../releases/latest">最新リリース</a>からダウンロードします。</li>
         <li>開いて手順に従います。Turnoutは“アプリケーション”フォルダにインストールされ、インストールが終わると開きます。</li>
         <li>Turnoutのようこそツアーに沿ってバックグラウンドサービスをインストールし、macOSに尋ねられたら“システム設定” › “一般” › “ログイン項目と機能拡張”で許可します。</li>
       </ol>
-      <p><a class="download" href="../releases/latest">Turnoutをダウンロード</a></p>
-      <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.1.4</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-11-06">2026年11月6日</time><!-- /released -->公開）· <a href="../releases/latest">リリースノート</a></p>
-      <p class="fineprint">macOS 15以降 · AppleシリコンとIntel · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、コンピュータ3台</p>
       <p><a href="https://brew.sh">Homebrew</a>でもインストールできます。インストールされるのは同じパッケージです。</p>
 <pre><code>brew tap tasict/tap
 brew install --cask tasict/tap/turnout</code></pre>
       <p class="fineprint">どちらの方法でも、Turnoutは自分でアップデートするので、<code>brew upgrade</code>はTurnoutに手を加えません。<code>brew uninstall --cask turnout</code>はTurnout自身のアンインストーラを実行し、保存したトンネルは残します。</p>
-      <p><strong>Windows PCの場合：</strong>同じリリースに、x64版Windows 11用のWindowsインストーラ（<code>.msi</code>ファイル）があります。<a href="windows#install">WindowsにTurnoutをインストールする方法</a></p>
+      <h3>Windowsの場合</h3>
+      <ol class="steps">
+        <li>インストーラ（<code>Turnout-&lt;version&gt;-x64.msi</code>）を<a href="../releases/latest">最新リリース</a>からダウンロードします。</li>
+        <li>開きます。インストーラはWindowsのコード署名証明書で署名されていないため、Windows SmartScreenが、PCを保護したと表示することがあります。その場合は“詳細情報”を選び、“実行”を選んでください。続いて、Windowsが管理者の承認を求めます。</li>
+        <li>Turnoutが<code>C:\Program Files\Turnout</code>にインストールされ、バックグラウンドサービスが起動し、Turnoutが開きます。ようこそツアーが、アイコンのある場所を示します。</li>
+      </ol>
+      <p class="fineprint">スマート アプリ コントロールがオンになっているPCでは、Windowsはコード署名証明書のないインストーラをまったく実行させません。<a href="windows#install">Windowsでのインストール</a></p>
       </div>
       <!-- /download:live -->
     </div>

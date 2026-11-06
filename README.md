@@ -15,6 +15,10 @@ This repository holds:
 
 ## Installing
 
+One download page has both installers: the same release, the same license, the same configs.
+
+### On a Mac
+
 Turnout needs macOS 15 or later, on Apple silicon or Intel.
 
 1. Download `Turnout-<version>.pkg` from the [latest release](https://github.com/tasict/Turnout/releases/latest).
@@ -32,11 +36,22 @@ brew install --cask tasict/tap/turnout
 
 Either way Turnout updates itself, so `brew upgrade` leaves it alone; `brew uninstall --cask turnout` runs Turnout's own uninstaller and keeps your saved tunnels.
 
-What the background service does to your Mac, and how to check it, is on [What Turnout does to your Mac](https://turnout.ctsite.cc/how-it-works.html).
+What the background service does to your Mac, and how to check it, is on [What Turnout does to your Mac](https://turnout.ctsite.cc/how-it-works).
 
 ### On Windows
 
-Turnout for Windows needs Windows 11 on an x64 PC (Intel or AMD). Download `Turnout-<version>-x64.msi` from the same [latest release](https://github.com/tasict/Turnout/releases/latest) and open it. The installer is not signed with a Windows code-signing certificate, so SmartScreen may say it protected your PC: choose More info, then Run anyway. Updates carry Turnout's own signature, which its background service checks before installing them. How to install it, what differs from the Mac and what it does to your PC are on [Turnout for Windows](https://turnout.ctsite.cc/windows.html).
+Turnout for Windows needs Windows 11 on an x64 PC (Intel or AMD). Download `Turnout-<version>-x64.msi` from the same [latest release](https://github.com/tasict/Turnout/releases/latest) and open it. The installer is not signed with a Windows code-signing certificate, so SmartScreen may say it protected your PC: choose More info, then Run anyway. Updates carry Turnout's own signature, which its background service checks before installing them. How to install it, what differs from the Mac and what it does to your PC are on [Turnout for Windows](https://turnout.ctsite.cc/windows).
+
+### What the Mac adds
+
+Turnout for Windows has the same configs, network interfaces, rules, notifications and license. A few things are on the Mac only:
+
+- tunnels over TCP through a [Phantun](https://github.com/dndx/phantun) server, for networks that block UDP (on Windows such a config is shown but does not connect yet);
+- Shortcuts actions that connect and disconnect a tunnel and read its status (on Windows, `Turnout.exe connect <tunnel>`, `disconnect` and `status` on the command line);
+- Homebrew;
+- the license on every Mac signed in to the same iCloud account (on Windows the key is entered on each PC).
+
+And one is the other way round: on Windows, a connected tunnel that takes all traffic keeps it inside, with Windows' firewall, as the official WireGuard app does.
 
 ## What Turnout sends
 
@@ -46,7 +61,7 @@ Switching off **Check for updates automatically** in General (Turnout › Settin
 
 No license check runs during the trial. Once you have bought a license, the app activates and checks it with Polar, which sells Turnout: when you activate a Mac, about once a week when you open its menu or window, and when you remove a Mac. It sends the license key, the name you give the Mac, its model identifier, the macOS and Turnout versions and a one-way hash of its hardware identifier, never anything about your tunnels. The key and the list of your Macs are kept in your own iCloud account, so your other Macs find the license; on Windows the key is entered on each PC. If Polar cannot be reached, a licensed computer keeps connecting.
 
-The details are in the [privacy policy](https://turnout.ctsite.cc/privacy.html).
+The details are in the [privacy policy](https://turnout.ctsite.cc/privacy).
 
 ## Reporting a problem
 
@@ -68,16 +83,16 @@ Issues are public: leave out private keys, preshared keys, server addresses and 
 
 Turnout is paid: US$19 once for three computers, Macs or Windows PCs (yours, your household's, or within one organization), with every update to Turnout 1. Try it first: 7 days on each computer, and 7 more if you ask, with no account, no card and no license check. After the trial only connecting needs a license; tunnels that are connected stay connected, and everything else keeps working.
 
-[Polar](https://polar.sh/) sells it and handles the payment, tax and receipt; your key appears on Polar's page as soon as you have paid, and stays on your Polar purchases page. Not for you? A refund within 14 days, no questions. The details are in the [license terms](https://turnout.ctsite.cc/license.html).
+[Polar](https://polar.sh/) sells it and handles the payment, tax and receipt; your key appears on Polar's page as soon as you have paid, and stays on your Polar purchases page. Not for you? A refund within 14 days, no questions. The details are in the [license terms](https://turnout.ctsite.cc/license).
 
 ## The website
 
 Plain static HTML and one stylesheet, in five languages (English, 繁體中文, 日本語, Español, 한국어), deployed as this repository's `main` branch stands to Cloudflare Pages, at <https://turnout.ctsite.cc/>; there is no build step. `_redirects` holds the site's stable addresses for the releases and the issues, which the apps use, and leads them here. The screenshots in `assets/` are taken from the app itself.
 
 - [Turnout](https://turnout.ctsite.cc/)
-- [What Turnout does to your Mac](https://turnout.ctsite.cc/how-it-works.html)
-- [Turnout for Windows](https://turnout.ctsite.cc/windows.html)
-- [Privacy policy](https://turnout.ctsite.cc/privacy.html)
-- [License terms](https://turnout.ctsite.cc/license.html)
+- [What Turnout does to your Mac](https://turnout.ctsite.cc/how-it-works)
+- [Turnout for Windows](https://turnout.ctsite.cc/windows)
+- [Privacy policy](https://turnout.ctsite.cc/privacy)
+- [License terms](https://turnout.ctsite.cc/license)
 
 © 2026 tasict

@@ -208,7 +208,7 @@ p code, li code, dd code, dt code, td code, figcaption code {
 .hero-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
 
 @media (min-width: 72rem) {
-  .hero-row { grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 4rem; }
+  .hero-row { grid-template-columns: minmax(0, 1fr) minmax(0, 31rem); align-items: start; gap: 4rem; }
 }
 
 .lede {
@@ -234,6 +234,10 @@ p code, li code, dd code, dt code, td code, figcaption code {
   text-decoration: none;
 }
 .download:hover { background: color-mix(in srgb, var(--blue) 84%, var(--ink)); }
+
+/* The two downloads, side by side and alike: neither platform comes first. */
+.downloads { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0; }
+#install h3 { margin-top: 1.75rem; }
 
 .fineprint { color: var(--muted); font-size: 0.92rem; margin: 0; }
 .fineprint a { white-space: nowrap; }
@@ -532,6 +536,22 @@ pre .c { color: var(--code-muted); }
 :lang(zh-Hant) .nots li::before, :lang(ja) .nots li::before { top: 0.55em; }
 .nots strong { color: var(--ink); }
 .nots li { color: var(--muted); }
+
+/* What the Mac has that Windows does not (yet) */
+.extras { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+.extras li { position: relative; padding-left: 1.75rem; color: var(--muted); }
+.extras li::before {
+  content: "";
+  position: absolute;
+  left: 0.15rem;
+  top: 0.5em;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--blue);
+}
+:lang(zh-Hant) .extras li::before, :lang(ja) .extras li::before { top: 0.65em; }
+.extras strong { color: var(--ink); }
 
 /* The teaser for what it does to your Mac, on the sunk ground. */
 .inspect { background: var(--sunk); --code-bg: var(--bg); }

@@ -18,7 +18,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="assets/site.css?v=19e101c5">
+<link rel="stylesheet" href="assets/site.css?v=2acdb75b">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout: wg-quick for your Mac and PC, in a native app">
@@ -111,7 +111,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     </picture></a>
     <nav class="site-nav" aria-label="Site">
       <ul>
-        <li><a href="how-it-works">How it works</a></li>
+        <li><a href="how-it-works">Mac</a></li>
         <li><a href="windows">Windows</a></li>
       </ul>
     </nav>
@@ -143,10 +143,10 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- /download:soon -->
         <!-- download:live -->
         <div class="live">
-          <a class="download" href="releases/latest">Download for Mac</a>
+          <p class="downloads"><a class="download" href="releases/latest">Download for Mac</a> <a class="download" href="releases/latest">Download for Windows</a></p>
           <p class="fineprint">Version <!-- version --><span data-latest="version">1.1.4</span><!-- /version -->, released <!-- released --><time data-latest="date" datetime="2026-11-06">6 November 2026</time><!-- /released --> · <a href="releases/latest">Release notes</a></p>
-          <p class="fineprint">macOS 15 or later · Apple silicon and Intel · 7-day trial · <!-- price --><span data-price>US$19</span><!-- /price --> once, three computers</p>
-          <p class="fineprint"><a href="#install">How to install</a> · <a href="windows">Turnout for Windows</a>, on Windows 11</p>
+          <p class="fineprint">macOS 15 or later, on Apple silicon and Intel · Windows 11 on x64 · 7-day trial · <!-- price --><span data-price>US$19</span><!-- /price --> once, three computers, Mac or Windows</p>
+          <p class="fineprint"><a href="#install">How to install</a> · <a href="#mac">What the Mac adds</a></p>
         </div>
         <!-- /download:live -->
       </div>
@@ -197,11 +197,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
   <div class="wrap">
     <h2 id="wg-quick-title">Your configs, as <span class="nb">wg-quick</span> runs them</h2>
     <div class="body">
-      <p class="intro">Turnout reads the <code>.conf</code> files you already use with wg-quick and applies them the way wg-quick does on macOS, step for step, with the same system tools.</p>
+      <p class="intro">Turnout reads the <code>.conf</code> files you already use with wg-quick and applies them the way wg-quick does, step for step: on a Mac with the same system tools, on Windows with Windows' own network functions.</p>
       <dl class="keys">
         <div>
           <dt><code>PreUp</code> <code>PostUp</code> <code>PreDown</code> <code>PostDown</code></dt>
-          <dd>Hooks run, with <code>%i</code> replaced by the tunnel's <code>utun</code> interface and <code>%I</code> by its name. An administrator approves a file's hooks before they can run; <a href="how-it-works#hooks">how that works</a>.</dd>
+          <dd>Hooks run, with <code>%i</code> replaced by the tunnel's interface (its <code>utun</code> interface on a Mac, its Wintun adapter on Windows) and <code>%I</code> by its name. An administrator approves a file's hooks before they can run; <a href="how-it-works#hooks">how that works</a>.</dd>
         </div>
         <div>
           <dt><code>AllowedIPs</code></dt>
@@ -213,7 +213,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         </div>
         <div>
           <dt><code>DNS</code></dt>
-          <dd>Servers and search domains are set on your network services while the tunnel is up, and your own settings come back when it goes down.</dd>
+          <dd>Servers and search domains apply while the tunnel is up. On a Mac they are set on your network services, and your own settings come back when it goes down; on Windows they are set on the tunnel's own adapter, so there is nothing to put back.</dd>
         </div>
         <div>
           <dt><code>MTU</code></dt>
@@ -257,6 +257,7 @@ Endpoint = vpn.example.com:51820</code></pre>
         </dl>
       </div>
       <p>You can also change a connected tunnel's exit interface from its path in the main window. Turnout disconnects, saves the change and connects again.</p>
+      <p>On Windows, the interface is the network adapter's name as Windows shows it, such as <code>Ethernet 2</code>: <code>#@ BindInterface = Ethernet 2</code>.</p>
     </div>
   </div>
 </section>
@@ -265,7 +266,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="network-title">Follows the network</h2>
     <div class="body">
-      <p class="intro">When gateways, interfaces or links change, or the Mac wakes from sleep, Turnout puts the tunnel's routes through your physical network back on the current gateways, works out the automatic MTU again and re-applies DNS.</p>
+      <p class="intro">When gateways, interfaces or links change, or the computer wakes from sleep, Turnout puts the tunnel's routes through your physical network back on the current gateways, works out the automatic MTU again and re-applies DNS.</p>
       <p>If the interface a tunnel is bound to goes away and comes back, the tunnel binds to it again and handshakes again. If it disappears for good, the route to the server becomes a blackhole, so handshakes cannot slip into the tunnel itself, and routes that skip the tunnel wait until the interface returns.</p>
     </div>
   </div>
@@ -275,6 +276,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="phantun-title">Over TCP when UDP is blocked</h2>
     <div class="body">
+      <p class="fineprint">On the Mac. Turnout for Windows shows a config that uses Phantun, but does not connect it yet.</p>
       <p class="intro">Some networks block or slow down UDP, which WireGuard travels on: hotel and guest Wi-Fi, some offices, some carriers. Switch a peer to Phantun, and Turnout sends WireGuard's packets inside a TCP connection to a Phantun server, which hands them to your WireGuard server.</p>
 <pre><code>[Peer]
 PublicKey = …
@@ -299,10 +301,10 @@ Endpoint = vpn.example.com:51820
     <h2 id="automatic-title">Connects by itself</h2>
     <div class="body">
       <p class="intro">Give a tunnel a schedule, a list of Wi-Fi networks, or both.</p>
-      <p>When a scheduled window starts, Turnout connects the tunnel, and when it ends, disconnects it. When the Mac joins one of the listed networks, the tunnel connects; when it leaves, the tunnel disconnects. In between, what you do by hand sticks, and changing a rule never connects or disconnects anything on its own.</p>
+      <p>When a scheduled window starts, Turnout connects the tunnel, and when it ends, disconnects it. When the computer joins one of the listed networks, the tunnel connects; when it leaves, the tunnel disconnects. In between, what you do by hand sticks, and changing a rule never connects or disconnects anything on its own.</p>
 <pre><code>#@ Schedule = Mon-Fri 09:00-18:00
 #@ OnWiFi = Office</code></pre>
-      <p>The rules are lines in the config file, set up from the tunnel's page. Turnout acts on them while it is open, so it offers Open at Login. A Wi-Fi rule needs Location access, because macOS counts the name of a Wi-Fi network as location; Turnout asks for it when you set up the rule, never at launch.</p>
+      <p>The rules are lines in the config file, set up from the tunnel's page. Turnout acts on them while it is open, so it offers Open at Login. A Wi-Fi rule needs Location access, because macOS and Windows count the name of a Wi-Fi network as location; Turnout asks for it when you set up the rule, never at launch.</p>
       <figure class="shot-figure shot-automation">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/dark/4-automation.jpg?v=3893c740">
@@ -344,10 +346,10 @@ Endpoint = vpn.example.com:51820
   <div class="wrap">
     <h2 id="menu-bar-title">Stays out of the way</h2>
     <div class="body">
-      <p class="intro">Turnout lives in the menu bar. Connect and disconnect tunnels from there, and open the window only when you want the details.</p>
-      <p>Tunnels run in Turnout's background service, so they keep running when the app is closed. Measured with the window open, the app uses about 0.5% of the CPU while idle and 2–4% while it draws live traffic. Statistics are only fetched while the menu or a window is open, and once a minute if you ask to hear when a server stops answering.</p>
+      <p class="intro">Turnout lives in the menu bar on a Mac and in the notification area on Windows. Connect and disconnect tunnels from there, and open the window only when you want the details.</p>
+      <p>Tunnels run in Turnout's background service, so they keep running when the app is closed. Measured on a Mac with the window open, the app uses about 0.5% of the CPU while idle and 2–4% while it draws live traffic. Statistics are only fetched while the menu or a window is open, and once a minute if you ask to hear when a server stops answering.</p>
       <p>Notifications tell you when a schedule or Wi-Fi rule connected or disconnected a tunnel, when a tunnel failed or stopped without being asked to, and the day before your trial ends. Each kind has its own switch, and the one about a silent server is off until you want it.</p>
-      <p>Its menus and windows speak English, 繁體中文, 日本語, Español and 한국어, following your Mac's language.</p>
+      <p>Its menus and windows speak English, 繁體中文, 日本語, Español and 한국어, following your computer's language.</p>
       <figure class="shot-figure">
         <!-- scripts/screenshots.sh must write menu-light.png and menu-dark.png at
              600x420 (the 300-point popover at 2x). If the popover's height
@@ -367,8 +369,9 @@ Endpoint = vpn.example.com:51820
     <h2 id="cleanup-title">Nothing left behind</h2>
     <div class="body">
       <p class="intro">Every change Turnout makes to routes and DNS is written down before it is made.</p>
-      <p>If the Mac crashes or loses power with a tunnel up, the background service undoes what was left at its next start, and connects no tunnel until that is done. Turnout › Repair Network Settings… does the same whenever you ask.</p>
-      <p>Uninstalling takes one path, whether you start it from the app, from the installer or from a shell script you can read first. It disconnects every tunnel, restores routes and DNS, takes the background service out of Login Items, and deletes the app, its logs and its preferences. Saved tunnels stay unless you choose to delete them too. Uninstalling from the app also frees the Mac's place on your license. <a href="how-it-works#uninstall">What each way removes</a></p>
+      <p>If the computer crashes or loses power with a tunnel up, the background service undoes what was left at its next start, and connects no tunnel until that is done. On a Mac, Turnout › Repair Network Settings… does the same whenever you ask.</p>
+      <p>On a Mac, uninstalling takes one path, whether you start it from the app, from the installer or from a shell script you can read first. It disconnects every tunnel, restores routes and DNS, takes the background service out of Login Items, and deletes the app, its logs and its preferences. Saved tunnels stay unless you choose to delete them too. Uninstalling from the app also frees the Mac's place on your license. <a href="how-it-works#uninstall">What each way removes</a></p>
+      <p>On Windows, uninstall it in Settings › Apps › Installed apps, or with Uninstall Turnout… in About in Turnout's window. Either way every tunnel disconnects, and the service and the Wintun driver go with the app. <a href="windows#uninstall">Uninstalling on Windows</a></p>
     </div>
   </div>
 </section>
@@ -378,23 +381,41 @@ Endpoint = vpn.example.com:51820
     <h2 id="not-title">What it is not</h2>
     <div class="body">
       <ul class="nots">
-        <li><strong>No kill switch yet.</strong> Turnout does not block traffic outside the tunnel. While a tunnel is down, your Mac uses its normal network.</li>
+        <li><strong>No kill switch yet.</strong> While a tunnel is down, your Mac or PC uses its normal network. On a Mac, Turnout does not block traffic outside a connected tunnel either; on Windows, a connected tunnel that takes all traffic keeps it inside.</li>
         <li><strong>Not a VPN provider.</strong> Bring your own server, or a config from your provider or your network administrator.</li>
-        <li><strong>No NetworkExtension.</strong> Tunnels run in Turnout's own background service, which is what lets hooks run and routes stay yours. They do not appear under System Settings › VPN.</li>
+        <li><strong>No NetworkExtension.</strong> Tunnels run in Turnout's own background service, on the Mac and on Windows, which is what lets hooks run and routes stay yours. On a Mac they do not appear under System Settings › VPN.</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="mac" aria-labelledby="mac-title">
+  <div class="wrap">
+    <h2 id="mac-title">A few more things on the Mac</h2>
+    <div class="body">
+      <p class="intro">Turnout for Windows has the same configs, network interfaces, rules, notifications and license. A few things are on the Mac only.</p>
+      <ul class="extras">
+        <li><strong>Over TCP when UDP is blocked.</strong> Tunnels through a <a href="#phantun">Phantun</a> server. On Windows, a config that uses Phantun is shown but does not connect yet.</li>
+        <li><strong>Shortcuts.</strong> Actions that connect and disconnect a tunnel and read its status, for your shortcuts and automations. On Windows the same is on the command line: <code>Turnout.exe connect &lt;tunnel&gt;</code>, <code>disconnect</code> and <code>status</code>.</li>
+        <li><strong>Homebrew.</strong> <code>brew install --cask tasict/tap/turnout</code> installs the same package as the download.</li>
+        <li><strong>The license on every Mac.</strong> Your other Macs signed in to the same iCloud account find the license and use it with one click. On a Windows PC, you paste the key on each one.</li>
+      </ul>
+      <p>One thing is the other way round. On Windows, while a tunnel that takes all traffic is connected, Windows' firewall keeps traffic, and DNS to servers other than the tunnel's, inside it, as the official WireGuard app does. <a href="windows#different">What differs on Windows</a></p>
     </div>
   </div>
 </section>
 
 <section class="feature inspect" id="your-mac" aria-labelledby="your-mac-title">
   <div class="wrap">
-    <h2 id="your-mac-title">What it does to your Mac</h2>
+    <h2 id="your-mac-title">What it does to your computer</h2>
     <div class="body">
-      <p class="intro">Turnout installs a background service that runs as root. It changes addresses, routes and DNS with the same tools wg-quick uses, keeps configs in a folder only root can read, and runs a config's hooks only after an administrator approves them. A tunnel through Phantun also adds one packet filter rule while it is connected. You can check each of these yourself.</p>
+      <p class="intro">On a Mac, Turnout installs a background service that runs as root. It changes addresses, routes and DNS with the same tools wg-quick uses, keeps configs in a folder only root can read, and runs a config's hooks only after an administrator approves them. A tunnel through Phantun also adds one packet filter rule while it is connected. You can check each of these yourself.</p>
 <pre><code>netstat -rn                         <span class="c"># the routes it added</span>
 networksetup -getdnsservers Wi-Fi   <span class="c"># the DNS servers it set</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       <p><a class="more" href="how-it-works">What Turnout does to your Mac</a></p>
+      <p>On Windows, the service runs as SYSTEM, and each connected tunnel is a Wintun network adapter named after it. PowerShell shows what it changed.</p>
+      <p><a class="more" href="windows#your-pc">What Turnout does to your PC</a></p>
     </div>
   </div>
 </section>
@@ -411,19 +432,26 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       <!-- /download:soon -->
       <!-- download:live -->
       <div class="live">
+      <p class="downloads"><a class="download" href="releases/latest">Download for Mac</a> <a class="download" href="releases/latest">Download for Windows</a></p>
+      <p class="fineprint">Version <!-- version --><span data-latest="version">1.1.4</span><!-- /version -->, released <!-- released --><time data-latest="date" datetime="2026-11-06">6 November 2026</time><!-- /released --> · <a href="releases/latest">Release notes</a></p>
+      <p class="fineprint">macOS 15 or later, on Apple silicon and Intel · Windows 11 on x64 · 7-day trial · <!-- price --><span data-price>US$19</span><!-- /price --> once, three computers, Mac or Windows</p>
+      <h3>On a Mac</h3>
       <ol class="steps">
         <li>Download the installer, the <code>.pkg</code> file, from the <a href="releases/latest">latest release</a>.</li>
         <li>Open it and follow the steps. Turnout is installed in your Applications folder and opens when the installer finishes.</li>
         <li>Turnout's welcome tour walks you through installing the background service; allow it when macOS asks, in System Settings › General › Login Items &amp; Extensions.</li>
       </ol>
-      <p><a class="download" href="releases/latest">Download Turnout</a></p>
-      <p class="fineprint">Version <!-- version --><span data-latest="version">1.1.4</span><!-- /version -->, released <!-- released --><time data-latest="date" datetime="2026-11-06">6 November 2026</time><!-- /released --> · <a href="releases/latest">Release notes</a></p>
-      <p class="fineprint">macOS 15 or later · Apple silicon and Intel · 7-day trial · <!-- price --><span data-price>US$19</span><!-- /price --> once, three computers</p>
       <p>Or install it with <a href="https://brew.sh">Homebrew</a>, which installs the same package:</p>
 <pre><code>brew tap tasict/tap
 brew install --cask tasict/tap/turnout</code></pre>
       <p class="fineprint">Either way Turnout updates itself, so <code>brew upgrade</code> leaves it alone. <code>brew uninstall --cask turnout</code> runs Turnout's own uninstaller and keeps your saved tunnels.</p>
-      <p><strong>On a Windows PC:</strong> the same release has the Windows installer, the <code>.msi</code> file, for Windows 11 on x64. <a href="windows#install">How to install Turnout on Windows</a></p>
+      <h3>On Windows</h3>
+      <ol class="steps">
+        <li>Download the installer, <code>Turnout-&lt;version&gt;-x64.msi</code>, from the <a href="releases/latest">latest release</a>.</li>
+        <li>Open it. The installer is not signed with a Windows code-signing certificate, so Windows SmartScreen may say it protected your PC: choose More info, then Run anyway. Windows then asks for an administrator's approval.</li>
+        <li>Turnout is installed in <code>C:\Program Files\Turnout</code>, its background service starts, and Turnout opens. Its welcome tour shows where its icon is.</li>
+      </ol>
+      <p class="fineprint">On a PC with Smart App Control turned on, Windows does not let an installer without a code-signing certificate run at all. <a href="windows#install">Installing on Windows</a></p>
       </div>
       <!-- /download:live -->
     </div>

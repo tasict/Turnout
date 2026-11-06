@@ -18,7 +18,7 @@
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
-<link rel="stylesheet" href="../assets/site.css?v=19e101c5">
+<link rel="stylesheet" href="../assets/site.css?v=2acdb75b">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Turnout: wg-quick para tu Mac y tu equipo con Windows, en una app nativa">
@@ -111,7 +111,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     </picture></a>
     <nav class="site-nav" aria-label="Sitio">
       <ul>
-        <li><a href="how-it-works">Cómo funciona</a></li>
+        <li><a href="how-it-works">Mac</a></li>
         <li><a href="windows">Windows</a></li>
       </ul>
     </nav>
@@ -143,10 +143,10 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- /download:soon -->
         <!-- download:live -->
         <div class="live">
-          <a class="download" href="../releases/latest">Descargar para Mac</a>
+          <p class="downloads"><a class="download" href="../releases/latest">Descargar para Mac</a> <a class="download" href="../releases/latest">Descargar para Windows</a></p>
           <p class="fineprint">Versión <!-- version --><span data-latest="version">1.1.4</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-11-06">6 de noviembre de 2026</time><!-- /released --> · <a href="../releases/latest">Notas de la versión</a></p>
-          <p class="fineprint">macOS 15 o posterior · Apple silicon e Intel · prueba de 7 días · <!-- price --><span data-price>US$19</span><!-- /price --> en un solo pago, tres equipos</p>
-          <p class="fineprint"><a href="#install">Cómo instalar</a> · <a href="windows">Turnout para Windows</a>, en Windows 11</p>
+          <p class="fineprint">macOS 15 o posterior, en Apple silicon e Intel · Windows 11 en x64 · prueba de 7 días · <!-- price --><span data-price>US$19</span><!-- /price --> en un solo pago, tres equipos, Mac o Windows</p>
+          <p class="fineprint"><a href="#install">Cómo instalar</a> · <a href="#mac">Qué añade el Mac</a></p>
         </div>
         <!-- /download:live -->
       </div>
@@ -197,11 +197,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
   <div class="wrap">
     <h2 id="wg-quick-title">Tus configuraciones, tal como las ejecuta <span class="nb">wg-quick</span></h2>
     <div class="body">
-      <p class="intro">Turnout lee los archivos <code>.conf</code> que ya usas con wg-quick y los aplica como lo hace wg-quick en macOS, paso a paso y con las mismas herramientas del sistema.</p>
+      <p class="intro">Turnout lee los archivos <code>.conf</code> que ya usas con wg-quick y los aplica como lo hace wg-quick, paso a paso: en un Mac, con las mismas herramientas del sistema; en Windows, con las propias funciones de red de Windows.</p>
       <dl class="keys">
         <div>
           <dt><code>PreUp</code> <code>PostUp</code> <code>PreDown</code> <code>PostDown</code></dt>
-          <dd>Los hooks se ejecutan, con <code>%i</code> sustituido por la interfaz <code>utun</code> del túnel y <code>%I</code> por su nombre. Un administrador aprueba los hooks de un archivo antes de que puedan ejecutarse; <a href="how-it-works#hooks">cómo funciona</a>.</dd>
+          <dd>Los hooks se ejecutan, con <code>%i</code> sustituido por la interfaz del túnel (su interfaz <code>utun</code> en un Mac, su adaptador Wintun en Windows) y <code>%I</code> por su nombre. Un administrador aprueba los hooks de un archivo antes de que puedan ejecutarse; <a href="how-it-works#hooks">cómo funciona</a>.</dd>
         </div>
         <div>
           <dt><code>AllowedIPs</code></dt>
@@ -213,7 +213,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         </div>
         <div>
           <dt><code>DNS</code></dt>
-          <dd>Los servidores y dominios de búsqueda se configuran en tus servicios de red mientras el túnel está activo, y tu configuración vuelve cuando se desconecta.</dd>
+          <dd>Los servidores y dominios de búsqueda se aplican mientras el túnel está activo. En un Mac se configuran en tus servicios de red, y tu configuración vuelve cuando el túnel se desconecta; en Windows se configuran en el propio adaptador del túnel, así que no hay nada que restaurar.</dd>
         </div>
         <div>
           <dt><code>MTU</code></dt>
@@ -257,6 +257,7 @@ Endpoint = vpn.example.com:51820</code></pre>
         </dl>
       </div>
       <p>También puedes cambiar la interfaz de salida de un túnel conectado desde su ruta en la ventana principal. Turnout desconecta, guarda el cambio y vuelve a conectar.</p>
+      <p>En Windows, la interfaz es el nombre del adaptador de red tal como lo muestra Windows, por ejemplo <code>Ethernet 2</code>: <code>#@ BindInterface = Ethernet 2</code>.</p>
     </div>
   </div>
 </section>
@@ -265,7 +266,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="network-title">Sigue a la red</h2>
     <div class="body">
-      <p class="intro">Cuando cambian las puertas de enlace, las interfaces o los enlaces, o el Mac sale del reposo, Turnout vuelve a apuntar las rutas del túnel que pasan por tu red física a las puertas de enlace actuales, recalcula la MTU automática y vuelve a aplicar el DNS.</p>
+      <p class="intro">Cuando cambian las puertas de enlace, las interfaces o los enlaces, o el equipo sale del reposo, Turnout vuelve a apuntar las rutas del túnel que pasan por tu red física a las puertas de enlace actuales, recalcula la MTU automática y vuelve a aplicar el DNS.</p>
       <p>Si la interfaz a la que está vinculado un túnel desaparece y vuelve, el túnel se vincula a ella de nuevo y repite la negociación. Si desaparece del todo, la ruta al servidor se convierte en un agujero negro, para que la negociación no se cuele en el propio túnel, y las rutas que evitan el túnel esperan a que la interfaz vuelva.</p>
     </div>
   </div>
@@ -275,6 +276,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="phantun-title">Por TCP cuando UDP está bloqueado</h2>
     <div class="body">
+      <p class="fineprint">En el Mac. Turnout para Windows muestra una configuración que usa Phantun, pero aún no la conecta.</p>
       <p class="intro">Algunas redes bloquean o ralentizan UDP, el protocolo por el que viaja WireGuard: el Wi-Fi de hoteles y de invitados, algunas oficinas, algunos operadores. Cambia un par a Phantun y Turnout enviará los paquetes de WireGuard dentro de una conexión TCP a un servidor Phantun, que se los entrega a tu servidor WireGuard.</p>
 <pre><code>[Peer]
 PublicKey = …
@@ -299,10 +301,10 @@ Endpoint = vpn.example.com:51820
     <h2 id="automatic-title">Se conecta solo</h2>
     <div class="body">
       <p class="intro">Dale a un túnel un horario, una lista de redes Wi-Fi, o ambos.</p>
-      <p>Cuando empieza una franja del horario, Turnout conecta el túnel, y cuando termina, lo desconecta. Cuando el Mac se une a una de las redes de la lista, el túnel se conecta; cuando la deja, se desconecta. Entre medias, lo que hagas a mano se mantiene, y cambiar una regla nunca conecta ni desconecta nada por sí solo.</p>
+      <p>Cuando empieza una franja del horario, Turnout conecta el túnel, y cuando termina, lo desconecta. Cuando el equipo se une a una de las redes de la lista, el túnel se conecta; cuando la deja, se desconecta. Entre medias, lo que hagas a mano se mantiene, y cambiar una regla nunca conecta ni desconecta nada por sí solo.</p>
 <pre><code>#@ Schedule = Mon-Fri 09:00-18:00
 #@ OnWiFi = Office</code></pre>
-      <p>Las reglas son líneas del archivo de configuración y se configuran desde la página del túnel. Turnout las aplica mientras está abierto, por eso ofrece Abrir al iniciar sesión. Una regla de Wi-Fi necesita acceso a la ubicación, porque macOS considera el nombre de una red Wi-Fi como información de ubicación; Turnout lo pide cuando configuras la regla, nunca al abrirse.</p>
+      <p>Las reglas son líneas del archivo de configuración y se configuran desde la página del túnel. Turnout las aplica mientras está abierto, por eso ofrece Abrir al iniciar sesión. Una regla de Wi-Fi necesita acceso a la ubicación, porque macOS y Windows consideran el nombre de una red Wi-Fi como información de ubicación; Turnout lo pide cuando configuras la regla, nunca al abrirse.</p>
       <figure class="shot-figure shot-automation">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/4-automation.jpg?v=3893c740">
@@ -344,10 +346,10 @@ Endpoint = vpn.example.com:51820
   <div class="wrap">
     <h2 id="menu-bar-title">No estorba</h2>
     <div class="body">
-      <p class="intro">Turnout vive en la barra de menús. Conecta y desconecta túneles desde ahí y abre la ventana solo cuando quieras ver los detalles.</p>
-      <p>Los túneles se ejecutan en el servicio en segundo plano de Turnout, así que siguen activos cuando cierras la app. Medido con la ventana abierta, la app usa cerca del 0,5 % de la CPU en reposo y entre el 2 y el 4 % mientras dibuja el tráfico en vivo. Las estadísticas solo se consultan mientras el menú o una ventana están abiertos, y una vez por minuto si pides un aviso cuando un servidor deje de responder.</p>
+      <p class="intro">Turnout vive en la barra de menús en un Mac y en el área de notificación en Windows. Conecta y desconecta túneles desde ahí y abre la ventana solo cuando quieras ver los detalles.</p>
+      <p>Los túneles se ejecutan en el servicio en segundo plano de Turnout, así que siguen activos cuando cierras la app. Medido en un Mac con la ventana abierta, la app usa cerca del 0,5 % de la CPU en reposo y entre el 2 y el 4 % mientras dibuja el tráfico en vivo. Las estadísticas solo se consultan mientras el menú o una ventana están abiertos, y una vez por minuto si pides un aviso cuando un servidor deje de responder.</p>
       <p>Las notificaciones te avisan cuando un horario o una regla de Wi-Fi conecta o desconecta un túnel, cuando un túnel falla o se detiene sin que se le pida, y el día antes de que termine tu prueba. Cada tipo tiene su propio interruptor, y el de un servidor que no responde viene desactivado hasta que lo quieras.</p>
-      <p>Sus menús y ventanas hablan English, 繁體中文, 日本語, Español y 한국어, según el idioma de tu Mac.</p>
+      <p>Sus menús y ventanas hablan English, 繁體中文, 日本語, Español y 한국어, según el idioma de tu equipo.</p>
       <figure class="shot-figure">
         <!-- scripts/screenshots.sh must write menu-light.png and menu-dark.png at
              600x420 (the 300-point popover at 2x). If the popover's height
@@ -367,8 +369,9 @@ Endpoint = vpn.example.com:51820
     <h2 id="cleanup-title">No deja nada atrás</h2>
     <div class="body">
       <p class="intro">Cada cambio que Turnout hace en las rutas y el DNS se anota antes de hacerlo.</p>
-      <p>Si el Mac se bloquea o se queda sin corriente con un túnel conectado, el servicio en segundo plano deshace lo que quedó en su siguiente arranque, y no conecta ningún túnel hasta terminar. Turnout › Reparar ajustes de red… hace lo mismo cuando quieras.</p>
-      <p>Desinstalar sigue un único camino, empieces desde la app, desde el instalador o desde un script de shell que puedes leer antes. Desconecta todos los túneles, restaura las rutas y el DNS, quita el servicio en segundo plano de Ítems de inicio y borra la app, sus registros y sus preferencias. Los túneles guardados se quedan, salvo que elijas borrarlos también. Desinstalar desde la app también libera el puesto del Mac en tu licencia. <a href="how-it-works#uninstall">Qué quita cada opción</a></p>
+      <p>Si el equipo se bloquea o se queda sin corriente con un túnel conectado, el servicio en segundo plano deshace lo que quedó en su siguiente arranque, y no conecta ningún túnel hasta terminar. En un Mac, Turnout › Reparar ajustes de red… hace lo mismo cuando quieras.</p>
+      <p>En un Mac, desinstalar sigue un único camino, empieces desde la app, desde el instalador o desde un script de shell que puedes leer antes. Desconecta todos los túneles, restaura las rutas y el DNS, quita el servicio en segundo plano de Ítems de inicio y borra la app, sus registros y sus preferencias. Los túneles guardados se quedan, salvo que elijas borrarlos también. Desinstalar desde la app también libera el puesto del Mac en tu licencia. <a href="how-it-works#uninstall">Qué quita cada opción</a></p>
+      <p>En Windows, desinstálalo en Configuración › Aplicaciones › Aplicaciones instaladas, o con Desinstalar Turnout… en Acerca de, en la ventana de Turnout. De cualquier forma, todos los túneles se desconectan, y el servicio y el controlador Wintun se eliminan con la app. <a href="windows#uninstall">Desinstalar en Windows</a></p>
     </div>
   </div>
 </section>
@@ -378,23 +381,41 @@ Endpoint = vpn.example.com:51820
     <h2 id="not-title">Lo que no es</h2>
     <div class="body">
       <ul class="nots">
-        <li><strong>Aún no tiene kill switch.</strong> Turnout no bloquea el tráfico fuera del túnel. Mientras un túnel está desconectado, tu Mac usa su red normal.</li>
+        <li><strong>Aún no tiene kill switch.</strong> Mientras un túnel está desconectado, tu Mac o tu equipo con Windows usa su red normal. En un Mac, Turnout tampoco bloquea el tráfico fuera de un túnel conectado; en Windows, un túnel conectado que lleva todo el tráfico no deja salir nada por fuera.</li>
         <li><strong>No es un proveedor de VPN.</strong> Usa tu propio servidor, o una configuración de tu proveedor o de tu administrador de red.</li>
-        <li><strong>No usa NetworkExtension.</strong> Los túneles se ejecutan en el propio servicio en segundo plano de Turnout, y eso es lo que permite que los hooks se ejecuten y que las rutas sigan siendo tuyas. No aparecen en Ajustes del Sistema › VPN.</li>
+        <li><strong>No usa NetworkExtension.</strong> Los túneles se ejecutan en el propio servicio en segundo plano de Turnout, en el Mac y en Windows, y eso es lo que permite que los hooks se ejecuten y que las rutas sigan siendo tuyas. En un Mac no aparecen en Ajustes del Sistema › VPN.</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="mac" aria-labelledby="mac-title">
+  <div class="wrap">
+    <h2 id="mac-title">Algunas cosas más en el Mac</h2>
+    <div class="body">
+      <p class="intro">Turnout para Windows tiene las mismas configuraciones, interfaces de red, reglas, notificaciones y licencia. Algunas cosas solo están en el Mac.</p>
+      <ul class="extras">
+        <li><strong>Por TCP cuando UDP está bloqueado.</strong> Túneles a través de un servidor <a href="#phantun">Phantun</a>. En Windows, una configuración que usa Phantun se muestra, pero aún no se conecta.</li>
+        <li><strong>Atajos.</strong> Acciones que conectan y desconectan un túnel y leen su estado, para tus atajos y automatizaciones. En Windows, lo mismo se hace desde la línea de comandos: <code>Turnout.exe connect &lt;tunnel&gt;</code>, <code>disconnect</code> y <code>status</code>.</li>
+        <li><strong>Homebrew.</strong> <code>brew install --cask tasict/tap/turnout</code> instala el mismo paquete que la descarga.</li>
+        <li><strong>La licencia en todos tus Mac.</strong> Tus otros Mac con la misma cuenta de iCloud encuentran la licencia y la usan con un clic. En un equipo con Windows, pegas la clave en cada uno.</li>
+      </ul>
+      <p>Una cosa va al revés. En Windows, mientras está conectado un túnel que lleva todo el tráfico, el firewall de Windows bloquea el tráfico que saldría por fuera de él, y el DNS hacia servidores que no son los del túnel, como hace la app oficial de WireGuard. <a href="windows#different">Qué cambia en Windows</a></p>
     </div>
   </div>
 </section>
 
 <section class="feature inspect" id="your-mac" aria-labelledby="your-mac-title">
   <div class="wrap">
-    <h2 id="your-mac-title">Qué hace en tu Mac</h2>
+    <h2 id="your-mac-title">Qué hace en tu equipo</h2>
     <div class="body">
-      <p class="intro">Turnout instala un servicio en segundo plano que se ejecuta como root. Cambia direcciones, rutas y DNS con las mismas herramientas que usa wg-quick, guarda las configuraciones en una carpeta que solo root puede leer y ejecuta los hooks de una configuración solo después de que un administrador los apruebe. Un túnel a través de Phantun añade además una regla al filtro de paquetes mientras está conectado. Puedes comprobar cada punto tú mismo.</p>
+      <p class="intro">En un Mac, Turnout instala un servicio en segundo plano que se ejecuta como root. Cambia direcciones, rutas y DNS con las mismas herramientas que usa wg-quick, guarda las configuraciones en una carpeta que solo root puede leer y ejecuta los hooks de una configuración solo después de que un administrador los apruebe. Un túnel a través de Phantun añade además una regla al filtro de paquetes mientras está conectado. Puedes comprobar cada punto tú mismo.</p>
 <pre><code>netstat -rn                         <span class="c"># las rutas que añadió</span>
 networksetup -getdnsservers Wi-Fi   <span class="c"># los servidores DNS que configuró</span>
 cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       <p><a class="more" href="how-it-works">Qué hace Turnout en tu Mac</a></p>
+      <p>En Windows, el servicio se ejecuta como SYSTEM, y cada túnel conectado es un adaptador de red Wintun que lleva su nombre. PowerShell muestra lo que cambió.</p>
+      <p><a class="more" href="windows#your-pc">Qué hace Turnout en tu equipo con Windows</a></p>
     </div>
   </div>
 </section>
@@ -411,19 +432,26 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       <!-- /download:soon -->
       <!-- download:live -->
       <div class="live">
+      <p class="downloads"><a class="download" href="../releases/latest">Descargar para Mac</a> <a class="download" href="../releases/latest">Descargar para Windows</a></p>
+      <p class="fineprint">Versión <!-- version --><span data-latest="version">1.1.4</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-11-06">6 de noviembre de 2026</time><!-- /released --> · <a href="../releases/latest">Notas de la versión</a></p>
+      <p class="fineprint">macOS 15 o posterior, en Apple silicon e Intel · Windows 11 en x64 · prueba de 7 días · <!-- price --><span data-price>US$19</span><!-- /price --> en un solo pago, tres equipos, Mac o Windows</p>
+      <h3>En un Mac</h3>
       <ol class="steps">
         <li>Descarga el instalador, el archivo <code>.pkg</code>, de la <a href="../releases/latest">última versión</a>.</li>
         <li>Ábrelo y sigue los pasos. Turnout se instala en tu carpeta Aplicaciones y se abre cuando el instalador termina.</li>
         <li>El recorrido de bienvenida de Turnout te guía para instalar el servicio en segundo plano; permítelo cuando macOS lo pida, en Ajustes del Sistema › General › Ítems de inicio y extensiones.</li>
       </ol>
-      <p><a class="download" href="../releases/latest">Descargar Turnout</a></p>
-      <p class="fineprint">Versión <!-- version --><span data-latest="version">1.1.4</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-11-06">6 de noviembre de 2026</time><!-- /released --> · <a href="../releases/latest">Notas de la versión</a></p>
-      <p class="fineprint">macOS 15 o posterior · Apple silicon e Intel · prueba de 7 días · <!-- price --><span data-price>US$19</span><!-- /price --> en un solo pago, tres equipos</p>
       <p>O instálalo con <a href="https://brew.sh">Homebrew</a>, que instala el mismo paquete:</p>
 <pre><code>brew tap tasict/tap
 brew install --cask tasict/tap/turnout</code></pre>
       <p class="fineprint">De cualquier forma, Turnout se actualiza solo, así que <code>brew upgrade</code> no lo toca. <code>brew uninstall --cask turnout</code> ejecuta el propio desinstalador de Turnout y conserva tus túneles guardados.</p>
-      <p><strong>En un equipo con Windows:</strong> la misma versión incluye el instalador para Windows, el archivo <code>.msi</code>, para Windows 11 en x64. <a href="windows#install">Cómo instalar Turnout en Windows</a></p>
+      <h3>En Windows</h3>
+      <ol class="steps">
+        <li>Descarga el instalador, <code>Turnout-&lt;version&gt;-x64.msi</code>, de la <a href="../releases/latest">última versión</a>.</li>
+        <li>Ábrelo. El instalador no está firmado con un certificado de firma de código de Windows, así que Windows SmartScreen puede avisarte de que protegió tu equipo: elige Más información y después Ejecutar de todas formas. Luego Windows pide la aprobación de un administrador.</li>
+        <li>Turnout se instala en <code>C:\Program Files\Turnout</code>, su servicio en segundo plano se inicia y Turnout se abre. Su recorrido de bienvenida te muestra dónde está su icono.</li>
+      </ol>
+      <p class="fineprint">En un equipo con el Control inteligente de aplicaciones activado, Windows no deja que se ejecute en absoluto un instalador sin certificado de firma de código. <a href="windows#install">Instalar en Windows</a></p>
       </div>
       <!-- /download:live -->
     </div>
