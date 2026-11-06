@@ -46,6 +46,15 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/privacy"/>
   </url>
   <url>
+    <loc>https://turnout.ctsite.cc/es/windows</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/windows"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/windows"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/windows"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/windows"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/windows"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/windows"/>
+  </url>
+  <url>
     <loc>https://turnout.ctsite.cc/how-it-works</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/how-it-works"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/how-it-works"/>
@@ -91,6 +100,15 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/privacy"/>
   </url>
   <url>
+    <loc>https://turnout.ctsite.cc/ja/windows</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/windows"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/windows"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/windows"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/windows"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/windows"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/windows"/>
+  </url>
+  <url>
     <loc>https://turnout.ctsite.cc/ko/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/"/>
@@ -127,6 +145,15 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/privacy"/>
   </url>
   <url>
+    <loc>https://turnout.ctsite.cc/ko/windows</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/windows"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/windows"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/windows"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/windows"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/windows"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/windows"/>
+  </url>
+  <url>
     <loc>https://turnout.ctsite.cc/license</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/license"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/license"/>
@@ -143,6 +170,15 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/privacy"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/privacy"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/privacy"/>
+  </url>
+  <url>
+    <loc>https://turnout.ctsite.cc/windows</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/windows"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/windows"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/windows"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/windows"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/windows"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/windows"/>
   </url>
   <url>
     <loc>https://turnout.ctsite.cc/zh-Hant/</loc>
@@ -179,5 +215,14 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/privacy"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/privacy"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/privacy"/>
+  </url>
+  <url>
+    <loc>https://turnout.ctsite.cc/zh-Hant/windows</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://turnout.ctsite.cc/windows"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://turnout.ctsite.cc/zh-Hant/windows"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://turnout.ctsite.cc/ja/windows"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://turnout.ctsite.cc/es/windows"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://turnout.ctsite.cc/ko/windows"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://turnout.ctsite.cc/windows"/>
   </url>
 </urlset>

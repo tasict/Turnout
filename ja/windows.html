@@ -15,9 +15,9 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121920" media="(prefers-color-scheme: dark)">
-<link rel="icon" type="image/png" href="../assets/favicon.png">
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" type="image/png" href="../assets/favicon.png?v=d3804e88">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4434b55c">
+<link rel="stylesheet" href="../assets/site.css?v=a2fde089">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Turnout">
 <meta property="og:title" content="Windows版Turnout">
@@ -33,6 +33,53 @@
 <meta property="og:locale:alternate" content="es_ES">
 <meta property="og:locale:alternate" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
+<!-- analytics -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
+(function () {
+  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  function grant() {
+    gtag("consent", "update", {analytics_storage: "granted"});
+    if (loaded) return;
+    loaded = true;
+    gtag("js", new Date());
+    gtag("config", "G-NB4HLJEEPW", {anonymize_ip: true});
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
+    document.head.appendChild(s);
+  }
+  function ask() {
+    if (bar) return;
+    bar = document.getElementById("consent-bar").content.firstElementChild.cloneNode(true);
+    bar.addEventListener("click", function (event) {
+      var choice = event.target.getAttribute("data-consent");
+      if (!choice) return;
+      try { localStorage.setItem(key, choice); } catch (e) {}
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      bar.remove();
+      bar = null;
+    });
+    document.body.appendChild(bar);
+  }
+  try { stored = localStorage.getItem(key); } catch (e) {}
+  if (stored === "granted") grant();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (stored !== "granted" && stored !== "denied") ask();
+    document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+        gtag("consent", "update", {analytics_storage: "denied"});
+        ask();
+      });
+    });
+  });
+})();
+</script>
+<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析"><p>このサイトへの訪問をGoogle Analyticsで数えてもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy.html#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
+<!-- /analytics -->
 </head>
 <body>
 <a class="skip" href="#main">本文へ移動</a>
@@ -40,8 +87,8 @@
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="./"><picture>
-      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg">
-      <img src="../assets/logo.svg" width="130" height="30" alt="Turnout">
+      <source media="(prefers-color-scheme: dark)" srcset="../assets/logo-dark.svg?v=1bbb3786">
+      <img src="../assets/logo.svg?v=6b9d5cd5" width="130" height="30" alt="Turnout">
     </picture></a>
     <nav class="site-nav" aria-label="サイト">
       <ul>
@@ -66,7 +113,7 @@
     <h1>Windows版Turnout</h1>
     <p class="lede">WireGuardサーバーに接続する同じVPNクライアントが、Windows 11でも使えます。構成ファイルはwg-quickが読むとおりに扱い、ネットワークインターフェイスはトンネルごとにあなたが選び、トンネルはスケジュールやWi-Fiネットワークに合わせて自動で接続します。Turnoutは通知領域にいて、1つのライセンスでMacとPCをまとめて使えます。</p>
     <p><a class="download" href="../releases/latest">Windows版をダウンロード</a></p>
-    <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.1.3</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-11-05">2026年11月5日</time><!-- /released -->公開）· <a href="../releases/latest">リリースノート</a></p>
+    <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.1.4</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-11-06">2026年11月6日</time><!-- /released -->公開）· <a href="../releases/latest">リリースノート</a></p>
     <p class="fineprint">x64 PC（IntelまたはAMD）のWindows 11 · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、コンピュータ3台（MacでもWindowsでも）</p>
   </div>
 
@@ -86,7 +133,7 @@
 
     <div class="doc-body">
       <figure class="shot-figure">
-        <img class="shot" src="../assets/windows/main.png" width="1044" height="712" alt="接続中のトンネルを表示した、Windows 11のTurnoutのウインドウ。経路はトンネルから、出ていくネットワークアダプタを経てサーバーまで続き、両方向に通信が流れています。">
+        <img class="shot" src="../assets/windows/main.png?v=31d54cf6" width="1044" height="712" alt="接続中のトンネルを表示した、Windows 11のTurnoutのウインドウ。経路はトンネルから、出ていくネットワークアダプタを経てサーバーまで続き、両方向に通信が流れています。">
         <figcaption>接続中のトンネルの経路。トンネル、その通信が出ていくネットワークアダプタ、そしてサーバーです。</figcaption>
       </figure>
 
@@ -111,7 +158,7 @@
           <li><strong>x64のWindows 11のみ。</strong>Windows 10、Arm版Windows、Windows Serverには対応していません。</li>
         </ul>
         <figure class="shot-figure">
-          <img class="shot shot-panel" src="../assets/windows/panel.png" width="340" height="334" alt="通知領域の上に開いたTurnoutのパネル。すべてのトンネルとそのスイッチ、接続中のトンネルが出ていくアダプタとその通信量、そして“設定”と“Turnoutを開く”のボタンが並んでいます。">
+          <img class="shot shot-panel" src="../assets/windows/panel.png?v=04e3577d" width="340" height="334" alt="通知領域の上に開いたTurnoutのパネル。すべてのトンネルとそのスイッチ、接続中のトンネルが出ていくアダプタとその通信量、そして“設定”と“Turnoutを開く”のボタンが並んでいます。">
           <figcaption>通知領域のTurnoutのアイコンから開くパネル。</figcaption>
         </figure>
       </section>
@@ -190,5 +237,54 @@ Get-DnsClientServerAddress          <span class="c"># トンネルのアダプ�
     <p>© 2026 tasict. MacおよびmacOSは、Apple Inc.の商標です。Windowsは、Microsoftグループの企業の商標です。WireGuardは、Jason A. Donenfeldの登録商標です。</p>
   </div>
 </footer>
+<!-- latest -->
+<script>
+(function () {
+  var months = {"en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], "es": ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]};
+  var lang = document.documentElement.lang;
+  function dateText(iso) {
+    var part = iso.split("-"), year = +part[0], month = +part[1], day = +part[2];
+    if (lang === "zh-Hant") return year + " 年 " + month + " 月 " + day + " 日";
+    if (lang === "ja") return year + "年" + month + "月" + day + "日";
+    if (lang === "ko") return year + "년 " + month + "월 " + day + "일";
+    if (lang === "es") return day + " de " + months.es[month - 1] + " de " + year;
+    return day + " " + months.en[month - 1] + " " + year;
+  }
+  function each(selector, apply) {
+    Array.prototype.forEach.call(document.querySelectorAll(selector), apply);
+  }
+  function json(response) {
+    if (!response.ok) throw new Error(response.status);
+    return response.json();
+  }
+  if (!window.fetch) return;
+  fetch("../assets/pricing.json", {cache: "no-cache"}).then(json).then(function (pricing) {
+    var price = String(pricing.price || ""), sale = pricing.sale;
+    if (!price) return;
+    each("[data-price]", function (element) { element.textContent = price; });
+    var now = new Date();
+    var today = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
+    var text = sale && sale.text && sale.text[lang];
+    var on = Boolean(text) && /^\d{4}-\d{2}-\d{2}$/.test(sale.ends) && today <= sale.ends;
+    each("p.launch", function (element) {
+      element.textContent = on ? text.replace("{sale}", sale.price).replace("{ends}", dateText(sale.ends))
+        .replace("{price}", price) : "";
+      element.hidden = !on;
+    });
+  }).catch(function () {});
+  if (!document.querySelector("[data-latest]")) return;
+  fetch("https://api.github.com/repos/tasict/Turnout/releases/latest", {credentials: "omit"}).then(json).then(function (release) {
+    var version = String(release.tag_name || "").replace(/^v/, "");
+    var date = String(release.published_at || "").slice(0, 10);
+    if (!/^\d+(\.\d+)*$/.test(version) || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+    each('[data-latest="version"]', function (element) { element.textContent = version; });
+    each('[data-latest="date"]', function (element) {
+      element.setAttribute("datetime", date);
+      element.textContent = dateText(date);
+    });
+  }).catch(function () {});
+})();
+</script>
+<!-- /latest -->
 </body>
 </html>
