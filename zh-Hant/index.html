@@ -276,7 +276,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="phantun-title">UDP 被擋時改走 TCP</h2>
     <div class="body">
-      <p class="fineprint">僅限 Mac。在 Windows 版 Turnout 中，經由 Phantun 連到伺服器的設定檔會照常顯示，但還不會連線。</p>
+      <p class="fineprint">僅限 Mac。在 Windows 版 Turnout 中，經由 Phantun 連到伺服器的設定檔會照常顯示，但不會連線。</p>
       <p class="intro">有些網路會封鎖或限速 WireGuard 使用的 UDP：飯店和訪客 Wi-Fi、部分辦公室、部分電信業者。把對等端切換成 Phantun，Turnout 就會把 WireGuard 的封包包在 TCP 連線裡送到 Phantun 伺服器，再由它交給你的 WireGuard 伺服器。</p>
 <pre><code>[Peer]
 PublicKey = …
@@ -395,7 +395,7 @@ Endpoint = vpn.example.com:51820
     <div class="body">
       <p class="intro">Windows 版 Turnout 有同樣的設定檔、網路介面、規則、通知和授權。有幾項是 Mac 上才有的。</p>
       <ul class="extras">
-        <li><strong>UDP 被擋時改走 TCP。</strong>通道可以經由 <a href="#phantun">Phantun</a> 伺服器連線。在 Windows 上，經由 Phantun 連到伺服器的設定檔會照常顯示，但還不會連線。</li>
+        <li><strong>UDP 被擋時改走 TCP。</strong>通道可以經由 <a href="#phantun">Phantun</a> 伺服器連線。在 Windows 上，經由 Phantun 連到伺服器的設定檔會照常顯示，但不會連線。</li>
         <li><strong>「捷徑」。</strong>提供連線、中斷通道和讀取通道狀態的動作，讓你用在自己的捷徑和自動化中。在 Windows 上則用命令列取代：<code>Turnout.exe connect &lt;tunnel&gt;</code>、<code>disconnect</code> 和 <code>status</code>。</li>
         <li><strong>Homebrew。</strong><code>brew install --cask tasict/tap/turnout</code> 裝的和下載的是同一個安裝程式。</li>
         <li><strong>每部 Mac 都找得到授權。</strong>登入同一個 iCloud 帳號的其他 Mac 會找到這份授權，按一下就能使用。Windows 電腦則要在每一台上各自貼上金鑰。</li>

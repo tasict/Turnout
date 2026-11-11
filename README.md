@@ -46,7 +46,7 @@ Turnout for Windows needs Windows 11 on an x64 PC (Intel or AMD). Download `Turn
 
 Turnout for Windows has the same configs, network interfaces, rules, notifications and license. A few things are on the Mac only:
 
-- tunnels over TCP through a [Phantun](https://github.com/dndx/phantun) server, for networks that block UDP (on Windows such a config is shown but does not connect yet);
+- tunnels over TCP through a [Phantun](https://github.com/dndx/phantun) server, for networks that block UDP (Mac only; on Windows such a config is shown but does not connect);
 - Shortcuts actions that connect and disconnect a tunnel and read its status (on Windows, `Turnout.exe connect <tunnel>`, `disconnect` and `status` on the command line);
 - Homebrew;
 - the license on every Mac signed in to the same iCloud account (on Windows the key is entered on each PC).

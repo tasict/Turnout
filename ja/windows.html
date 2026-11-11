@@ -154,7 +154,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <ul>
           <li><strong>通知領域にいます。</strong>Turnoutのアイコンをクリックすると、すべてのトンネルとそのスイッチが並んだパネルが開きます。ウインドウには、各トンネルの経路、ルート、ピア、構成と、設定があります。Windowsは新しいアイコンをタスクバーの^の中にしまうことがあります。常に見えるようにするには、アイコンをタスクバーにドラッグするか、“設定” › “個人用設定” › “タスク バー” › “その他のシステム トレイ アイコン”でTurnoutをオンにしてください。</li>
           <li><strong>フルトンネルは、通信をトンネルの外に出しません。</strong>すべての通信を通すトンネルが接続している間、Windowsのファイアウォールは、トンネルの外へ出ようとする通信と、トンネルのもの以外のDNSサーバーへの問い合わせをブロックします。公式のWireGuardアプリと同じです。設定したバイパスルート、ローカルネットワークに欠かせない通信（DHCP、ループバック）、そしてトンネル自身のサーバーへの接続は、そのまま通ります。</li>
-          <li><strong>Phantunはまだありません。</strong>Phantun経由でサーバーに接続する構成は表示されますが、Windowsでは接続しません。</li>
+          <li><strong>Phantunには対応しません。</strong>Phantunは自分で組み立てたTCPセグメントを送ります。Windowsではカーネルドライバーなしにはそれができないため、PhantunはMac版だけの機能です。Phantun経由でサーバーに接続する構成は表示されますが、Windowsでは接続しません。</li>
           <li><strong>コマンドラインから。</strong>“ショートカット”の代わりに、<code>Turnout.exe connect &lt;tunnel&gt;</code>、<code>disconnect &lt;tunnel&gt;</code>、<code>status [tunnel]</code>を使えます。</li>
           <li><strong>x64のWindows 11のみ。</strong>Windows 10、Arm版Windows、Windows Serverには対応していません。</li>
         </ul>

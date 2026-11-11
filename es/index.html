@@ -276,7 +276,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="phantun-title">Por TCP cuando UDP está bloqueado</h2>
     <div class="body">
-      <p class="fineprint">En el Mac. Turnout para Windows muestra una configuración que usa Phantun, pero aún no la conecta.</p>
+      <p class="fineprint">Solo en el Mac. Turnout para Windows muestra una configuración que usa Phantun, pero no la conecta.</p>
       <p class="intro">Algunas redes bloquean o ralentizan UDP, el protocolo por el que viaja WireGuard: el Wi-Fi de hoteles y de invitados, algunas oficinas, algunos operadores. Cambia un par a Phantun y Turnout enviará los paquetes de WireGuard dentro de una conexión TCP a un servidor Phantun, que se los entrega a tu servidor WireGuard.</p>
 <pre><code>[Peer]
 PublicKey = …
@@ -395,7 +395,7 @@ Endpoint = vpn.example.com:51820
     <div class="body">
       <p class="intro">Turnout para Windows tiene las mismas configuraciones, interfaces de red, reglas, notificaciones y licencia. Algunas cosas solo están en el Mac.</p>
       <ul class="extras">
-        <li><strong>Por TCP cuando UDP está bloqueado.</strong> Túneles a través de un servidor <a href="#phantun">Phantun</a>. En Windows, una configuración que usa Phantun se muestra, pero aún no se conecta.</li>
+        <li><strong>Por TCP cuando UDP está bloqueado.</strong> Túneles a través de un servidor <a href="#phantun">Phantun</a>. En Windows, una configuración que usa Phantun se muestra, pero no se conecta.</li>
         <li><strong>Atajos.</strong> Acciones que conectan y desconectan un túnel y leen su estado, para tus atajos y automatizaciones. En Windows, lo mismo se hace desde la línea de comandos: <code>Turnout.exe connect &lt;tunnel&gt;</code>, <code>disconnect</code> y <code>status</code>.</li>
         <li><strong>Homebrew.</strong> <code>brew install --cask tasict/tap/turnout</code> instala el mismo paquete que la descarga.</li>
         <li><strong>La licencia en todos tus Mac.</strong> Tus otros Mac con la misma cuenta de iCloud encuentran la licencia y la usan con un clic. En un equipo con Windows, pegas la clave en cada uno.</li>

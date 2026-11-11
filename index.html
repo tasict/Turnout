@@ -276,7 +276,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="phantun-title">Over TCP when UDP is blocked</h2>
     <div class="body">
-      <p class="fineprint">On the Mac. Turnout for Windows shows a config that uses Phantun, but does not connect it yet.</p>
+      <p class="fineprint">On the Mac only. Turnout for Windows shows a config that uses Phantun, but does not connect it.</p>
       <p class="intro">Some networks block or slow down UDP, which WireGuard travels on: hotel and guest Wi-Fi, some offices, some carriers. Switch a peer to Phantun, and Turnout sends WireGuard's packets inside a TCP connection to a Phantun server, which hands them to your WireGuard server.</p>
 <pre><code>[Peer]
 PublicKey = …
@@ -395,7 +395,7 @@ Endpoint = vpn.example.com:51820
     <div class="body">
       <p class="intro">Turnout for Windows has the same configs, network interfaces, rules, notifications and license. A few things are on the Mac only.</p>
       <ul class="extras">
-        <li><strong>Over TCP when UDP is blocked.</strong> Tunnels through a <a href="#phantun">Phantun</a> server. On Windows, a config that uses Phantun is shown but does not connect yet.</li>
+        <li><strong>Over TCP when UDP is blocked.</strong> Tunnels through a <a href="#phantun">Phantun</a> server. On Windows, a config that uses Phantun is shown but does not connect.</li>
         <li><strong>Shortcuts.</strong> Actions that connect and disconnect a tunnel and read its status, for your shortcuts and automations. On Windows the same is on the command line: <code>Turnout.exe connect &lt;tunnel&gt;</code>, <code>disconnect</code> and <code>status</code>.</li>
         <li><strong>Homebrew.</strong> <code>brew install --cask tasict/tap/turnout</code> installs the same package as the download.</li>
         <li><strong>The license on every Mac.</strong> Your other Macs signed in to the same iCloud account find the license and use it with one click. On a Windows PC, you paste the key on each one.</li>

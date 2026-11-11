@@ -276,7 +276,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="phantun-title">UDPがふさがれたらTCPで</h2>
     <div class="body">
-      <p class="fineprint">Mac版の機能です。Windows版Turnoutでは、Phantun経由でサーバーに接続する構成は表示されますが、まだ接続しません。</p>
+      <p class="fineprint">Mac版の機能です。Windows版Turnoutでは、Phantun経由でサーバーに接続する構成は表示されますが、接続はしません。</p>
       <p class="intro">WireGuardが使うUDPをブロックしたり遅くしたりするネットワークがあります。ホテルやゲスト用のWi-Fi、一部のオフィスや通信事業者です。ピアをPhantunに切り替えると、TurnoutはWireGuardのパケットをTCP接続に包んでPhantunサーバーに送り、そこからWireGuardサーバーに渡されます。</p>
 <pre><code>[Peer]
 PublicKey = …
@@ -395,7 +395,7 @@ Endpoint = vpn.example.com:51820
     <div class="body">
       <p class="intro">Windows版Turnoutにも、同じ構成ファイル、ネットワークインターフェイス、ルール、通知、ライセンスがあります。Macだけのものが、いくつかあります。</p>
       <ul class="extras">
-        <li><strong>UDPがふさがれたらTCPで。</strong><a href="#phantun">Phantun</a>サーバーを経由してトンネルを接続します。Windowsでは、Phantun経由でサーバーに接続する構成は表示されますが、まだ接続しません。</li>
+        <li><strong>UDPがふさがれたらTCPで。</strong><a href="#phantun">Phantun</a>サーバーを経由してトンネルを接続します。Windowsでは、Phantun経由でサーバーに接続する構成は表示されますが、接続はしません。</li>
         <li><strong>ショートカット。</strong>トンネルを接続、接続解除し、その状態を読み取るアクションを、ショートカットやオートメーションで使えます。Windowsでは、“ショートカット”の代わりに、コマンドラインで<code>Turnout.exe connect &lt;tunnel&gt;</code>、<code>disconnect</code>、<code>status</code>を使えます。</li>
         <li><strong>Homebrew。</strong><code>brew install --cask tasict/tap/turnout</code>で、ダウンロードと同じパッケージをインストールできます。</li>
         <li><strong>すべてのMacにライセンスを。</strong>同じiCloudアカウントにサインインしているほかのMacがライセンスを見つけ、クリック1回で使えます。Windows PCでは、PCごとにキーを貼り付けます。</li>

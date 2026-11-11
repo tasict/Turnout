@@ -154,7 +154,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <ul>
           <li><strong>알림 영역에 있습니다.</strong> Turnout 아이콘을 클릭하면 모든 터널과 각 터널의 스위치가 있는 패널이 열립니다. 윈도우에는 각 터널의 경로, 라우팅, 피어, 구성과 함께 설정이 있습니다. Windows는 새 아이콘을 작업 표시줄의 ^ 뒤에 숨겨 둘 수 있습니다. 아이콘이 항상 보이게 하려면 아이콘을 작업 표시줄로 끌어 놓거나, ‘설정’ › ‘개인 설정’ › ‘작업 표시줄’ › ‘기타 시스템 트레이 아이콘’에서 Turnout을 켜십시오.</li>
           <li><strong>전체 터널의 트래픽은 터널 안에 머뭅니다.</strong> 모든 트래픽을 받는 터널이 연결되어 있는 동안, 공식 WireGuard 앱과 마찬가지로 Windows 방화벽이 터널 밖으로 나가려는 트래픽과 터널의 DNS 서버가 아닌 서버로 가는 DNS를 차단합니다. 우회 경로, 로컬 네트워크에 꼭 필요한 트래픽(DHCP, 루프백), 그리고 터널 자체의 서버 연결은 허용됩니다.</li>
-          <li><strong>아직 Phantun은 지원하지 않습니다.</strong> Phantun을 거쳐 서버에 연결하는 구성은 표시되지만, Windows에서는 연결되지 않습니다.</li>
+          <li><strong>Phantun은 지원하지 않습니다.</strong> Phantun은 직접 만든 TCP 세그먼트를 보내는데, Windows에서는 커널 드라이버 없이는 그럴 수 없어서 Phantun은 Mac에서만 제공합니다. Phantun을 거쳐 서버에 연결하는 구성은 표시되지만, Windows에서는 연결되지 않습니다.</li>
           <li><strong>명령줄.</strong> 단축어 대신 <code>Turnout.exe connect &lt;tunnel&gt;</code>, <code>disconnect &lt;tunnel&gt;</code>, <code>status [tunnel]</code>을 사용할 수 있습니다.</li>
           <li><strong>x64의 Windows 11만 지원합니다.</strong> Windows 10, Arm 기반 Windows, Windows Server는 지원하지 않습니다.</li>
         </ul>

@@ -276,7 +276,7 @@ Endpoint = vpn.example.com:51820</code></pre>
   <div class="wrap">
     <h2 id="phantun-title">UDP가 막히면 TCP로</h2>
     <div class="body">
-      <p class="fineprint">Mac 전용입니다. Windows용 Turnout에서는 Phantun을 사용하는 구성이 표시되지만, 아직 연결되지 않습니다.</p>
+      <p class="fineprint">Mac 전용입니다. Windows용 Turnout에서는 Phantun을 사용하는 구성이 표시되지만, 연결되지는 않습니다.</p>
       <p class="intro">일부 네트워크는 WireGuard가 사용하는 UDP를 차단하거나 느리게 만듭니다. 호텔과 게스트 Wi-Fi, 일부 사무실과 통신사가 그렇습니다. 피어를 Phantun으로 바꾸면 Turnout이 WireGuard 패킷을 TCP 연결에 담아 Phantun 서버로 보내고, Phantun 서버가 이를 WireGuard 서버에 전달합니다.</p>
 <pre><code>[Peer]
 PublicKey = …
@@ -395,7 +395,7 @@ Endpoint = vpn.example.com:51820
     <div class="body">
       <p class="intro">Windows용 Turnout에도 같은 구성, 네트워크 인터페이스, 규칙, 알림, 라이선스가 있습니다. 몇 가지는 Mac에만 있습니다.</p>
       <ul class="extras">
-        <li><strong>UDP가 막히면 TCP로.</strong> <a href="#phantun">Phantun</a> 서버를 거쳐 터널을 연결합니다. Windows에서는 Phantun을 사용하는 구성이 표시되지만, 아직 연결되지 않습니다.</li>
+        <li><strong>UDP가 막히면 TCP로.</strong> <a href="#phantun">Phantun</a> 서버를 거쳐 터널을 연결합니다. Windows에서는 Phantun을 사용하는 구성이 표시되지만, 연결되지는 않습니다.</li>
         <li><strong>단축어.</strong> 터널을 연결하거나 연결 해제하고 상태를 읽는 동작을 단축어와 자동화에서 사용할 수 있습니다. Windows에서는 단축어 대신 명령줄에서 <code>Turnout.exe connect &lt;tunnel&gt;</code>, <code>disconnect</code>, <code>status</code>를 사용할 수 있습니다.</li>
         <li><strong>Homebrew.</strong> <code>brew install --cask tasict/tap/turnout</code>은 다운로드한 것과 같은 패키지를 설치합니다.</li>
         <li><strong>모든 Mac으로 이어지는 라이선스.</strong> 같은 iCloud 계정에 로그인한 다른 Mac은 라이선스를 찾아 클릭 한 번으로 사용할 수 있습니다. Windows PC에서는 PC마다 키를 붙여 넣습니다.</li>

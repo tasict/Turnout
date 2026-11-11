@@ -154,7 +154,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <ul>
           <li><strong>In the notification area.</strong> Turnout's icon opens a panel with every tunnel and its switch; the window has each tunnel's path, routes, peers and configuration, and the settings. Windows may keep a new icon behind ^ on the taskbar: drag it onto the taskbar, or turn Turnout on in Settings › Personalization › Taskbar › Other system tray icons, to keep it in sight.</li>
           <li><strong>Full tunnels stay inside.</strong> While a tunnel that takes all traffic is connected, Windows' firewall blocks traffic that would leave outside it, and DNS to servers other than the tunnel's, as the official WireGuard app does. Your bypass routes, the local network's essentials (DHCP, loopback) and the tunnel's own connection to the server are let through.</li>
-          <li><strong>No Phantun yet.</strong> A config that reaches its server through Phantun is shown, but does not connect on Windows.</li>
+          <li><strong>No Phantun.</strong> Phantun sends TCP segments of its own making, which Windows allows only through a kernel driver, so it stays on the Mac. A config that reaches its server through Phantun is shown, but does not connect on Windows.</li>
           <li><strong>From the command line,</strong> in place of Shortcuts: <code>Turnout.exe connect &lt;tunnel&gt;</code>, <code>disconnect &lt;tunnel&gt;</code> and <code>status [tunnel]</code>.</li>
           <li><strong>Windows 11 on x64 only.</strong> No Windows 10, no Windows on Arm and no Windows Server.</li>
         </ul>

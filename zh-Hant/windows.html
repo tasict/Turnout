@@ -154,7 +154,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <ul>
           <li><strong>待在通知區域。</strong>按一下 Turnout 的圖示會打開一個面板，列出每條通道和它的開關；視窗裡則有每條通道的路徑、路由、對等端和設定檔，以及各項設定。Windows 可能會把新的圖示收在工作列的 ^ 後面：把它拖到工作列上，或在「設定 › 個人化 › 工作列 › 其他系統匣圖示」中打開 Turnout，它就會一直顯示。</li>
           <li><strong>全通道的流量留在通道裡。</strong>承接所有流量的通道連線期間，Windows 的防火牆會封鎖原本會從通道外送出的流量，以及送往通道 DNS 伺服器以外的 DNS 查詢，做法和官方 WireGuard App 相同。你的繞過路由、區域網路必要的流量（DHCP、loopback），以及通道本身連到伺服器的連線，都會放行。</li>
-          <li><strong>還沒有 Phantun。</strong>經由 Phantun 連到伺服器的設定檔會照常顯示，但在 Windows 上不會連線。</li>
+          <li><strong>不支援 Phantun。</strong>Phantun 會送出自己組成的 TCP 封包，而 Windows 只允許透過核心驅動程式這麼做，所以 Phantun 只在 Mac 上提供。經由 Phantun 連到伺服器的設定檔會照常顯示，但在 Windows 上不會連線。</li>
           <li><strong>用命令列取代「捷徑」。</strong><code>Turnout.exe connect &lt;tunnel&gt;</code>、<code>disconnect &lt;tunnel&gt;</code> 和 <code>status [tunnel]</code>。</li>
           <li><strong>只支援 x64 電腦上的 Windows 11。</strong>不支援 Windows 10、Arm 版 Windows，也不支援 Windows Server。</li>
         </ul>
