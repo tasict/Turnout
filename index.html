@@ -301,7 +301,7 @@ Endpoint = vpn.example.com:51820
     <h2 id="automatic-title">Connects by itself</h2>
     <div class="body">
       <p class="intro">Give a tunnel a schedule, a list of Wi-Fi networks, or both.</p>
-      <p>When a scheduled window starts, Turnout connects the tunnel, and when it ends, disconnects it. When the computer joins one of the listed networks, the tunnel connects; when it leaves, the tunnel disconnects. In between, what you do by hand sticks, and changing a rule never connects or disconnects anything on its own.</p>
+      <p>Turn the tunnel on, and Turnout keeps it to them: connected while they allow it, inside a scheduled window and on one of the listed networks, and paused the rest of the time. A paused tunnel stays on: every time the computer changes networks or a window starts or ends, Turnout checks again, and the tunnel resumes by itself as soon as its rules allow it. With both a schedule and networks, both have to allow it. Turned off, a tunnel stays off whatever its rules say.</p>
 <pre><code>#@ Schedule = Mon-Fri 09:00-18:00
 #@ OnWiFi = Office</code></pre>
       <p>The rules are lines in the config file, set up from the tunnel's page. Turnout acts on them while it is open, so it offers Open at Login. A Wi-Fi rule needs Location access, because macOS and Windows count the name of a Wi-Fi network as location; Turnout asks for it when you set up the rule, never at launch.</p>
@@ -348,7 +348,7 @@ Endpoint = vpn.example.com:51820
     <div class="body">
       <p class="intro">Turnout lives in the menu bar on a Mac and in the notification area on Windows. Connect and disconnect tunnels from there, and open the window only when you want the details.</p>
       <p>Tunnels run in Turnout's background service, so they keep running when the app is closed. Measured on a Mac with the window open, the app uses about 0.5% of the CPU while idle and 2–4% while it draws live traffic. Statistics are only fetched while the menu or a window is open, and once a minute if you ask to hear when a server stops answering.</p>
-      <p>Notifications tell you when a schedule or Wi-Fi rule connected or disconnected a tunnel, when a tunnel failed or stopped without being asked to, and the day before your trial ends. Each kind has its own switch, and the one about a silent server is off until you want it.</p>
+      <p>Notifications tell you when a schedule or Wi-Fi rule paused or resumed a tunnel, when a tunnel failed or stopped without being asked to, and the day before your trial ends. Each kind has its own switch, and the one about a silent server is off until you want it.</p>
       <p>Its menus and windows speak English, 繁體中文, 日本語, Español and 한국어, following your computer's language.</p>
       <figure class="shot-figure">
         <!-- scripts/screenshots.sh must write menu-light.png and menu-dark.png at

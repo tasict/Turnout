@@ -143,7 +143,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <ul>
           <li><strong>構成ファイルはwg-quickのとおりに。</strong>WireGuardの<code>.conf</code>ファイルや、それをまとめたzip（公式アプリが書き出したものを含む）を読み込み、また書き出せます。エディタにはフォームとテキストがあり、コメントやエディタが知らない行も、書いたとおりに残ります。</li>
           <li><strong>ネットワークインターフェイスを選べます。</strong><code>#@ BindInterface</code>は、トンネルの暗号化された通信を、指定したアダプタ（たとえば<code>Ethernet 2</code>）から送り出します。<code>#@ Route … dev</code>は、選んだネットワークを、トンネルではなくアダプタから送り出します。どのアダプタが通信を運んでいるかは、各トンネルの上部にある経路に表示されます。</li>
-          <li><strong>自動で接続。</strong>スケジュールや、一覧にしたWi-Fiネットワークに合わせて、トンネルが接続され、また接続が解除されます。その間に手動で行った操作はそのまま保たれます。</li>
+          <li><strong>ルールどおりに動作。</strong>オンにしたトンネルは、スケジュールや一覧にしたWi-Fiネットワークに合わせて動き、その外では一時停止して、戻ると自動で再開します。オフにしたトンネルはオフのままです。</li>
           <li><strong>フック。</strong><code>PreUp</code>、<code>PostUp</code>、<code>PreDown</code>、<code>PostDown</code>は、管理者が承認すれば、Macと同じように実行されます。</li>
           <li><strong>通知、5つの言語、1つのライセンス。</strong>同じ通知、メニュー、ウインドウが、English、繁體中文、日本語、Español、한국어で表示されます。そして1つのライセンスで、MacでもWindowsでも、コンピュータ3台に使えます。</li>
         </ul>

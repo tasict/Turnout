@@ -301,7 +301,7 @@ Endpoint = vpn.example.com:51820
     <h2 id="automatic-title">Se conecta solo</h2>
     <div class="body">
       <p class="intro">Dale a un túnel un horario, una lista de redes Wi-Fi, o ambos.</p>
-      <p>Cuando empieza una franja del horario, Turnout conecta el túnel, y cuando termina, lo desconecta. Cuando el equipo se une a una de las redes de la lista, el túnel se conecta; cuando la deja, se desconecta. Entre medias, lo que hagas a mano se mantiene, y cambiar una regla nunca conecta ni desconecta nada por sí solo.</p>
+      <p>Enciende el túnel y Turnout lo ajusta a ellas: conectado mientras lo permiten, dentro de una franja del horario y en una de las redes de la lista, y en pausa el resto del tiempo. Un túnel en pausa sigue encendido: cada vez que el equipo cambia de red o una franja empieza o termina, Turnout lo comprueba de nuevo, y el túnel se reanuda solo en cuanto sus reglas lo permiten. Con horario y redes a la vez, ambos tienen que permitirlo. Apagado, un túnel sigue apagado digan lo que digan sus reglas.</p>
 <pre><code>#@ Schedule = Mon-Fri 09:00-18:00
 #@ OnWiFi = Office</code></pre>
       <p>Las reglas son líneas del archivo de configuración y se configuran desde la página del túnel. Turnout las aplica mientras está abierto, por eso ofrece Abrir al iniciar sesión. Una regla de Wi-Fi necesita acceso a la ubicación, porque macOS y Windows consideran el nombre de una red Wi-Fi como información de ubicación; Turnout lo pide cuando configuras la regla, nunca al abrirse.</p>
@@ -348,7 +348,7 @@ Endpoint = vpn.example.com:51820
     <div class="body">
       <p class="intro">Turnout vive en la barra de menús en un Mac y en el área de notificación en Windows. Conecta y desconecta túneles desde ahí y abre la ventana solo cuando quieras ver los detalles.</p>
       <p>Los túneles se ejecutan en el servicio en segundo plano de Turnout, así que siguen activos cuando cierras la app. Medido en un Mac con la ventana abierta, la app usa cerca del 0,5 % de la CPU en reposo y entre el 2 y el 4 % mientras dibuja el tráfico en vivo. Las estadísticas solo se consultan mientras el menú o una ventana están abiertos, y una vez por minuto si pides un aviso cuando un servidor deje de responder.</p>
-      <p>Las notificaciones te avisan cuando un horario o una regla de Wi-Fi conecta o desconecta un túnel, cuando un túnel falla o se detiene sin que se le pida, y el día antes de que termine tu prueba. Cada tipo tiene su propio interruptor, y el de un servidor que no responde viene desactivado hasta que lo quieras.</p>
+      <p>Las notificaciones te avisan cuando un horario o una regla de Wi-Fi pone en pausa o reanuda un túnel, cuando un túnel falla o se detiene sin que se le pida, y el día antes de que termine tu prueba. Cada tipo tiene su propio interruptor, y el de un servidor que no responde viene desactivado hasta que lo quieras.</p>
       <p>Sus menús y ventanas hablan English, 繁體中文, 日本語, Español y 한국어, según el idioma de tu equipo.</p>
       <figure class="shot-figure">
         <!-- scripts/screenshots.sh must write menu-light.png and menu-dark.png at

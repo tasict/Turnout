@@ -143,7 +143,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <ul>
           <li><strong>你的設定檔，照 wg-quick 的方式讀取。</strong>匯入 WireGuard 的 <code>.conf</code> 檔和裝著它們的 zip，包括官方 App 匯出的檔案，也能再匯出。編輯器有表單和文字兩種檢視；註解和它不認得的行，都會照你寫的樣子保留。</li>
           <li><strong>網路介面由你選擇。</strong><code>#@ BindInterface</code> 讓通道的加密流量從你指定的網路介面卡出去，例如 <code>Ethernet 2</code>；<code>#@ Route … dev</code> 則讓你選的網段改從某個網路介面卡出去，不走通道。每條通道最上方的路徑會顯示是哪個網路介面卡在傳送它的流量。</li>
-          <li><strong>自己連線。</strong>排程或你列出的 Wi-Fi 網路會讓通道連線，之後再中斷；這中間你手動做的操作會維持不變。</li>
+          <li><strong>照規則運作。</strong>開啟的通道會依排程或你列出的 Wi-Fi 網路運作，不符合時暫停、符合時自動恢復連線；關閉的通道會保持關閉。</li>
           <li><strong>Hook。</strong><code>PreUp</code>、<code>PostUp</code>、<code>PreDown</code> 和 <code>PostDown</code> 和在 Mac 上一樣會執行，但要先經過管理者核准。</li>
           <li><strong>通知、五種語言和一份授權。</strong>同樣的通知、選單和視窗，有 English、繁體中文、日本語、Español 和 한국어 可選；一份授權可以用在三台電腦上，Mac 或 Windows 皆可。</li>
         </ul>

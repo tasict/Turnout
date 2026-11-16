@@ -143,7 +143,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <ul>
           <li><strong>wg-quick이 읽는 그대로의 구성.</strong> WireGuard <code>.conf</code> 파일과 그 파일을 담은 zip을 공식 앱이 내보낸 것까지 포함해 가져오고, 다시 내보낼 수 있습니다. 편집기에는 양식과 텍스트가 있으며, 주석과 편집기가 모르는 줄은 작성한 그대로 유지됩니다.</li>
           <li><strong>직접 선택하는 네트워크 인터페이스.</strong> <code>#@ BindInterface</code>는 터널의 암호화된 트래픽을 <code>Ethernet 2</code>처럼 지정한 어댑터로 내보내고, <code>#@ Route … dev</code>는 선택한 네트워크를 터널 대신 어댑터로 내보냅니다. 각 터널 맨 위의 경로에 어느 어댑터를 거치는지 표시됩니다.</li>
-          <li><strong>스스로 연결됩니다.</strong> 스케줄이나 나열한 Wi-Fi 네트워크에 따라 터널이 연결되고 다시 연결이 해제됩니다. 그 사이에 직접 한 조작은 그대로 유지됩니다.</li>
+          <li><strong>규칙대로 동작합니다.</strong> 켜 둔 터널은 스케줄이나 나열한 Wi-Fi 네트워크에 맞춰 동작하며, 그 밖에서는 일시 정지하고 자동으로 재개합니다. 꺼 둔 터널은 계속 꺼져 있습니다.</li>
           <li><strong>훅.</strong> <code>PreUp</code>, <code>PostUp</code>, <code>PreDown</code>, <code>PostDown</code>은 관리자가 승인하면 Mac에서와 같이 실행됩니다.</li>
           <li><strong>알림, 다섯 가지 언어, 하나의 라이선스.</strong> 같은 알림, 메뉴, 윈도우가 English, 繁體中文, 日本語, Español, 한국어로 제공되며, 라이선스 하나로 Mac 또는 Windows 컴퓨터 3대에서 사용할 수 있습니다.</li>
         </ul>
