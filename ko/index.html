@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QIvTMlseRTyJI+xFXHwpxfg3Tl7GdElBGp4QHCkROZE=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnout: WireGuard 서버에 연결하는 macOS 및 Windows용 VPN 클라이언트</title>
 <meta name="description" content="Turnout은 wg-quick과 같은 방식으로 Mac 또는 Windows PC를 WireGuard 서버에 연결하는 네이티브 앱입니다. 훅이 그대로 실행되고, 경로는 사용자가 정한 대로 유지되며, 터널이 어느 네트워크 인터페이스로 나갈지 직접 선택할 수 있습니다.">
 <link rel="canonical" href="https://turnout.ctsite.cc/ko/">
@@ -60,7 +60,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 (function () {
   var key = "turnout-analytics", loaded = false, bar = null, stored = null;
   function grant() {
-    gtag("consent", "update", {analytics_storage: "granted"});
+    gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;
     loaded = true;
     gtag("js", new Date());
@@ -69,6 +69,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     s.async = true;
     s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
     document.head.appendChild(s);
+    var a = document.createElement("script");
+    a.async = true;
+    a.crossOrigin = "anonymous";
+    a.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5869768897978172";
+    document.head.appendChild(a);
   }
   function ask() {
     if (bar) return;
@@ -77,7 +82,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       var choice = event.target.getAttribute("data-consent");
       if (!choice) return;
       try { localStorage.setItem(key, choice); } catch (e) {}
-      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
       bar.remove();
       bar = null;
     });
@@ -90,14 +95,14 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
       button.addEventListener("click", function () {
         try { localStorage.removeItem(key); } catch (e) {}
-        gtag("consent", "update", {analytics_storage: "denied"});
+        gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
         ask();
       });
     });
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="웹 사이트 분석"><p>이 사이트가 Google Analytics로 방문을 집계해도 될까요? 동의하기 전에는 Google에 아무것도 전송되지 않습니다. <a href="privacy#analytics">개인정보 처리방침</a></p><p class="consent-actions"><button type="button" data-consent="denied">거부</button> <button type="button" data-consent="granted">동의</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="웹 사이트 분석 및 광고"><p>이 사이트가 Google Analytics로 방문을 집계하고 Google AdSense 광고를 표시해도 될까요? 동의하기 전에는 Google에 아무것도 전송되지 않습니다. <a href="privacy#analytics">개인정보 처리방침</a></p><p class="consent-actions"><button type="button" data-consent="denied">거부</button> <button type="button" data-consent="granted">동의</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -144,7 +149,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- download:live -->
         <div class="live">
           <p class="downloads"><a class="download" href="../releases/latest">Mac용 다운로드</a> <a class="download" href="../releases/latest">Windows용 다운로드</a></p>
-          <p class="fineprint">버전 <!-- version --><span data-latest="version">1.2.0</span><!-- /version -->, <!-- released --><time data-latest="date" datetime="2026-11-16">2026년 11월 16일</time><!-- /released --> 출시 · <a href="../releases/latest">릴리스 노트</a></p>
+          <p class="fineprint">버전 <!-- version --><span data-latest="version">1.2.1</span><!-- /version -->, <!-- released --><time data-latest="date" datetime="2026-11-18">2026년 11월 18일</time><!-- /released --> 출시 · <a href="../releases/latest">릴리스 노트</a></p>
           <p class="fineprint">Apple 실리콘 및 Intel Mac의 macOS 15 이상 · x64 PC의 Windows 11 · 7일 체험 · <!-- price --><span data-price>US$19</span><!-- /price --> 1회 결제, Mac 또는 Windows 컴퓨터 3대</p>
           <p class="fineprint"><a href="#install">설치 방법</a> · <a href="#mac">Mac에만 있는 기능</a></p>
         </div>
@@ -274,16 +279,16 @@ Endpoint = vpn.example.com:51820</code></pre>
 
 <section class="feature" id="phantun" aria-labelledby="phantun-title">
   <div class="wrap">
-    <h2 id="phantun-title">UDP가 막히면 TCP로</h2>
+    <h2 id="phantun-title">UDP가 통하지 않으면 TCP로</h2>
     <div class="body">
       <p class="fineprint">Mac 전용입니다. Windows용 Turnout에서는 Phantun을 사용하는 구성이 표시되지만, 연결되지는 않습니다.</p>
-      <p class="intro">일부 네트워크는 WireGuard가 사용하는 UDP를 차단하거나 느리게 만듭니다. 호텔과 게스트 Wi-Fi, 일부 사무실과 통신사가 그렇습니다. 피어를 Phantun으로 바꾸면 Turnout이 WireGuard 패킷을 TCP 연결에 담아 Phantun 서버로 보내고, Phantun 서버가 이를 WireGuard 서버에 전달합니다.</p>
+      <p class="intro">WireGuard는 UDP를 사용하는데, 일부 네트워크에서는 UDP가 통하지 않거나 느려집니다. 일부 호텔과 게스트 Wi-Fi, 일부 통신사가 그렇습니다. 피어를 Phantun으로 바꾸면 Turnout이 WireGuard 패킷을 TCP 연결에 담아 Phantun 서버로 보내고, Phantun 서버가 이를 WireGuard 서버에 전달합니다.</p>
 <pre><code>[Peer]
 PublicKey = …
 Endpoint = vpn.example.com:51820
 #@ Phantun = 4567</code></pre>
       <p>이 한 줄은 wg-quick에게는 주석이므로, 같은 파일은 다른 곳에서 여전히 UDP로 연결됩니다. Phantun은 WireGuard 서버 앞의 Linux 호스트에서 실행되며, ‘서버 설정…’에서 Docker 또는 Phantun의 릴리스 바이너리로 실행하는 명령을 터널의 포트와 MTU가 채워진 상태로 볼 수 있습니다. Mac에서는 다른 프로그램이 실행되지 않습니다. Phantun의 TCP는 Turnout이 직접 처리합니다.</p>
-      <p>경로는 TCP 연결을 케이블을 감싸는 슬리브로 그리고, 응답이 없으면 어느 쪽을 확인해야 하는지 알려 줍니다. UDP 터널이 응답을 받지 못하면 경로의 ‘Phantun 사용…’으로 바로 전환할 수 있습니다. Phantun은 UDP를 차단하거나 느리게 하는 네트워크는 통과하지만, 트래픽이 실제 웹 연결인지 검사하는 방화벽은 통과하지 못합니다.</p>
+      <p>경로는 TCP 연결을 케이블을 감싸는 슬리브로 그리고, 응답이 없으면 어느 쪽을 확인해야 하는지 알려 줍니다. UDP 터널이 응답을 받지 못하면 경로의 ‘Phantun 사용…’으로 바로 전환할 수 있습니다. Phantun은 UDP가 통하지 않거나 느린 네트워크를 위한 것입니다. 트래픽이 실제 웹 연결인지 검사하는 네트워크에서는 연결할 수 없습니다.</p>
       <figure class="shot-figure shot-phantun">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/5-phantun.jpg?v=16570c5c">
@@ -395,7 +400,7 @@ Endpoint = vpn.example.com:51820
     <div class="body">
       <p class="intro">Windows용 Turnout에도 같은 구성, 네트워크 인터페이스, 규칙, 알림, 라이선스가 있습니다. 몇 가지는 Mac에만 있습니다.</p>
       <ul class="extras">
-        <li><strong>UDP가 막히면 TCP로.</strong> <a href="#phantun">Phantun</a> 서버를 거쳐 터널을 연결합니다. Windows에서는 Phantun을 사용하는 구성이 표시되지만, 연결되지는 않습니다.</li>
+        <li><strong>UDP가 통하지 않으면 TCP로.</strong> <a href="#phantun">Phantun</a> 서버를 거쳐 터널을 연결합니다. Windows에서는 Phantun을 사용하는 구성이 표시되지만, 연결되지는 않습니다.</li>
         <li><strong>단축어.</strong> 터널을 연결하거나 연결 해제하고 상태를 읽는 동작을 단축어와 자동화에서 사용할 수 있습니다. Windows에서는 단축어 대신 명령줄에서 <code>Turnout.exe connect &lt;tunnel&gt;</code>, <code>disconnect</code>, <code>status</code>를 사용할 수 있습니다.</li>
         <li><strong>Homebrew.</strong> <code>brew install --cask tasict/tap/turnout</code>은 다운로드한 것과 같은 패키지를 설치합니다.</li>
         <li><strong>모든 Mac으로 이어지는 라이선스.</strong> 같은 iCloud 계정에 로그인한 다른 Mac은 라이선스를 찾아 클릭 한 번으로 사용할 수 있습니다. Windows PC에서는 PC마다 키를 붙여 넣습니다.</li>
@@ -433,7 +438,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       <!-- download:live -->
       <div class="live">
       <p class="downloads"><a class="download" href="../releases/latest">Mac용 다운로드</a> <a class="download" href="../releases/latest">Windows용 다운로드</a></p>
-      <p class="fineprint">버전 <!-- version --><span data-latest="version">1.2.0</span><!-- /version -->, <!-- released --><time data-latest="date" datetime="2026-11-16">2026년 11월 16일</time><!-- /released --> 출시 · <a href="../releases/latest">릴리스 노트</a></p>
+      <p class="fineprint">버전 <!-- version --><span data-latest="version">1.2.1</span><!-- /version -->, <!-- released --><time data-latest="date" datetime="2026-11-18">2026년 11월 18일</time><!-- /released --> 출시 · <a href="../releases/latest">릴리스 노트</a></p>
       <p class="fineprint">Apple 실리콘 및 Intel Mac의 macOS 15 이상 · x64 PC의 Windows 11 · 7일 체험 · <!-- price --><span data-price>US$19</span><!-- /price --> 1회 결제, Mac 또는 Windows 컴퓨터 3대</p>
       <h3>Mac에서</h3>
       <ol class="steps">

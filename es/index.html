@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QIvTMlseRTyJI+xFXHwpxfg3Tl7GdElBGp4QHCkROZE=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnout: un cliente VPN para macOS y Windows que se conecta a servidores WireGuard</title>
 <meta name="description" content="Turnout conecta tu Mac o tu equipo con Windows a servidores WireGuard como lo hace wg-quick, en una app nativa: tus hooks se ejecutan, tus rutas siguen siendo tuyas y tú eliges por qué interfaz de red sale el túnel.">
 <link rel="canonical" href="https://turnout.ctsite.cc/es/">
@@ -60,7 +60,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 (function () {
   var key = "turnout-analytics", loaded = false, bar = null, stored = null;
   function grant() {
-    gtag("consent", "update", {analytics_storage: "granted"});
+    gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;
     loaded = true;
     gtag("js", new Date());
@@ -69,6 +69,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     s.async = true;
     s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
     document.head.appendChild(s);
+    var a = document.createElement("script");
+    a.async = true;
+    a.crossOrigin = "anonymous";
+    a.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5869768897978172";
+    document.head.appendChild(a);
   }
   function ask() {
     if (bar) return;
@@ -77,7 +82,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       var choice = event.target.getAttribute("data-consent");
       if (!choice) return;
       try { localStorage.setItem(key, choice); } catch (e) {}
-      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
       bar.remove();
       bar = null;
     });
@@ -90,14 +95,14 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
       button.addEventListener("click", function () {
         try { localStorage.removeItem(key); } catch (e) {}
-        gtag("consent", "update", {analytics_storage: "denied"});
+        gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
         ask();
       });
     });
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="Analítica"><p>¿Puede este sitio contar tu visita con Google Analytics? No se envía nada a Google a menos que aceptes. <a href="privacy#analytics">Política de privacidad</a></p><p class="consent-actions"><button type="button" data-consent="denied">Rechazar</button> <button type="button" data-consent="granted">Aceptar</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="Analítica y anuncios"><p>¿Puede este sitio contar tu visita con Google Analytics y mostrar anuncios de Google AdSense? No se envía nada a Google a menos que aceptes. <a href="privacy#analytics">Política de privacidad</a></p><p class="consent-actions"><button type="button" data-consent="denied">Rechazar</button> <button type="button" data-consent="granted">Aceptar</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -144,7 +149,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- download:live -->
         <div class="live">
           <p class="downloads"><a class="download" href="../releases/latest">Descargar para Mac</a> <a class="download" href="../releases/latest">Descargar para Windows</a></p>
-          <p class="fineprint">Versión <!-- version --><span data-latest="version">1.2.0</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-11-16">16 de noviembre de 2026</time><!-- /released --> · <a href="../releases/latest">Notas de la versión</a></p>
+          <p class="fineprint">Versión <!-- version --><span data-latest="version">1.2.1</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-11-18">18 de noviembre de 2026</time><!-- /released --> · <a href="../releases/latest">Notas de la versión</a></p>
           <p class="fineprint">macOS 15 o posterior, en Apple silicon e Intel · Windows 11 en x64 · prueba de 7 días · <!-- price --><span data-price>US$19</span><!-- /price --> en un solo pago, tres equipos, Mac o Windows</p>
           <p class="fineprint"><a href="#install">Cómo instalar</a> · <a href="#mac">Qué añade el Mac</a></p>
         </div>
@@ -274,16 +279,16 @@ Endpoint = vpn.example.com:51820</code></pre>
 
 <section class="feature" id="phantun" aria-labelledby="phantun-title">
   <div class="wrap">
-    <h2 id="phantun-title">Por TCP cuando UDP está bloqueado</h2>
+    <h2 id="phantun-title">Por TCP cuando UDP no pasa</h2>
     <div class="body">
       <p class="fineprint">Solo en el Mac. Turnout para Windows muestra una configuración que usa Phantun, pero no la conecta.</p>
-      <p class="intro">Algunas redes bloquean o ralentizan UDP, el protocolo por el que viaja WireGuard: el Wi-Fi de hoteles y de invitados, algunas oficinas, algunos operadores. Cambia un par a Phantun y Turnout enviará los paquetes de WireGuard dentro de una conexión TCP a un servidor Phantun, que se los entrega a tu servidor WireGuard.</p>
+      <p class="intro">WireGuard viaja por UDP, y en algunas redes UDP no pasa o va lento: algunas redes Wi-Fi de hoteles y de invitados, algunos operadores. Cambia un par a Phantun y Turnout enviará los paquetes de WireGuard dentro de una conexión TCP a un servidor Phantun, que se los entrega a tu servidor WireGuard.</p>
 <pre><code>[Peer]
 PublicKey = …
 Endpoint = vpn.example.com:51820
 #@ Phantun = 4567</code></pre>
       <p>Esa línea es un comentario para wg-quick, así que el mismo archivo sigue conectándose por UDP en cualquier otro sitio. Phantun se ejecuta en un host Linux delante de tu servidor WireGuard, y Configuración del servidor… te da sus comandos, con Docker o con el binario publicado de Phantun, ya rellenos con los puertos y el MTU del túnel. En tu Mac no se ejecuta nada más: Turnout se encarga él mismo del TCP de Phantun.</p>
-      <p>La ruta dibuja la conexión TCP como una funda alrededor del cable y, cuando algo no responde, te dice qué lado revisar. Cuando un túnel UDP no recibe respuesta, Usar Phantun… en su ruta lo cambia. Phantun atraviesa redes que bloquean o ralentizan UDP; no supera cortafuegos que inspeccionan el tráfico en busca de conexiones web reales.</p>
+      <p>La ruta dibuja la conexión TCP como una funda alrededor del cable y, cuando algo no responde, te dice qué lado revisar. Cuando un túnel UDP no recibe respuesta, Usar Phantun… en su ruta lo cambia. Phantun sirve para redes en las que UDP no pasa o va lento; en una red que comprueba si el tráfico es una conexión web real, no puede conectarse.</p>
       <figure class="shot-figure shot-phantun">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/5-phantun.jpg?v=16570c5c">
@@ -395,7 +400,7 @@ Endpoint = vpn.example.com:51820
     <div class="body">
       <p class="intro">Turnout para Windows tiene las mismas configuraciones, interfaces de red, reglas, notificaciones y licencia. Algunas cosas solo están en el Mac.</p>
       <ul class="extras">
-        <li><strong>Por TCP cuando UDP está bloqueado.</strong> Túneles a través de un servidor <a href="#phantun">Phantun</a>. En Windows, una configuración que usa Phantun se muestra, pero no se conecta.</li>
+        <li><strong>Por TCP cuando UDP no pasa.</strong> Túneles a través de un servidor <a href="#phantun">Phantun</a>. En Windows, una configuración que usa Phantun se muestra, pero no se conecta.</li>
         <li><strong>Atajos.</strong> Acciones que conectan y desconectan un túnel y leen su estado, para tus atajos y automatizaciones. En Windows, lo mismo se hace desde la línea de comandos: <code>Turnout.exe connect &lt;tunnel&gt;</code>, <code>disconnect</code> y <code>status</code>.</li>
         <li><strong>Homebrew.</strong> <code>brew install --cask tasict/tap/turnout</code> instala el mismo paquete que la descarga.</li>
         <li><strong>La licencia en todos tus Mac.</strong> Tus otros Mac con la misma cuenta de iCloud encuentran la licencia y la usan con un clic. En un equipo con Windows, pegas la clave en cada uno.</li>
@@ -433,7 +438,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       <!-- download:live -->
       <div class="live">
       <p class="downloads"><a class="download" href="../releases/latest">Descargar para Mac</a> <a class="download" href="../releases/latest">Descargar para Windows</a></p>
-      <p class="fineprint">Versión <!-- version --><span data-latest="version">1.2.0</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-11-16">16 de noviembre de 2026</time><!-- /released --> · <a href="../releases/latest">Notas de la versión</a></p>
+      <p class="fineprint">Versión <!-- version --><span data-latest="version">1.2.1</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-11-18">18 de noviembre de 2026</time><!-- /released --> · <a href="../releases/latest">Notas de la versión</a></p>
       <p class="fineprint">macOS 15 o posterior, en Apple silicon e Intel · Windows 11 en x64 · prueba de 7 días · <!-- price --><span data-price>US$19</span><!-- /price --> en un solo pago, tres equipos, Mac o Windows</p>
       <h3>En un Mac</h3>
       <ol class="steps">

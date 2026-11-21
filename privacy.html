@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-4tNa4vvOOSMEARZU9Xp7d7U9nYbn5Uv/x1piJcP03a4=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnout privacy policy</title>
 <meta name="description" content="Turnout has no account, no advertising and no crash reporting. The app sends its update check with one anonymous report, and, once you have bought a license, a license check to Polar about once a week.">
 <link rel="canonical" href="https://turnout.ctsite.cc/privacy">
@@ -42,7 +42,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 (function () {
   var key = "turnout-analytics", loaded = false, bar = null, stored = null;
   function grant() {
-    gtag("consent", "update", {analytics_storage: "granted"});
+    gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;
     loaded = true;
     gtag("js", new Date());
@@ -59,7 +59,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       var choice = event.target.getAttribute("data-consent");
       if (!choice) return;
       try { localStorage.setItem(key, choice); } catch (e) {}
-      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
       bar.remove();
       bar = null;
     });
@@ -72,14 +72,14 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
       button.addEventListener("click", function () {
         try { localStorage.removeItem(key); } catch (e) {}
-        gtag("consent", "update", {analytics_storage: "denied"});
+        gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
         ask();
       });
     });
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="Analytics"><p>Can this site count your visit with Google Analytics? Nothing is sent to Google unless you accept. <a href="privacy#analytics">Privacy policy</a></p><p class="consent-actions"><button type="button" data-consent="denied">Decline</button> <button type="button" data-consent="granted">Accept</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="Analytics and ads"><p>Can this site count your visit with Google Analytics and show ads from Google AdSense? Nothing is sent to Google unless you accept. <a href="privacy#analytics">Privacy policy</a></p><p class="consent-actions"><button type="button" data-consent="denied">Decline</button> <button type="button" data-consent="granted">Accept</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -112,7 +112,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <main id="main" class="doc policy">
   <div class="wrap doc-head">
     <h1>Privacy policy</h1>
-    <p class="effective">Effective 6 November 2026</p>
+    <p class="effective">Effective 21 November 2026</p>
   </div>
 
   <div class="wrap">
@@ -183,13 +183,23 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       </section>
       <!-- /analytics:on -->
 
+      <!-- ads:on -->
+      <section id="advertising" aria-labelledby="advertising-title">
+        <h2 id="advertising-title">Advertising on this website</h2>
+        <p>The home page, What Turnout does to your Mac and Turnout for Windows show ads from Google AdSense, but only if you choose Accept in the same bar at the bottom of the page. Until you do, and if you choose Decline, no advertising code is loaded and nothing is sent to Google. This policy and the license terms show no ads.</p>
+        <p>Once you accept, third-party vendors, including Google, use cookies to serve ads based on your prior visits to this website or other websites. Google's use of advertising cookies enables it and its partners to serve ads to you based on your visits to this site and/or other sites on the Internet.</p>
+        <p>You can opt out of personalized advertising in Google's <a href="https://adssettings.google.com/">Ads Settings</a>, and opt out of some third-party vendors' use of cookies for personalized advertising at <a href="https://www.aboutads.info/choices/">www.aboutads.info</a>. Google explains how it uses data from sites that show its ads in <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites or apps that use our services</a>.</p>
+        <p>Google chooses the ads, not Turnout's developer. One choice in the bar covers both analytics and ads; Change my analytics choice, under Analytics on this website, changes it.</p>
+      </section>
+      <!-- /ads:on -->
+
       <section id="website" aria-labelledby="website-title">
         <h2 id="website-title">This website</h2>
         <!-- analytics:off -->
         <p hidden>This site has no analytics and no cookies. The one thing it asks another site for is the newest version of Turnout and the day it was released, which the home page asks GitHub's API (api.github.com) for, to show them under the Download button.</p>
         <!-- /analytics:off -->
         <!-- analytics:on -->
-        <p>Besides Google Analytics, which loads only after you accept it, as described above, this site asks one other site for one thing: the home page asks GitHub's API (api.github.com) for the newest version of Turnout and the day it was released, to show them under the Download button. That request carries no cookies, and the site sets none of its own.</p>
+        <p>Besides the Google services described above, which load only after you accept them, this site asks one other site for one thing: the home page asks GitHub's API (api.github.com) for the newest version of Turnout and the day it was released, to show them under the Download button. That request carries no cookies, and the site sets none of its own.</p>
         <!-- /analytics:on -->
         <p>It is hosted on Cloudflare Pages, and Cloudflare may log visits as described in the <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare Privacy Policy</a>; GitHub may log that request as described in the <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>.</p>
       </section>

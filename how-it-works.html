@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QIvTMlseRTyJI+xFXHwpxfg3Tl7GdElBGp4QHCkROZE=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>What Turnout does to your Mac</title>
 <meta name="description" content="Turnout's background service runs as root. What it is, what it changes and with which tools, where configs live, when hooks run, what the app connects to, and how to check all of it yourself.">
 <link rel="canonical" href="https://turnout.ctsite.cc/how-it-works">
@@ -42,7 +42,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 (function () {
   var key = "turnout-analytics", loaded = false, bar = null, stored = null;
   function grant() {
-    gtag("consent", "update", {analytics_storage: "granted"});
+    gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;
     loaded = true;
     gtag("js", new Date());
@@ -51,6 +51,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     s.async = true;
     s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
     document.head.appendChild(s);
+    var a = document.createElement("script");
+    a.async = true;
+    a.crossOrigin = "anonymous";
+    a.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5869768897978172";
+    document.head.appendChild(a);
   }
   function ask() {
     if (bar) return;
@@ -59,7 +64,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       var choice = event.target.getAttribute("data-consent");
       if (!choice) return;
       try { localStorage.setItem(key, choice); } catch (e) {}
-      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
       bar.remove();
       bar = null;
     });
@@ -72,14 +77,14 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
       button.addEventListener("click", function () {
         try { localStorage.removeItem(key); } catch (e) {}
-        gtag("consent", "update", {analytics_storage: "denied"});
+        gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
         ask();
       });
     });
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="Analytics"><p>Can this site count your visit with Google Analytics? Nothing is sent to Google unless you accept. <a href="privacy#analytics">Privacy policy</a></p><p class="consent-actions"><button type="button" data-consent="denied">Decline</button> <button type="button" data-consent="granted">Accept</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="Analytics and ads"><p>Can this site count your visit with Google Analytics and show ads from Google AdSense? Nothing is sent to Google unless you accept. <a href="privacy#analytics">Privacy policy</a></p><p class="consent-actions"><button type="button" data-consent="denied">Decline</button> <button type="button" data-consent="granted">Accept</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>

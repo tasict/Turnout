@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QIvTMlseRTyJI+xFXHwpxfg3Tl7GdElBGp4QHCkROZE=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnout：連線到 WireGuard 伺服器的 macOS 與 Windows VPN 用戶端</title>
 <meta name="description" content="Turnout 用原生 App，照 wg-quick 的做法把你的 Mac 或 Windows 電腦連上 WireGuard 伺服器：hook 照樣執行，路由由你作主，通道要從哪個網路介面出去也由你決定。">
 <link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/">
@@ -60,7 +60,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 (function () {
   var key = "turnout-analytics", loaded = false, bar = null, stored = null;
   function grant() {
-    gtag("consent", "update", {analytics_storage: "granted"});
+    gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;
     loaded = true;
     gtag("js", new Date());
@@ -69,6 +69,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     s.async = true;
     s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
     document.head.appendChild(s);
+    var a = document.createElement("script");
+    a.async = true;
+    a.crossOrigin = "anonymous";
+    a.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5869768897978172";
+    document.head.appendChild(a);
   }
   function ask() {
     if (bar) return;
@@ -77,7 +82,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       var choice = event.target.getAttribute("data-consent");
       if (!choice) return;
       try { localStorage.setItem(key, choice); } catch (e) {}
-      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
       bar.remove();
       bar = null;
     });
@@ -90,14 +95,14 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
       button.addEventListener("click", function () {
         try { localStorage.removeItem(key); } catch (e) {}
-        gtag("consent", "update", {analytics_storage: "denied"});
+        gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
         ask();
       });
     });
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="網站分析"><p>可以讓本網站用 Google Analytics 統計這次造訪嗎？除非你接受，否則不會傳送任何資料給 Google。 <a href="privacy#analytics">隱私權政策</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒絕</button> <button type="button" data-consent="granted">接受</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="網站分析與廣告"><p>可以讓本網站用 Google Analytics 統計這次造訪，並顯示 Google AdSense 的廣告嗎？除非你接受，否則不會傳送任何資料給 Google。 <a href="privacy#analytics">隱私權政策</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒絕</button> <button type="button" data-consent="granted">接受</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -144,7 +149,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- download:live -->
         <div class="live">
           <p class="downloads"><a class="download" href="../releases/latest">下載 Mac 版</a> <a class="download" href="../releases/latest">下載 Windows 版</a></p>
-          <p class="fineprint">版本 <!-- version --><span data-latest="version">1.2.0</span><!-- /version -->，<!-- released --><time data-latest="date" datetime="2026-11-16">2026 年 11 月 16 日</time><!-- /released -->發布 · <a href="../releases/latest">版本說明</a></p>
+          <p class="fineprint">版本 <!-- version --><span data-latest="version">1.2.1</span><!-- /version -->，<!-- released --><time data-latest="date" datetime="2026-11-18">2026 年 11 月 18 日</time><!-- /released -->發布 · <a href="../releases/latest">版本說明</a></p>
           <p class="fineprint">macOS 15 以上，支援 Apple 晶片與 Intel · x64 電腦上的 Windows 11 · 試用 7 天 · <!-- price --><span data-price>US$19</span><!-- /price --> 一次買斷，三台電腦，Mac 或 Windows 皆可</p>
           <p class="fineprint"><a href="#install">如何安裝</a> · <a href="#mac">Mac 上多了什麼</a></p>
         </div>
@@ -274,16 +279,16 @@ Endpoint = vpn.example.com:51820</code></pre>
 
 <section class="feature" id="phantun" aria-labelledby="phantun-title">
   <div class="wrap">
-    <h2 id="phantun-title">UDP 被擋時改走 TCP</h2>
+    <h2 id="phantun-title">UDP 不通時改走 TCP</h2>
     <div class="body">
       <p class="fineprint">僅限 Mac。在 Windows 版 Turnout 中，經由 Phantun 連到伺服器的設定檔會照常顯示，但不會連線。</p>
-      <p class="intro">有些網路會封鎖或限速 WireGuard 使用的 UDP：飯店和訪客 Wi-Fi、部分辦公室、部分電信業者。把對等端切換成 Phantun，Turnout 就會把 WireGuard 的封包包在 TCP 連線裡送到 Phantun 伺服器，再由它交給你的 WireGuard 伺服器。</p>
+      <p class="intro">WireGuard 使用 UDP，而有些網路上的 UDP 不通或被限速，例如部分飯店和訪客 Wi-Fi、部分電信業者。把對等端切換成 Phantun，Turnout 就會把 WireGuard 的封包包在 TCP 連線裡送到 Phantun 伺服器，再由它交給你的 WireGuard 伺服器。</p>
 <pre><code>[Peer]
 PublicKey = …
 Endpoint = vpn.example.com:51820
 #@ Phantun = 4567</code></pre>
       <p>這一行對 wg-quick 來說是註解，所以同一個檔案在別的地方照樣用 UDP 連線。Phantun 跑在 WireGuard 伺服器前面的一台 Linux 主機上，「伺服器設定⋯」會列出它需要的指令，可以用 Docker 或 Phantun 的發行版執行檔，通道的連接埠和 MTU 都已經填好。你的 Mac 上不必多跑任何程式：Phantun 的 TCP 由 Turnout 自己處理。</p>
-      <p>路徑會把 TCP 連線畫成包住傳輸線的套管，有哪一段沒有回應，也會告訴你該檢查哪一邊。UDP 通道收不到回應時，路徑上的「使用Phantun⋯」可以直接切換過去。Phantun 能穿過封鎖或限速 UDP 的網路，但過不了會檢查流量是否為真正網頁連線的防火牆。</p>
+      <p>路徑會把 TCP 連線畫成包住傳輸線的套管，有哪一段沒有回應，也會告訴你該檢查哪一邊。UDP 通道收不到回應時，路徑上的「使用Phantun⋯」可以直接切換過去。Phantun 適合 UDP 不通或被限速的網路；如果網路會檢查流量是否為真正的網頁連線，它就連不上。</p>
       <figure class="shot-figure shot-phantun">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/5-phantun.jpg?v=16570c5c">
@@ -395,7 +400,7 @@ Endpoint = vpn.example.com:51820
     <div class="body">
       <p class="intro">Windows 版 Turnout 有同樣的設定檔、網路介面、規則、通知和授權。有幾項是 Mac 上才有的。</p>
       <ul class="extras">
-        <li><strong>UDP 被擋時改走 TCP。</strong>通道可以經由 <a href="#phantun">Phantun</a> 伺服器連線。在 Windows 上，經由 Phantun 連到伺服器的設定檔會照常顯示，但不會連線。</li>
+        <li><strong>UDP 不通時改走 TCP。</strong>通道可以經由 <a href="#phantun">Phantun</a> 伺服器連線。在 Windows 上，經由 Phantun 連到伺服器的設定檔會照常顯示，但不會連線。</li>
         <li><strong>「捷徑」。</strong>提供連線、中斷通道和讀取通道狀態的動作，讓你用在自己的捷徑和自動化中。在 Windows 上則用命令列取代：<code>Turnout.exe connect &lt;tunnel&gt;</code>、<code>disconnect</code> 和 <code>status</code>。</li>
         <li><strong>Homebrew。</strong><code>brew install --cask tasict/tap/turnout</code> 裝的和下載的是同一個安裝程式。</li>
         <li><strong>每部 Mac 都找得到授權。</strong>登入同一個 iCloud 帳號的其他 Mac 會找到這份授權，按一下就能使用。Windows 電腦則要在每一台上各自貼上金鑰。</li>
@@ -433,7 +438,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       <!-- download:live -->
       <div class="live">
       <p class="downloads"><a class="download" href="../releases/latest">下載 Mac 版</a> <a class="download" href="../releases/latest">下載 Windows 版</a></p>
-      <p class="fineprint">版本 <!-- version --><span data-latest="version">1.2.0</span><!-- /version -->，<!-- released --><time data-latest="date" datetime="2026-11-16">2026 年 11 月 16 日</time><!-- /released -->發布 · <a href="../releases/latest">版本說明</a></p>
+      <p class="fineprint">版本 <!-- version --><span data-latest="version">1.2.1</span><!-- /version -->，<!-- released --><time data-latest="date" datetime="2026-11-18">2026 年 11 月 18 日</time><!-- /released -->發布 · <a href="../releases/latest">版本說明</a></p>
       <p class="fineprint">macOS 15 以上，支援 Apple 晶片與 Intel · x64 電腦上的 Windows 11 · 試用 7 天 · <!-- price --><span data-price>US$19</span><!-- /price --> 一次買斷，三台電腦，Mac 或 Windows 皆可</p>
       <h3>在 Mac 上</h3>
       <ol class="steps">

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-4tNa4vvOOSMEARZU9Xp7d7U9nYbn5Uv/x1piJcP03a4=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnoutプライバシーポリシー</title>
 <meta name="description" content="Turnoutにはアカウントも広告もクラッシュレポートもありません。アプリが送るのはアップデートの確認とそれに伴う匿名の報告1件、そしてライセンスの購入後は、週に1回程度のPolarへのライセンス確認です。">
 <link rel="canonical" href="https://turnout.ctsite.cc/ja/privacy">
@@ -42,7 +42,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 (function () {
   var key = "turnout-analytics", loaded = false, bar = null, stored = null;
   function grant() {
-    gtag("consent", "update", {analytics_storage: "granted"});
+    gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;
     loaded = true;
     gtag("js", new Date());
@@ -59,7 +59,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       var choice = event.target.getAttribute("data-consent");
       if (!choice) return;
       try { localStorage.setItem(key, choice); } catch (e) {}
-      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
       bar.remove();
       bar = null;
     });
@@ -72,14 +72,14 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
       button.addEventListener("click", function () {
         try { localStorage.removeItem(key); } catch (e) {}
-        gtag("consent", "update", {analytics_storage: "denied"});
+        gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
         ask();
       });
     });
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析"><p>このサイトへの訪問をGoogle Analyticsで数えてもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析と広告"><p>このサイトへの訪問をGoogle Analyticsで数え、Google AdSenseの広告を表示してもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -112,7 +112,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <main id="main" class="doc policy">
   <div class="wrap doc-head">
     <h1>プライバシーポリシー</h1>
-    <p class="effective">施行日：2026年11月6日</p>
+    <p class="effective">施行日：2026年11月21日</p>
   </div>
 
   <div class="wrap">
@@ -183,13 +183,23 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       </section>
       <!-- /analytics:on -->
 
+      <!-- ads:on -->
+      <section id="advertising" aria-labelledby="advertising-title">
+        <h2 id="advertising-title">このWebサイトの広告</h2>
+        <p>トップページ、“TurnoutがMacに対して行うこと”、“Windows版Turnout”には、Google AdSenseの広告が表示されます。ただし、ページ下部の同じバーで“同意する”を選んだ場合に限ります。同意するまで、また“拒否”を選んだ場合は、広告のコードは読み込まれず、Googleには何も送られません。このプライバシーポリシーとライセンス条項には広告は表示されません。</p>
+        <p>同意すると、Googleなどの第三者配信事業者がCookieを使用して、このWebサイトやほかのWebサイトへの過去のアクセス情報に基づいて広告を配信します。Googleは広告Cookieを使用することで、このサイトやインターネット上のほかのサイトへのアクセス情報に基づいて、Googleやそのパートナーが広告を配信できるようにしています。</p>
+        <p>パーソナライズ広告は、Googleの<a href="https://adssettings.google.com/">広告設定</a>で無効にできます。また、<a href="https://www.aboutads.info/choices/">www.aboutads.info</a>では、一部の第三者配信事業者によるパーソナライズ広告のためのCookieの使用を無効にできます。Googleが広告を表示するサイトのデータをどのように使用するかは、<a href="https://policies.google.com/technologies/partner-sites?hl=ja">Googleのサービスを使用するサイトやアプリから収集した情報のGoogleによる使用</a>で説明されています。</p>
+        <p>広告を選ぶのはGoogleで、Turnoutの開発者ではありません。アクセス解析と広告はバーでのひとつの選択で決まり、“このWebサイトのアクセス解析”にある“アクセス解析の選択を変更”で変えられます。</p>
+      </section>
+      <!-- /ads:on -->
+
       <section id="website" aria-labelledby="website-title">
         <h2 id="website-title">このWebサイト</h2>
         <!-- analytics:off -->
         <p hidden>このサイトにはアクセス解析もCookieもありません。ほかのサイトに求めるのは、Turnoutの最新バージョンと公開日だけです。トップページが、ダウンロードボタンの下に表示するためにGitHubのAPI（api.github.com）に問い合わせます。</p>
         <!-- /analytics:off -->
         <!-- analytics:on -->
-        <p>Google Analytics（前述のとおり、同意したあとにだけ読み込まれます）のほかに、このサイトがほかのサイトに求めるのはひとつだけです。トップページが、ダウンロードボタンの下に表示するために、Turnoutの最新バージョンと公開日をGitHubのAPI（api.github.com）に問い合わせます。この問い合わせにCookieは含まれず、このサイト自身もCookieを設定しません。</p>
+        <p>前述のGoogleのサービス（同意したあとにだけ読み込まれます）のほかに、このサイトがほかのサイトに求めるのはひとつだけです。トップページが、ダウンロードボタンの下に表示するために、Turnoutの最新バージョンと公開日をGitHubのAPI（api.github.com）に問い合わせます。この問い合わせにCookieは含まれず、このサイト自身もCookieを設定しません。</p>
         <!-- /analytics:on -->
         <p>このサイトはCloudflare Pagesでホストされており、Cloudflareは<a href="https://www.cloudflare.com/privacypolicy/">Cloudflareのプライバシーポリシー</a>に従ってアクセスを記録することがあります。GitHubは<a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub一般プライバシーステートメント</a>に従ってこの問い合わせを記録することがあります。</p>
       </section>

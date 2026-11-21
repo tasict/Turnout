@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QIvTMlseRTyJI+xFXHwpxfg3Tl7GdElBGp4QHCkROZE=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnout：WireGuardサーバーに接続するmacOSとWindows用のVPNクライアント</title>
 <meta name="description" content="Turnoutは、MacやWindows PCをWireGuardサーバーにwg-quickと同じやり方でつなぐネイティブアプリです。フックは実行され、ルートはあなたのまま。トンネルがどのネットワークインターフェイスから出ていくかも選べます。">
 <link rel="canonical" href="https://turnout.ctsite.cc/ja/">
@@ -60,7 +60,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 (function () {
   var key = "turnout-analytics", loaded = false, bar = null, stored = null;
   function grant() {
-    gtag("consent", "update", {analytics_storage: "granted"});
+    gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;
     loaded = true;
     gtag("js", new Date());
@@ -69,6 +69,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     s.async = true;
     s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
     document.head.appendChild(s);
+    var a = document.createElement("script");
+    a.async = true;
+    a.crossOrigin = "anonymous";
+    a.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5869768897978172";
+    document.head.appendChild(a);
   }
   function ask() {
     if (bar) return;
@@ -77,7 +82,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       var choice = event.target.getAttribute("data-consent");
       if (!choice) return;
       try { localStorage.setItem(key, choice); } catch (e) {}
-      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
       bar.remove();
       bar = null;
     });
@@ -90,14 +95,14 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
       button.addEventListener("click", function () {
         try { localStorage.removeItem(key); } catch (e) {}
-        gtag("consent", "update", {analytics_storage: "denied"});
+        gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
         ask();
       });
     });
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析"><p>このサイトへの訪問をGoogle Analyticsで数えてもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="アクセス解析と広告"><p>このサイトへの訪問をGoogle Analyticsで数え、Google AdSenseの広告を表示してもよいですか？同意するまで、Googleには何も送られません。 <a href="privacy#analytics">プライバシーポリシー</a></p><p class="consent-actions"><button type="button" data-consent="denied">拒否</button> <button type="button" data-consent="granted">同意する</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -144,7 +149,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
         <!-- download:live -->
         <div class="live">
           <p class="downloads"><a class="download" href="../releases/latest">Mac版をダウンロード</a> <a class="download" href="../releases/latest">Windows版をダウンロード</a></p>
-          <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.2.0</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-11-16">2026年11月16日</time><!-- /released -->公開）· <a href="../releases/latest">リリースノート</a></p>
+          <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.2.1</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-11-18">2026年11月18日</time><!-- /released -->公開）· <a href="../releases/latest">リリースノート</a></p>
           <p class="fineprint">macOS 15以降（AppleシリコンとIntel）· x64のWindows 11 · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、コンピュータ3台（MacでもWindowsでも）</p>
           <p class="fineprint"><a href="#install">インストール方法</a> · <a href="#mac">Macで加わる機能</a></p>
         </div>
@@ -274,16 +279,16 @@ Endpoint = vpn.example.com:51820</code></pre>
 
 <section class="feature" id="phantun" aria-labelledby="phantun-title">
   <div class="wrap">
-    <h2 id="phantun-title">UDPがふさがれたらTCPで</h2>
+    <h2 id="phantun-title">UDPが通らないときはTCPで</h2>
     <div class="body">
       <p class="fineprint">Mac版の機能です。Windows版Turnoutでは、Phantun経由でサーバーに接続する構成は表示されますが、接続はしません。</p>
-      <p class="intro">WireGuardが使うUDPをブロックしたり遅くしたりするネットワークがあります。ホテルやゲスト用のWi-Fi、一部のオフィスや通信事業者です。ピアをPhantunに切り替えると、TurnoutはWireGuardのパケットをTCP接続に包んでPhantunサーバーに送り、そこからWireGuardサーバーに渡されます。</p>
+      <p class="intro">WireGuardはUDPを使いますが、ネットワークによってはUDPが通らなかったり遅くなったりします。一部のホテルやゲスト用のWi-Fi、一部の通信事業者です。ピアをPhantunに切り替えると、TurnoutはWireGuardのパケットをTCP接続に包んでPhantunサーバーに送り、そこからWireGuardサーバーに渡されます。</p>
 <pre><code>[Peer]
 PublicKey = …
 Endpoint = vpn.example.com:51820
 #@ Phantun = 4567</code></pre>
       <p>この1行はwg-quickにとってはコメントなので、同じファイルはほかの場所では今までどおりUDPで接続します。PhantunはWireGuardサーバーの手前のLinuxホストで動きます。“サーバ設定…”は、そのためのコマンドを、DockerまたはPhantunのリリース版バイナリで、トンネルのポートとMTUを埋めた状態で表示します。Mac側で別のプログラムを動かす必要はありません。PhantunのTCPはTurnout自身が扱います。</p>
-      <p>経路はTCP接続をケーブルを包むスリーブとして描き、応答がないときはどちら側を確かめればよいかを示します。UDPのトンネルに応答がないときは、経路の“Phantunを使う…”からそのまま切り替えられます。PhantunはUDPをブロックしたり遅くしたりするネットワークを通り抜けますが、本物のWeb通信かどうかを調べるファイアウォールは越えられません。</p>
+      <p>経路はTCP接続をケーブルを包むスリーブとして描き、応答がないときはどちら側を確かめればよいかを示します。UDPのトンネルに応答がないときは、経路の“Phantunを使う…”からそのまま切り替えられます。PhantunはUDPが通らない、または遅いネットワーク向けです。通信が本物のWeb接続かどうかを調べるネットワークでは接続できません。</p>
       <figure class="shot-figure shot-phantun">
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="../assets/screenshots/dark/5-phantun.jpg?v=16570c5c">
@@ -395,7 +400,7 @@ Endpoint = vpn.example.com:51820
     <div class="body">
       <p class="intro">Windows版Turnoutにも、同じ構成ファイル、ネットワークインターフェイス、ルール、通知、ライセンスがあります。Macだけのものが、いくつかあります。</p>
       <ul class="extras">
-        <li><strong>UDPがふさがれたらTCPで。</strong><a href="#phantun">Phantun</a>サーバーを経由してトンネルを接続します。Windowsでは、Phantun経由でサーバーに接続する構成は表示されますが、接続はしません。</li>
+        <li><strong>UDPが通らないときはTCPで。</strong><a href="#phantun">Phantun</a>サーバーを経由してトンネルを接続します。Windowsでは、Phantun経由でサーバーに接続する構成は表示されますが、接続はしません。</li>
         <li><strong>ショートカット。</strong>トンネルを接続、接続解除し、その状態を読み取るアクションを、ショートカットやオートメーションで使えます。Windowsでは、“ショートカット”の代わりに、コマンドラインで<code>Turnout.exe connect &lt;tunnel&gt;</code>、<code>disconnect</code>、<code>status</code>を使えます。</li>
         <li><strong>Homebrew。</strong><code>brew install --cask tasict/tap/turnout</code>で、ダウンロードと同じパッケージをインストールできます。</li>
         <li><strong>すべてのMacにライセンスを。</strong>同じiCloudアカウントにサインインしているほかのMacがライセンスを見つけ、クリック1回で使えます。Windows PCでは、PCごとにキーを貼り付けます。</li>
@@ -433,7 +438,7 @@ cat /Applications/Turnout.app/Contents/Resources/uninstall.sh</code></pre>
       <!-- download:live -->
       <div class="live">
       <p class="downloads"><a class="download" href="../releases/latest">Mac版をダウンロード</a> <a class="download" href="../releases/latest">Windows版をダウンロード</a></p>
-      <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.2.0</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-11-16">2026年11月16日</time><!-- /released -->公開）· <a href="../releases/latest">リリースノート</a></p>
+      <p class="fineprint">バージョン<!-- version --><span data-latest="version">1.2.1</span><!-- /version -->（<!-- released --><time data-latest="date" datetime="2026-11-18">2026年11月18日</time><!-- /released -->公開）· <a href="../releases/latest">リリースノート</a></p>
       <p class="fineprint">macOS 15以降（AppleシリコンとIntel）· x64のWindows 11 · 7日間の試用 · <!-- price --><span data-price>US$19</span><!-- /price -->の買い切り、コンピュータ3台（MacでもWindowsでも）</p>
       <h3>Macの場合</h3>
       <ol class="steps">

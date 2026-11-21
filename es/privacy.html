@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-4tNa4vvOOSMEARZU9Xp7d7U9nYbn5Uv/x1piJcP03a4=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Política de privacidad de Turnout</title>
 <meta name="description" content="Turnout no tiene cuenta, publicidad ni informes de fallos. La app envía su comprobación de actualizaciones con un informe anónimo y, cuando has comprado una licencia, una comprobación de licencia a Polar más o menos una vez por semana.">
 <link rel="canonical" href="https://turnout.ctsite.cc/es/privacy">
@@ -42,7 +42,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 (function () {
   var key = "turnout-analytics", loaded = false, bar = null, stored = null;
   function grant() {
-    gtag("consent", "update", {analytics_storage: "granted"});
+    gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;
     loaded = true;
     gtag("js", new Date());
@@ -59,7 +59,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       var choice = event.target.getAttribute("data-consent");
       if (!choice) return;
       try { localStorage.setItem(key, choice); } catch (e) {}
-      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
       bar.remove();
       bar = null;
     });
@@ -72,14 +72,14 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
       button.addEventListener("click", function () {
         try { localStorage.removeItem(key); } catch (e) {}
-        gtag("consent", "update", {analytics_storage: "denied"});
+        gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
         ask();
       });
     });
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="Analítica"><p>¿Puede este sitio contar tu visita con Google Analytics? No se envía nada a Google a menos que aceptes. <a href="privacy#analytics">Política de privacidad</a></p><p class="consent-actions"><button type="button" data-consent="denied">Rechazar</button> <button type="button" data-consent="granted">Aceptar</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="Analítica y anuncios"><p>¿Puede este sitio contar tu visita con Google Analytics y mostrar anuncios de Google AdSense? No se envía nada a Google a menos que aceptes. <a href="privacy#analytics">Política de privacidad</a></p><p class="consent-actions"><button type="button" data-consent="denied">Rechazar</button> <button type="button" data-consent="granted">Aceptar</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -112,7 +112,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 <main id="main" class="doc policy">
   <div class="wrap doc-head">
     <h1>Política de privacidad</h1>
-    <p class="effective">En vigor desde el 6 de noviembre de 2026</p>
+    <p class="effective">En vigor desde el 21 de noviembre de 2026</p>
   </div>
 
   <div class="wrap">
@@ -183,13 +183,23 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       </section>
       <!-- /analytics:on -->
 
+      <!-- ads:on -->
+      <section id="advertising" aria-labelledby="advertising-title">
+        <h2 id="advertising-title">Publicidad en este sitio web</h2>
+        <p>La página de inicio, Qué hace Turnout en tu Mac y Turnout para Windows muestran anuncios de Google AdSense, pero solo si eliges Aceptar en la misma barra de la parte inferior de la página. Hasta que lo hagas, y si eliges Rechazar, no se carga ningún código de publicidad y no se envía nada a Google. Esta política y los términos de la licencia no muestran anuncios.</p>
+        <p>Una vez que aceptas, proveedores externos, incluido Google, usan cookies para mostrar anuncios basados en tus visitas anteriores a este sitio web o a otros sitios web. El uso de cookies de publicidad por parte de Google les permite a Google y a sus socios mostrarte anuncios basados en tus visitas a este sitio o a otros sitios de Internet.</p>
+        <p>Puedes desactivar la publicidad personalizada en la <a href="https://adssettings.google.com/">Configuración de anuncios</a> de Google, y desactivar el uso de cookies para publicidad personalizada por parte de algunos proveedores externos en <a href="https://www.aboutads.info/choices/">www.aboutads.info</a>. Google explica cómo usa los datos de los sitios que muestran sus anuncios en <a href="https://policies.google.com/technologies/partner-sites?hl=es">Cómo utiliza Google la información de sitios web o aplicaciones que utilizan nuestros servicios</a>.</p>
+        <p>Los anuncios los elige Google, no el desarrollador de Turnout. Una sola elección en la barra abarca la analítica y los anuncios; Cambiar mi elección de analítica, en Analítica en este sitio web, la cambia.</p>
+      </section>
+      <!-- /ads:on -->
+
       <section id="website" aria-labelledby="website-title">
         <h2 id="website-title">Este sitio web</h2>
         <!-- analytics:off -->
         <p hidden>Este sitio no tiene analítica ni cookies. Lo único que pide a otro sitio es la última versión de Turnout y la fecha en que se publicó: la página de inicio se las pide a la API de GitHub (api.github.com) para mostrarlas bajo el botón de descarga.</p>
         <!-- /analytics:off -->
         <!-- analytics:on -->
-        <p>Aparte de Google Analytics, que solo se carga después de que lo aceptes, como se describe arriba, este sitio pide una sola cosa a otro sitio: la página de inicio pide a la API de GitHub (api.github.com) la última versión de Turnout y la fecha en que se publicó, para mostrarlas bajo el botón de descarga. Esa petición no lleva cookies, y el sitio no instala cookies propias.</p>
+        <p>Aparte de los servicios de Google descritos arriba, que solo se cargan después de que los aceptes, este sitio pide una sola cosa a otro sitio: la página de inicio pide a la API de GitHub (api.github.com) la última versión de Turnout y la fecha en que se publicó, para mostrarlas bajo el botón de descarga. Esa petición no lleva cookies, y el sitio no instala cookies propias.</p>
         <!-- /analytics:on -->
         <p>Está alojado en Cloudflare Pages, y Cloudflare puede registrar las visitas como se describe en la <a href="https://www.cloudflare.com/privacypolicy/">Política de privacidad de Cloudflare</a>; GitHub puede registrar esa petición como se describe en la <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">Declaración de privacidad general de GitHub</a>.</p>
       </section>

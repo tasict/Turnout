@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QIvTMlseRTyJI+xFXHwpxfg3Tl7GdElBGp4QHCkROZE=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnout para Windows</title>
 <meta name="description" content="Turnout en Windows 11: un cliente VPN que se conecta a servidores WireGuard como lo hace wg-quick, con la interfaz de red que elijas y túneles que se conectan solos. Cómo instalarlo, qué cambia respecto al Mac y qué hace en tu equipo.">
 <link rel="canonical" href="https://turnout.ctsite.cc/es/windows">
@@ -42,7 +42,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 (function () {
   var key = "turnout-analytics", loaded = false, bar = null, stored = null;
   function grant() {
-    gtag("consent", "update", {analytics_storage: "granted"});
+    gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;
     loaded = true;
     gtag("js", new Date());
@@ -51,6 +51,11 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     s.async = true;
     s.src = "https://www.googletagmanager.com/gtag/js?id=G-NB4HLJEEPW";
     document.head.appendChild(s);
+    var a = document.createElement("script");
+    a.async = true;
+    a.crossOrigin = "anonymous";
+    a.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5869768897978172";
+    document.head.appendChild(a);
   }
   function ask() {
     if (bar) return;
@@ -59,7 +64,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       var choice = event.target.getAttribute("data-consent");
       if (!choice) return;
       try { localStorage.setItem(key, choice); } catch (e) {}
-      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
       bar.remove();
       bar = null;
     });
@@ -72,14 +77,14 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
       button.addEventListener("click", function () {
         try { localStorage.removeItem(key); } catch (e) {}
-        gtag("consent", "update", {analytics_storage: "denied"});
+        gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
         ask();
       });
     });
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="Analítica"><p>¿Puede este sitio contar tu visita con Google Analytics? No se envía nada a Google a menos que aceptes. <a href="privacy#analytics">Política de privacidad</a></p><p class="consent-actions"><button type="button" data-consent="denied">Rechazar</button> <button type="button" data-consent="granted">Aceptar</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="Analítica y anuncios"><p>¿Puede este sitio contar tu visita con Google Analytics y mostrar anuncios de Google AdSense? No se envía nada a Google a menos que aceptes. <a href="privacy#analytics">Política de privacidad</a></p><p class="consent-actions"><button type="button" data-consent="denied">Rechazar</button> <button type="button" data-consent="granted">Aceptar</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
@@ -114,7 +119,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     <h1>Turnout para Windows</h1>
     <p class="lede">El mismo cliente VPN para servidores WireGuard, en Windows 11: tus configuraciones tal como las lee wg-quick, la interfaz de red que elijas para cada túnel y túneles que se conectan solos según un horario o en una red Wi-Fi. Vive en el área de notificación, y una sola licencia cubre a la vez tus Mac y tus equipos con Windows.</p>
     <p><a class="download" href="../releases/latest">Descargar para Windows</a></p>
-    <p class="fineprint">Versión <!-- version --><span data-latest="version">1.2.0</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-11-16">16 de noviembre de 2026</time><!-- /released --> · <a href="../releases/latest">Notas de la versión</a></p>
+    <p class="fineprint">Versión <!-- version --><span data-latest="version">1.2.1</span><!-- /version -->, publicada el <!-- released --><time data-latest="date" datetime="2026-11-18">18 de noviembre de 2026</time><!-- /released --> · <a href="../releases/latest">Notas de la versión</a></p>
     <p class="fineprint">Windows 11 en un equipo x64 (Intel o AMD) · prueba de 7 días · <!-- price --><span data-price>US$19</span><!-- /price --> en un solo pago, tres equipos, Mac o Windows</p>
   </div>
 

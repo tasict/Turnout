@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LnFxGDx389p33FXwn+vl4fXYMwq2v1U6b3/YM5YYlsY=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-4tNa4vvOOSMEARZU9Xp7d7U9nYbn5Uv/x1piJcP03a4=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnout 라이선스 약관</title>
 <meta name="description" content="Turnout 라이선스는 한 번만 결제하면 Mac이든 Windows PC든 컴퓨터 3대에서 사용할 수 있고 Turnout 1의 모든 업데이트가 포함됩니다. 먼저 7일 동안 체험할 수 있으며, 14일 이내에 환불받을 수 있습니다.">
 <link rel="canonical" href="https://turnout.ctsite.cc/ko/license">
@@ -42,7 +42,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
 (function () {
   var key = "turnout-analytics", loaded = false, bar = null, stored = null;
   function grant() {
-    gtag("consent", "update", {analytics_storage: "granted"});
+    gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;
     loaded = true;
     gtag("js", new Date());
@@ -59,7 +59,7 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
       var choice = event.target.getAttribute("data-consent");
       if (!choice) return;
       try { localStorage.setItem(key, choice); } catch (e) {}
-      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied"});
+      if (choice === "granted") grant(); else gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
       bar.remove();
       bar = null;
     });
@@ -72,14 +72,14 @@ gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", a
     document.querySelectorAll("[data-consent-reset]").forEach(function (button) {
       button.addEventListener("click", function () {
         try { localStorage.removeItem(key); } catch (e) {}
-        gtag("consent", "update", {analytics_storage: "denied"});
+        gtag("consent", "update", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
         ask();
       });
     });
   });
 })();
 </script>
-<template id="consent-bar"><div class="consent" role="region" aria-label="웹 사이트 분석"><p>이 사이트가 Google Analytics로 방문을 집계해도 될까요? 동의하기 전에는 Google에 아무것도 전송되지 않습니다. <a href="privacy#analytics">개인정보 처리방침</a></p><p class="consent-actions"><button type="button" data-consent="denied">거부</button> <button type="button" data-consent="granted">동의</button></p></div></template>
+<template id="consent-bar"><div class="consent" role="region" aria-label="웹 사이트 분석 및 광고"><p>이 사이트가 Google Analytics로 방문을 집계하고 Google AdSense 광고를 표시해도 될까요? 동의하기 전에는 Google에 아무것도 전송되지 않습니다. <a href="privacy#analytics">개인정보 처리방침</a></p><p class="consent-actions"><button type="button" data-consent="denied">거부</button> <button type="button" data-consent="granted">동의</button></p></div></template>
 <!-- /analytics -->
 </head>
 <body>
