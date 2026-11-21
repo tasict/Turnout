@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QIvTMlseRTyJI+xFXHwpxfg3Tl7GdElBGp4QHCkROZE=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-A0NIeotZbSz2KhgbLf4xC33AVjlIZXpvkhVu6CxriTM=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnout: WireGuard 서버에 연결하는 macOS 및 Windows용 VPN 클라이언트</title>
 <meta name="description" content="Turnout은 wg-quick과 같은 방식으로 Mac 또는 Windows PC를 WireGuard 서버에 연결하는 네이티브 앱입니다. 훅이 그대로 실행되고, 경로는 사용자가 정한 대로 유지되며, 터널이 어느 네트워크 인터페이스로 나갈지 직접 선택할 수 있습니다.">
 <link rel="canonical" href="https://turnout.ctsite.cc/ko/">
@@ -58,7 +58,7 @@ window.dataLayer = window.dataLayer || [];
 function gtag() { dataLayer.push(arguments); }
 gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
 (function () {
-  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  var key = "turnout-consent-ads", loaded = false, bar = null, stored = null;
   function grant() {
     gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;

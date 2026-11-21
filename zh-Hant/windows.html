@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QIvTMlseRTyJI+xFXHwpxfg3Tl7GdElBGp4QHCkROZE=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-A0NIeotZbSz2KhgbLf4xC33AVjlIZXpvkhVu6CxriTM=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Windows 版 Turnout</title>
 <meta name="description" content="Windows 11 上的 Turnout：照 wg-quick 的做法連線到 WireGuard 伺服器的 VPN 用戶端，網路介面由你選擇，通道也會自己連線。這裡說明如何安裝、和 Mac 上有哪些不同，以及它對你的電腦做了什麼。">
 <link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/windows">
@@ -40,7 +40,7 @@ window.dataLayer = window.dataLayer || [];
 function gtag() { dataLayer.push(arguments); }
 gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
 (function () {
-  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  var key = "turnout-consent-ads", loaded = false, bar = null, stored = null;
   function grant() {
     gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;

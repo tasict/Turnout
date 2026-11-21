@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-4tNa4vvOOSMEARZU9Xp7d7U9nYbn5Uv/x1piJcP03a4=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-/1Z5vRgYuGoolZF5WD5q7cAsidYPNHKB73hghFDWEK8=' https://www.googletagmanager.com; connect-src 'self' https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnoutプライバシーポリシー</title>
 <meta name="description" content="Turnoutにはアカウントも広告もクラッシュレポートもありません。アプリが送るのはアップデートの確認とそれに伴う匿名の報告1件、そしてライセンスの購入後は、週に1回程度のPolarへのライセンス確認です。">
 <link rel="canonical" href="https://turnout.ctsite.cc/ja/privacy">
@@ -40,7 +40,7 @@ window.dataLayer = window.dataLayer || [];
 function gtag() { dataLayer.push(arguments); }
 gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
 (function () {
-  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  var key = "turnout-consent-ads", loaded = false, bar = null, stored = null;
   function grant() {
     gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;

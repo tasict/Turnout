@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QIvTMlseRTyJI+xFXHwpxfg3Tl7GdElBGp4QHCkROZE=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-A0NIeotZbSz2KhgbLf4xC33AVjlIZXpvkhVu6CxriTM=' 'sha256-hFkPUxLDKvSOWSDS492b8x+EN1atgrtrKoFP/Adko8A=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>Turnout：連線到 WireGuard 伺服器的 macOS 與 Windows VPN 用戶端</title>
 <meta name="description" content="Turnout 用原生 App，照 wg-quick 的做法把你的 Mac 或 Windows 電腦連上 WireGuard 伺服器：hook 照樣執行，路由由你作主，通道要從哪個網路介面出去也由你決定。">
 <link rel="canonical" href="https://turnout.ctsite.cc/zh-Hant/">
@@ -58,7 +58,7 @@ window.dataLayer = window.dataLayer || [];
 function gtag() { dataLayer.push(arguments); }
 gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
 (function () {
-  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  var key = "turnout-consent-ads", loaded = false, bar = null, stored = null;
   function grant() {
     gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;

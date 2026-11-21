@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QIvTMlseRTyJI+xFXHwpxfg3Tl7GdElBGp4QHCkROZE=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
+<!-- csp --><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-A0NIeotZbSz2KhgbLf4xC33AVjlIZXpvkhVu6CxriTM=' 'strict-dynamic' 'unsafe-eval' https:; connect-src 'self' https:; frame-src https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"><!-- /csp -->
 <title>What Turnout does to your Mac</title>
 <meta name="description" content="Turnout's background service runs as root. What it is, what it changes and with which tools, where configs live, when hooks run, what the app connects to, and how to check all of it yourself.">
 <link rel="canonical" href="https://turnout.ctsite.cc/how-it-works">
@@ -40,7 +40,7 @@ window.dataLayer = window.dataLayer || [];
 function gtag() { dataLayer.push(arguments); }
 gtag("consent", "default", {analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied"});
 (function () {
-  var key = "turnout-analytics", loaded = false, bar = null, stored = null;
+  var key = "turnout-consent-ads", loaded = false, bar = null, stored = null;
   function grant() {
     gtag("consent", "update", {analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted"});
     if (loaded) return;
